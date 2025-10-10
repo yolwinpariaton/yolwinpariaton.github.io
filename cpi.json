@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Annual Inflation Rate (2015-2024)",
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/ipc.csv",
+    "format": {
+      "type": "csv",
+      "parse": {"year": "number", "value": "number"}
+    }
+  },
+  "transform": [
+    {"filter": "isValid(datum.value)"}
+  ],
+  "mark": {
+    "type": "line",
+    "point": true,
+    "color": "#2563eb",
+    "strokeWidth": 2.5
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "axis": {
+        "title": "Year",
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "axis": {
+        "title": "Inflation Rate (%)",
+        "format": ".1f"
+      },
+      "scale": {
+        "zero": false
+      }
+    },
+    "tooltip": [
+      {"field": "year", "title": "Year"},
+      {"field": "value", "type": "quantitative", "title": "Rate (%)", "format": ".2f"}
+    ]
+  }
+}
