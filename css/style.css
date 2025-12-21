@@ -208,9 +208,9 @@ a:hover{ text-decoration: underline; }
   box-shadow: none;
 }
 
-/* =========================================================
-   Charts layout (fix box vs chart mismatch)
-   ========================================================= */
+/* =========================
+   Charts layout (Task 1 & 2)
+   ========================= */
 .charts-grid{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -220,7 +220,7 @@ a:hover{ text-decoration: underline; }
 }
 
 .chart-card{
-  background: white;
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 12px;
@@ -228,7 +228,7 @@ a:hover{ text-decoration: underline; }
   overflow: hidden;
 }
 
-/* Vega container */
+/* Make Vega chart fill the card width */
 .chart-card .vega-embed{
   width: 100%;
 }
@@ -238,6 +238,13 @@ a:hover{ text-decoration: underline; }
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/* Mobile: 1 column */
+@media (max-width: 860px){
+  .charts-grid{
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =========================================================
