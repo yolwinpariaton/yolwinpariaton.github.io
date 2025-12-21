@@ -23,10 +23,12 @@
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <button class="nav__toggle" aria-expanded="false" aria-controls="navMenu">
+      <!-- CSS-only nav toggle -->
+      <input class="nav__checkbox" type="checkbox" id="navToggle" aria-label="Toggle navigation">
+      <label class="nav__toggle" for="navToggle" aria-controls="navMenu">
         <span class="sr-only">Toggle navigation</span>
         ☰
-      </button>
+      </label>
 
       <ul class="nav__menu" id="navMenu">
         <li><a class="nav__link" href="index.html">Home</a></li>
@@ -64,11 +66,11 @@
 
         <div class="charts-grid">
           <div class="chart-card">
-            <div id="chart_unemployment"></div>
+            <div id="chart_unemployment" aria-label="UK unemployment chart"></div>
           </div>
 
           <div class="chart-card">
-            <div id="chart_inflation"></div>
+            <div id="chart_inflation" aria-label="G7 inflation chart"></div>
           </div>
         </div>
 
@@ -81,11 +83,11 @@
 
         <div class="charts-grid">
           <div class="chart-card">
-            <div id="chart_nigeria"></div>
+            <div id="chart_nigeria" aria-label="Nigeria inflation chart"></div>
           </div>
 
           <div class="chart-card">
-            <div id="chart_ethiopia"></div>
+            <div id="chart_ethiopia" aria-label="Ethiopia debt chart"></div>
           </div>
         </div>
 
@@ -99,21 +101,39 @@
         <p>Contact: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
       <div>
+        <p>© 2025 Yolwin Pariaton</p>
         <p>Built for LSE — Automated Data Collection</p>
       </div>
     </div>
   </footer>
 
-  <!-- Site JS first -->
-  <script src="js/main.js"></script>
-
-  <!-- Vega libraries -->
+  <!-- Vega libraries (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Task JS -->
-  <script src="js/charts.js"></script>
-  <script src="js/task2.js"></script>
+  <!-- Inline embed (loads JSON specs from your /graphs folder) -->
+  <script>
+    const embedOpts = {
+      actions: false,
+      renderer: "svg",
+      autosize: { type: "fit", contains: "padding" }
+    };
+
+    const charts = [
+      ["#chart_unemployment", "graphs/uk_unemployment_chart.json"],
+      ["#chart_inflation", "graphs/g7_inflation_chart.json"],
+      ["#chart_nigeria", "graphs/nigeria_chart.json"],
+      ["#chart_ethiopia", "graphs/ethiopia_chart.json"]
+    ];
+
+    charts.forEach(([selector, specPath]) => {
+      vegaEmbed(selector, specPath, embedOpts).catch(err => {
+        console.error("Failed to load:", specPath, err);
+        const el = document.querySelector(selector);
+        if (el) el.innerHTML = "<p style='color:#b91c1c;font-weight:700;'>Chart failed to load.</p>";
+      });
+    });
+  </script>
 </body>
 </html>
