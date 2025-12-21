@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- =========================================================
+       Academic Portfolio Website (GitHub Pages)
+       Customize: name, title, email, GitHub/LinkedIn links, images
+  ========================================================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO -->
+  <title>Yolwin Pariaton | Academic Portfolio</title>
+  <meta name="description" content="Academic portfolio and project website for the course 'Automated Data Collection' at LSE." />
+  <meta name="author" content="Yolwin Pariaton" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Social preview (optional) -->
+  <meta property="og:title" content="Yolwin Pariaton | Academic Portfolio" />
+  <meta property="og:description" content="Portfolio and research project for 'Automated Data Collection' at LSE." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav" aria-label="Primary">
+      <div class="nav__brand">
+        <a class="nav__home" href="index.html">Yolwin Pariaton</a>
+      </div>
+
+      <button class="nav__toggle" aria-expanded="false" aria-controls="navMenu">
+        <span class="sr-only">Toggle navigation</span>
+        ☰
+      </button>
+
+      <ul class="nav__menu" id="navMenu">
+        <li><a class="nav__link" href="index.html" aria-current="page">Home</a></li>
+        <li><a class="nav__link" href="#project">Project</a></li>
+        <li><a class="nav__link" href="#portfolio">Portfolio</a></li>
+        <li><a class="nav__link" href="project.html">Project Page</a></li>
+        <li><a class="nav__link" href="portfolio.html">Portfolio Page</a></li>
+        <li><a class="nav__link" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+        <li><a class="nav__link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+      </ul>
+    </nav>
+
+    <section class="hero" aria-label="Intro">
+      <div class="container hero__grid">
+        <div class="hero__left">
+          <div class="avatar" aria-hidden="true">
+            <img src="images/profile-placeholder.svg" alt="Profile placeholder" />
+          </div>
+
+          <h1 class="hero__title">Yolwin Pariaton</h1>
+          <p class="hero__subtitle">
+            MPA Data Science for Public Policy, LSE • Academic Portfolio & Research Project
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn" href="#project">View Project</a>
+            <a class="btn btn--ghost" href="#portfolio">View Portfolio</a>
+          </div>
+
+          <p class="hero__meta">
+            Contact: <a href="mailto:yolwin.pariaton@example.com">yolwin.pariaton@example.com</a>
+          </p>
+        </div>
+
+        <div class="hero__right">
+          <div class="card card--note">
+            <h2 class="card__title">About this site</h2>
+            <p class="card__text">
+              This website showcases my portfolio and research project for the course
+              <strong>“Automated Data Collection”</strong> at LSE.
+            </p>
+            <p class="card__text">
+              Use the navigation links to jump to sections or open dedicated pages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main id="main">
+    <section class="section" id="project" aria-label="Project section">
+      <div class="container two-col">
+        <div class="two-col__text">
+          <h2>Project</h2>
+          <p>
+            A brief description of the main research project. Explain the research question,
+            data sources, and what methods you used. Keep it short here.
+          </p>
+          <p>
+            <a class="link" href="project.html">Open full project page →</a>
+          </p>
+        </div>
+
+        <div class="two-col__media" aria-hidden="true">
+          <img src="images/project-placeholder.svg" alt="Project placeholder" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="portfolio" aria-label="Portfolio section">
+      <div class="container two-col">
+        <div class="two-col__text">
+          <h2>Portfolio</h2>
+          <p>
+            A brief overview of course exercises and assignments. Mention key themes:
+            web scraping, APIs, automation, text data, reproducibility, etc.
+          </p>
+          <p>
+            <a class="link" href="portfolio.html">Open full portfolio page →</a>
+          </p>
+        </div>
+
+        <div class="two-col__media" aria-hidden="true">
+          <img src="images/portfolio-placeholder.svg" alt="Portfolio placeholder" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container footer__grid">
+      <div>
+        <h3>Contact</h3>
+        <p>Email: <a href="mailto:yolwin.pariaton@example.com">yolwin.pariaton@example.com</a></p>
+      </div>
+
+      <div>
+        <h3>Links</h3>
+        <ul class="footer__links">
+          <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Copyright</h3>
+        <p>© <span id="year"></span> Yolwin Pariaton. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

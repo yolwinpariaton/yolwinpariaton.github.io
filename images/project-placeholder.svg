@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="Project placeholder">
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <rect x="40" y="40" width="1120" height="620" rx="24" fill="#eef3fb" stroke="#d8e0ee" stroke-width="4"/>
+  <path d="M120 520 L380 360 L520 450 L760 250 L1020 400" fill="none" stroke="#1d4ed8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="380" cy="360" r="10" fill="#1d4ed8"/>
+  <circle cx="520" cy="450" r="10" fill="#1d4ed8"/>
+  <circle cx="760" cy="250" r="10" fill="#1d4ed8"/>
+  <circle cx="1020" cy="400" r="10" fill="#1d4ed8"/>
+  <text x="50%" y="14%" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" fill="#0b1f3a">
+    Project Visualization Placeholder
+  </text>
+</svg>

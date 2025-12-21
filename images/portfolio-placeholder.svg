@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="Portfolio placeholder">
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <rect x="40" y="40" width="1120" height="620" rx="24" fill="#eef3fb" stroke="#d8e0ee" stroke-width="4"/>
+  <g fill="#0b1f3a" opacity="0.12">
+    <rect x="110" y="160" width="280" height="180" rx="16"/>
+    <rect x="460" y="160" width="280" height="180" rx="16"/>
+    <rect x="810" y="160" width="280" height="180" rx="16"/>
+    <rect x="110" y="390" width="280" height="180" rx="16"/>
+    <rect x="460" y="390" width="280" height="180" rx="16"/>
+    <rect x="810" y="390" width="280" height="180" rx="16"/>
+  </g>
+  <text x="50%" y="14%" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" fill="#0b1f3a">
+    Portfolio Grid Placeholder
+  </text>
+</svg>
