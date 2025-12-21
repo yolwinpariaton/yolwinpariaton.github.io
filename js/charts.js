@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+  // Shared embed options (clean + responsive)
+  const embedOptions = {
+    actions: false,
+    renderer: "svg",
+    autosize: { type: "fit", contains: "padding" }
+  };
+
   // Chart 1: Unemployment (UK)
   const unemploymentSpec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -18,8 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
       "color": "black"
     },
 
-    "width": 300,
-    "height": 300,
+    /* ✅ responsive width */
+    "width": "container",
+    "height": 320,
+
+    /* ✅ helps with fit behavior */
+    "autosize": { "type": "fit", "contains": "padding" },
 
     "mark": {
       "type": "line",
@@ -47,8 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
       "color": "black"
     },
 
-    "width": 300,
-    "height": 300,
+    /* ✅ responsive width */
+    "width": "container",
+    "height": 320,
+
+    /* ✅ helps with fit behavior */
+    "autosize": { "type": "fit", "contains": "padding" },
 
     "mark": {
       "type": "line",
@@ -79,19 +94,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // make sure your specs use responsive width
-unemploymentSpec.width = "container";
-inflationSpec.width = "container";
-
-// embed with responsive sizing
-vegaEmbed("#chart_unemployment", unemploymentSpec, {
-  actions: false,
-  autosize: { type: "fit", contains: "padding" }
-});
-
-vegaEmbed("#chart_inflation", inflationSpec, {
-  actions: false,
-  autosize: { type: "fit", contains: "padding" }
-});
+  // Embed charts into the matching divs
+  vegaEmbed("#chart_unemployment", unemploymentSpec, embedOptions);
+  vegaEmbed("#chart_inflation", inflationSpec, embedOptions);
 
 });

@@ -60,16 +60,9 @@ a:hover{ text-decoration: underline; }
    Header + Nav
    ========================================================= */
 .site-header{
-  /* Keep my navy theme for nav background */
   background: linear-gradient(180deg, var(--navy), var(--navy-2));
   color: var(--white);
-  padding-bottom: 0; /* hero will control spacing now */
-}
-
-.page-header{
-  background: linear-gradient(180deg, var(--navy), var(--navy-2));
-  color: var(--white);
-  padding-bottom: 20px;
+  padding-bottom: 0;
 }
 
 .nav{
@@ -124,36 +117,41 @@ a:hover{ text-decoration: underline; }
 .nav__toggle:hover{ background: rgba(255,255,255,0.12); }
 
 /* =========================================================
-   HERO (Landing section) 
+   HERO
    ========================================================= */
-
-/* My HTML uses: <section class="hero hero--bg"> */
 .hero{
-  padding: 0; /* hero--bg handles padding */
+  padding: 0;
 }
 
+/* Landing hero background (index uses this) */
 .hero--bg{
   position: relative;
   min-height: 88vh;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Background image */
   background-image: url("../images/london.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Dark overlay to ensure ADA-friendly contrast */
+/* Portfolio hero background */
+.hero--portfolio{
+  position: relative;
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  background: url("../images/portfolio.jpg") center/cover no-repeat;
+}
+
+/* Overlay to ensure contrast */
 .hero__overlay{
   position: absolute;
   inset: 0;
   background: rgba(3, 18, 43, 0.62);
 }
 
-/* Centered hero content container */
 .hero__center{
   position: relative;
   z-index: 1;
@@ -161,35 +159,6 @@ a:hover{ text-decoration: underline; }
   max-width: 820px;
   padding: 52px 18px 44px;
   color: var(--white);
-}
-
-/* Larger, centered avatar */
-.avatar{
-  width: 110px;
-  height: 110px;
-  border-radius: 999px;
-  overflow:hidden;
-  border: 3px solid rgba(255,255,255,0.35);
-  background: rgba(255,255,255,0.08);
-}
-.avatar img{ width:100%; height:100%; display:block; object-fit: cover; }
-
-/* optional class used in the new HTML: avatar--lg */
-.avatar--lg{
-  width: 160px;
-  height: 160px;
-  margin: 0 auto 14px auto;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 3px solid rgba(255,255,255,0.85);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-  background: rgba(255,255,255,0.08);
-}
-.avatar--lg img{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
 }
 
 .hero__title{
@@ -205,58 +174,16 @@ a:hover{ text-decoration: underline; }
   font-size: clamp(16px, 1.8vw, 20px);
 }
 
-.hero__meta{
-  margin-top: 14px;
-  color: rgba(255,255,255,0.90);
-}
-.hero__meta a{
-  color: var(--white);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Social buttons row */
-.hero__social{
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-/* Portfolio hero background image */
-.hero--portfolio{
-  background-image: url("../images/portfolio.jpg");
-}
-
-/* Blank section for future content */
-.white-space{
-  background: #ffffff;
-  min-height: 70vh;        /* big empty area */
-  padding: 60px 0;         /* vertical breathing room */
-}
-
-/* Portfolio hero background */
-.hero--portfolio{
-  min-height: 70vh;
-  display: grid;
-  place-items: center;
-  position: relative;
-  background: url("../images/portfolio.jpg") center/cover no-repeat;
-}
-
 /* Plain white section after hero */
 .white-space{
   background: #ffffff;
   padding: 70px 0;
-  min-height: 70vh; /* gives you visible blank area */
+  min-height: 70vh;
 }
 
 /* =========================================================
    Buttons
    ========================================================= */
-.hero__actions{ display:flex; gap: 10px; flex-wrap: wrap; }
-
 .btn{
   display:inline-block;
   background: var(--white);
@@ -282,78 +209,35 @@ a:hover{ text-decoration: underline; }
 }
 
 /* =========================================================
-   Cards / Sections
+   Charts layout (fix box vs chart mismatch)
    ========================================================= */
-.card{
-  background: var(--white);
+.charts-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 14px;
+  align-items: start;
+}
+
+.chart-card{
+  background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  padding: 12px;
   box-shadow: var(--shadow);
-  padding: 16px;
-}
-.card--note{ background: rgba(255,255,255,0.96); }
-.card__title{ margin: 0 0 8px; }
-.card__text{ margin: 0 0 10px; color: var(--muted); }
-
-.section{ padding: 44px 0; }
-.section--alt{
-  background: #eef3fb;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  overflow: hidden;
 }
 
-.two-col{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  align-items: center;
-}
-.two-col__text h2{ margin-top: 0; font-size: 28px; }
-.two-col__text p{ color: var(--muted); font-size: 16px; }
-
-.two-col__media{
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px;
-  box-shadow: var(--shadow);
-}
-.two-col__media img{
-  width:100%;
-  height:auto;
-  display:block;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.link{ font-weight: 700; }
-
-/* =========================================================
-   Other pages
-   ========================================================= */
-.page-hero{ padding: 18px 0 6px; }
-.lead{ color: rgba(255,255,255,0.88); max-width: 70ch; }
-
-.page-content{ padding: 28px 18px 40px; }
-.content-block{
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin: 0 0 16px;
-  box-shadow: var(--shadow);
-}
-.responsive-img{
+/* Vega container */
+.chart-card .vega-embed{
   width: 100%;
-  height: auto;
-  border-radius: 12px;
-  border: 1px solid var(--border);
 }
 
-.grid{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+.chart-card svg,
+.chart-card canvas{
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* =========================================================
@@ -370,45 +254,12 @@ a:hover{ text-decoration: underline; }
   gap: 16px;
 }
 .site-footer a{ color: var(--white); text-decoration: underline; }
-.footer__links{ list-style:none; padding:0; margin:0; }
-.footer__links li{ margin: 6px 0; }
-
-.charts-grid{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 14px;
-  align-items: start; /* prevents stretching */
-}
-
-.chart-card{
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px;
-  box-shadow: var(--shadow);
-  overflow: hidden; /* cleaner than overflow-x:auto for charts */
-}
-
-/* Make the Vega container behave nicely */
-.chart-card .vega-embed{
-  width: 100%;
-}
-
-.chart-card svg,
-.chart-card canvas{
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
 
 /* =========================================================
    Responsive
    ========================================================= */
 @media (max-width: 860px){
-  .two-col{ grid-template-columns: 1fr; }
   .footer__grid{ grid-template-columns: 1fr; }
-  .grid{ grid-template-columns: 1fr; }
 
   .nav__toggle{ display:inline-block; }
   .nav__menu{
@@ -424,11 +275,5 @@ a:hover{ text-decoration: underline; }
     padding-bottom: 38px;
   }
 
-  .avatar--lg{
-    width: 140px;
-    height: 140px;
-  }
-
-  /* Charts go to one column on mobile */
   .charts-grid{ grid-template-columns: 1fr; }
 }
