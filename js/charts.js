@@ -79,8 +79,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Embed both charts into the matching divs
-  vegaEmbed("#chart_unemployment", unemploymentSpec, { actions: false });
-  vegaEmbed("#chart_inflation", inflationSpec, { actions: false });
+  // make sure your specs use responsive width
+unemploymentSpec.width = "container";
+inflationSpec.width = "container";
+
+// embed with responsive sizing
+vegaEmbed("#chart_unemployment", unemploymentSpec, {
+  actions: false,
+  autosize: { type: "fit", contains: "padding" }
+});
+
+vegaEmbed("#chart_inflation", inflationSpec, {
+  actions: false,
+  autosize: { type: "fit", contains: "padding" }
+});
 
 });
