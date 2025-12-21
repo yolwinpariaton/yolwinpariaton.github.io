@@ -17,10 +17,11 @@
 
   "data": {
     "url": "data/nigeria.json",
-    "format": { "type": "json" }
+    "format": { "type": "json", "property": "data" }
   },
 
   "mark": { "type": "line", "color": "#f4134d", "strokeWidth": 2 },
+
   "encoding": {
     "x": { "field": "date", "type": "temporal", "axis": { "title": "", "grid": false } },
     "y": { "field": "value", "type": "quantitative", "axis": { "title": "", "grid": false } }

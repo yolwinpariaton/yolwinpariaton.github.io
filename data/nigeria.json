@@ -515,38 +515,3 @@
         }
     ]
 }
-Download
-Your chart code in JSON format:
-
-Edit Code
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Inflation",
-    "anchor": "start",
-    "subtitle": "CPI, % | Source: NBS (WB) through ECO API",
-    "fontSize": "14",
-    "subtitleFontSize": "12",
-    "color": "#000000",
-    "subtitleColor": "#000000"
-  },
-  "height": "250",
-  "width": "container",
-  "autosize": {
-    "type": "fit",
-    "contains": "padding"
-  },
-  "background": "#ffffff",
-  "view": {
-    "fill": "#ffffff",
-    "strokeOpacity": 0
-  },
-  "data": {
-    "url": "https://api.economicsobservatory.com/nga/infl?vega",
-    "format": {
-      "type": "json"
-    }
-  },
-  "mark": {
-    "type": "line",
-    "color": "#f4134d",
