@@ -119,11 +119,8 @@ a:hover{ text-decoration: underline; }
 /* =========================================================
    HERO
    ========================================================= */
-.hero{
-  padding: 0;
-}
+.hero{ padding: 0; }
 
-/* Landing hero background (index uses this) */
 .hero--bg{
   position: relative;
   min-height: 88vh;
@@ -136,7 +133,6 @@ a:hover{ text-decoration: underline; }
   background-repeat: no-repeat;
 }
 
-/* Portfolio hero background */
 .hero--portfolio{
   position: relative;
   min-height: 70vh;
@@ -145,7 +141,6 @@ a:hover{ text-decoration: underline; }
   background: url("../images/portfolio.jpg") center/cover no-repeat;
 }
 
-/* Overlay to ensure contrast */
 .hero__overlay{
   position: absolute;
   inset: 0;
@@ -228,7 +223,6 @@ a:hover{ text-decoration: underline; }
   overflow: hidden;
 }
 
-/* Make Vega chart fill the card width */
 .chart-card .vega-embed{
   width: 100%;
 }
@@ -238,13 +232,6 @@ a:hover{ text-decoration: underline; }
   max-width: 100%;
   height: auto;
   display: block;
-}
-
-/* Mobile: 1 column */
-@media (max-width: 860px){
-  .charts-grid{
-    grid-template-columns: 1fr;
-  }
 }
 
 /* =========================================================
@@ -282,5 +269,8 @@ a:hover{ text-decoration: underline; }
     padding-bottom: 38px;
   }
 
-  .charts-grid{ grid-template-columns: 1fr; }
+  /* Charts go to one column on mobile */
+  .charts-grid{
+    grid-template-columns: 1fr;
+  }
 }

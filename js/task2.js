@@ -12,11 +12,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   try {
-    // These should match your repo structure exactly
     const nigeriaSpec = await loadSpec("graphs/nigeria_chart.json");
     const ethiopiaSpec = await loadSpec("graphs/ethiopia_chart.json");
 
-    // Optional: make charts responsive in the cards
+    // Responsive inside the cards
     nigeriaSpec.width = "container";
     ethiopiaSpec.width = "container";
 
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   } catch (err) {
     console.error(err);
-    // Show a visible error on the page (so you don’t need DevTools)
     const el = document.querySelector("#chart_nigeria");
     if (el) el.innerHTML = `<p style="color:#b91c1c;font-weight:700;">Charts failed to load. Check console for details.</p>`;
   }
