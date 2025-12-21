@@ -1,1 +1,0 @@
-# yolwinpariaton.github.io
