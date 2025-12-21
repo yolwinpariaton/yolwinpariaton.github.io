@@ -4,8 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- SEO -->
   <title>Portfolio | Yolwin Pariaton</title>
   <meta name="description" content="Portfolio page for course exercises and assignments for Automated Data Collection at LSE." />
+  <meta name="author" content="Yolwin Pariaton" />
+  <meta name="robots" content="index, follow" />
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -13,7 +16,8 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="page-header">
+  <!-- Header + Nav (same as the rest of the site) -->
+  <header class="site-header" id="top">
     <nav class="nav" aria-label="Primary">
       <div class="nav__brand">
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
@@ -28,67 +32,42 @@
         <li><a class="nav__link" href="index.html">Home</a></li>
         <li><a class="nav__link" href="project.html">Project</a></li>
         <li><a class="nav__link" href="portfolio.html" aria-current="page">Portfolio</a></li>
-        <li><a class="nav__link" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
-        <li><a class="nav__link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+        <li><a class="nav__link" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+        <li><a class="nav__link" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
       </ul>
     </nav>
 
-    <div class="container page-hero">
-      <h1>Portfolio</h1>
-      <p class="lead">
-        Course exercises, assignments, and technical notes.
-      </p>
-    </div>
+    <!-- HERO with Portfolio background -->
+    <section class="hero hero--bg hero--portfolio" aria-label="Portfolio intro">
+      <div class="hero__overlay"></div>
+
+      <div class="hero__center">
+        <h1 class="hero__title">Portfolio</h1>
+        <p class="hero__subtitle">
+          Course exercises and assignments. Key themes: web scraping, APIs, automation,
+          text data, reproducibility, and maps.
+        </p>
+      </div>
+    </section>
   </header>
 
-  <main id="main" class="container page-content">
-    <section class="content-block">
-      <h2>Course Exercises</h2>
-      <p>
-        Add links to notebooks, reports, and short descriptions. You can keep this as a simple list or use cards.
-      </p>
+ <!-- Main content -->
+<main id="main">
+  <!-- Black space / section placeholder -->
+  <section class="black-space" aria-label="Portfolio content area">
+    <div class="container">
+      <!-- Blank space: add content later -->
+    </div>
+  </section>
+</main>
 
-      <div class="grid">
-        <article class="card">
-          <h3 class="card__title">Exercise 1</h3>
-          <p class="card__text">Short description of the exercise and what you learned.</p>
-          <p><a class="link" href="#">Link (add later)</a></p>
-        </article>
-
-        <article class="card">
-          <h3 class="card__title">Exercise 2</h3>
-          <p class="card__text">Short description of the exercise and what you learned.</p>
-          <p><a class="link" href="#">Link (add later)</a></p>
-        </article>
-
-        <article class="card">
-          <h3 class="card__title">Exercise 3</h3>
-          <p class="card__text">Short description of the exercise and what you learned.</p>
-          <p><a class="link" href="#">Link (add later)</a></p>
-        </article>
-      </div>
-    </section>
-
-    <section class="content-block">
-      <h2>Assignments</h2>
-      <p>
-        Add formal assignments here. Link to PDFs, GitHub folders, or write-ups.
-      </p>
-      <img class="responsive-img" src="images/portfolio-placeholder.svg" alt="Portfolio placeholder grid" />
-    </section>
-
-    <p>
-      <a class="link" href="index.html">← Back to Home</a>
-    </p>
-  </main>
-
-  <footer class="site-footer">
+  <footer class="site-footer" aria-label="Footer">
     <div class="container footer__grid">
       <div>
-        <p>Contact: <a href="mailto:yolwin.pariaton@example.com">yolwin.pariaton@example.com</a></p>
+        <p>Contact: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
       <div>
-        <p>© <span id="year"></span> Yolwin Pariaton</p>
+        <p>Built for LSE — Automated Data Collection</p>
       </div>
     </div>
   </footer>
