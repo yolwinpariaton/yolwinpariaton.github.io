@@ -236,6 +236,22 @@ a:hover{ text-decoration: underline; }
   padding: 60px 0;         /* vertical breathing room */
 }
 
+/* Portfolio hero background */
+.hero--portfolio{
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: url("../images/portfolio.jpg") center/cover no-repeat;
+}
+
+/* Plain white section after hero */
+.white-space{
+  background: #ffffff;
+  padding: 70px 0;
+  min-height: 70vh; /* gives you visible blank area */
+}
+
 /* =========================================================
    Buttons
    ========================================================= */
