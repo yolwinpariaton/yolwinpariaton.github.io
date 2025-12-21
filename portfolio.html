@@ -53,10 +53,27 @@
  <!-- Main content -->
 <main id="main">
   <section class="white-space" aria-label="Portfolio content area">
-    <div class="container">
-      <!-- Add your portfolio items here later -->
+  <div class="container">
+
+    <h2>Task 1</h2>
+    <p><strong>Hosting: Display charts in your own site.</strong><br>
+      Two charts from Richard Davies' library were integrated.
+    </p>
+
+    <!--  two empty divs  -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div id="chart_inflation"></div>
+      </div>
+
+      <div class="chart-card">
+        <div id="chart_umemployment"></div>
+      </div>
     </div>
-  </section>
+
+  </div>
+</section>
+
 </main>
 
   <footer class="site-footer" aria-label="Footer">
@@ -71,5 +88,16 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+<!-- Your chart code -->
+<script src="js/charts.js"></script>
+
+<!-- Your existing JS (keep it) -->
+<script src="js/main.js"></script>
+
 </body>
 </html>
