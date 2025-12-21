@@ -140,7 +140,7 @@ a:hover{ text-decoration: underline; }
   justify-content: center;
 
   /* Background image */
-  background-image: url("../images/London.jpg");
+  background-image: url("../images/london.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
