@@ -1,8 +1,5 @@
 /* =========================================================
-   Academic Portfolio Theme
-   - Navy + white + subtle accent
-   - Responsive, accessible contrast
-   - Smooth, minimalist styling
+   I use this to set style
    ========================================================= */
 
 :root{
@@ -59,10 +56,14 @@ a:hover{ text-decoration: underline; }
   border:0;
 }
 
+/* =========================================================
+   Header + Nav
+   ========================================================= */
 .site-header{
+  /* Keep my navy theme for nav background */
   background: linear-gradient(180deg, var(--navy), var(--navy-2));
   color: var(--white);
-  padding-bottom: 26px;
+  padding-bottom: 0; /* hero will control spacing now */
 }
 
 .page-header{
@@ -122,18 +123,47 @@ a:hover{ text-decoration: underline; }
 }
 .nav__toggle:hover{ background: rgba(255,255,255,0.12); }
 
-.hero{ padding: 22px 0 12px; }
-.hero__grid{
-  display:grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 22px;
-  align-items: start;
-}
-.hero__title{ margin: 14px 0 6px; font-size: clamp(28px, 3.6vw, 44px); }
-.hero__subtitle{ margin: 0 0 14px; color: rgba(255,255,255,0.88); }
-.hero__meta{ margin-top: 10px; color: rgba(255,255,255,0.86); }
-.hero__meta a{ color: var(--white); text-decoration: underline; }
+/* =========================================================
+   HERO (Landing section) 
+   ========================================================= */
 
+/* My HTML uses: <section class="hero hero--bg"> */
+.hero{
+  padding: 0; /* hero--bg handles padding */
+}
+
+.hero--bg{
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background image */
+  background-image: url("../images/London.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Dark overlay to ensure ADA-friendly contrast */
+.hero__overlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 18, 43, 0.62);
+}
+
+/* Centered hero content container */
+.hero__center{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 820px;
+  padding: 52px 18px 44px;
+  color: var(--white);
+}
+
+/* Larger, centered avatar */
 .avatar{
   width: 110px;
   height: 110px;
@@ -142,8 +172,61 @@ a:hover{ text-decoration: underline; }
   border: 3px solid rgba(255,255,255,0.35);
   background: rgba(255,255,255,0.08);
 }
-.avatar img{ width:100%; height:100%; display:block; }
+.avatar img{ width:100%; height:100%; display:block; object-fit: cover; }
 
+/* optional class used in the new HTML: avatar--lg */
+.avatar--lg{
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 14px auto;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 3px solid rgba(255,255,255,0.85);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.08);
+}
+.avatar--lg img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.hero__title{
+  margin: 10px 0 6px;
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: 0.2px;
+  color: var(--white);
+}
+
+.hero__subtitle{
+  margin: 0 0 18px;
+  color: rgba(255,255,255,0.92);
+  font-size: clamp(16px, 1.8vw, 20px);
+}
+
+.hero__meta{
+  margin-top: 14px;
+  color: rgba(255,255,255,0.90);
+}
+.hero__meta a{
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Social buttons row */
+.hero__social{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
 .hero__actions{ display:flex; gap: 10px; flex-wrap: wrap; }
 
 .btn{
@@ -163,13 +246,16 @@ a:hover{ text-decoration: underline; }
 .btn--ghost{
   background: transparent;
   color: var(--white);
-  border-color: rgba(255,255,255,0.5);
+  border-color: rgba(255,255,255,0.65);
 }
 .btn--ghost:hover{
   background: rgba(255,255,255,0.12);
   box-shadow: none;
 }
 
+/* =========================================================
+   Cards / Sections
+   ========================================================= */
 .card{
   background: var(--white);
   border: 1px solid var(--border);
@@ -182,7 +268,11 @@ a:hover{ text-decoration: underline; }
 .card__text{ margin: 0 0 10px; color: var(--muted); }
 
 .section{ padding: 44px 0; }
-.section--alt{ background: #eef3fb; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.section--alt{
+  background: #eef3fb;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
 
 .two-col{
   display:grid;
@@ -200,10 +290,19 @@ a:hover{ text-decoration: underline; }
   padding: 14px;
   box-shadow: var(--shadow);
 }
-.two-col__media img{ width:100%; height:auto; display:block; border-radius: 10px; }
+.two-col__media img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius: 10px;
+  object-fit: cover;
+}
 
 .link{ font-weight: 700; }
 
+/* =========================================================
+   Other pages
+   ========================================================= */
 .page-hero{ padding: 18px 0 6px; }
 .lead{ color: rgba(255,255,255,0.88); max-width: 70ch; }
 
@@ -216,7 +315,12 @@ a:hover{ text-decoration: underline; }
   margin: 0 0 16px;
   box-shadow: var(--shadow);
 }
-.responsive-img{ width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); }
+.responsive-img{
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
 
 .grid{
   display:grid;
@@ -224,6 +328,9 @@ a:hover{ text-decoration: underline; }
   gap: 12px;
 }
 
+/* =========================================================
+   Footer
+   ========================================================= */
 .site-footer{
   background: #0b1f3a;
   color: var(--white);
@@ -238,8 +345,10 @@ a:hover{ text-decoration: underline; }
 .footer__links{ list-style:none; padding:0; margin:0; }
 .footer__links li{ margin: 6px 0; }
 
+/* =========================================================
+   Responsive
+   ========================================================= */
 @media (max-width: 860px){
-  .hero__grid{ grid-template-columns: 1fr; }
   .two-col{ grid-template-columns: 1fr; }
   .footer__grid{ grid-template-columns: 1fr; }
   .grid{ grid-template-columns: 1fr; }
@@ -252,4 +361,14 @@ a:hover{ text-decoration: underline; }
   }
   .nav__menu.is-open{ display:flex; }
   .nav{ flex-wrap: wrap; }
+
+  .hero__center{
+    padding-top: 44px;
+    padding-bottom: 38px;
+  }
+
+  .avatar--lg{
+    width: 140px;
+    height: 140px;
+  }
 }

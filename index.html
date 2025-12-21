@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- =========================================================
-       Thi is my landing page
+       This is my landing page
   ========================================================== -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,47 +39,34 @@
         <li><a class="nav__link" href="index.html" aria-current="page">Home</a></li>
         <li><a class="nav__link" href="#project">Project</a></li>
         <li><a class="nav__link" href="#portfolio">Portfolio</a></li>
-        <li><a class="nav__link" href="project.html">Project Page</a></li>
-        <li><a class="nav__link" href="portfolio.html">Portfolio Page</a></li>
-        <li><a class="nav__link" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
-        <li><a class="nav__link" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
       </ul>
     </nav>
 
-    <section class="hero" aria-label="Intro">
-      <div class="container hero__grid">
-        <div class="hero__left">
-          <div class="avatar" aria-hidden="true">
-            <img src="images/Yolwin_photo_cv.jpeg" alt="Profile placeholder" />
-          </div>
+    <!-- HERO with London background -->
+    <section class="hero hero--bg" aria-label="Intro">
+      <div class="hero__overlay"></div>
 
-          <h1 class="hero__title">Yolwin Pariaton</h1>
-          <p class="hero__subtitle">
-            MPA Data Science for Public Policy, LSE • Academic Portfolio & Research Project
-          </p>
-
-          <div class="hero__actions">
-            <a class="btn" href="#project">View Project</a>
-            <a class="btn btn--ghost" href="#portfolio">View Portfolio</a>
-          </div>
-
-          <p class="hero__meta">
-            Contact: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">yolwin.pariaton@example.com</a>
-          </p>
+      <div class="container hero__center">
+        <div class="avatar avatar--lg">
+          <!-- Use your requested filename -->
+          <img src="images/profile_cv.jpeg" alt="Photo of Yolwin Pariaton" />
         </div>
 
-        <div class="hero__right">
-          <div class="card card--note">
-            <h2 class="card__title">About this site</h2>
-            <p class="card__text">
-              This website showcases my portfolio and research project for the course
-              <strong>“Automated Data Collection”</strong> at LSE.
-            </p>
-            <p class="card__text">
-              Use the navigation links to jump to sections or open dedicated pages.
-            </p>
-          </div>
+        <h1 class="hero__title">Yolwin Pariaton</h1>
+        <p class="hero__subtitle">LSE Data Science for Public Policy</p>
+
+        <div class="hero__social" aria-label="Social links">
+          <a class="btn btn--ghost" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">
+            LinkedIn ↗
+          </a>
         </div>
+
+        <p class="hero__meta">
+          Contact: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a>
+        </p>
       </div>
     </section>
   </header>
@@ -91,15 +78,15 @@
           <h2>Project</h2>
           <p>
             A brief description of the main research project. Explain the research question,
-            data sources, and what methods you used. Keep it short here.
+            data sources, and the methods you used. Keep it short here.
           </p>
           <p>
             <a class="link" href="project.html">Open full project page →</a>
           </p>
         </div>
 
-        <div class="two-col__media" aria-hidden="true">
-          <img src="images/project-placeholder.svg" alt="Project placeholder" />
+        <div class="two-col__media">
+          <img src="images/living_cost.jpg" alt="Project visual: Living cost" />
         </div>
       </div>
     </section>
@@ -109,16 +96,16 @@
         <div class="two-col__text">
           <h2>Portfolio</h2>
           <p>
-            A brief overview of course exercises and assignments. Mention key themes:
-            web scraping, APIs, automation, text data, reproducibility, etc.
+            Course exercises and assignments. Key themes: web scraping, APIs, automation,
+            text data, reproducibility, and data ethics.
           </p>
           <p>
             <a class="link" href="portfolio.html">Open full portfolio page →</a>
           </p>
         </div>
 
-        <div class="two-col__media" aria-hidden="true">
-          <img src="images/portfolio-placeholder.svg" alt="Portfolio placeholder" />
+        <div class="two-col__media">
+          <img src="images/portfolio.jpg" alt="Portfolio visual" />
         </div>
       </div>
     </section>
@@ -128,7 +115,7 @@
     <div class="container footer__grid">
       <div>
         <h3>Contact</h3>
-        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">yolwin.pariaton@example.com</a></p>
+        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
 
       <div>
@@ -140,8 +127,10 @@
       </div>
 
       <div>
-        <h3>Copyright</h3>
-        <p>© <span id="year"></span> Yolwin Pariaton. All rights reserved.</p>
+        <h3>About</h3>
+        <p>
+          Built for <strong>Automated Data Collection</strong> (LSE) • Hosted on GitHub Pages • <span id="year"></span>
+        </p>
       </div>
     </div>
   </footer>
