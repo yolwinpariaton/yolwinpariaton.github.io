@@ -16,7 +16,7 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Header + Nav (same as the rest of the site) -->
+  <!-- Header + Nav -->
   <header class="site-header" id="top">
     <nav class="nav" aria-label="Primary">
       <div class="nav__brand">
@@ -37,44 +37,45 @@
       </ul>
     </nav>
 
-   <!-- HERO with Portfolio background -->
-<section class="hero hero--portfolio" aria-label="Portfolio intro">
-  <div class="hero__overlay"></div>
+    <!-- HERO with Portfolio background -->
+    <section class="hero hero--portfolio" aria-label="Portfolio intro">
+      <div class="hero__overlay"></div>
 
-  <div class="hero__center">
-    <h1 class="hero__title">Portfolio</h1>
-    <p class="hero__subtitle">
-      Course exercises and assignments. Key themes: web scraping, APIs, automation,
-      text data, reproducibility, and maps.
-    </p>
-  </div>
-</section>
-
- <!-- Main content -->
-<main id="main">
-  <section class="white-space" aria-label="Portfolio content area">
-  <div class="container">
-
-    <h2>Task 1</h2>
-    <p><strong>Hosting: Display charts in your own site.</strong><br>
-      Two charts from Richard Davies' library were integrated.
-    </p>
-
-    <!--  two empty divs  -->
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div id="chart_unemployment"></div>
+      <div class="hero__center">
+        <h1 class="hero__title">Portfolio</h1>
+        <p class="hero__subtitle">
+          Course exercises and assignments. Key themes: web scraping, APIs, automation,
+          text data, reproducibility, and maps.
+        </p>
       </div>
+    </section>
+  </header>
 
-      <div class="chart-card">
-        <div id="chart_inflation"></div>
+  <!-- Main content -->
+  <main id="main">
+    <section class="white-space" aria-label="Portfolio content area">
+      <div class="container">
+
+        <h2>Task 1</h2>
+        <p>
+          <strong>Hosting: Display charts in your own site.</strong><br>
+          Two charts from Richard Davies' library were integrated.
+        </p>
+
+        <!-- Two chart containers -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div id="chart_unemployment"></div>
+          </div>
+
+          <div class="chart-card">
+            <div id="chart_inflation"></div>
+          </div>
+        </div>
+
       </div>
-    </div>
-
-  </div>
-</section>
-
-</main>
+    </section>
+  </main>
 
   <footer class="site-footer" aria-label="Footer">
     <div class="container footer__grid">
@@ -87,14 +88,15 @@
     </div>
   </footer>
 
+  <!-- Scripts (IMPORTANT ORDER) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Your chart code -->
+  <script src="js/charts.js"></script>
+
+  <!-- Your site JS (menu toggle, smooth scroll, etc.) -->
   <script src="js/main.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
-<script src="js/charts.js"></script>
-<script src="js/main.js"></script>
-
 </body>
 </html>
