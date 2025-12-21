@@ -1,22 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- =========================================================
-       This is my landing page
-  ========================================================== -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- SEO -->
-  <title>Yolwin Pariaton | Academic Portfolio</title>
-  <meta name="description" content="Academic portfolio and project website for the course 'Automated Data Collection' at LSE." />
+  <title>Yolwin Pariaton | Home</title>
+  <meta name="description" content="Personal site for Yolwin Pariaton — Automated Data Collection at LSE." />
   <meta name="author" content="Yolwin Pariaton" />
   <meta name="robots" content="index, follow" />
-
-  <!-- Social preview (optional) -->
-  <meta property="og:title" content="Yolwin Pariaton | Academic Portfolio" />
-  <meta property="og:description" content="Portfolio and research project for 'Automated Data Collection' at LSE." />
-  <meta property="og:type" content="website" />
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -24,85 +16,45 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- Header + Nav -->
   <header class="site-header" id="top">
     <nav class="nav" aria-label="Primary">
       <div class="nav__brand">
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <button class="nav__toggle" aria-expanded="false" aria-controls="navMenu">
-        <span class="sr-only">Toggle navigation</span>
-        ☰
-      </button>
-
+      <!-- No toggle button (JS removed) -->
       <ul class="nav__menu" id="navMenu">
         <li><a class="nav__link" href="index.html" aria-current="page">Home</a></li>
-        <li><a class="nav__link" href="#project">Project</a></li>
-        <li><a class="nav__link" href="#portfolio">Portfolio</a></li>
+        <li><a class="nav__link" href="project.html">Project</a></li>
+        <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
+        <li><a class="nav__link" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+        <li><a class="nav__link" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
       </ul>
     </nav>
 
-   <!-- HERO with London background -->
-<section class="hero hero--bg" aria-label="Intro">
-  <div class="hero__overlay"></div>
+    <!-- HERO with London background -->
+    <section class="hero hero--bg" aria-label="Intro">
+      <div class="hero__overlay"></div>
 
-  <div class="hero__center">
-    <h1 class="hero__title">Yolwin Pariaton</h1>
-    <p class="hero__subtitle">LSE Data Science for Public Policy</p>
+      <div class="hero__center">
+        <h1 class="hero__title">Yolwin Pariaton</h1>
+        <p class="hero__subtitle">LSE Data Science for Public Policy</p>
 
-    <div class="hero__social">
-      <a class="btn" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-      <a class="btn btn--ghost" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-    </div>
-  </div>
-</section>
-
-        <p class="hero__meta">
-          Contact: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a>
-        </p>
+        <div class="hero__social">
+          <a class="btn" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        </div>
       </div>
     </section>
   </header>
 
+  <!-- Main (optional — keep blank or add intro sections later) -->
   <main id="main">
-    <section class="section" id="project" aria-label="Project section">
-      <div class="container two-col">
-        <div class="two-col__text">
-          <h2>Project</h2>
-          <p>
-            The cost-of-living crisis in the United Kingdom.
-            This project aims to present and analyse basic information about 
-            the cost-of-living crisis in the UK, the factors driving it and 
-            its main consequences.
-
-          </p>
-          <p>
-            <a class="link" href="project.html">Explore →</a>
-          </p>
-        </div>
-
-        <div class="two-col__media">
-          <img src="images/living_cost.jpg" alt="Project visual: Living cost" />
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--alt" id="portfolio" aria-label="Portfolio section">
-      <div class="container two-col">
-        <div class="two-col__text">
-          <h2>Portfolio</h2>
-          <p>
-            Course exercises and assignments. Key themes: web scraping, APIs, automation,
-            text data, reproducibility, and maps.
-          </p>
-          <p>
-            <a class="link" href="portfolio.html">Explore →</a>
-          </p>
-        </div>
-
-        <div class="two-col__media">
-          <img src="images/portfolio.jpg" alt="Portfolio visual" />
-        </div>
+    <!-- If you want a white space section after the hero (optional) -->
+    <section class="white-space" aria-label="Home content area">
+      <div class="container">
+        <!-- Add content later -->
       </div>
     </section>
   </main>
@@ -110,27 +62,12 @@
   <footer class="site-footer" aria-label="Footer">
     <div class="container footer__grid">
       <div>
-        <h3>Contact</h3>
-        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+        <p>Contact: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
-
       <div>
-        <h3>Links</h3>
-        <ul class="footer__links">
-          <li><a href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3>About</h3>
-        <p>
-          Built for <strong>Automated Data Course at</strong> (LSE) • Hosted on GitHub Pages • <span id="year"></span>
-        </p>
+        <p>Built for LSE — Automated Data Collection</p>
       </div>
     </div>
   </footer>
-
-  <script src="js/main.js"></script>
 </body>
 </html>

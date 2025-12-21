@@ -28,6 +28,14 @@
   max-width: 100%;
 }
 
+/* Make nav wrap nicely without JS toggle */
 @media (max-width: 860px){
-  .charts-grid{ grid-template-columns: 1fr; }
+  .nav{
+    flex-wrap: wrap;
+  }
+  .nav__menu{
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
+
