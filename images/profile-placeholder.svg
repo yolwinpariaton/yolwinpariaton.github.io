@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Profile placeholder">
-  <rect width="800" height="800" fill="#eef3fb"/>
-  <circle cx="400" cy="320" r="130" fill="#0b1f3a" opacity="0.12"/>
-  <path d="M240 690c40-150 120-210 160-210s120 60 160 210" fill="#0b1f3a" opacity="0.10"/>
-  <circle cx="400" cy="310" r="90" fill="#0b1f3a" opacity="0.20"/>
-  <text x="50%" y="92%" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#0b1f3a" opacity="0.75">
-    Profile Photo
-  </text>
-</svg>
