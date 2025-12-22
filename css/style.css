@@ -1,60 +1,75 @@
-/* --- GLOBAL REUSE --- */
-:root {
-  --navy: #0b1f3a;
-  --bg: #f7f9fc;
-  --border: #d8e0ee;
-  --white: #ffffff;
+/* Ensure these don't break your Home page by using specific class names */
+
+.portfolio-hero {
+  background: linear-gradient(rgba(11, 31, 58, 0.8), rgba(11, 31, 58, 0.8)), 
+              url('../image/portfolio-bg.jpg'); /* ADJUST THIS FILENAME */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 80px 0;
+  text-align: center;
 }
 
-body { margin: 0; font-family: sans-serif; background: var(--bg); color: #0f172a; line-height: 1.6; }
-.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.portfolio-layout h2 {
+  margin-top: 50px;
+  border-bottom: 2px solid #d8e0ee;
+  padding-bottom: 10px;
+  color: #0b1f3a;
+}
 
-/* Navigation & Hero (Keep these as they were) */
-.site-header { background: var(--navy); color: white; padding: 15px 0; }
-.nav { display: flex; justify-content: space-between; align-items: center; }
-.nav__menu { display: flex; list-style: none; gap: 20px; padding: 0; }
-.nav__link { color: white; text-decoration: none; font-weight: 600; }
-.hero { padding: 60px 0; text-align: center; background: var(--navy); color: white; }
-
-/* --- PORTFOLIO ISOLATED STYLES --- */
-.portfolio-container h2 { margin-top: 40px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
-
-.p-grid {
+/* Fix for the side-by-side layout */
+.chart-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 25px;
+  gap: 30px;
   margin: 20px 0;
 }
 
-.p-centered {
+/* Fix for the centered bottom chart */
+.chart-centered {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
-.p-card {
-  background: var(--white);
+.chart-card {
+  background: white;
   padding: 25px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  min-height: 400px; /* Guarantees space for graphs */
-  width: 100%;
+  border-radius: 15px;
+  border: 1px solid #d8e0ee;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  min-height: 450px; /* Forces cards to stay open */
 }
 
-.p-centered .p-card { max-width: 700px; }
+.chart-centered .chart-card {
+  width: 100%;
+  max-width: 800px;
+}
 
-.p-label { font-weight: bold; text-align: center; margin-bottom: 15px; color: var(--navy); }
+/* Fix for the "Squashed" graphs */
+.vega-box {
+  width: 100%;
+  height: 350px;
+}
 
-.p-img { width: 100%; height: auto; border-radius: 6px; display: block; }
+.vega-embed {
+  width: 100% !important;
+}
 
-/* Vega Container Fixes */
-.v-canvas { width: 100%; height: 300px; display: block; }
-.vega-embed { width: 100% !important; }
+.chart-title {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #0b1f3a;
+}
 
-/* Tablet/Mobile Safety */
-@media (max-width: 800px) {
-  .p-grid { grid-template-columns: 1fr; }
-  /* Your Home page two-col safety */
-  .two-col { grid-template-columns: 1fr; }
+.ref-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Mobile Fix */
+@media (max-width: 850px) {
+  .chart-grid { grid-template-columns: 1fr; }
 }
