@@ -16,10 +16,10 @@
       <div class="nav__brand"><a class="nav__home" href="index.html">Yolwin Pariaton</a></div>
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
+        <li><a class="nav__link" href="project.html">Project</a></li>
         <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
       </ul>
     </nav>
-
     <section class="hero hero--portfolio">
       <div class="hero__center">
         <h1 class="hero__title">Portfolio</h1>
@@ -28,11 +28,11 @@
     </section>
   </header>
 
-  <main id="main" class="container portfolio-content">
+  <main class="container portfolio-content" id="main">
     
     <section>
       <h2>Task 1: Hosting</h2>
-      <p>Integrating charts from external repositories using remote URLs.</p>
+      <p>Displaying external charts from Richard Davies' library using remote URLs to demonstrate basic hosting.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis1"></div></div>
         <div class="chart-wrapper"><div id="vis2"></div></div>
@@ -41,7 +41,7 @@
 
     <section>
       <h2>Task 2: Building</h2>
-      <p>Custom charts created using Economics Observatory data for Nigeria and Ethiopia.</p>
+      <p>Custom-built charts for Nigeria and Ethiopia created via the Economics Observatory data hub.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis3"></div></div>
         <div class="chart-wrapper"><div id="vis4"></div></div>
@@ -50,7 +50,7 @@
 
     <section>
       <h2>Task 3: Debating</h2>
-      <p>An analysis of renewable energy shares and the declining costs of green technology.</p>
+      <p>Analyzing renewable energy trends and costs to evaluate the economic transition to green power.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis5"></div></div>
         <div class="chart-wrapper"><div id="vis6"></div></div>
@@ -59,11 +59,11 @@
 
     <section>
       <h2>Task 4: Replication & Improvement</h2>
-      <p>Re-creating a Financial Times inflation chart and improving it with target lines and clearer axis formatting.</p>
+      <p>Re-creating an FT inflation chart and improving it with target lines and clearer axis labels.</p>
       <div class="task4-grid">
         <div class="chart-wrapper">
           <p><strong>Original FT Image</strong></p>
-          <img src="images/financial_times.jpg" alt="FT Original" class="task-img">
+          <img src="image/financial_times.jpg" alt="FT Original" class="task-img">
         </div>
         <div class="chart-wrapper">
           <p><strong>My Replication</strong></p>
@@ -78,7 +78,7 @@
   </main>
 
   <script>
-    // Configuration to prevent "huge" graphs and force them to fit the boxes
+    // Configuration to ensure charts fit their boxes
     const config = {
       "actions": false,
       "renderer": "svg",
@@ -86,19 +86,21 @@
       "height": 300
     };
 
-    // Task 1 (Using remote URLs)
+    // Task 1: Remote URLs
     vegaEmbed('#vis1', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/unemployment/chartUnemploymentLine.json", config);
     vegaEmbed('#vis2', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/chartOECDinflation.json", config);
 
-    // Task 2 & 3 (Using local file paths)
+    // Task 2: Nigeria and Ethiopia
     vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
     vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
+
+    // Task 3: Renewable Energy
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
 
-    // Task 4
-    vegaEmbed('#vis7', 'graphs/financial_times.vl.json', config);
-    vegaEmbed('#vis8', 'graphs/financial_times2.vl.json', config);
+    // Task 4: Paths updated to match your .json filenames
+    vegaEmbed('#vis7', 'graphs/financial_times.json', config);
+    vegaEmbed('#vis8', 'graphs/financial_times2.json', config);
   </script>
 </body>
 </html>
