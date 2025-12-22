@@ -11,90 +11,77 @@
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-
-  <header class="site-header" id="top">
-    <nav class="nav" aria-label="Primary">
-      <div class="nav__brand">
-        <a class="nav__home" href="index.html">Yolwin Pariaton</a>
-      </div>
-      <input class="nav__checkbox" type="checkbox" id="navToggle" />
-      <label class="nav__toggle" for="navToggle">☰</label>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
-        <li><a class="nav__link" href="project.html">Project</a></li>
-        <li><a class="nav__link" href="portfolio.html" aria-current="page">Portfolio</a></li>
-        <li><a class="nav__link" href="https://github.com/yolwinpariaton" target="_blank">GitHub ↗</a></li>
+        <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
       </ul>
     </nav>
-
     <section class="hero hero--portfolio">
-      <div class="hero__overlay"></div>
       <div class="hero__center">
-        <h1 class="hero__title">Portfolio</h1>
-        <p class="hero__subtitle">Web scraping, APIs, and Data Visualization.</p>
+        <h1>Portfolio</h1>
+        <p>Data Science & Visualization Exercises</p>
       </div>
     </section>
   </header>
 
-  <main id="main">
-    <section class="portfolio-content">
-      <div class="container">
-        
-        <h2>Task 1</h2>
-        <div class="charts-row">
-          <div class="chart-wrapper"><div id="vis1"></div></div>
-          <div class="chart-wrapper"><div id="vis2"></div></div>
-        </div>
+  <main class="container portfolio-content">
+    
+    <h2>Task 1: Hosting</h2>
+    <p>Integrated two charts from a remote repository to demonstrate external hosting.</p>
+    <div class="charts-row">
+      <div class="chart-wrapper"><div id="vis1"></div></div>
+      <div class="chart-wrapper"><div id="vis2"></div></div>
+    </div>
 
-        <h2>Task 2</h2>
-        <div class="charts-row">
-          <div class="chart-wrapper"><div id="vis3"></div></div>
-          <div class="chart-wrapper"><div id="vis4"></div></div>
-        </div>
+    <h2>Task 2: Building</h2>
+    <p>Custom-built charts using Economics Observatory data for Nigeria and Ethiopia.</p>
+    <div class="charts-row">
+      <div class="chart-wrapper"><div id="vis3"></div></div>
+      <div class="chart-wrapper"><div id="vis4"></div></div>
+    </div>
 
-        <h2>Task 3</h2>
-        <div class="charts-row">
-          <div class="chart-wrapper"><div id="vis5"></div></div>
-          <div class="chart-wrapper"><div id="vis6"></div></div>
-        </div>
+    <h2>Task 3: Debating</h2>
+    <p>Visualizing the economic shift toward renewable energy and pricing trends.</p>
+    <div class="charts-row">
+      <div class="chart-wrapper"><div id="vis5"></div></div>
+      <div class="chart-wrapper"><div id="vis6"></div></div>
+    </div>
 
-        <h2>Task 4</h2>
-        <p><strong>Replication. Re-create, then improve, someone else’s chart.</strong><br>
-        The new version includes information about the 2% target, an improved grid, and better label spacing.</p>
-        
-        <div class="task4-grid">
-          <div class="chart-wrapper">
-            <h3>Original FT Image</h3>
-            <img src="images/financial_times.jpg" alt="Original Chart" class="task-img">
-          </div>
-          <div class="chart-wrapper">
-            <h3>My Replication</h3>
-            <div id="vis7"></div>
-          </div>
-          <div class="chart-wrapper">
-            <h3>My Improvement</h3>
-            <div id="vis8"></div>
-          </div>
-        </div>
-
+    <h2>Task 4: Replication & Improvement</h2>
+    <p>Re-creating a Financial Times chart and adding a 2% inflation target line and improved spacing.</p>
+    <div class="task4-grid">
+      <div class="chart-wrapper">
+        <p><strong>Original Image</strong></p>
+        <img src="images/financial_times.jpg" class="task-img">
       </div>
-    </section>
+      <div class="chart-wrapper">
+        <p><strong>Replication</strong></p>
+        <div id="vis7"></div>
+      </div>
+      <div class="chart-wrapper">
+        <p><strong>Improvement</strong></p>
+        <div id="vis8"></div>
+      </div>
+    </div>
   </main>
 
   <script>
-    const opt = {"actions": false, "renderer": "svg"};
+    const opt = { "actions": false, "renderer": "svg", "width": "container" };
 
-    // Task 1: Inline specs (keeping your variables)
-    // Note: ensure ukUnemploymentSpec and g7InflationSpec are defined here or linked
-    
-    // Task 2 & 3: Direct file paths
+    // Task 1
+    vegaEmbed('#vis1', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/unemployment/chartUnemploymentLine.json", opt);
+    vegaEmbed('#vis2', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/chartOECDinflation.json", opt);
+
+    // Task 2 & 3
     vegaEmbed('#vis3', 'graphs/nigeria_chart.json', opt);
     vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', opt);
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', opt);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', opt);
 
-    // Task 4: The new charts
+    // Task 4
     vegaEmbed('#vis7', 'graphs/financial_times.vl.json', opt);
     vegaEmbed('#vis8', 'graphs/financial_times2.vl.json', opt);
   </script>
