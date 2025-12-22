@@ -311,15 +311,6 @@ a:hover{ text-decoration: underline; }
   line-height: 1.5;
 }
 
-/* Vega chart container sizing */
-.vega-embed{
-  width: 100% !important;
-}
-
-.vega-embed .vega-bindings{
-  display: none;
-}
-
 /* =========================================================
    Footer
    ========================================================= */

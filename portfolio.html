@@ -124,93 +124,86 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <script>
-    // Embed options to control chart size
+    // Embed options
     const opt = {
       "actions": false,
-      "renderer": "svg",
-      "width": 450,
-      "height": 300
+      "renderer": "svg"
     };
 
-    // Task 1 - Load from JSON files
-    fetch('graphs/uk_unemployment.json')
-      .then(response => response.json())
-      .then(spec => {
-        spec.width = 450;
-        spec.height = 300;
-        vegaEmbed('#vis1', spec, opt);
-      });
-
-    fetch('graphs/g7_inflation.json')
-      .then(response => response.json())
-      .then(spec => {
-        spec.width = 450;
-        spec.height = 300;
-        vegaEmbed('#vis2', spec, opt);
-      });
-
-    // Task 2 - Nigeria Inflation
-    const nigeriaSpec = {
+    // Task 1 - Chart 1: UK Unemployment (embed directly)
+    const ukUnemploymentSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
-        "text": "Nigeria: Inflation",
-        "subtitle": "CPI, % | Source: NBS (WB) through ECO API",
+        "text": "Unemployment level (16+)",
+        "subtitle": "United Kingdom (thousands) seasonally adjusted",
         "anchor": "start",
         "subtitleFontStyle": "italic",
         "subtitleFontSize": 12
       },
-      "data": { 
-        "url": "https://api.economicsobservatory.com/nga/infl",
+      "data": {
+        "url": "https://api.economicsobservatory.com/gbr/unem",
         "format": {"type": "json", "property": "raw.years"}
       },
-      "width": 450,
-      "height": 300,
-      "mark": {"type": "line", "color": "#f4134d", "strokeWidth": 2},
+      "width": 400,
+      "height": 280,
+      "mark": {"type": "line", "color": "seagreen", "strokeWidth": 2},
       "encoding": {
         "x": {"field": "date", "type": "temporal", "title": null},
         "y": {"field": "value", "type": "quantitative", "title": null}
       }
     };
-    vegaEmbed('#vis3', nigeriaSpec, opt);
+    vegaEmbed('#vis1', ukUnemploymentSpec, opt);
 
-    // Task 2 - Ethiopia Debt
-    const ethiopiaSpec = {
+    // Task 1 - Chart 2: G7 Inflation (embed directly)
+    const g7InflationSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
-        "text": "Ethiopia: Debt",
-        "subtitle": "Ratio, % GDP | Source: CSA (WB) through ECO API",
+        "text": "Inflation - four G7 countries",
+        "subtitle": "Source: OECD",
         "anchor": "start",
         "subtitleFontStyle": "italic",
         "subtitleFontSize": 12
       },
-      "data": { 
-        "url": "https://api.economicsobservatory.com/eth/debt",
-        "format": {"type": "json", "property": "raw.years"}
+      "data": {
+        "url": "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/data_OECD_inflation2.csv"
       },
-      "width": 450,
-      "height": 300,
-      "mark": {"type": "line", "color": "#f4134d", "strokeWidth": 2},
+      "transform": [
+        {"calculate": "datum.Value/100", "as": "valueToUse"},
+        {"calculate": "year(datum.TIME)", "as": "year"},
+        {"filter": "datum.LOCATION!='JPN' && datum.LOCATION!='CAN' && datum.LOCATION!='ITA'"},
+        {"filter": "datum.year > 1999"}
+      ],
+      "width": 400,
+      "height": 280,
+      "mark": {"type": "line", "strokeWidth": 2},
       "encoding": {
-        "x": {"field": "date", "type": "temporal", "title": null},
-        "y": {"field": "value", "type": "quantitative", "title": null}
+        "x": {"field": "TIME", "type": "temporal", "title": null},
+        "y": {"field": "valueToUse", "type": "quantitative", "title": null, "axis": {"format": "%"}},
+        "color": {"field": "Country", "title": null, "legend": {"orient": "top-left"}}
       }
     };
-    vegaEmbed('#vis4', ethiopiaSpec, opt);
+    vegaEmbed('#vis2', g7InflationSpec, opt);
 
-    // Task 3 - Load from JSON files with size control
+    // Task 2 - Nigeria Inflation (fixed to use correct API format)
+    vegaEmbed('#vis3', "https://api.economicsobservatory.com/nga/infl?vega=true", opt);
+
+    // Task 2 - Ethiopia Debt (fixed to use correct API format)  
+    vegaEmbed('#vis4', "https://api.economicsobservatory.com/eth/debt?vega=true", opt);
+
+    // Task 3 - Load from JSON files with consistent sizing
     fetch('graphs/uk_renewable.json')
       .then(response => response.json())
       .then(spec => {
-        spec.width = 450;
-        spec.height = 300;
+        spec.width = 400;
+        spec.height = 280;
         vegaEmbed('#vis5', spec, opt);
       });
 
     fetch('graphs/energy_prices.json')
       .then(response => response.json())
       .then(spec => {
-        spec.width = 450;
-        spec.height = 300;
+        spec.width = 400;
+        spec.height = 280;
         vegaEmbed('#vis6', spec, opt);
       });
   </script>
