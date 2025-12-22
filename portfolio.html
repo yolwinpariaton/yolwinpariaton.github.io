@@ -32,7 +32,7 @@
     
     <section>
       <h2>Task 1: Hosting</h2>
-      <p>Displaying external charts from Richard Davies' library using remote URLs.</p>
+      <p>Displaying unemployment and inflation data using local JSON files.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis1"></div></div>
         <div class="chart-wrapper"><div id="vis2"></div></div>
@@ -41,7 +41,7 @@
 
     <section>
       <h2>Task 2: Building</h2>
-      <p>Custom-built charts for Nigeria and Ethiopia created via the Economics Observatory data hub.</p>
+      <p>Custom charts for Nigeria and Ethiopia.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis3"></div></div>
         <div class="chart-wrapper"><div id="vis4"></div></div>
@@ -50,7 +50,7 @@
 
     <section>
       <h2>Task 3: Debating</h2>
-      <p>Analyzing renewable energy trends and costs to evaluate the economic transition to green power.</p>
+      <p>Analyzing renewable energy trends and pricing.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis5"></div></div>
         <div class="chart-wrapper"><div id="vis6"></div></div>
@@ -59,7 +59,7 @@
 
     <section>
       <h2>Task 4: Replication & Improvement</h2>
-      <p>Re-creating an FT inflation chart and improving it with target lines and clearer axis labels.</p>
+      <p>Re-creating and improving an FT inflation chart.</p>
       
       <div class="task4-top">
         <div class="chart-wrapper">
@@ -82,27 +82,25 @@
   </main>
 
   <script>
-    // These settings solve the "compressed" and "tiny" issues
+    // Configuration to prevent "huge" graphs - width is responsive to the CSS container
     const config = {
       "actions": false,
       "renderer": "svg",
-      "width": 400,   // Fixed width to prevent compression
-      "height": 300   // Fixed height to ensure they aren't tiny
+      "width": "container",
+      "height": 300
     };
 
-    // Task 1: Direct File Path to remote JSONs
-    vegaEmbed('#vis1', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/unemployment/chartUnemploymentLine.json", config);
-    vegaEmbed('#vis2', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/chartOECDinflation.json", config);
+    // Task 1: Fixed filenames
+    vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
+    vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', config);
 
-    // Task 2: Nigeria and Ethiopia
+    // Task 2 & 3
     vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
     vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
-
-    // Task 3: Renewable Energy
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
 
-    // Task 4: Replication and Improvement
+    // Task 4
     vegaEmbed('#vis7', 'graphs/financial_times.json', config);
     vegaEmbed('#vis8', 'graphs/financial_times2.json', config);
   </script>
