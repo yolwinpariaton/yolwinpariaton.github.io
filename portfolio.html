@@ -130,7 +130,7 @@
       "renderer": "svg"
     };
 
-    // Task 1 - Chart 1: UK Unemployment (embed directly)
+    // Task 1 - Chart 1: UK Unemployment
     const ukUnemploymentSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
@@ -154,7 +154,7 @@
     };
     vegaEmbed('#vis1', ukUnemploymentSpec, opt);
 
-    // Task 1 - Chart 2: G7 Inflation (embed directly)
+    // Task 1 - Chart 2: G7 Inflation
     const g7InflationSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
@@ -184,13 +184,25 @@
     };
     vegaEmbed('#vis2', g7InflationSpec, opt);
 
-    // Task 2 - Nigeria Inflation (fixed to use correct API format)
-    vegaEmbed('#vis3', "https://api.economicsobservatory.com/nga/infl?vega=true", opt);
+    // Task 2 - Load Nigeria chart from JSON file
+    fetch('graphs/nigeria_chart.json')
+      .then(response => response.json())
+      .then(spec => {
+        spec.width = 400;
+        spec.height = 280;
+        vegaEmbed('#vis3', spec, opt);
+      });
 
-    // Task 2 - Ethiopia Debt (fixed to use correct API format)  
-    vegaEmbed('#vis4', "https://api.economicsobservatory.com/eth/debt?vega=true", opt);
+    // Task 2 - Load Ethiopia chart from JSON file
+    fetch('graphs/ethiopia_chart.json')
+      .then(response => response.json())
+      .then(spec => {
+        spec.width = 400;
+        spec.height = 280;
+        vegaEmbed('#vis4', spec, opt);
+      });
 
-    // Task 3 - Load from JSON files with consistent sizing
+    // Task 3 - Load UK renewable chart from JSON file
     fetch('graphs/uk_renewable.json')
       .then(response => response.json())
       .then(spec => {
@@ -199,6 +211,7 @@
         vegaEmbed('#vis5', spec, opt);
       });
 
+    // Task 3 - Load energy prices chart from JSON file
     fetch('graphs/energy_prices.json')
       .then(response => response.json())
       .then(spec => {
