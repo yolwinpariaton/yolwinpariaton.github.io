@@ -3,101 +3,193 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Portfolio | Yolwin Pariaton</title>
+  <meta name="description" content="Portfolio tasks and data visualisations for Automated Data Collection at LSE." />
+  <meta name="author" content="Yolwin Pariaton" />
+  <meta name="robots" content="index, follow" />
+
   <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Vega libraries (allowed; required to render Vega JSON) -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 
 <body>
-  <header class="site-header portfolio-hero">
-    <nav class="nav">
-      <div class="nav__brand"><a class="nav__home" href="index.html">Yolwin Pariaton</a></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav" aria-label="Primary">
+      <div class="nav__brand">
+        <a class="nav__home" href="index.html">Yolwin Pariaton</a>
+      </div>
+
+      <!-- NO-JS toggle -->
+      <input class="nav__checkbox" type="checkbox" id="navTogglePortfolio" />
+      <label class="nav__toggle" for="navTogglePortfolio" aria-label="Toggle navigation">☰</label>
+
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
         <li><a class="nav__link" href="project.html">Project</a></li>
-        <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
+        <li><a class="nav__link" href="portfolio.html" aria-current="page">Portfolio</a></li>
       </ul>
     </nav>
-    <div class="hero-content">
-      <h1 class="hero-title">Portfolio</h1>
-      <p class="hero-subtitle">Data Science & Visualization Tasks</p>
-    </div>
+
+    <section class="hero hero--portfolio" aria-label="Portfolio intro">
+      <div class="hero__overlay"></div>
+      <div class="hero__center">
+        <h1 class="hero__title">Portfolio</h1>
+        <p class="hero__subtitle">Data Science & Visualization Tasks</p>
+      </div>
+    </section>
   </header>
 
-  <main class="portfolio-layout container">
-    
-    <section class="task-block">
-      <h2>Task 1: Hosting</h2>
-      <p>Hosting unemployment and inflation charts via local JSON files.</p>
-      <div class="chart-grid">
-        <div class="chart-card"><div id="vis1" class="vega-box"></div></div>
-        <div class="chart-card"><div id="vis2" class="vega-box"></div></div>
-      </div>
-    </section>
+  <main id="main">
+    <section class="white-space" aria-label="Portfolio tasks">
+      <div class="container">
 
-    <section class="task-block">
-      <h2>Task 2: Building</h2>
-      <p>Custom visualizations from Economics Observatory data.</p>
-      <div class="chart-grid">
-        <div class="chart-card">
-          <h3 class="chart-title">Nigeria Inflation</h3>
-          <div id="vis3" class="vega-box"></div>
-        </div>
-        <div class="chart-card">
-          <h3 class="chart-title">Ethiopia Debt</h3>
-          <div id="vis4" class="vega-box"></div>
-        </div>
-      </div>
-    </section>
+        <section class="task-block">
+          <h2>Task 1: Hosting</h2>
+          <p>Displaying external unemployment and inflation data.</p>
 
-    <section class="task-block">
-      <h2>Task 3: Debating</h2>
-      <div class="chart-grid">
-        <div class="chart-card"><div id="vis5" class="vega-box"></div></div>
-        <div class="chart-card"><div id="vis6" class="vega-box"></div></div>
-      </div>
-    </section>
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-title">UK Unemployment</div>
+              <div id="vis1" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
 
-    <section class="task-block">
-      <h2>Task 4: Replication & Improvement</h2>
-      <div class="chart-grid">
-        <div class="chart-card">
-          <h3 class="chart-title">Original FT Image</h3>
-          <img src="image/financial_times.jpg" alt="FT Original" class="ref-img">
-        </div>
-        <div class="chart-card">
-          <h3 class="chart-title">My Replication</h3>
-          <div id="vis7" class="vega-box"></div>
-        </div>
-      </div>
-      <div class="chart-centered">
-        <div class="chart-card">
-          <h3 class="chart-title">My Improvement</h3>
-          <div id="vis8" class="vega-box"></div>
-        </div>
+            <div class="chart-card">
+              <div class="chart-title">G7 Inflation</div>
+              <div id="vis2" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
+          </div>
+        </section>
+
+        <section class="task-block">
+          <h2>Task 2: Building</h2>
+          <p>Custom visualizations for Nigeria and Ethiopia.</p>
+
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-title">Nigeria Inflation</div>
+              <div id="vis3" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-title">Ethiopia Debt</div>
+              <div id="vis4" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
+          </div>
+        </section>
+
+        <section class="task-block">
+          <h2>Task 3: Debating</h2>
+          <p>Analyzing the shift to renewable energy and technology costs.</p>
+
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-title">UK Renewables</div>
+              <div id="vis5" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-title">Energy Prices</div>
+              <div id="vis6" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
+          </div>
+        </section>
+
+        <section class="task-block">
+          <h2>Task 4: Replication & Improvement</h2>
+
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-title">Original FT Image</div>
+              <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-title">My Replication</div>
+              <div id="vis7" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
+          </div>
+
+          <div class="charts-grid charts-grid--single">
+            <div class="chart-card">
+              <div class="chart-title">My Improvement</div>
+              <div id="vis8" class="vega-container"></div>
+              <noscript><p class="chart-error">This chart requires JavaScript enabled.</p></noscript>
+            </div>
+          </div>
+        </section>
+
       </div>
     </section>
   </main>
 
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container footer__grid footer__grid--centered">
+      <div>
+        <h3 class="footer__title">Contact</h3>
+        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+      </div>
+
+      <div>
+        <h3 class="footer__title">Links</h3>
+        <p><a href="project.html">Project</a></p>
+        <p><a href="index.html">Home</a></p>
+      </div>
+
+      <div>
+        <h3 class="footer__title">About</h3>
+        <p>Built for the LSE Automated Data Visualisation Course.</p>
+        <p>© 2025 Yolwin Pariaton</p>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    // These options force the chart to fill the white cards correctly
-    const vConfig = {
-      "actions": false,
-      "renderer": "svg",
-      "width": "container",
-      "height": 300
+    // Shared embed options
+    const embedOptions = {
+      actions: false,
+      renderer: "svg",
+      autosize: { type: "fit", contains: "padding" }
     };
 
-    vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', vConfig);
-    vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', vConfig);
-    vegaEmbed('#vis3', 'graphs/nigeria_chart.json', vConfig);
-    vegaEmbed('#vis4', 'graphs/ethiopia_debt.json', vConfig); 
-    vegaEmbed('#vis5', 'graphs/uk_renewable.json', vConfig);
-    vegaEmbed('#vis6', 'graphs/energy_prices.json', vConfig);
-    vegaEmbed('#vis7', 'graphs/financial_times.json', vConfig);
-    vegaEmbed('#vis8', 'graphs/financial_times2.json', vConfig);
+    // Helper: show visible error if file path is wrong
+    function embedOrShowError(el, specPath) {
+      vegaEmbed(el, specPath, embedOptions).catch(() => {
+        const container = document.querySelector(el);
+        if (container) {
+          container.innerHTML = '<p class="chart-error">Chart failed to load. Check the file path: <code>' + specPath + '</code></p>';
+        }
+      });
+    }
+
+    // ✅ Task 1 (these MUST exist in /graphs)
+    embedOrShowError('#vis1', 'graphs/uk_unemployment_chart.json');
+    embedOrShowError('#vis2', 'graphs/g7_inflation_chart.json');
+
+    // ✅ Task 2 (these MUST exist in /graphs)
+    embedOrShowError('#vis3', 'graphs/nigeria_chart.json');
+    embedOrShowError('#vis4', 'graphs/ethiopia_chart.json');
+
+    // Task 3 (only if these files exist; otherwise you’ll see a message)
+    embedOrShowError('#vis5', 'graphs/uk_renewable.json');
+    embedOrShowError('#vis6', 'graphs/energy_prices.json');
+
+    // Task 4 (only if these files exist)
+    embedOrShowError('#vis7', 'graphs/financial_times.json');
+    embedOrShowError('#vis8', 'graphs/financial_times2.json');
   </script>
 </body>
 </html>
