@@ -32,7 +32,7 @@
     
     <section>
       <h2>Task 1: Hosting</h2>
-      <p>Displaying external charts from Richard Davies' library using remote URLs to demonstrate basic hosting.</p>
+      <p>Displaying external charts from Richard Davies' library using remote URLs.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis1"></div></div>
         <div class="chart-wrapper"><div id="vis2"></div></div>
@@ -60,7 +60,8 @@
     <section>
       <h2>Task 4: Replication & Improvement</h2>
       <p>Re-creating an FT inflation chart and improving it with target lines and clearer axis labels.</p>
-      <div class="task4-grid">
+      
+      <div class="task4-top">
         <div class="chart-wrapper">
           <p><strong>Original FT Image</strong></p>
           <img src="image/financial_times.jpg" alt="FT Original" class="task-img">
@@ -69,6 +70,9 @@
           <p><strong>My Replication</strong></p>
           <div id="vis7"></div>
         </div>
+      </div>
+
+      <div class="task4-bottom">
         <div class="chart-wrapper">
           <p><strong>My Improvement</strong></p>
           <div id="vis8"></div>
@@ -78,15 +82,15 @@
   </main>
 
   <script>
-    // Configuration to ensure charts fit their boxes
+    // These settings solve the "compressed" and "tiny" issues
     const config = {
       "actions": false,
       "renderer": "svg",
-      "width": "container",
-      "height": 300
+      "width": 400,   // Fixed width to prevent compression
+      "height": 300   // Fixed height to ensure they aren't tiny
     };
 
-    // Task 1: Remote URLs
+    // Task 1: Direct File Path to remote JSONs
     vegaEmbed('#vis1', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/unemployment/chartUnemploymentLine.json", config);
     vegaEmbed('#vis2', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/chartOECDinflation.json", config);
 
@@ -98,7 +102,7 @@
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
 
-    // Task 4: Paths updated to match your .json filenames
+    // Task 4: Replication and Improvement
     vegaEmbed('#vis7', 'graphs/financial_times.json', config);
     vegaEmbed('#vis8', 'graphs/financial_times2.json', config);
   </script>
