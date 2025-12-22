@@ -50,7 +50,7 @@
 
     <section>
       <h2>Task 3: Debating</h2>
-      <p>Analyzing renewable energy trends and pricing.</p>
+      <p>Visualizing the economic shift toward renewable energy and pricing trends.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis5"></div></div>
         <div class="chart-wrapper"><div id="vis6"></div></div>
@@ -82,21 +82,22 @@
   </main>
 
   <script>
-    // Configuration to prevent "huge" graphs - width is responsive to the CSS container
     const config = {
       "actions": false,
       "renderer": "svg",
-      "width": "container",
-      "height": 300
+      "width": "container", // This tells the chart to fill the wrapper width
+      "height": 300         // Fixed height prevents the "tiny line" issue
     };
 
-    // Task 1: Fixed filenames
+    // Task 1
     vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
     vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', config);
 
-    // Task 2 & 3
+    // Task 2
     vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
     vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
+
+    // Task 3
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
 
