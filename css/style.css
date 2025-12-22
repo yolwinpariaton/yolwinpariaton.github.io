@@ -232,3 +232,40 @@ a:hover{ text-decoration: underline; }
     display:flex;
   }
 }
+
+/* =========================================================
+   NO-JS MOBILE NAV TOGGLE (append at the end)
+   ========================================================= */
+
+/* Hide the checkbox (but keep it functional) */
+.nav__checkbox{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* On desktop keep menu normal */
+@media (min-width: 861px){
+  .nav__toggle{ display: none; }
+}
+
+/* On mobile: hide menu until checkbox checked */
+@media (max-width: 860px){
+  .nav{ flex-wrap: wrap; }
+
+  .nav__toggle{
+    display: inline-block; /* show hamburger */
+  }
+
+  /* Hide menu by default on mobile */
+  .nav__menu{
+    display: none;
+    width: 100%;
+    padding-top: 10px;
+  }
+
+  /* ✅ When checked, show the menu */
+  .nav__checkbox:checked ~ .nav__menu{
+    display: flex;
+  }
+}
