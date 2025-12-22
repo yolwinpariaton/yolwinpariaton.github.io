@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- SEO -->
   <title>Portfolio | Yolwin Pariaton</title>
   <meta name="description" content="Portfolio page for course exercises and assignments for Automated Data Collection at LSE." />
   <meta name="author" content="Yolwin Pariaton" />
@@ -16,21 +15,17 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Header + Nav -->
   <header class="site-header" id="top">
     <nav class="nav" aria-label="Primary">
       <div class="nav__brand">
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <!-- CSS-only nav toggle -->
-      <input class="nav__checkbox" type="checkbox" id="navToggle" aria-label="Toggle navigation">
-      <label class="nav__toggle" for="navToggle" aria-controls="navMenu">
-        <span class="sr-only">Toggle navigation</span>
-        ☰
-      </label>
+      <!-- NO-JS toggle -->
+      <input class="nav__checkbox" type="checkbox" id="navToggle" />
+      <label class="nav__toggle" for="navToggle" aria-label="Toggle navigation">☰</label>
 
-      <ul class="nav__menu" id="navMenu">
+      <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
         <li><a class="nav__link" href="project.html">Project</a></li>
         <li><a class="nav__link" href="portfolio.html" aria-current="page">Portfolio</a></li>
@@ -39,21 +34,17 @@
       </ul>
     </nav>
 
-    <!-- HERO with Portfolio background -->
     <section class="hero hero--portfolio" aria-label="Portfolio intro">
       <div class="hero__overlay"></div>
-
       <div class="hero__center">
         <h1 class="hero__title">Portfolio</h1>
         <p class="hero__subtitle">
-          Course exercises and assignments. Key themes: web scraping, APIs, automation,
-          text data, reproducibility, and maps.
+          Course exercises and assignments. Key themes: web scraping, APIs, automation, text data, reproducibility, and maps.
         </p>
       </div>
     </section>
   </header>
 
-  <!-- Main content -->
   <main id="main">
     <section class="white-space" aria-label="Portfolio content area">
       <div class="container">
@@ -66,28 +57,25 @@
 
         <div class="charts-grid">
           <div class="chart-card">
-            <div id="chart_unemployment" aria-label="UK unemployment chart"></div>
+            <div id="chart_uk_unemployment"></div>
           </div>
-
           <div class="chart-card">
-            <div id="chart_inflation" aria-label="G7 inflation chart"></div>
+            <div id="chart_g7_inflation"></div>
           </div>
         </div>
 
-        <h2>Task 2</h2>
+        <h2 class="mt-36">Task 2</h2>
         <p>
           <strong>Building: Create your own visualisations.</strong><br>
-          Two custom charts built using the Economics Observatory Data Hub “create” tool,
-          saved locally in this repo, and embedded with VegaEmbed.
+          Two custom charts built with the Economics Observatory Data Hub “create” tool, saved locally in this repo, and embedded with VegaEmbed.
         </p>
 
         <div class="charts-grid">
           <div class="chart-card">
-            <div id="chart_nigeria" aria-label="Nigeria inflation chart"></div>
+            <div id="chart_nigeria"></div>
           </div>
-
           <div class="chart-card">
-            <div id="chart_ethiopia" aria-label="Ethiopia debt chart"></div>
+            <div id="chart_ethiopia"></div>
           </div>
         </div>
 
@@ -98,42 +86,67 @@
   <footer class="site-footer" aria-label="Footer">
     <div class="container footer__grid">
       <div>
-        <p>Contact: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+        <h3 class="footer__title">Contact</h3>
+        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">Profile ↗</a></p>
       </div>
+
       <div>
-        <p>© 2025 Yolwin Pariaton</p>
-        <p>Built for LSE — Automated Data Collection</p>
+        <h3 class="footer__title">Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="project.html">Project</a></p>
+        <p><a href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a></p>
+      </div>
+
+      <div>
+        <h3 class="footer__title">About</h3>
+        <p>Built for LSE — Automated Data Collection.</p>
+        <p>© <span>2025</span> Yolwin Pariaton</p>
       </div>
     </div>
   </footer>
 
-  <!-- Vega libraries (CDN) -->
+  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Inline embed (loads JSON specs from your /graphs folder) -->
+  <!-- Inline embed (no external JS files) -->
   <script>
-    const embedOpts = {
-      actions: false,
-      renderer: "svg",
-      autosize: { type: "fit", contains: "padding" }
-    };
+    (async function () {
+      const embedOptions = {
+        actions: false,
+        renderer: "svg",
+        autosize: { type: "fit", contains: "padding" }
+      };
 
-    const charts = [
-      ["#chart_unemployment", "graphs/uk_unemployment_chart.json"],
-      ["#chart_inflation", "graphs/g7_inflation_chart.json"],
-      ["#chart_nigeria", "graphs/nigeria_chart.json"],
-      ["#chart_ethiopia", "graphs/ethiopia_chart.json"]
-    ];
+      async function loadSpec(path) {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error("Could not load " + path + " (" + res.status + ")");
+        return res.json();
+      }
 
-    charts.forEach(([selector, specPath]) => {
-      vegaEmbed(selector, specPath, embedOpts).catch(err => {
-        console.error("Failed to load:", specPath, err);
-        const el = document.querySelector(selector);
-        if (el) el.innerHTML = "<p style='color:#b91c1c;font-weight:700;'>Chart failed to load.</p>";
-      });
-    });
+      try {
+        const ukUnem = await loadSpec("graphs/uk_unemployment_chart.json");
+        const g7Infl = await loadSpec("graphs/g7_inflation_chart.json");
+        const nigeria = await loadSpec("graphs/nigeria_chart.json");
+        const ethiopia = await loadSpec("graphs/ethiopia_chart.json");
+
+        // Ensure responsive width inside cards
+        ukUnem.width = "container";
+        g7Infl.width = "container";
+        nigeria.width = "container";
+        ethiopia.width = "container";
+
+        await vegaEmbed("#chart_uk_unemployment", ukUnem, embedOptions);
+        await vegaEmbed("#chart_g7_inflation", g7Infl, embedOptions);
+        await vegaEmbed("#chart_nigeria", nigeria, embedOptions);
+        await vegaEmbed("#chart_ethiopia", ethiopia, embedOptions);
+
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   </script>
 </body>
 </html>
