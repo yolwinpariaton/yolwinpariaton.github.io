@@ -1,4 +1,4 @@
-/* --- BASE STYLES (Keeps Home Clean) --- */
+/* --- GLOBAL REUSE --- */
 :root {
   --navy: #0b1f3a;
   --bg: #f7f9fc;
@@ -6,56 +6,55 @@
   --white: #ffffff;
 }
 
-body { margin: 0; font-family: sans-serif; background: var(--bg); color: #0f172a; }
+body { margin: 0; font-family: sans-serif; background: var(--bg); color: #0f172a; line-height: 1.6; }
 .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-/* Navigation */
-.site-header { background: var(--navy); color: white; padding: 1rem 0; }
+/* Navigation & Hero (Keep these as they were) */
+.site-header { background: var(--navy); color: white; padding: 15px 0; }
 .nav { display: flex; justify-content: space-between; align-items: center; }
 .nav__menu { display: flex; list-style: none; gap: 20px; padding: 0; }
 .nav__link { color: white; text-decoration: none; font-weight: 600; }
-
-/* Hero Section (Common) */
 .hero { padding: 60px 0; text-align: center; background: var(--navy); color: white; }
 
-/* --- PORTFOLIO SPECIFIC (Wont affect Home) --- */
-.portfolio-main h2 { margin-top: 40px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+/* --- PORTFOLIO ISOLATED STYLES --- */
+.portfolio-container h2 { margin-top: 40px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
 
-.task-grid {
+.p-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns */
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
   margin: 20px 0;
 }
 
-.centered-row {
+.p-centered {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.chart-frame {
+.p-card {
   background: var(--white);
-  padding: 20px;
+  padding: 25px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  min-height: 420px; /* Prevents compression */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  min-height: 400px; /* Guarantees space for graphs */
   width: 100%;
 }
 
-.centered-row .chart-frame { max-width: 600px; }
+.p-centered .p-card { max-width: 700px; }
 
-.chart-label { font-weight: bold; text-align: center; margin-bottom: 15px; display: block; }
+.p-label { font-weight: bold; text-align: center; margin-bottom: 15px; color: var(--navy); }
 
-.task-img { width: 100%; height: auto; border-radius: 6px; display: block; }
+.p-img { width: 100%; height: auto; border-radius: 6px; display: block; }
 
-/* Fixes for disappearing graphs */
-div[id^="vis"] { width: 100%; height: 300px; }
+/* Vega Container Fixes */
+.v-canvas { width: 100%; height: 300px; display: block; }
 .vega-embed { width: 100% !important; }
 
-/* Mobile fallback */
+/* Tablet/Mobile Safety */
 @media (max-width: 800px) {
-  .task-grid { grid-template-columns: 1fr; }
-  .two-col { grid-template-columns: 1fr; } /* Added for your index.html safety */
+  .p-grid { grid-template-columns: 1fr; }
+  /* Your Home page two-col safety */
+  .two-col { grid-template-columns: 1fr; }
 }
