@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- SEO -->
   <title>Yolwin Pariaton | Home</title>
   <meta name="description" content="Personal site for Yolwin Pariaton — Automated Data Collection at LSE." />
   <meta name="author" content="Yolwin Pariaton" />
@@ -16,14 +15,18 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Header + Nav -->
   <header class="site-header" id="top">
     <nav class="nav" aria-label="Primary">
       <div class="nav__brand">
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <!-- No toggle button (JS removed) -->
+      <!-- CSS-only toggle (no JS) -->
+      <input class="nav__checkbox" type="checkbox" id="navToggle" />
+      <label class="nav__toggle" for="navToggle" aria-label="Toggle navigation">
+        ☰
+      </label>
+
       <ul class="nav__menu" id="navMenu">
         <li><a class="nav__link" href="index.html" aria-current="page">Home</a></li>
         <li><a class="nav__link" href="project.html">Project</a></li>
@@ -49,9 +52,8 @@
     </section>
   </header>
 
-  <!-- Main (optional — keep blank or add intro sections later) -->
   <main id="main">
-    <!-- If you want a white space section after the hero (optional) -->
+    <!-- Optional white section (leave blank or add later) -->
     <section class="white-space" aria-label="Home content area">
       <div class="container">
         <!-- Add content later -->

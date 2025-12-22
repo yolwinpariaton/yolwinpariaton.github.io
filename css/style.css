@@ -1,41 +1,234 @@
-/* Charts layout (Task 1 & 2) */
-.charts-grid{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 14px;
+:root{
+  --navy: #0b1f3a;
+  --navy-2: #102a4b;
+  --white: #ffffff;
+  --bg: #f7f9fc;
+  --text: #0f172a;
+  --muted: #475569;
+  --accent: #1d4ed8;
+  --border: #d8e0ee;
 
-  /* This prevents huge empty space around smaller charts */
-  justify-items: start;
-  align-items: start;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(2, 6, 23, 0.10);
+  --maxw: 1080px;
 }
 
-.chart-card{
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.55;
+}
+
+a{ color: var(--accent); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+.container{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+.skip-link{
+  position: absolute;
+  left: -999px;
+  top: 10px;
+  background: var(--white);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid var(--accent);
+  z-index: 999;
+}
+.skip-link:focus{ left: 10px; }
+
+.site-header{
+  background: linear-gradient(180deg, var(--navy), var(--navy-2));
+  color: var(--white);
+  padding-bottom: 0;
+}
+
+/* NAV */
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  padding: 14px 18px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  position: relative;
+}
+
+.nav__home{
+  color: var(--white);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.nav__menu{
+  display:flex;
+  gap: 14px;
+  list-style:none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav__link{
+  color: var(--white);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.nav__link:hover{
+  background: rgba(255,255,255,0.12);
+  text-decoration: none;
+}
+.nav__link[aria-current="page"]{
+  background: rgba(255,255,255,0.18);
+}
+
+/* CSS-only toggle */
+.nav__checkbox{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav__toggle{
+  display:none;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
+  color: var(--white);
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.nav__toggle:hover{ background: rgba(255,255,255,0.12); }
+
+/* HERO */
+.hero{ padding: 0; }
+
+.hero--bg{
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("../images/london.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero__overlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 18, 43, 0.62);
+}
+
+.hero__center{
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 820px;
+  padding: 52px 18px 44px;
+  color: var(--white);
+}
+
+.hero__title{
+  margin: 10px 0 6px;
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: 0.2px;
+  color: var(--white);
+}
+
+.hero__subtitle{
+  margin: 0 0 18px;
+  color: rgba(255,255,255,0.92);
+  font-size: clamp(16px, 1.8vw, 20px);
+}
+
+.hero__social{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-block;
+  background: var(--white);
+  color: var(--navy);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 2px solid transparent;
+}
+.btn:hover{
+  transform: translateY(-1px);
   box-shadow: var(--shadow);
-
-  /* Key lines: card will shrink to match chart if chart is fixed-width */
-  width: fit-content;
-  max-width: 100%;
+  text-decoration: none;
 }
 
-/* Keep Vega output behaving nicely */
-.chart-card .vega-embed,
-.chart-card > div{
-  max-width: 100%;
+.btn--ghost{
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(255,255,255,0.65);
+}
+.btn--ghost:hover{
+  background: rgba(255,255,255,0.12);
+  box-shadow: none;
 }
 
-/* Make nav wrap nicely without JS toggle */
+/* Optional white section */
+.white-space{
+  background: #ffffff;
+  padding: 70px 0;
+  min-height: 40vh;
+}
+
+/* Footer */
+.site-footer{
+  background: #0b1f3a;
+  color: var(--white);
+  padding: 26px 0;
+}
+.footer__grid{
+  display:grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+}
+.site-footer a{ color: var(--white); text-decoration: underline; }
+
+/* MOBILE: show hamburger + hide menu until checked */
 @media (max-width: 860px){
   .nav{
     flex-wrap: wrap;
   }
+
+  .nav__toggle{
+    display:inline-block;
+  }
+
   .nav__menu{
+    display:none;
     width: 100%;
+    padding-top: 10px;
     justify-content: flex-start;
   }
-}
 
+  /* When checked, show menu */
+  .nav__checkbox:checked + .nav__toggle + .nav__menu{
+    display:flex;
+  }
+}
