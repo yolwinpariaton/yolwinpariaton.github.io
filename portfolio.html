@@ -32,6 +32,7 @@
     
     <section>
       <h2>Task 1: Hosting</h2>
+      <p>This task involves hosting two charts from an external repository. I have selected unemployment and inflation data to demonstrate remote data integration.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis1"></div></div>
         <div class="chart-wrapper"><div id="vis2"></div></div>
@@ -40,6 +41,7 @@
 
     <section>
       <h2>Task 2: Building</h2>
+      <p>Here, I have built two custom charts using the Economics Observatory data hub, focusing on economic indicators for Nigeria and Ethiopia.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis3"></div></div>
         <div class="chart-wrapper"><div id="vis4"></div></div>
@@ -48,6 +50,7 @@
 
     <section>
       <h2>Task 3: Debating</h2>
+      <p>This section explores the growth of renewable energy. The first chart shows the rising share of renewables in the UK, while the second shows how the costs of these technologies have plummeted.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis5"></div></div>
         <div class="chart-wrapper"><div id="vis6"></div></div>
@@ -56,6 +59,8 @@
 
     <section>
       <h2>Task 4: Replication & Improvement</h2>
+      <p>I replicated a Financial Times chart on inflation. My improvement adds a 2% target line and better labeling to make the data more accessible.</p>
+      
       <div class="task4-top">
         <div class="chart-wrapper">
           <p><strong>Original FT Image</strong></p>
@@ -77,24 +82,30 @@
   </main>
 
   <script>
-    // HARDCODED PIXELS to stop the "Huge" or "Tiny" issue
+    // Using fixed pixel widths (400px) solves the "weird/compressed" graph issue
     const config = {
       "actions": false,
       "renderer": "svg",
-      "width": 380, 
+      "width": 400, 
       "height": 300
     };
 
+    // Task 1
     vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
     vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', config);
+
+    // Task 2
     vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
     vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
+
+    // Task 3
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
+
+    // Task 4
     vegaEmbed('#vis7', 'graphs/financial_times.json', config);
-    
-    // Slightly larger width for the centered improvement
-    vegaEmbed('#vis8', 'graphs/financial_times2.json', { ...config, width: 500 });
+    // Making the centered improvement slightly wider for impact
+    vegaEmbed('#vis8', 'graphs/financial_times2.json', { ...config, width: 550 });
   </script>
 </body>
 </html>
