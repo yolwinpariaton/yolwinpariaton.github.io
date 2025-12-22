@@ -257,12 +257,6 @@ a:hover{ text-decoration: underline; }
   margin-bottom: 50px;
 }
 
-.portfolio-content h3{
-  margin-top: 30px;
-  margin-bottom: 15px;
-  color: var(--navy);
-}
-
 /* Charts layout */
 .charts-row{
   display: grid;
@@ -278,52 +272,34 @@ a:hover{ text-decoration: underline; }
   border-radius: var(--radius);
   padding: 16px;
   box-shadow: var(--shadow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 340px;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Wider single chart block */
-.chart-wrapper--wide{
+/* Full width chart wrapper */
+.chart-wrapper--full{
   margin-top: 20px;
-  min-height: 420px;
 }
 
-/* Chart container sizes */
+/* Chart container */
 .vega-container{
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 300px;
 }
 
 .vega-container--large{
-  min-height: 400px;
+  min-height: 380px;
 }
 
-/* Task 5 specific styles */
-.api-description,
-.scraper-info{
-  background: var(--bg);
-  border-left: 4px solid var(--accent);
-  padding: 15px;
-  margin: 20px 0;
-  border-radius: 8px;
+/* Ensure vega embeds fill their containers */
+.vega-embed{
+  width: 100% !important;
 }
 
-.api-description h4,
-.scraper-info h4{
-  margin-top: 0;
-  color: var(--navy);
-}
-
-.api-description code{
-  background: var(--navy);
-  color: var(--white);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 14px;
+.vega-embed svg,
+.vega-embed canvas{
+  max-width: 100% !important;
+  height: auto !important;
 }
 
 /* Task image sizing */
@@ -333,12 +309,7 @@ a:hover{ text-decoration: underline; }
   display: block;
   border-radius: 10px;
   object-fit: contain;
-  max-height: 320px;
-}
-
-.task-img--match{
-  height: 100%;
-  object-fit: cover;
+  max-height: 300px;
 }
 
 /* Footer */
@@ -394,9 +365,5 @@ a:hover{ text-decoration: underline; }
 
   .footer__grid{
     grid-template-columns: 1fr;
-  }
-  
-  .chart-wrapper{
-    min-height: 300px;
   }
 }

@@ -93,45 +93,13 @@
 
           <div class="charts-row">
             <div class="chart-wrapper">
-              <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img task-img--match">
+              <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
             </div>
             <div class="chart-wrapper"><div id="vis7" class="vega-container"></div></div>
           </div>
 
-          <div class="chart-wrapper chart-wrapper--wide">
+          <div class="chart-wrapper chart-wrapper--full">
             <div id="vis8" class="vega-container vega-container--large"></div>
-          </div>
-        </section>
-
-        <!-- TASK 5: API & SCRAPER -->
-        <section class="task">
-          <h2>Task 5: Accessing data: Scraper and API</h2>
-          
-          <h3>API Task</h3>
-          <p>Live data from the Bank of England API showing UK interest rates.</p>
-          
-          <div class="chart-wrapper">
-            <div id="vis9" class="vega-container"></div>
-          </div>
-          
-          <div class="api-description">
-            <h4>API Documentation:</h4>
-            <p><strong>Base URL:</strong> <code>https://api.statisticsauthority.gov.uk/bankofengland/</code></p>
-            <p><strong>Endpoint:</strong> <code>fromdb/{series_code}</code></p>
-            <p><strong>Series Code:</strong> IUDBEDR (UK Official Bank Rate)</p>
-            <p><strong>Full URL:</strong> <code>https://api.statisticsauthority.gov.uk/bankofengland/fromdb/IUDBEDR</code></p>
-          </div>
-
-          <h3>Scraper Task</h3>
-          <p>UK inflation data scraped from RateInflation.com using Python and BeautifulSoup.</p>
-          
-          <div class="chart-wrapper">
-            <div id="vis10" class="vega-container"></div>
-          </div>
-          
-          <div class="scraper-info">
-            <p><strong>Google Colab Notebook:</strong> <a href="https://colab.research.google.com/drive/YOUR_NOTEBOOK_ID" target="_blank">View Notebook</a></p>
-            <p><strong>Comment:</strong> Scraped UK inflation rates from RateInflation.com using BeautifulSoup. Challenge: parsing percentage values and date formats into clean JSON.</p>
           </div>
         </section>
 
@@ -155,43 +123,39 @@
   </footer>
 
   <script>
-    // Embed options for different chart types
+    // Base embed options
     const embedOptions = {
       actions: false,
       renderer: "svg"
     };
 
-    // Standard charts with controlled height
-    const embedOptions300h = {
+    // For charts that need responsive width
+    const embedResponsive = {
       ...embedOptions,
       width: "container",
       height: 300
     };
 
-    // For the improved FT chart (needs more height)
-    const embedOptionsLarge = {
+    // For larger charts
+    const embedLarge = {
       ...embedOptions,
       width: "container",
-      height: 400
+      height: 380
     };
 
-    // Tasks 1-2: Standard size
-    vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedOptions300h);
-    vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedOptions300h);
-    vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedOptions300h);
-    vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedOptions300h);
+    // Tasks 1-2
+    vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedResponsive);
+    vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedResponsive);
+    vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedResponsive);
+    vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedResponsive);
 
-    // Task 3: Fixed sizing for energy charts
-    vegaEmbed("#vis5", "graphs/uk_renewable.json", embedOptions300h);
-    vegaEmbed("#vis6", "graphs/energy_prices.json", embedOptions300h);
+    // Task 3 - Let these use their own sizing from the JSON
+    vegaEmbed("#vis5", "graphs/uk_renewable.json", embedOptions);
+    vegaEmbed("#vis6", "graphs/energy_prices.json", embedOptions);
 
-    // Task 4: Financial Times charts
-    vegaEmbed("#vis7", "graphs/financial_times.json", embedOptions300h);
-    vegaEmbed("#vis8", "graphs/financial_times2.json", embedOptionsLarge);
-
-    // Task 5: API and Scraper charts
-    vegaEmbed("#vis9", "graphs/bank_rate_api.json", embedOptions300h);
-    vegaEmbed("#vis10", "graphs/inflation_scraped.json", embedOptions300h);
+    // Task 4
+    vegaEmbed("#vis7", "graphs/financial_times.json", embedResponsive);
+    vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
   </script>
 </body>
 </html>
