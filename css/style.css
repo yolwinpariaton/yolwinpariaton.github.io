@@ -378,23 +378,17 @@ a:hover{ text-decoration: underline; }
   margin: 6px 0;
 }
 
+/* Task 4: make FT image a bit bigger without changing charts */
+.task-img--bigger{
+  width: 100%;
+  max-width: 100%;
+  height: 340px;       /* slightly bigger than before */
+  object-fit: contain; /* keep full image visible */
+  display: block;
+}
+
 @media (max-width: 860px){
   .footer__grid{
     grid-template-columns: 1fr;
   }
-}
-
-/* Make the FT image match chart size better */
-.chart-wrapper--ft{
-  min-height: 400px; /* same as other chart cards */
-}
-
-.task-img--match-chart{
-  width: 100%;
-  height: 300px;          /* match the vegaEmbed height */
-  object-fit: contain;    /* keep full image visible */
-  background: #FFF1E5;    /* FT-like paper background */
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  padding: 10px;
 }

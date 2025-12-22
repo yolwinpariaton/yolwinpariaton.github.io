@@ -15,10 +15,11 @@
 
 <body>
   <header class="site-header">
-    <nav class="nav" aria-label="Primary">
+    <nav class="nav">
       <div class="nav__brand">
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
+
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
         <li><a class="nav__link" href="project.html">Project</a></li>
@@ -26,18 +27,17 @@
       </ul>
     </nav>
 
-    <section class="hero hero--portfolio" aria-label="Portfolio intro">
+    <section class="hero hero--portfolio">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">Portfolio</h1>
-        <p class="hero__subtitle">Data Science & Visualisation Tasks</p>
+        <p class="hero__subtitle">Data Science & Visualization Tasks</p>
       </div>
     </section>
   </header>
 
   <main class="container portfolio-content">
 
-    <!-- Task 1 -->
     <section>
       <h2>Task 1: Hosting. Display charts in your own site</h2>
       <p>Two charts from Richard Davies' library were integrated.</p>
@@ -52,7 +52,6 @@
       </div>
     </section>
 
-    <!-- Task 2 -->
     <section>
       <h2>Task 2: Building. Create your own visualisations</h2>
       <p>Two charts were developed using the Economics Observatory Data Hub.</p>
@@ -69,11 +68,10 @@
       </div>
     </section>
 
-    <!-- Task 3 -->
     <section>
       <h2>Task 3: Debating. Use a visualisation in economic/policy commentary</h2>
       <p>
-        Renewable energy is expanding fast, but price volatility and grid constraints remain; sustained investment and stable policy can reduce costs and improve long-term affordability.
+        Renewables are expanding, but price swings and grid limits persist; stable policy and investment can lower costs and support long-term sustainability.
       </p>
 
       <div class="charts-row">
@@ -86,17 +84,17 @@
       </div>
     </section>
 
-    <!-- Task 4 -->
     <section>
       <h2>Task 4: Replication. Re-create, then improve, someone else’s chart</h2>
       <p>
-        Based on a Financial Times figure, I replicated the chart and then improved it by adding the inflation target line, highlighting the peak, and including clearer percentage labels.
+        Using a Financial Times figure, I replicated the chart and improved it by adding an inflation target line, highlighting the peak, and adding clearer percentage labels.
       </p>
 
       <div class="task4-top">
-        <div class="chart-wrapper chart-wrapper--ft">
+        <div class="chart-wrapper">
           <p><strong>Original FT Image</strong></p>
-          <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img task-img--match-chart">
+          <!-- ✅ Make this image larger without changing chart sizes -->
+          <img src="images/financial_times.jpg" alt="FT Original" class="task-img task-img--bigger">
         </div>
 
         <div class="chart-wrapper">
@@ -130,6 +128,7 @@
   </footer>
 
   <script>
+    // ✅ Back to original sizing to avoid huge charts
     const config = {
       actions: false,
       renderer: "svg",
