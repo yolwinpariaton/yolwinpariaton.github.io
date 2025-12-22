@@ -223,20 +223,22 @@ a:hover{ text-decoration: underline; }
 .two-col__text p{
   margin: 0 0 14px;
   color: var(--muted);
-  max-width: 60ch;
+  max-width: 62ch;
 }
 
 .two-col__media{
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 12px;
   box-shadow: var(--shadow);
 }
 
-.responsive-img{
+/* ✅ FIX: images not huge */
+.media-img{
   width: 100%;
-  height: auto;
+  height: clamp(200px, 26vw, 320px); /* limits size */
+  object-fit: cover;
   display: block;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -261,6 +263,7 @@ a:hover{ text-decoration: underline; }
   margin-top: 14px;
   align-items: start;
 }
+
 .chart-card{
   background: #ffffff;
   border: 1px solid var(--border);
@@ -269,7 +272,10 @@ a:hover{ text-decoration: underline; }
   box-shadow: var(--shadow);
   overflow: hidden;
 }
+
+/* Make Vega charts fill the card width */
 .chart-card .vega-embed{ width: 100%; }
+
 .chart-card svg,
 .chart-card canvas{
   max-width: 100%;
@@ -278,26 +284,40 @@ a:hover{ text-decoration: underline; }
 }
 
 /* =========================================================
-   Footer
+   Footer (improved style)
    ========================================================= */
 .site-footer{
-  background: #0b1f3a;
-  color: var(--white);
-  padding: 26px 0;
+  background: #071a33;
+  color: rgba(255,255,255,0.92);
+  padding: 36px 0;
+  border-top: 1px solid rgba(255,255,255,0.10);
 }
+
 .footer__grid{
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
+  gap: 22px;
 }
+
 .footer__title{
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-size: 16px;
+  color: #ffffff;
+  letter-spacing: 0.2px;
 }
+
+.site-footer p{
+  margin: 6px 0;
+  color: rgba(255,255,255,0.85);
+}
+
 .site-footer a{
-  color: var(--white);
+  color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.site-footer a:hover{
+  opacity: 0.9;
 }
 
 /* =========================================================

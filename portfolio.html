@@ -34,6 +34,7 @@
       </ul>
     </nav>
 
+    <!-- HERO (portfolio background image) -->
     <section class="hero hero--portfolio" aria-label="Portfolio intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
@@ -45,6 +46,7 @@
     </section>
   </header>
 
+  <!-- WHITE SPACE AREA FOR TASKS -->
   <main id="main">
     <section class="white-space" aria-label="Portfolio content area">
       <div class="container">
@@ -59,6 +61,7 @@
           <div class="chart-card">
             <div id="chart_uk_unemployment"></div>
           </div>
+
           <div class="chart-card">
             <div id="chart_g7_inflation"></div>
           </div>
@@ -67,13 +70,14 @@
         <h2 class="mt-36">Task 2</h2>
         <p>
           <strong>Building: Create your own visualisations.</strong><br>
-          Two custom charts built with the Economics Observatory Data Hub “create” tool, saved locally in this repo, and embedded with VegaEmbed.
+          Two custom charts built using the Economics Observatory Data Hub “create” tool.
         </p>
 
         <div class="charts-grid">
           <div class="chart-card">
             <div id="chart_nigeria"></div>
           </div>
+
           <div class="chart-card">
             <div id="chart_ethiopia"></div>
           </div>
@@ -101,7 +105,7 @@
       <div>
         <h3 class="footer__title">About</h3>
         <p>Built for LSE — Automated Data Collection.</p>
-        <p>© <span>2025</span> Yolwin Pariaton</p>
+        <p>© 2025 Yolwin Pariaton</p>
       </div>
     </div>
   </footer>
@@ -111,42 +115,110 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Inline embed (no external JS files) -->
+  <!-- Embed charts (inline; no external JS files) -->
   <script>
-    (async function () {
-      const embedOptions = {
-        actions: false,
-        renderer: "svg",
-        autosize: { type: "fit", contains: "padding" }
-      };
+    const embedOptions = {
+      actions: false,
+      renderer: "svg",
+      autosize: { type: "fit", contains: "padding" }
+    };
 
-      async function loadSpec(path) {
-        const res = await fetch(path);
-        if (!res.ok) throw new Error("Could not load " + path + " (" + res.status + ")");
-        return res.json();
+    // Task 1 — UK unemployment (ECO API)
+    const ukUnemploymentSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "title": {
+        "text": "Unemployment level (16+)",
+        "subtitle": "United Kingdom (thousands) seasonally adjusted",
+        "anchor": "start",
+        "subtitleFontStyle": "italic",
+        "subtitleFontSize": 12
+      },
+      "data": {
+        "url": "https://api.economicsobservatory.com/gbr/unem",
+        "format": { "type": "json", "property": "raw.years" }
+      },
+      "width": "container",
+      "height": 280,
+      "mark": { "type": "line", "color": "seagreen", "strokeWidth": 2 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal", "title": null },
+        "y": { "field": "value", "type": "quantitative", "title": null }
       }
+    };
 
-      try {
-        const ukUnem = await loadSpec("graphs/uk_unemployment_chart.json");
-        const g7Infl = await loadSpec("graphs/g7_inflation_chart.json");
-        const nigeria = await loadSpec("graphs/nigeria_chart.json");
-        const ethiopia = await loadSpec("graphs/ethiopia_chart.json");
-
-        // Ensure responsive width inside cards
-        ukUnem.width = "container";
-        g7Infl.width = "container";
-        nigeria.width = "container";
-        ethiopia.width = "container";
-
-        await vegaEmbed("#chart_uk_unemployment", ukUnem, embedOptions);
-        await vegaEmbed("#chart_g7_inflation", g7Infl, embedOptions);
-        await vegaEmbed("#chart_nigeria", nigeria, embedOptions);
-        await vegaEmbed("#chart_ethiopia", ethiopia, embedOptions);
-
-      } catch (err) {
-        console.error(err);
+    // Task 1 — G7 inflation (CSV)
+    const g7InflationSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "title": {
+        "text": "Inflation - four G7 countries",
+        "subtitle": "Source: OECD",
+        "anchor": "start",
+        "subtitleFontStyle": "italic",
+        "subtitleFontSize": 12
+      },
+      "data": {
+        "url": "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/data_OECD_inflation2.csv"
+      },
+      "transform": [
+        { "calculate": "datum.Value/100", "as": "valueToUse" },
+        { "calculate": "year(datum.TIME)", "as": "year" },
+        { "filter": "datum.LOCATION!='JPN' && datum.LOCATION!='CAN' && datum.LOCATION!='ITA'" },
+        { "filter": "datum.year > 1999" }
+      ],
+      "width": "container",
+      "height": 280,
+      "mark": { "type": "line", "strokeWidth": 2 },
+      "encoding": {
+        "x": { "field": "TIME", "type": "temporal", "title": null },
+        "y": { "field": "valueToUse", "type": "quantitative", "title": null, "axis": { "format": "%" } },
+        "color": { "field": "Country", "title": null, "legend": { "orient": "top-left" } }
       }
-    })();
+    };
+
+    // Task 2 — Nigeria inflation (ECO API via ?vega gives clean json for vega-lite)
+    const nigeriaSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "title": {
+        "text": "Nigeria: Inflation",
+        "subtitle": "CPI, % | Source: NBS (WB) through ECO API",
+        "anchor": "start",
+        "subtitleFontStyle": "italic",
+        "subtitleFontSize": 12
+      },
+      "data": { "url": "https://api.economicsobservatory.com/nga/infl?vega", "format": { "type": "json" } },
+      "width": "container",
+      "height": 280,
+      "mark": { "type": "line", "color": "#f4134d", "strokeWidth": 2 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal", "title": null },
+        "y": { "field": "value", "type": "quantitative", "title": null }
+      }
+    };
+
+    // Task 2 — Ethiopia debt
+    const ethiopiaSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "title": {
+        "text": "Ethiopia: Debt",
+        "subtitle": "Ratio, % GDP | Source: CSA (WB) through ECO API",
+        "anchor": "start",
+        "subtitleFontStyle": "italic",
+        "subtitleFontSize": 12
+      },
+      "data": { "url": "https://api.economicsobservatory.com/eth/debt?vega", "format": { "type": "json" } },
+      "width": "container",
+      "height": 280,
+      "mark": { "type": "line", "color": "#f4134d", "strokeWidth": 2 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal", "title": null },
+        "y": { "field": "value", "type": "quantitative", "title": null }
+      }
+    };
+
+    vegaEmbed("#chart_uk_unemployment", ukUnemploymentSpec, embedOptions);
+    vegaEmbed("#chart_g7_inflation", g7InflationSpec, embedOptions);
+    vegaEmbed("#chart_nigeria", nigeriaSpec, embedOptions);
+    vegaEmbed("#chart_ethiopia", ethiopiaSpec, embedOptions);
   </script>
 </body>
 </html>
