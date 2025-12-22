@@ -36,7 +36,6 @@
       </ul>
     </nav>
 
-    <!-- HERO with Portfolio background -->
     <section class="hero hero--portfolio" aria-label="Portfolio intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
@@ -56,12 +55,8 @@
           <p>Two charts from Richard Davies' library were integrated.</p>
 
           <div class="charts-row">
-            <div class="chart-wrapper">
-              <div id="vis1" class="vega-container"></div>
-            </div>
-            <div class="chart-wrapper">
-              <div id="vis2" class="vega-container"></div>
-            </div>
+            <div class="chart-wrapper"><div id="vis1" class="vega-container"></div></div>
+            <div class="chart-wrapper"><div id="vis2" class="vega-container"></div></div>
           </div>
         </section>
 
@@ -71,12 +66,8 @@
           <p>Two charts were developed using the Economics Observatory Data Hub.</p>
 
           <div class="charts-row">
-            <div class="chart-wrapper">
-              <div id="vis3" class="vega-container"></div>
-            </div>
-            <div class="chart-wrapper">
-              <div id="vis4" class="vega-container"></div>
-            </div>
+            <div class="chart-wrapper"><div id="vis3" class="vega-container"></div></div>
+            <div class="chart-wrapper"><div id="vis4" class="vega-container"></div></div>
           </div>
         </section>
 
@@ -88,12 +79,8 @@
           </p>
 
           <div class="charts-row">
-            <div class="chart-wrapper">
-              <div id="vis5" class="vega-container"></div>
-            </div>
-            <div class="chart-wrapper">
-              <div id="vis6" class="vega-container"></div>
-            </div>
+            <div class="chart-wrapper"><div id="vis5" class="vega-container"></div></div>
+            <div class="chart-wrapper"><div id="vis6" class="vega-container"></div></div>
           </div>
         </section>
 
@@ -104,17 +91,13 @@
             Based on a Financial Times chart, I replicated the figure and improved it by adding an inflation target line, marking the peak, and adding clearer percentage labels.
           </p>
 
-          <!-- Top row: image left, replication right -->
           <div class="charts-row">
             <div class="chart-wrapper">
               <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
             </div>
-            <div class="chart-wrapper">
-              <div id="vis7" class="vega-container"></div>
-            </div>
+            <div class="chart-wrapper"><div id="vis7" class="vega-container"></div></div>
           </div>
 
-          <!-- Bottom row: improved version (full width) -->
           <div class="chart-wrapper chart-wrapper--wide">
             <div id="vis8" class="vega-container"></div>
           </div>
@@ -140,25 +123,33 @@
   </footer>
 
   <script>
-    // Keep charts consistent, not huge
+    // ✅ KEY FIX: do NOT force width:"container" here.
+    // Let JSON charts decide width, but make them "fit" the container.
     const embedOptions = {
       actions: false,
       renderer: "svg",
-      width: "container",
+      autosize: { type: "fit", contains: "padding" }
+    };
+
+    // If you want consistent height without breaking width, you can set height only.
+    // (width stays from JSON or fits container)
+    const embedOptions300h = {
+      ...embedOptions,
       height: 300
     };
 
-    vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedOptions);
-    vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedOptions);
+    vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedOptions300h);
+    vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedOptions300h);
 
-    vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedOptions);
-    vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedOptions);
+    vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedOptions300h);
+    vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedOptions300h);
 
-    vegaEmbed("#vis5", "graphs/uk_renewable.json", embedOptions);
-    vegaEmbed("#vis6", "graphs/energy_prices.json", embedOptions);
+    // ✅ These were getting compressed — use autosize fit (no forced width)
+    vegaEmbed("#vis5", "graphs/uk_renewable.json", embedOptions300h);
+    vegaEmbed("#vis6", "graphs/energy_prices.json", embedOptions300h);
 
-    vegaEmbed("#vis7", "graphs/financial_times.json", embedOptions);
-    vegaEmbed("#vis8", "graphs/financial_times2.json", embedOptions);
+    vegaEmbed("#vis7", "graphs/financial_times.json", embedOptions300h);
+    vegaEmbed("#vis8", "graphs/financial_times2.json", { ...embedOptions, height: 340 });
   </script>
 </body>
 </html>
