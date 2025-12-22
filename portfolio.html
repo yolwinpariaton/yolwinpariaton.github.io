@@ -32,34 +32,52 @@
     
     <section>
       <h2>Task 1: Hosting</h2>
-      <p>This task involves hosting two charts from an external repository. I have selected unemployment and inflation data to demonstrate remote data integration.</p>
+      <p>Hosting charts from an external repository, focusing on UK unemployment and G7 inflation trends.</p>
       <div class="charts-row">
-        <div class="chart-wrapper"><div id="vis1"></div></div>
-        <div class="chart-wrapper"><div id="vis2"></div></div>
+        <div class="chart-wrapper">
+            <p><strong>UK Unemployment</strong></p>
+            <div id="vis1" class="vega-container"></div>
+        </div>
+        <div class="chart-wrapper">
+            <p><strong>G7 Inflation</strong></p>
+            <div id="vis2" class="vega-container"></div>
+        </div>
       </div>
     </section>
 
     <section>
       <h2>Task 2: Building</h2>
-      <p>Here, I have built two custom charts using the Economics Observatory data hub, focusing on economic indicators for Nigeria and Ethiopia.</p>
+      <p>Custom-built visualizations using Economics Observatory data.</p>
       <div class="charts-row">
-        <div class="chart-wrapper"><div id="vis3"></div></div>
-        <div class="chart-wrapper"><div id="vis4"></div></div>
+        <div class="chart-wrapper">
+            <p><strong>Nigeria Inflation</strong></p>
+            <div id="vis3" class="vega-container"></div>
+        </div>
+        <div class="chart-wrapper">
+            <p><strong>Ethiopia Debt</strong></p>
+            <div id="vis4" class="vega-container"></div>
+        </div>
       </div>
     </section>
 
     <section>
       <h2>Task 3: Debating</h2>
-      <p>This section explores the growth of renewable energy. The first chart shows the rising share of renewables in the UK, while the second shows how the costs of these technologies have plummeted.</p>
+      <p>Exploring the transition to green energy through market share and technology cost data.</p>
       <div class="charts-row">
-        <div class="chart-wrapper"><div id="vis5"></div></div>
-        <div class="chart-wrapper"><div id="vis6"></div></div>
+        <div class="chart-wrapper">
+            <p><strong>Renewable Share</strong></p>
+            <div id="vis5" class="vega-container"></div>
+        </div>
+        <div class="chart-wrapper">
+            <p><strong>Technology Costs</strong></p>
+            <div id="vis6" class="vega-container"></div>
+        </div>
       </div>
     </section>
 
     <section>
       <h2>Task 4: Replication & Improvement</h2>
-      <p>I replicated a Financial Times chart on inflation. My improvement adds a 2% target line and better labeling to make the data more accessible.</p>
+      <p>Replicating and refining a Financial Times inflation graphic.</p>
       
       <div class="task4-top">
         <div class="chart-wrapper">
@@ -68,44 +86,37 @@
         </div>
         <div class="chart-wrapper">
           <p><strong>My Replication</strong></p>
-          <div id="vis7"></div>
+          <div id="vis7" class="vega-container"></div>
         </div>
       </div>
 
       <div class="task4-bottom">
         <div class="chart-wrapper">
           <p><strong>My Improvement</strong></p>
-          <div id="vis8"></div>
+          <div id="vis8" class="vega-container"></div>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    // Using fixed pixel widths (400px) solves the "weird/compressed" graph issue
+    // Config: Setting autosize to "fit" helps the graph match the frame width
     const config = {
       "actions": false,
       "renderer": "svg",
-      "width": 400, 
-      "height": 300
+      "width": "container",
+      "height": 300,
+      "autosize": {"type": "fit", "contains": "padding"}
     };
 
-    // Task 1
     vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
     vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', config);
-
-    // Task 2
     vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
     vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
-
-    // Task 3
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
-
-    // Task 4
     vegaEmbed('#vis7', 'graphs/financial_times.json', config);
-    // Making the centered improvement slightly wider for impact
-    vegaEmbed('#vis8', 'graphs/financial_times2.json', { ...config, width: 550 });
+    vegaEmbed('#vis8', 'graphs/financial_times2.json', config);
   </script>
 </body>
 </html>
