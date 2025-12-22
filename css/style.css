@@ -379,3 +379,35 @@ a:hover{ text-decoration: underline; }
   .footer__grid{ grid-template-columns: 1fr; }
   .footer__grid--centered{ justify-items: start; text-align: left; }
 }
+
+/* =========================================================
+   Task 4 Specific Styles
+   ========================================================= */
+
+/* Adjusts the grid to show 3 items in a row on large screens */
+.three-col-task4 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.chart-wrapper h3 {
+    margin-top: 0;
+    font-size: 16px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.task-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+/* Responsive adjustment for Task 4 grid */
+@media (max-width: 1000px) {
+    .three-col-task4 {
+        grid-template-columns: 1fr;
+    }
+}
