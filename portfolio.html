@@ -10,6 +10,64 @@
   <meta name="robots" content="index, follow" />
 
   <link rel="stylesheet" href="css/style.css" />
+  
+  <style>
+    /* Portfolio-specific styles */
+    .hero--portfolio {
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url("images/portfolio.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    .portfolio-content {
+      background: #f7f9fc;
+      padding: 60px 0;
+    }
+    
+    .charts-row {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+      justify-content: space-between;
+    }
+    
+    .chart-wrapper {
+      flex: 1;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .chart-wrapper p {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+    }
+    
+    h2 {
+      margin-top: 50px;
+      margin-bottom: 10px;
+      color: #0b1f3a;
+    }
+    
+    h2:first-child {
+      margin-top: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .charts-row {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -21,7 +79,6 @@
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <!-- NO-JS toggle -->
       <input class="nav__checkbox" type="checkbox" id="navToggle" />
       <label class="nav__toggle" for="navToggle" aria-label="Toggle navigation">☰</label>
 
@@ -34,8 +91,8 @@
       </ul>
     </nav>
 
-    <!-- HERO (portfolio background image) -->
-    <section class="hero hero--portfolio" aria-label="Portfolio intro">
+    <!-- Portfolio Hero Section -->
+    <section class="hero hero--portfolio">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">Portfolio</h1>
@@ -46,58 +103,51 @@
     </section>
   </header>
 
-  <!-- WHITE SPACE AREA FOR TASKS -->
   <main id="main">
-    <section class="white-space" aria-label="Portfolio content area">
+    <section class="portfolio-content">
       <div class="container">
-
+        
+        <!-- Task 1 -->
         <h2>Task 1</h2>
-        <p>
-          <strong>Hosting: Display charts in your own site.</strong><br>
-          Two charts from Richard Davies' library were integrated.
-        </p>
-
-        <div class="charts-grid">
-          <div class="chart-card">
-            <div id="chart_uk_unemployment"></div>
+        <p><strong>Hosting: Display charts in your own site.</strong><br>
+        Two charts from Richard Davies' library were integrated.</p>
+        
+        <div class="charts-row">
+          <div class="chart-wrapper">
+            <div id="vis1"></div>
           </div>
-
-          <div class="chart-card">
-            <div id="chart_g7_inflation"></div>
+          <div class="chart-wrapper">
+            <div id="vis2"></div>
           </div>
         </div>
 
-        <h2 class="mt-36">Task 2</h2>
-        <p>
-          <strong>Building: Create your own visualisations.</strong><br>
-          Two custom charts built using the Economics Observatory Data Hub "create" tool.
-        </p>
-
-        <div class="charts-grid">
-          <div class="chart-card">
-            <div id="chart_nigeria"></div>
+        <!-- Task 2 -->
+        <h2>Task 2</h2>
+        <p><strong>Building: Create your own visualisations.</strong><br>
+        Two custom charts built using the Economics Observatory Data Hub "create" tool.</p>
+        
+        <div class="charts-row">
+          <div class="chart-wrapper">
+            <div id="vis3"></div>
           </div>
-
-          <div class="chart-card">
-            <div id="chart_ethiopia"></div>
+          <div class="chart-wrapper">
+            <div id="vis4"></div>
           </div>
         </div>
 
-        <h2 class="mt-36">Task 3</h2>
-        <p>
-          <strong>Debating. Use a visualisation in economic/policy commentary</strong><br>
-          Renewable energy growth proves green transition is economically viable without sacrificing energy security.
-        </p>
-
-        <div class="charts-grid">
-          <div class="chart-card">
-            <div id="chart_uk_renewable"></div>
-            <p style="font-size: 14px; margin-top: 10px;">UK renewable share tripled since 2000, proving rapid transition feasible without compromising energy security.</p>
+        <!-- Task 3 -->
+        <h2>Task 3</h2>
+        <p><strong>Debating. Use a visualisation in economic/policy commentary</strong><br>
+        Renewable energy growth proves green transition is economically viable without sacrificing energy security.</p>
+        
+        <div class="charts-row">
+          <div class="chart-wrapper">
+            <div id="vis5"></div>
+            <p>UK renewable share tripled since 2000, proving rapid transition feasible without compromising energy security.</p>
           </div>
-
-          <div class="chart-card">
-            <div id="chart_energy_prices"></div>
-            <p style="font-size: 14px; margin-top: 10px;">Solar and wind costs fell 90% while capacity expanded, confirming economic viability of renewables.</p>
+          <div class="chart-wrapper">
+            <div id="vis6"></div>
+            <p>Solar and wind costs fell 90% while capacity expanded, confirming economic viability of renewables.</p>
           </div>
         </div>
 
@@ -105,21 +155,19 @@
     </section>
   </main>
 
-  <footer class="site-footer" aria-label="Footer">
+  <footer class="site-footer">
     <div class="container footer__grid">
       <div>
         <h3 class="footer__title">Contact</h3>
         <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
         <p>LinkedIn: <a href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">Profile ↗</a></p>
       </div>
-
       <div>
         <h3 class="footer__title">Links</h3>
         <p><a href="index.html">Home</a></p>
         <p><a href="project.html">Project</a></p>
         <p><a href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a></p>
       </div>
-
       <div>
         <h3 class="footer__title">About</h3>
         <p>Built for Automated Data Visualisation at LSE.</p>
@@ -128,44 +176,18 @@
     </div>
   </footer>
 
-  <!-- Vega libraries -->
+  <!-- Vega Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Embed charts (inline; no external JS files) -->
   <script>
-    const embedOptions = {
-      actions: false,
-      renderer: "svg",
-      autosize: { type: "fit", contains: "padding" }
-    };
+    // Task 1 - Chart 1: UK Unemployment
+    var myChart1 = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/chartUKunemployment.json";
+    vegaEmbed('#vis1', myChart1);
 
-    // Task 1 — UK unemployment (ECO API)
-    const ukUnemploymentSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {
-        "text": "Unemployment level (16+)",
-        "subtitle": "United Kingdom (thousands) seasonally adjusted",
-        "anchor": "start",
-        "subtitleFontStyle": "italic",
-        "subtitleFontSize": 12
-      },
-      "data": {
-        "url": "https://api.economicsobservatory.com/gbr/unem",
-        "format": { "type": "json", "property": "raw.years" }
-      },
-      "width": "container",
-      "height": 280,
-      "mark": { "type": "line", "color": "seagreen", "strokeWidth": 2 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal", "title": null },
-        "y": { "field": "value", "type": "quantitative", "title": null }
-      }
-    };
-
-    // Task 1 — G7 inflation (CSV)
-    const g7InflationSpec = {
+    // Task 1 - Chart 2: G7 Inflation  
+    var myChart2 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
         "text": "Inflation - four G7 countries",
@@ -178,77 +200,34 @@
         "url": "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/data_OECD_inflation2.csv"
       },
       "transform": [
-        { "calculate": "datum.Value/100", "as": "valueToUse" },
-        { "calculate": "year(datum.TIME)", "as": "year" },
-        { "filter": "datum.LOCATION!='JPN' && datum.LOCATION!='CAN' && datum.LOCATION!='ITA'" },
-        { "filter": "datum.year > 1999" }
+        {"calculate": "datum.Value/100", "as": "valueToUse"},
+        {"calculate": "year(datum.TIME)", "as": "year"},
+        {"filter": "datum.LOCATION!='JPN' && datum.LOCATION!='CAN' && datum.LOCATION!='ITA'"},
+        {"filter": "datum.year > 1999"}
       ],
-      "width": "container",
+      "width": 380,
       "height": 280,
-      "mark": { "type": "line", "strokeWidth": 2 },
+      "mark": {"type": "line", "strokeWidth": 2},
       "encoding": {
-        "x": { "field": "TIME", "type": "temporal", "title": null },
-        "y": { "field": "valueToUse", "type": "quantitative", "title": null, "axis": { "format": "%" } },
-        "color": { "field": "Country", "title": null, "legend": { "orient": "top-left" } }
+        "x": {"field": "TIME", "type": "temporal", "title": null},
+        "y": {"field": "valueToUse", "type": "quantitative", "title": null, "axis": {"format": "%"}},
+        "color": {"field": "Country", "title": null, "legend": {"orient": "top-left"}}
       }
     };
+    vegaEmbed('#vis2', myChart2);
 
-    // Task 2 — Nigeria inflation (ECO API via ?vega gives clean json for vega-lite)
-    const nigeriaSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {
-        "text": "Nigeria: Inflation",
-        "subtitle": "CPI, % | Source: NBS (WB) through ECO API",
-        "anchor": "start",
-        "subtitleFontStyle": "italic",
-        "subtitleFontSize": 12
-      },
-      "data": { "url": "https://api.economicsobservatory.com/nga/infl?vega", "format": { "type": "json" } },
-      "width": "container",
-      "height": 280,
-      "mark": { "type": "line", "color": "#f4134d", "strokeWidth": 2 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal", "title": null },
-        "y": { "field": "value", "type": "quantitative", "title": null }
-      }
-    };
+    // Task 2 - Chart 3: Nigeria
+    var myChart3 = "https://api.economicsobservatory.com/nga/infl?vega=true";
+    vegaEmbed('#vis3', myChart3);
 
-    // Task 2 — Ethiopia debt
-    const ethiopiaSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": {
-        "text": "Ethiopia: Debt",
-        "subtitle": "Ratio, % GDP | Source: CSA (WB) through ECO API",
-        "anchor": "start",
-        "subtitleFontStyle": "italic",
-        "subtitleFontSize": 12
-      },
-      "data": { "url": "https://api.economicsobservatory.com/eth/debt?vega", "format": { "type": "json" } },
-      "width": "container",
-      "height": 280,
-      "mark": { "type": "line", "color": "#f4134d", "strokeWidth": 2 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal", "title": null },
-        "y": { "field": "value", "type": "quantitative", "title": null }
-      }
-    };
+    // Task 2 - Chart 4: Ethiopia
+    var myChart4 = "https://api.economicsobservatory.com/eth/debt?vega=true";
+    vegaEmbed('#vis4', myChart4);
 
-    // Embed Task 1 and Task 2 charts using the specifications directly
-    vegaEmbed("#chart_uk_unemployment", ukUnemploymentSpec, embedOptions);
-    vegaEmbed("#chart_g7_inflation", g7InflationSpec, embedOptions);
-    vegaEmbed("#chart_nigeria", nigeriaSpec, embedOptions);
-    vegaEmbed("#chart_ethiopia", ethiopiaSpec, embedOptions);
-
-    // Task 3 — Load JSON files from graphs folder
-    fetch('graphs/uk_renewable.json')
-      .then(response => response.json())
-      .then(spec => vegaEmbed('#chart_uk_renewable', spec, embedOptions))
-      .catch(console.error);
-
-    fetch('graphs/energy_prices.json')
-      .then(response => response.json())
-      .then(spec => vegaEmbed('#chart_energy_prices', spec, embedOptions))
-      .catch(console.error);
+    // Task 3 - Charts from your JSON files
+    vegaEmbed('#vis5', 'graphs/uk_renewable.json');
+    vegaEmbed('#vis6', 'graphs/energy_prices.json');
   </script>
+
 </body>
 </html>
