@@ -28,78 +28,72 @@
     </section>
   </header>
 
-  <main class="container portfolio-content">
-    
-    <section>
+  <main class="portfolio-main container">
+    <section class="task-section">
       <h2>Task 1: Hosting</h2>
-      <p>Displaying external unemployment and inflation data.</p>
-      <div class="charts-row">
-        <div class="chart-wrapper"><div id="vis1" class="vega-container"></div></div>
-        <div class="chart-wrapper"><div id="vis2" class="vega-container"></div></div>
+      <p>Displaying unemployment and inflation data using local JSON files.</p>
+      <div class="task-grid">
+        <div class="chart-frame"><div id="vis1"></div></div>
+        <div class="chart-frame"><div id="vis2"></div></div>
       </div>
     </section>
 
-    <section>
+    <section class="task-section">
       <h2>Task 2: Building</h2>
       <p>Custom visualizations for Nigeria and Ethiopia.</p>
-      <div class="charts-row">
-        <div class="chart-wrapper">
-          <p><strong>Nigeria Inflation</strong></p>
-          <div id="vis3" class="vega-container"></div>
+      <div class="task-grid">
+        <div class="chart-frame">
+          <p class="chart-label">Nigeria Inflation</p>
+          <div id="vis3"></div>
         </div>
-        <div class="chart-wrapper">
-          <p><strong>Ethiopia Debt</strong></p>
-          <div id="vis4" class="vega-container"></div>
+        <div class="chart-frame">
+          <p class="chart-label">Ethiopia Debt</p>
+          <div id="vis4"></div>
         </div>
       </div>
     </section>
 
-    <section>
+    <section class="task-section">
       <h2>Task 3: Debating</h2>
-      <p>Analyzing the shift to renewable energy and technology costs.</p>
-      <div class="charts-row">
-        <div class="chart-wrapper"><div id="vis5" class="vega-container"></div></div>
-        <div class="chart-wrapper"><div id="vis6" class="vega-container"></div></div>
+      <p>Analyzing renewable energy trends and costs.</p>
+      <div class="task-grid">
+        <div class="chart-frame"><div id="vis5"></div></div>
+        <div class="chart-frame"><div id="vis6"></div></div>
       </div>
     </section>
 
-    <section>
+    <section class="task-section">
       <h2>Task 4: Replication & Improvement</h2>
-      <div class="task4-top">
-        <div class="chart-wrapper">
-          <p><strong>Original FT Image</strong></p>
+      <div class="task-grid">
+        <div class="chart-frame">
+          <p class="chart-label">Original FT Image</p>
           <img src="image/financial_times.jpg" alt="FT Original" class="task-img">
         </div>
-        <div class="chart-wrapper">
-          <p><strong>My Replication</strong></p>
-          <div id="vis7" class="vega-container"></div>
+        <div class="chart-frame">
+          <p class="chart-label">My Replication</p>
+          <div id="vis7"></div>
         </div>
       </div>
-      <div class="task4-bottom">
-        <div class="chart-wrapper">
-          <p><strong>My Improvement</strong></p>
-          <div id="vis8" class="vega-container"></div>
+      <div class="centered-row">
+        <div class="chart-frame">
+          <p class="chart-label">My Improvement</p>
+          <div id="vis8"></div>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    const config = {
-      "actions": false,
-      "renderer": "svg",
-      "width": "container",
-      "height": 300
-    };
+    const opt = { "actions": false, "renderer": "svg", "width": "container", "height": 300 };
 
-    vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
-    vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', config);
-    vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
-    vegaEmbed('#vis4', 'graphs/ethiopia_debt.json', config); // Ensure this filename matches your repo
-    vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
-    vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
-    vegaEmbed('#vis7', 'graphs/financial_times.json', config);
-    vegaEmbed('#vis8', 'graphs/financial_times2.json', config);
+    vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', opt);
+    vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', opt);
+    vegaEmbed('#vis3', 'graphs/nigeria_chart.json', opt);
+    vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', opt);
+    vegaEmbed('#vis5', 'graphs/uk_renewable.json', opt);
+    vegaEmbed('#vis6', 'graphs/energy_prices.json', opt);
+    vegaEmbed('#vis7', 'graphs/financial_times.json', opt);
+    vegaEmbed('#vis8', 'graphs/financial_times2.json', opt);
   </script>
 </body>
 </html>
