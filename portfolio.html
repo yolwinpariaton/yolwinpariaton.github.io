@@ -13,77 +13,92 @@
 <body>
   <header class="site-header">
     <nav class="nav">
-      <a class="nav__home" href="index.html">Yolwin Pariaton</a>
+      <div class="nav__brand"><a class="nav__home" href="index.html">Yolwin Pariaton</a></div>
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
         <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
       </ul>
     </nav>
+
     <section class="hero hero--portfolio">
       <div class="hero__center">
-        <h1>Portfolio</h1>
-        <p>Data Science & Visualization Exercises</p>
+        <h1 class="hero__title">Portfolio</h1>
+        <p class="hero__subtitle">Data Science & Visualization Tasks</p>
       </div>
     </section>
   </header>
 
-  <main class="container portfolio-content">
+  <main id="main" class="container portfolio-content">
     
-    <h2>Task 1: Hosting</h2>
-    <p>Integrated two charts from a remote repository to demonstrate external hosting.</p>
-    <div class="charts-row">
-      <div class="chart-wrapper"><div id="vis1"></div></div>
-      <div class="chart-wrapper"><div id="vis2"></div></div>
-    </div>
-
-    <h2>Task 2: Building</h2>
-    <p>Custom-built charts using Economics Observatory data for Nigeria and Ethiopia.</p>
-    <div class="charts-row">
-      <div class="chart-wrapper"><div id="vis3"></div></div>
-      <div class="chart-wrapper"><div id="vis4"></div></div>
-    </div>
-
-    <h2>Task 3: Debating</h2>
-    <p>Visualizing the economic shift toward renewable energy and pricing trends.</p>
-    <div class="charts-row">
-      <div class="chart-wrapper"><div id="vis5"></div></div>
-      <div class="chart-wrapper"><div id="vis6"></div></div>
-    </div>
-
-    <h2>Task 4: Replication & Improvement</h2>
-    <p>Re-creating a Financial Times chart and adding a 2% inflation target line and improved spacing.</p>
-    <div class="task4-grid">
-      <div class="chart-wrapper">
-        <p><strong>Original Image</strong></p>
-        <img src="images/financial_times.jpg" class="task-img">
+    <section>
+      <h2>Task 1: Hosting</h2>
+      <p>Integrating charts from external repositories using remote URLs.</p>
+      <div class="charts-row">
+        <div class="chart-wrapper"><div id="vis1"></div></div>
+        <div class="chart-wrapper"><div id="vis2"></div></div>
       </div>
-      <div class="chart-wrapper">
-        <p><strong>Replication</strong></p>
-        <div id="vis7"></div>
+    </section>
+
+    <section>
+      <h2>Task 2: Building</h2>
+      <p>Custom charts created using Economics Observatory data for Nigeria and Ethiopia.</p>
+      <div class="charts-row">
+        <div class="chart-wrapper"><div id="vis3"></div></div>
+        <div class="chart-wrapper"><div id="vis4"></div></div>
       </div>
-      <div class="chart-wrapper">
-        <p><strong>Improvement</strong></p>
-        <div id="vis8"></div>
+    </section>
+
+    <section>
+      <h2>Task 3: Debating</h2>
+      <p>An analysis of renewable energy shares and the declining costs of green technology.</p>
+      <div class="charts-row">
+        <div class="chart-wrapper"><div id="vis5"></div></div>
+        <div class="chart-wrapper"><div id="vis6"></div></div>
       </div>
-    </div>
+    </section>
+
+    <section>
+      <h2>Task 4: Replication & Improvement</h2>
+      <p>Re-creating a Financial Times inflation chart and improving it with target lines and clearer axis formatting.</p>
+      <div class="task4-grid">
+        <div class="chart-wrapper">
+          <p><strong>Original FT Image</strong></p>
+          <img src="images/financial_times.jpg" alt="FT Original" class="task-img">
+        </div>
+        <div class="chart-wrapper">
+          <p><strong>My Replication</strong></p>
+          <div id="vis7"></div>
+        </div>
+        <div class="chart-wrapper">
+          <p><strong>My Improvement</strong></p>
+          <div id="vis8"></div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script>
-    const opt = { "actions": false, "renderer": "svg", "width": "container" };
+    // Configuration to prevent "huge" graphs and force them to fit the boxes
+    const config = {
+      "actions": false,
+      "renderer": "svg",
+      "width": "container",
+      "height": 300
+    };
 
-    // Task 1
-    vegaEmbed('#vis1', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/unemployment/chartUnemploymentLine.json", opt);
-    vegaEmbed('#vis2', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/chartOECDinflation.json", opt);
+    // Task 1 (Using remote URLs)
+    vegaEmbed('#vis1', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/unemployment/chartUnemploymentLine.json", config);
+    vegaEmbed('#vis2', "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/ONSinflation/chartOECDinflation.json", config);
 
-    // Task 2 & 3
-    vegaEmbed('#vis3', 'graphs/nigeria_chart.json', opt);
-    vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', opt);
-    vegaEmbed('#vis5', 'graphs/uk_renewable.json', opt);
-    vegaEmbed('#vis6', 'graphs/energy_prices.json', opt);
+    // Task 2 & 3 (Using local file paths)
+    vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
+    vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
+    vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
+    vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
 
     // Task 4
-    vegaEmbed('#vis7', 'graphs/financial_times.vl.json', opt);
-    vegaEmbed('#vis8', 'graphs/financial_times2.vl.json', opt);
+    vegaEmbed('#vis7', 'graphs/financial_times.vl.json', config);
+    vegaEmbed('#vis8', 'graphs/financial_times2.vl.json', config);
   </script>
 </body>
 </html>
