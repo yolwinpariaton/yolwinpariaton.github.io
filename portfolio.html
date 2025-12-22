@@ -122,7 +122,7 @@
 
       <div>
         <h3 class="footer__title">About</h3>
-        <p>Built for LSE — Automated Data Collection.</p>
+        <p>Built for Automated Data Visualisation at LSE.</p>
         <p>© 2025 Yolwin Pariaton</p>
       </div>
     </div>
@@ -233,6 +233,12 @@
       }
     };
 
+    // Embed Task 1 and Task 2 charts using the specifications directly
+    vegaEmbed("#chart_uk_unemployment", ukUnemploymentSpec, embedOptions);
+    vegaEmbed("#chart_g7_inflation", g7InflationSpec, embedOptions);
+    vegaEmbed("#chart_nigeria", nigeriaSpec, embedOptions);
+    vegaEmbed("#chart_ethiopia", ethiopiaSpec, embedOptions);
+
     // Task 3 — Load JSON files from graphs folder
     fetch('graphs/uk_renewable.json')
       .then(response => response.json())
@@ -243,11 +249,6 @@
       .then(response => response.json())
       .then(spec => vegaEmbed('#chart_energy_prices', spec, embedOptions))
       .catch(console.error);
-
-    vegaEmbed("#chart_uk_unemployment", ukUnemploymentSpec, embedOptions);
-    vegaEmbed("#chart_g7_inflation", g7InflationSpec, embedOptions);
-    vegaEmbed("#chart_nigeria", nigeriaSpec, embedOptions);
-    vegaEmbed("#chart_ethiopia", ethiopiaSpec, embedOptions);
   </script>
 </body>
 </html>
