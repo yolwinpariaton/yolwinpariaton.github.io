@@ -45,15 +45,15 @@ a:hover{ text-decoration: underline; }
 }
 .skip-link:focus{ left: 10px; }
 
+/* =========================
+   HEADER + NAV (no-JS toggle)
+   ========================= */
 .site-header{
   background: linear-gradient(180deg, var(--navy), var(--navy-2));
   color: var(--white);
   padding-bottom: 0;
 }
 
-/* =========================
-   NAV (no-JS toggle)
-   ========================= */
 .nav{
   display:flex;
   align-items:center;
@@ -114,10 +114,8 @@ a:hover{ text-decoration: underline; }
 }
 .nav__toggle:hover{ background: rgba(255,255,255,0.12); }
 
-/* Mobile toggle behavior */
 @media (max-width: 860px){
   .nav{ flex-wrap: wrap; }
-
   .nav__toggle{ display:inline-block; }
 
   .nav__menu{
@@ -133,16 +131,9 @@ a:hover{ text-decoration: underline; }
 }
 
 /* =========================
-   HERO (background images)
+   HERO
    ========================= */
 .hero{ padding: 0; position: relative; }
-
-.hero--bg{
-  min-height: 88vh;
-  display: grid;
-  place-items: center;
-  background: url("../images/london.jpg") center/cover no-repeat;
-}
 
 .hero--portfolio{
   min-height: 70vh;
@@ -179,7 +170,7 @@ a:hover{ text-decoration: underline; }
   font-size: clamp(16px, 1.8vw, 20px);
 }
 
-/* Content section after hero */
+/* White content section after hero */
 .white-space{
   background: #ffffff;
   padding: 70px 0;
@@ -187,69 +178,58 @@ a:hover{ text-decoration: underline; }
 }
 
 /* =========================
-   PORTFOLIO layout
+   PORTFOLIO TASKS + CHARTS
    ========================= */
 .portfolio-content .task{
-  margin-bottom: 38px;
+  margin-bottom: 40px;
 }
 
-/* Two charts per row */
-.charts-row,
-.task4-top{
-  display: grid;
+/* ✅ This is the important part: 2 charts side-by-side */
+.charts-row{
+  display:grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
-  margin: 16px 0 10px;
+  margin-top: 14px;
+  align-items: start;
 }
 
-.task4-bottom{
-  display: grid;
-  grid-template-columns: 1fr;
-  margin-top: 10px;
-}
-
-/* ✅ Key fix: stop cards becoming huge */
 .chart-wrapper{
-  background: #fff;
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 12px;
   box-shadow: var(--shadow);
-
-  /* prevent “super huge” charts */
-  max-width: 520px;
-  width: 100%;
-  margin: 0 auto;
+  overflow: hidden;
 }
 
-/* Keep chart area stable, but not massive */
+/* Optional: make Task 4 bottom chart full width */
+.chart-wrapper--wide{
+  margin-top: 18px;
+}
+
+/* Vega container fills card */
 .vega-container{
   width: 100%;
-  min-height: 280px;
+  min-height: 300px;
 }
 
-/* Image sizing in Task 4 */
+/* Task 4 image should match chart height nicely */
 .task-img{
   width: 100%;
-  max-width: 520px;
-  height: 280px;
+  height: 300px;
   object-fit: contain;
-  display: block;
-  margin: 0 auto;
+  display:block;
 }
 
+/* Mobile: stack into one column */
 @media (max-width: 860px){
-  .charts-row,
-  .task4-top{
+  .charts-row{
     grid-template-columns: 1fr;
-  }
-  .chart-wrapper{
-    max-width: 520px;
   }
 }
 
 /* =========================
-   FOOTER (nicer)
+   FOOTER
    ========================= */
 .site-footer{
   background: #071a33;
@@ -265,8 +245,8 @@ a:hover{ text-decoration: underline; }
 }
 
 .footer__grid--centered{
-  align-items: start;
   text-align: center;
+  align-items: start;
 }
 
 .footer__title{
@@ -282,7 +262,5 @@ a:hover{ text-decoration: underline; }
 }
 
 @media (max-width: 860px){
-  .footer__grid{
-    grid-template-columns: 1fr;
-  }
+  .footer__grid{ grid-template-columns: 1fr; }
 }

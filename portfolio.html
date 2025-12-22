@@ -25,7 +25,7 @@
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <!-- NO-JS toggle (mobile) -->
+      <!-- NO-JS toggle -->
       <input class="nav__checkbox" type="checkbox" id="navTogglePortfolio" />
       <label class="nav__toggle" for="navTogglePortfolio" aria-label="Toggle navigation">☰</label>
 
@@ -36,7 +36,7 @@
       </ul>
     </nav>
 
-    <!-- HERO background -->
+    <!-- HERO with Portfolio background -->
     <section class="hero hero--portfolio" aria-label="Portfolio intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
@@ -50,6 +50,7 @@
     <section class="white-space" aria-label="Portfolio content">
       <div class="container portfolio-content">
 
+        <!-- TASK 1 -->
         <section class="task">
           <h2>Task 1: Hosting. Display charts in your own site</h2>
           <p>Two charts from Richard Davies' library were integrated.</p>
@@ -64,26 +65,26 @@
           </div>
         </section>
 
+        <!-- TASK 2 -->
         <section class="task">
           <h2>Task 2: Building. Create your own visualisations</h2>
           <p>Two charts were developed using the Economics Observatory Data Hub.</p>
 
           <div class="charts-row">
             <div class="chart-wrapper">
-              <p><strong>Nigeria Inflation</strong></p>
               <div id="vis3" class="vega-container"></div>
             </div>
             <div class="chart-wrapper">
-              <p><strong>Ethiopia Debt</strong></p>
               <div id="vis4" class="vega-container"></div>
             </div>
           </div>
         </section>
 
+        <!-- TASK 3 -->
         <section class="task">
           <h2>Task 3: Debating. Use a visualisation in economic/policy commentary</h2>
           <p>
-            Renewables are expanding, but prices and grid constraints still fluctuate; stable policy and investment support affordability and long-term sustainability.
+            Renewables are expanding, but price volatility and grid constraints remain; stable investment and policy help ensure affordability and sustainability.
           </p>
 
           <div class="charts-row">
@@ -96,30 +97,26 @@
           </div>
         </section>
 
+        <!-- TASK 4 -->
         <section class="task">
           <h2>Task 4: Replication. Re-create, then improve, someone else’s chart</h2>
           <p>
-            Using a Financial Times figure, I replicated the chart and improved it by adding an inflation target line, highlighting the peak, and adding clearer percentage labels.
+            Based on a Financial Times chart, I replicated the figure and improved it by adding an inflation target line, marking the peak, and adding clearer percentage labels.
           </p>
 
-          <div class="task4-top">
+          <!-- Top row: image left, replication right -->
+          <div class="charts-row">
             <div class="chart-wrapper">
-              <p><strong>Original FT Image</strong></p>
-              <!-- ✅ correct folder: images/ -->
-              <img src="images/financial_times.jpg" alt="FT Original chart" class="task-img">
+              <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
             </div>
-
             <div class="chart-wrapper">
-              <p><strong>My Replication</strong></p>
               <div id="vis7" class="vega-container"></div>
             </div>
           </div>
 
-          <div class="task4-bottom">
-            <div class="chart-wrapper">
-              <p><strong>My Improvement</strong></p>
-              <div id="vis8" class="vega-container"></div>
-            </div>
+          <!-- Bottom row: improved version (full width) -->
+          <div class="chart-wrapper chart-wrapper--wide">
+            <div id="vis8" class="vega-container"></div>
           </div>
         </section>
 
@@ -143,17 +140,17 @@
   </footer>
 
   <script>
-    // ✅ Force charts to a sane size (prevents "super huge")
+    // Keep charts consistent, not huge
     const embedOptions = {
       actions: false,
       renderer: "svg",
-      width: 460,
-      height: 280
+      width: "container",
+      height: 300
     };
 
-    // ✅ Make sure filenames match your /graphs folder
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedOptions);
     vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedOptions);
+
     vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedOptions);
     vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedOptions);
 
