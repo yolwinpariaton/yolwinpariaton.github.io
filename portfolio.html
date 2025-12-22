@@ -32,52 +32,40 @@
     
     <section>
       <h2>Task 1: Hosting</h2>
-      <p>Hosting charts from an external repository, focusing on UK unemployment and G7 inflation trends.</p>
+      <p>Integrated two charts from a remote repository to demonstrate external hosting.</p>
       <div class="charts-row">
-        <div class="chart-wrapper">
-            <p><strong>UK Unemployment</strong></p>
-            <div id="vis1" class="vega-container"></div>
-        </div>
-        <div class="chart-wrapper">
-            <p><strong>G7 Inflation</strong></p>
-            <div id="vis2" class="vega-container"></div>
-        </div>
+        <div class="chart-wrapper"><div id="vis1" class="vega-container"></div></div>
+        <div class="chart-wrapper"><div id="vis2" class="vega-container"></div></div>
       </div>
     </section>
 
     <section>
       <h2>Task 2: Building</h2>
-      <p>Custom-built visualizations using Economics Observatory data.</p>
+      <p>Custom-built charts using Economics Observatory data.</p>
       <div class="charts-row">
         <div class="chart-wrapper">
-            <p><strong>Nigeria Inflation</strong></p>
-            <div id="vis3" class="vega-container"></div>
+          <p><strong>Nigeria Inflation</strong></p>
+          <div id="vis3" class="vega-container"></div>
         </div>
         <div class="chart-wrapper">
-            <p><strong>Ethiopia Debt</strong></p>
-            <div id="vis4" class="vega-container"></div>
+          <p><strong>Ethiopia Debt</strong></p>
+          <div id="vis4" class="vega-container"></div>
         </div>
       </div>
     </section>
 
     <section>
       <h2>Task 3: Debating</h2>
-      <p>Exploring the transition to green energy through market share and technology cost data.</p>
+      <p>Analyzing renewable energy trends and pricing.</p>
       <div class="charts-row">
-        <div class="chart-wrapper">
-            <p><strong>Renewable Share</strong></p>
-            <div id="vis5" class="vega-container"></div>
-        </div>
-        <div class="chart-wrapper">
-            <p><strong>Technology Costs</strong></p>
-            <div id="vis6" class="vega-container"></div>
-        </div>
+        <div class="chart-wrapper"><div id="vis5" class="vega-container"></div></div>
+        <div class="chart-wrapper"><div id="vis6" class="vega-container"></div></div>
       </div>
     </section>
 
     <section>
       <h2>Task 4: Replication & Improvement</h2>
-      <p>Replicating and refining a Financial Times inflation graphic.</p>
+      <p>Re-creating and improving an FT inflation chart.</p>
       
       <div class="task4-top">
         <div class="chart-wrapper">
@@ -100,13 +88,13 @@
   </main>
 
   <script>
-    // Config: Setting autosize to "fit" helps the graph match the frame width
+    // These settings force the graphs to fill the frame and prevent compression
     const config = {
       "actions": false,
       "renderer": "svg",
       "width": "container",
       "height": 300,
-      "autosize": {"type": "fit", "contains": "padding"}
+      "view": {"stroke": "transparent"}
     };
 
     vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
