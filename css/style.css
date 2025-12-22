@@ -130,14 +130,6 @@ a:hover{ text-decoration: underline; }
   background-repeat: no-repeat;
 }
 
-.hero--portfolio{
-  position: relative;
-  min-height: 70vh;
-  display: grid;
-  place-items: center;
-  background: url("../images/portfolio.jpg") center/cover no-repeat;
-}
-
 .hero__overlay{
   position: absolute;
   inset: 0;
@@ -199,6 +191,22 @@ a:hover{ text-decoration: underline; }
   box-shadow: none;
 }
 
+/* ✅ Flat button (no frame look) */
+.btn--flat{
+  background: transparent;
+  color: var(--accent);
+  border-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 0;
+}
+.btn--flat:hover{
+  transform: none;
+  box-shadow: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* =========================================================
    Sections under hero
    ========================================================= */
@@ -234,57 +242,24 @@ a:hover{ text-decoration: underline; }
   box-shadow: var(--shadow);
 }
 
-/* ✅ FIX: images not huge */
+/* ✅ lighter media frame */
+.two-col__media--light{
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  box-shadow: none;
+  padding: 8px;
+}
+
 .media-img{
   width: 100%;
-  height: clamp(200px, 26vw, 320px); /* limits size */
+  height: clamp(200px, 26vw, 320px);
   object-fit: cover;
   display: block;
   border-radius: 12px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 /* =========================================================
-   Portfolio main white area
-   ========================================================= */
-.white-space{
-  background: #ffffff;
-  padding: 70px 0;
-  min-height: 70vh;
-}
-
-.mt-36{ margin-top: 36px; }
-
-/* Charts layout */
-.charts-grid{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 14px;
-  align-items: start;
-}
-
-.chart-card{
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-/* Make Vega charts fill the card width */
-.chart-card .vega-embed{ width: 100%; }
-
-.chart-card svg,
-.chart-card canvas{
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* =========================================================
-   Footer (improved style)
+   Footer (centered)
    ========================================================= */
 .site-footer{
   background: #071a33;
@@ -297,6 +272,12 @@ a:hover{ text-decoration: underline; }
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 22px;
+}
+
+/* ✅ center all footer content */
+.footer__grid--centered{
+  text-align: center;
+  justify-items: center;
 }
 
 .footer__title{
@@ -342,6 +323,6 @@ a:hover{ text-decoration: underline; }
   }
 
   .two-col{ grid-template-columns: 1fr; }
-  .charts-grid{ grid-template-columns: 1fr; }
   .footer__grid{ grid-template-columns: 1fr; }
+  .footer__grid--centered{ justify-items: start; text-align: left; }
 }

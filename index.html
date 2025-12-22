@@ -25,12 +25,11 @@
       <input class="nav__checkbox" type="checkbox" id="navToggle" />
       <label class="nav__toggle" for="navToggle" aria-label="Toggle navigation">☰</label>
 
+      <!-- ✅ Only these three links in top nav -->
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html" aria-current="page">Home</a></li>
         <li><a class="nav__link" href="project.html">Project</a></li>
         <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
-        <li><a class="nav__link" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
-        <li><a class="nav__link" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
       </ul>
     </nav>
 
@@ -39,11 +38,14 @@
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">Yolwin Pariaton</h1>
-        <p class="hero__subtitle">LSE — Automated Data Collection</p>
 
+        <!-- ✅ updated subtitle -->
+        <p class="hero__subtitle">LSE Data Science for Public Policy</p>
+
+        <!-- ✅ GitHub + LinkedIn below subtitle -->
         <div class="hero__social">
-          <a class="btn" href="project.html">Explore Project</a>
-          <a class="btn btn--ghost" href="portfolio.html">Explore Portfolio</a>
+          <a class="btn btn--ghost" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
         </div>
       </div>
     </section>
@@ -59,10 +61,13 @@
             A course project exploring automated data collection methods (APIs, web scraping, and reproducible workflows).
             This page summarises the goal, methods, and key outputs.
           </p>
-          <a class="btn" href="project.html">Explore project</a>
+
+          <!-- ✅ explore button without border frame -->
+          <a class="btn btn--flat" href="project.html">Explore project</a>
         </div>
 
-        <div class="two-col__media">
+        <!-- ✅ reduced image frame -->
+        <div class="two-col__media two-col__media--light">
           <img class="media-img" src="images/living_cost.jpg" alt="Project preview image" />
         </div>
       </div>
@@ -76,34 +81,41 @@
           <p>
             Weekly tasks and exercises showing charts embedded with Vega/Vega-Lite, data work, and short write-ups.
           </p>
-          <a class="btn" href="portfolio.html">Explore portfolio</a>
+
+          <!-- ✅ explore button without border frame -->
+          <a class="btn btn--flat" href="portfolio.html">Explore portfolio</a>
         </div>
 
-        <div class="two-col__media">
+        <!-- ✅ reduced image frame -->
+        <div class="two-col__media two-col__media--light">
           <img class="media-img" src="images/portfolio.jpg" alt="Portfolio preview image" />
         </div>
       </div>
     </section>
   </main>
 
+  <!-- ✅ footer centered + updated About text -->
   <footer class="site-footer" aria-label="Footer">
-    <div class="container footer__grid">
+    <div class="container footer__grid footer__grid--centered">
       <div>
         <h3 class="footer__title">Contact</h3>
         <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">Profile ↗</a></p>
+        <p>
+          <a href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          &nbsp;·&nbsp;
+          <a href="https://www.linkedin.com/in/yolwin-pariaton-zurita-548867112/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        </p>
       </div>
 
       <div>
         <h3 class="footer__title">Links</h3>
         <p><a href="project.html">Project</a></p>
         <p><a href="portfolio.html">Portfolio</a></p>
-        <p><a href="https://github.com/yolwinpariaton" target="_blank" rel="noopener noreferrer">GitHub ↗</a></p>
       </div>
 
       <div>
         <h3 class="footer__title">About</h3>
-        <p>Built for LSE — Automated Data Collection.</p>
+        <p>Built for the LSE Automated Data Visualisation Course.</p>
         <p>© 2025 Yolwin Pariaton</p>
       </div>
     </div>
