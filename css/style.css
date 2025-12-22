@@ -383,3 +383,18 @@ a:hover{ text-decoration: underline; }
     grid-template-columns: 1fr;
   }
 }
+
+/* Make the FT image match chart size better */
+.chart-wrapper--ft{
+  min-height: 400px; /* same as other chart cards */
+}
+
+.task-img--match-chart{
+  width: 100%;
+  height: 300px;          /* match the vegaEmbed height */
+  object-fit: contain;    /* keep full image visible */
+  background: #FFF1E5;    /* FT-like paper background */
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 10px;
+}
