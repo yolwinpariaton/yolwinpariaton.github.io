@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Portfolio | Yolwin Pariaton</title>
+  <meta name="description" content="Portfolio page for course exercises and assignments for Automated Data Collection at LSE." />
+  <meta name="author" content="Yolwin Pariaton" />
 
   <link rel="stylesheet" href="css/style.css" />
 
@@ -14,11 +17,17 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav" aria-label="Primary">
       <div class="nav__brand">
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
+
+      <!-- NO-JS toggle (mobile) -->
+      <input class="nav__checkbox" type="checkbox" id="navTogglePortfolio" />
+      <label class="nav__toggle" for="navTogglePortfolio" aria-label="Toggle navigation">☰</label>
 
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
@@ -27,90 +36,95 @@
       </ul>
     </nav>
 
-    <section class="hero hero--portfolio">
+    <!-- HERO background -->
+    <section class="hero hero--portfolio" aria-label="Portfolio intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">Portfolio</h1>
-        <p class="hero__subtitle">Data Science & Visualization Tasks</p>
+        <p class="hero__subtitle">Data Science & Visualisation Tasks</p>
       </div>
     </section>
   </header>
 
-  <main class="container portfolio-content">
+  <main id="main">
+    <section class="white-space" aria-label="Portfolio content">
+      <div class="container portfolio-content">
 
-    <section>
-      <h2>Task 1: Hosting. Display charts in your own site</h2>
-      <p>Two charts from Richard Davies' library were integrated.</p>
+        <section class="task">
+          <h2>Task 1: Hosting. Display charts in your own site</h2>
+          <p>Two charts from Richard Davies' library were integrated.</p>
 
-      <div class="charts-row">
-        <div class="chart-wrapper">
-          <div id="vis1" class="vega-container"></div>
-        </div>
-        <div class="chart-wrapper">
-          <div id="vis2" class="vega-container"></div>
-        </div>
+          <div class="charts-row">
+            <div class="chart-wrapper">
+              <div id="vis1" class="vega-container"></div>
+            </div>
+            <div class="chart-wrapper">
+              <div id="vis2" class="vega-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="task">
+          <h2>Task 2: Building. Create your own visualisations</h2>
+          <p>Two charts were developed using the Economics Observatory Data Hub.</p>
+
+          <div class="charts-row">
+            <div class="chart-wrapper">
+              <p><strong>Nigeria Inflation</strong></p>
+              <div id="vis3" class="vega-container"></div>
+            </div>
+            <div class="chart-wrapper">
+              <p><strong>Ethiopia Debt</strong></p>
+              <div id="vis4" class="vega-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="task">
+          <h2>Task 3: Debating. Use a visualisation in economic/policy commentary</h2>
+          <p>
+            Renewables are expanding, but prices and grid constraints still fluctuate; stable policy and investment support affordability and long-term sustainability.
+          </p>
+
+          <div class="charts-row">
+            <div class="chart-wrapper">
+              <div id="vis5" class="vega-container"></div>
+            </div>
+            <div class="chart-wrapper">
+              <div id="vis6" class="vega-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="task">
+          <h2>Task 4: Replication. Re-create, then improve, someone else’s chart</h2>
+          <p>
+            Using a Financial Times figure, I replicated the chart and improved it by adding an inflation target line, highlighting the peak, and adding clearer percentage labels.
+          </p>
+
+          <div class="task4-top">
+            <div class="chart-wrapper">
+              <p><strong>Original FT Image</strong></p>
+              <!-- ✅ correct folder: images/ -->
+              <img src="images/financial_times.jpg" alt="FT Original chart" class="task-img">
+            </div>
+
+            <div class="chart-wrapper">
+              <p><strong>My Replication</strong></p>
+              <div id="vis7" class="vega-container"></div>
+            </div>
+          </div>
+
+          <div class="task4-bottom">
+            <div class="chart-wrapper">
+              <p><strong>My Improvement</strong></p>
+              <div id="vis8" class="vega-container"></div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </section>
-
-    <section>
-      <h2>Task 2: Building. Create your own visualisations</h2>
-      <p>Two charts were developed using the Economics Observatory Data Hub.</p>
-
-      <div class="charts-row">
-        <div class="chart-wrapper">
-          <p><strong>Nigeria Inflation</strong></p>
-          <div id="vis3" class="vega-container"></div>
-        </div>
-        <div class="chart-wrapper">
-          <p><strong>Ethiopia Debt</strong></p>
-          <div id="vis4" class="vega-container"></div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Task 3: Debating. Use a visualisation in economic/policy commentary</h2>
-      <p>
-        Renewables are expanding, but price swings and grid limits persist; stable policy and investment can lower costs and support long-term sustainability.
-      </p>
-
-      <div class="charts-row">
-        <div class="chart-wrapper">
-          <div id="vis5" class="vega-container"></div>
-        </div>
-        <div class="chart-wrapper">
-          <div id="vis6" class="vega-container"></div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Task 4: Replication. Re-create, then improve, someone else’s chart</h2>
-      <p>
-        Using a Financial Times figure, I replicated the chart and improved it by adding an inflation target line, highlighting the peak, and adding clearer percentage labels.
-      </p>
-
-      <div class="task4-top">
-        <div class="chart-wrapper">
-          <p><strong>Original FT Image</strong></p>
-          <!-- ✅ Make this image larger without changing chart sizes -->
-          <img src="images/financial_times.jpg" alt="FT Original" class="task-img task-img--bigger">
-        </div>
-
-        <div class="chart-wrapper">
-          <p><strong>My Replication</strong></p>
-          <div id="vis7" class="vega-container"></div>
-        </div>
-      </div>
-
-      <div class="task4-bottom">
-        <div class="chart-wrapper">
-          <p><strong>My Improvement</strong></p>
-          <div id="vis8" class="vega-container"></div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer class="site-footer" aria-label="Footer">
@@ -119,6 +133,7 @@
         <h3 class="footer__title">Contact</h3>
         <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
+
       <div>
         <h3 class="footer__title">About</h3>
         <p>Built for the LSE Automated Data Visualisation Course.</p>
@@ -128,24 +143,25 @@
   </footer>
 
   <script>
-    // ✅ Back to original sizing to avoid huge charts
-    const config = {
+    // ✅ Force charts to a sane size (prevents "super huge")
+    const embedOptions = {
       actions: false,
       renderer: "svg",
-      width: "container",
-      height: 300
+      width: 460,
+      height: 280
     };
 
-    vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
-    vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', config);
-    vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
-    vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
+    // ✅ Make sure filenames match your /graphs folder
+    vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedOptions);
+    vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedOptions);
+    vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedOptions);
+    vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedOptions);
 
-    vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
-    vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
+    vegaEmbed("#vis5", "graphs/uk_renewable.json", embedOptions);
+    vegaEmbed("#vis6", "graphs/energy_prices.json", embedOptions);
 
-    vegaEmbed('#vis7', 'graphs/financial_times.json', config);
-    vegaEmbed('#vis8', 'graphs/financial_times2.json', config);
+    vegaEmbed("#vis7", "graphs/financial_times.json", embedOptions);
+    vegaEmbed("#vis8", "graphs/financial_times2.json", embedOptions);
   </script>
 </body>
 </html>
