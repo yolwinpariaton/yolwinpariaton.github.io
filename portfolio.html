@@ -32,7 +32,7 @@
     
     <section>
       <h2>Task 1: Hosting</h2>
-      <p>Integrated two charts from a remote repository to demonstrate external hosting.</p>
+      <p>Displaying external unemployment and inflation data.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis1" class="vega-container"></div></div>
         <div class="chart-wrapper"><div id="vis2" class="vega-container"></div></div>
@@ -41,7 +41,7 @@
 
     <section>
       <h2>Task 2: Building</h2>
-      <p>Custom-built charts using Economics Observatory data.</p>
+      <p>Custom visualizations for Nigeria and Ethiopia.</p>
       <div class="charts-row">
         <div class="chart-wrapper">
           <p><strong>Nigeria Inflation</strong></p>
@@ -56,7 +56,7 @@
 
     <section>
       <h2>Task 3: Debating</h2>
-      <p>Analyzing renewable energy trends and pricing.</p>
+      <p>Analyzing the shift to renewable energy and technology costs.</p>
       <div class="charts-row">
         <div class="chart-wrapper"><div id="vis5" class="vega-container"></div></div>
         <div class="chart-wrapper"><div id="vis6" class="vega-container"></div></div>
@@ -65,8 +65,6 @@
 
     <section>
       <h2>Task 4: Replication & Improvement</h2>
-      <p>Re-creating and improving an FT inflation chart.</p>
-      
       <div class="task4-top">
         <div class="chart-wrapper">
           <p><strong>Original FT Image</strong></p>
@@ -77,7 +75,6 @@
           <div id="vis7" class="vega-container"></div>
         </div>
       </div>
-
       <div class="task4-bottom">
         <div class="chart-wrapper">
           <p><strong>My Improvement</strong></p>
@@ -88,19 +85,17 @@
   </main>
 
   <script>
-    // These settings force the graphs to fill the frame and prevent compression
     const config = {
       "actions": false,
       "renderer": "svg",
       "width": "container",
-      "height": 300,
-      "view": {"stroke": "transparent"}
+      "height": 300
     };
 
     vegaEmbed('#vis1', 'graphs/uk_unemployment_chart.json', config);
     vegaEmbed('#vis2', 'graphs/g7_inflation_chart.json', config);
     vegaEmbed('#vis3', 'graphs/nigeria_chart.json', config);
-    vegaEmbed('#vis4', 'graphs/ethiopia_chart.json', config);
+    vegaEmbed('#vis4', 'graphs/ethiopia_debt.json', config); // Ensure this filename matches your repo
     vegaEmbed('#vis5', 'graphs/uk_renewable.json', config);
     vegaEmbed('#vis6', 'graphs/energy_prices.json', config);
     vegaEmbed('#vis7', 'graphs/financial_times.json', config);
