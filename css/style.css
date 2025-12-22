@@ -212,40 +212,6 @@ a:hover{ text-decoration: underline; }
   text-decoration: none;
 }
 
-/* Sections */
-.section{ padding: 44px 0; }
-.section--alt{ background: #eef3fb; }
-
-.two-col{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  align-items: center;
-}
-
-.two-col__text h2{ margin-top: 0; font-size: 28px; }
-.two-col__text p{ color: var(--muted); font-size: 16px; }
-
-.two-col__media{
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px;
-  box-shadow: var(--shadow);
-}
-
-.two-col__media--light{
-  padding: 8px;
-}
-
-.media-img{
-  width: 100%;
-  height: auto;
-  display:block;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
 /* White content area after hero */
 .white-space{
   background: #ffffff;
@@ -281,10 +247,16 @@ a:hover{ text-decoration: underline; }
   min-height: 320px;
 }
 
-/* Full width chart wrapper for Task 4 improved */
+/* ✅ Full width wrapper: DO NOT flex-center the inner chart */
 .chart-wrapper--full{
   margin-top: 20px;
-  max-width: 100%;
+  display: block;
+  min-height: auto;
+}
+
+/* ✅ Scroll container keeps chart INSIDE frame */
+.chart-scroll{
+  width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
 }
@@ -310,12 +282,6 @@ a:hover{ text-decoration: underline; }
 .chart-wrapper .vega-embed canvas{
   max-width: 100% !important;
   height: auto !important;
-}
-
-/* For Task 3 specifically - contain the charts */
-#vis5, #vis6 {
-  max-width: 100%;
-  overflow: hidden;
 }
 
 /* Task image sizing - should match chart height */
@@ -372,8 +338,6 @@ a:hover{ text-decoration: underline; }
     display: flex;
   }
 
-  .two-col{ grid-template-columns: 1fr; }
-
   .charts-row{
     grid-template-columns: 1fr;
   }
@@ -381,10 +345,8 @@ a:hover{ text-decoration: underline; }
   .footer__grid{
     grid-template-columns: 1fr;
   }
-  
-  /* Adjust embed sizes for mobile */
-  .vega-embed svg,
-  .vega-embed canvas{
-    max-width: 100% !important;
+
+  .task-img{
+    height: 240px;
   }
 }

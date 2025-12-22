@@ -98,8 +98,11 @@
             <div class="chart-wrapper"><div id="vis7" class="vega-container"></div></div>
           </div>
 
+          <!-- ✅ FIXED: keep the chart INSIDE the frame using an inner scroll container -->
           <div class="chart-wrapper chart-wrapper--full">
-            <div id="vis8" class="vega-container vega-container--large"></div>
+            <div class="chart-scroll">
+              <div id="vis8" class="vega-container vega-container--large"></div>
+            </div>
           </div>
         </section>
 
@@ -129,38 +132,35 @@
       renderer: "svg"
     };
 
-    // Standard responsive charts
+    // Standard sizing
     const embedStandard = {
       ...embedOptions,
-      width: 400,  // Fixed width that fits in container
+      width: 400,
       height: 300
     };
 
-    // For Task 3 - need to constrain these charts
+    // Task 3 sizing
     const embedTask3 = {
       ...embedOptions,
-      width: 380,  // Smaller to fit in the card
+      width: 380,
       height: 280
     };
 
-    // For Task 4 improved chart - needs more space
+    // Task 4 improved chart (wide)
     const embedLarge = {
       ...embedOptions,
-      width: 900,  // Wider for the full-width container
+      width: 900,
       height: 380
     };
 
-    // Tasks 1-2 - Standard sizing
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
     vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
     vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
     vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
 
-    // Task 3 - Constrained sizing
     vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
     vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 
-    // Task 4 - Original and improved
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
   </script>
