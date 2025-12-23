@@ -99,20 +99,29 @@
           </div>
         </section>
 
+        <!-- ✅ TASK 5 (NEW) -->
         <section class="task">
-          <h2>Task 5: Accessing data. Scraper and API</h2>
-          <p>This chart is powered by a live link to the Economics Observatory API, showing real-time inflation measures.</p>
-          
+          <h2>Task 5: Live API chart</h2>
+          <p>
+            This chart pulls UK inflation data live from the World Bank Indicators API.
+          </p>
+
           <div class="chart-wrapper chart-wrapper--full">
             <div id="vis_api" class="vega-container"></div>
           </div>
 
-          <div class="api-description" style="margin-top: 20px; font-size: 0.9em; line-height: 1.6;">
-            <p><strong>Functional Description:</strong></p>
+          <div style="margin-top: 16px; line-height: 1.6;">
+            <p><strong>Functional description of the API call</strong></p>
             <ul>
-              <li><strong>Base URL:</strong> <code>https://api.economicsobservatory.com</code></li>
-              <li><strong>Parameters:</strong> <code>/gbr/cpic</code> specifies Great Britain and the CPI dataset. The <code>?format=csv</code> ensures compatibility.</li>
-              <li><strong>Final URL:</strong> <a href="https://api.economicsobservatory.com/gbr/cpic?format=csv" target="_blank">https://api.economicsobservatory.com/gbr/cpic?format=csv</a></li>
+              <li><strong>Base URL:</strong> <code>https://api.worldbank.org/v2</code></li>
+              <li><strong>Country:</strong> <code>/country/GBR</code> (United Kingdom)</li>
+              <li><strong>Indicator:</strong> <code>/indicator/FP.CPI.TOTL.ZG</code> (Inflation, consumer prices — annual %)</li>
+              <li><strong>Query parameters:</strong> <code>?format=json&amp;per_page=100</code> (JSON output; return up to 100 rows)</li>
+              <li><strong>Final URL used in the chart:</strong>
+                <a href="https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=100" target="_blank" rel="noopener noreferrer">
+                  https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=100
+                </a>
+              </li>
             </ul>
           </div>
         </section>
@@ -137,22 +146,16 @@
   </footer>
 
   <script>
-    // This setting prevents the charts from being "squashed" 
-    // by ignoring zero-width parent containers.
+    // Keep your existing sizing behaviour (unchanged)
     const embedOptions = {
       actions: false,
       renderer: "svg",
-      width: 400, // Forces the width
-      height: 300 // Forces the height
+      width: 400,
+      height: 300
     };
 
-    // Standard sizing
     const embedStandard = { ...embedOptions };
-
-    // Task 3 sizing
     const embedTask3 = { ...embedOptions, width: 380, height: 280 };
-
-    // Task 4 improved chart (wide)
     const embedLarge = { ...embedOptions, width: 800, height: 400 };
 
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
@@ -164,8 +167,8 @@
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-    // Task 5 - API Chart
-    vegaEmbed("#vis_api", "graphs/api_inflation.json", embedStandard);
+    // ✅ Task 5
+    vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
   </script>
 </body>
 </html>
