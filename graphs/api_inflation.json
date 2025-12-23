@@ -1,23 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Live UK Inflation data via API",
+  "description": "Live UK Inflation data via API with CORS Proxy",
   "data": {
-    "url": "https://api.economicsobservatory.com/gbr/cpic?format=csv",
-    "format": {
-      "type": "csv"
-    }
+    "url": "https://corsproxy.io/?https://api.economicsobservatory.com/gbr/cpic?format=csv",
+    "format": {"type": "csv"}
   },
   "mark": "line",
   "encoding": {
-    "x": {
-      "field": "date", 
-      "type": "temporal", 
-      "title": "Year"
-    },
-    "y": {
-      "field": "value", 
-      "type": "quantitative", 
-      "title": "CPI Inflation (%)"
-    }
+    "x": {"field": "date", "type": "temporal", "title": "Year"},
+    "y": {"field": "value", "type": "quantitative", "title": "CPI Inflation (%)"}
   }
 }
