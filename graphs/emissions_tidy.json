@@ -42,7 +42,7 @@
       "field": "Country",
       "type": "nominal",
       "sort": {"field": "Emissions", "order": "descending"},
-      "legend": {"title": "Top 10 Countries"}
+      "legend": {"title": "Top 10 Emitters"}
     },
     "tooltip": [
       {"field": "Country", "type": "nominal", "title": "Country"},
