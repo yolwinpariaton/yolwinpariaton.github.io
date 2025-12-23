@@ -125,6 +125,28 @@
           </div>
         </section>
 
+        <section class="task">
+          <h2>Task 6: Scraped Data Chart</h2>
+          <p style="text-align: center;">
+            This chart uses data scraped from Wikipedia, converted into a tidy format for time-series analysis.
+          </p>
+          
+          <div class="chart-wrapper" style="margin: 0 auto; max-width: 500px; display: flex; justify-content: center;">
+            <div id="vis_scrape" class="vega-container"></div>
+          </div>
+
+          <div style="text-align: center; margin-top: 15px;">
+            <p>
+              <a href="PASTE_YOUR_COLAB_LINK_HERE" target="_blank" style="font-weight: bold;">
+                View Python Scraper (Google Colab)
+              </a>
+            </p>
+            <p style="font-style: italic; color: #555; max-width: 600px; margin: 0 auto;">
+              I scraped Wikipedia emissions data using BeautifulSoup, flattened MultiIndex headers, and melted the dataset into tidy format to create this multi-series time-series visualization.
+            </p>
+          </div>
+        </section>
+
       </div>
     </section>
   </main>
@@ -165,6 +187,9 @@
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
     vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
+    
+    // Load Task 6 Scraper Chart
+    vegaEmbed("#vis_scrape", "graphs/emissions_chart.json", embedStandard);
   </script>
 </body>
 </html>

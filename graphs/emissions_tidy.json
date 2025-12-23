@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top Global Greenhouse Gas Emitters",
+    "subtitle": "Data scraped from Wikipedia (MtCO2e)",
+    "anchor": "start",
+    "fontSize": 14
+  },
+  "data": {
+    "url": "data/emissions_tidy.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.Emissions > 1500"
+    }
+  ],
+  "width": 400,
+  "height": 300,
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "temporal",
+      "title": "Year"
+    },
+    "y": {
+      "field": "Emissions",
+      "type": "quantitative",
+      "title": "Emissions"
+    },
+    "color": {
+      "field": "Country/territory/region/group",
+      "type": "nominal",
+      "legend": {"title": "Country", "orient": "right"}
+    },
+    "tooltip": [
+      {"field": "Country/territory/region/group", "title": "Country"},
+      {"field": "Year", "type": "temporal", "format": "%Y"},
+      {"field": "Emissions", "type": "quantitative", "format": ".2f"}
+    ]
+  }
+}
