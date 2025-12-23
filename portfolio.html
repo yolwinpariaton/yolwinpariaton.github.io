@@ -99,27 +99,26 @@
           </div>
         </section>
 
-        <!-- ✅ TASK 5 (NEW) -->
         <section class="task">
           <h2>Task 5: Live API chart</h2>
-          <p>
+          <p style="text-align: center;">
             This chart pulls UK inflation data live from the World Bank Indicators API.
           </p>
 
-          <div class="chart-wrapper chart-wrapper--full">
+          <div class="chart-wrapper" style="margin: 0 auto; max-width: 500px; display: flex; justify-content: center;">
             <div id="vis_api" class="vega-container"></div>
           </div>
 
-          <div style="margin-top: 16px; line-height: 1.6;">
+          <div style="margin-top: 16px; line-height: 1.6; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
             <p><strong>Functional description of the API call</strong></p>
-            <ul>
+            <ul style="list-style-position: inside; padding: 0; text-align: left; display: inline-block;">
               <li><strong>Base URL:</strong> <code>https://api.worldbank.org/v2</code></li>
               <li><strong>Country:</strong> <code>/country/GBR</code> (United Kingdom)</li>
               <li><strong>Indicator:</strong> <code>/indicator/FP.CPI.TOTL.ZG</code> (Inflation, consumer prices — annual %)</li>
               <li><strong>Query parameters:</strong> <code>?format=json&amp;per_page=100</code> (JSON output; return up to 100 rows)</li>
               <li><strong>Final URL used in the chart:</strong>
                 <a href="https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=100" target="_blank" rel="noopener noreferrer">
-                  https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=100
+                  Link to API
                 </a>
               </li>
             </ul>
@@ -146,7 +145,6 @@
   </footer>
 
   <script>
-    // Keep your existing sizing behaviour (unchanged)
     const embedOptions = {
       actions: false,
       renderer: "svg",
@@ -166,8 +164,6 @@
     vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
-
-    // ✅ Task 5
     vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
   </script>
 </body>
