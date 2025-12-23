@@ -175,8 +175,23 @@
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-    // Task 5 Live API Chart
-    vegaEmbed("#vis_api", "graphs/api_inflation.json", embedStandard);
+    // This 'opt' setting tells Vega NOT to try and fit a zero-width container
+const opt = { 
+  actions: false, 
+  renderer: "svg"
+};
+
+vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", opt);
+vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", opt);
+vegaEmbed("#vis3", "graphs/nigeria_chart.json", opt);
+vegaEmbed("#vis4", "graphs/ethiopia_chart.json", opt);
+vegaEmbed("#vis5", "graphs/uk_renewable.json", opt);
+vegaEmbed("#vis6", "graphs/energy_prices.json", opt);
+vegaEmbed("#vis7", "graphs/financial_times.json", opt);
+vegaEmbed("#vis8", "graphs/financial_times2.json", opt);
+
+// Task 5 - Use the same options
+vegaEmbed("#vis_api", "graphs/api_inflation.json", opt);
   </script>
 </body>
 </html>
