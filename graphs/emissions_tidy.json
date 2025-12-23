@@ -11,18 +11,25 @@
   },
   "transform": [
     {
-      "joinaggregate": [
-        {"op": "sum", "field": "Emissions", "as": "Total_Country_Emissions"}
+      "aggregate": [
+        {"op": "sum", "field": "Emissions", "as": "Total_Emissions"}
       ],
       "groupby": ["Country"]
     },
     {
-      "window": [{"op": "dense_rank", "as": "emission_rank"}],
-      "sort": [{"field": "Total_Country_Emissions", "order": "descending"}],
-      "groupby": []
+      "window": [{"op": "row_number", "as": "rank"}],
+      "sort": [{"field": "Total_Emissions", "order": "descending"}]
     },
     {
-      "filter": "datum.emission_rank <= 5"
+      "filter": "datum.rank <= 5"
+    },
+    {
+      "lookup": "Country",
+      "from": {
+        "data": {"url": "data/emissions_tidy.csv"},
+        "key": "Country",
+        "fields": ["Year", "Emissions"]
+      }
     }
   ],
   "width": 400,
@@ -44,19 +51,17 @@
     "color": {
       "field": "Country",
       "type": "nominal",
-      "legend": {"title": "Top 5 Emitters", "orient": "right", "labelLimit": 200},
+      "legend": {"title": "Top 5 Emitters", "orient": "right"},
       "scale": {"scheme": "category10"}
     },
     "tooltip": [
       {"field": "Country", "type": "nominal", "title": "Country"},
       {"field": "Year", "type": "temporal", "format": "%Y", "title": "Year"},
-      {"field": "Emissions", "type": "quantitative", "format": ",.0f", "title": "Annual Emissions"},
-      {"field": "Total_Country_Emissions", "type": "quantitative", "format": ",.0f", "title": "Cumulative Total"}
+      {"field": "Emissions", "type": "quantitative", "format": ",.0f", "title": "Annual Emissions"}
     ]
   },
   "config": {
     "view": {"stroke": "transparent"},
-    "axis": {"grid": true, "gridColor": "#e0e0e0"},
-    "legend": {"labelFontSize": 11}
+    "axis": {"grid": true, "gridColor": "#e0e0e0"}
   }
 }
