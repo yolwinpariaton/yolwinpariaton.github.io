@@ -87,7 +87,7 @@
 
           <div class="charts-row">
             <div class="chart-wrapper">
-              <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
+              <img src="image/financial_times.jpg" alt="Financial Times original chart" class="task-img">
             </div>
             <div class="chart-wrapper"><div id="vis7" class="vega-container"></div></div>
           </div>
@@ -111,7 +111,7 @@
             <p><strong>Functional Description:</strong></p>
             <ul>
               <li><strong>Base URL:</strong> <code>https://api.economicsobservatory.com</code></li>
-              <li><strong>Parameters:</strong> <code>/gbr/cpic</code> specifies the country (Great Britain) and the dataset (Consumer Price Index). The <code>?format=csv</code> suffix ensures the data is returned in a format readable by Vega-Lite.</li>
+              <li><strong>Parameters:</strong> <code>/gbr/cpic</code> specifies Great Britain and the CPI dataset. The <code>?format=csv</code> ensures compatibility.</li>
               <li><strong>Final URL:</strong> <a href="https://api.economicsobservatory.com/gbr/cpic?format=csv" target="_blank">https://api.economicsobservatory.com/gbr/cpic?format=csv</a></li>
             </ul>
           </div>
@@ -137,45 +137,34 @@
   </footer>
 
   <script>
-    // Base embed options
+    // This setting prevents the charts from being "squashed" 
+    // by ignoring zero-width parent containers.
     const embedOptions = {
       actions: false,
-      renderer: "svg"
+      renderer: "svg",
+      width: 400, // Forces the width
+      height: 300 // Forces the height
     };
 
     // Standard sizing
-    const embedStandard = {
-      ...embedOptions,
-      width: 400,
-      height: 300
-    };
+    const embedStandard = { ...embedOptions };
 
     // Task 3 sizing
-    const embedTask3 = {
-      ...embedOptions,
-      width: 380,
-      height: 280
-    };
+    const embedTask3 = { ...embedOptions, width: 380, height: 280 };
 
     // Task 4 improved chart (wide)
-    const embedLarge = {
-      ...embedOptions,
-      width: 900,
-      height: 380
-    };
+    const embedLarge = { ...embedOptions, width: 800, height: 400 };
 
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
     vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
     vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
     vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
-
     vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
     vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
-
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-    // Task 5 Live API Chart
+    // Task 5 - API Chart
     vegaEmbed("#vis_api", "graphs/api_inflation.json", embedStandard);
   </script>
 </body>
