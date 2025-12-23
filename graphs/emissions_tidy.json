@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Top 10 Global Greenhouse Gas Emitters",
-    "subtitle": "Data scraped from Wikipedia (MtCO2e)",
+    "text": "Top 10 Global Greenhouse Gas Emitters Over Time",
+    "subtitle": "Based on total cumulative emissions across all years (MtCO₂e)",
     "anchor": "start",
     "fontSize": 14
   },
@@ -18,7 +18,8 @@
     },
     {
       "window": [{"op": "dense_rank", "as": "emission_rank"}],
-      "sort": [{"field": "Total_Country_Emissions", "order": "descending"}]
+      "sort": [{"field": "Total_Country_Emissions", "order": "descending"}],
+      "groupby": []
     },
     {
       "filter": "datum.emission_rank <= 10"
@@ -26,28 +27,35 @@
   ],
   "width": 400,
   "height": 300,
-  "mark": {"type": "line", "point": true},
+  "mark": {"type": "line", "point": true, "strokeWidth": 2},
   "encoding": {
     "x": {
       "field": "Year",
       "type": "temporal",
-      "title": "Year"
+      "title": "Year",
+      "axis": {"format": "%Y", "labelAngle": 0}
     },
     "y": {
       "field": "Emissions",
       "type": "quantitative",
-      "title": "Annual Emissions (MtCO2e)"
+      "title": "Annual Emissions (MtCO₂e)",
+      "axis": {"format": ",.0f"}
     },
     "color": {
       "field": "Country",
       "type": "nominal",
-      "sort": {"field": "Emissions", "order": "descending"},
-      "legend": {"title": "Top 10 Emitters"}
+      "legend": {"title": "Top 10 Emitters", "orient": "right"},
+      "scale": {"scheme": "category20"}
     },
     "tooltip": [
       {"field": "Country", "type": "nominal", "title": "Country"},
       {"field": "Year", "type": "temporal", "format": "%Y", "title": "Year"},
-      {"field": "Emissions", "type": "quantitative", "format": ",.2f", "title": "Emissions"}
+      {"field": "Emissions", "type": "quantitative", "format": ",.0f", "title": "Emissions (MtCO₂e)"},
+      {"field": "Total_Country_Emissions", "type": "quantitative", "format": ",.0f", "title": "Cumulative Total"}
     ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"grid": true, "gridColor": "#e0e0e0"}
   }
 }
