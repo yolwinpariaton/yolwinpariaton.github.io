@@ -11,23 +11,17 @@
   },
   "transform": [
     {
-      "aggregate": [{"op": "sum", "field": "Emissions", "as": "TotalEmissions"}],
+      "joinaggregate": [
+        {"op": "sum", "field": "Emissions", "as": "Total_Country_Emissions"}
+      ],
       "groupby": ["Country"]
     },
     {
-      "window": [{"op": "rank", "as": "rank"}],
-      "sort": [{"field": "TotalEmissions", "order": "descending"}]
+      "window": [{"op": "dense_rank", "as": "emission_rank"}],
+      "sort": [{"field": "Total_Country_Emissions", "order": "descending"}]
     },
     {
-      "filter": "datum.rank <= 10"
-    },
-    {
-      "lookup": "Country",
-      "from": {
-        "data": {"url": "data/emissions_tidy.csv"},
-        "key": "Country",
-        "fields": ["Year", "Emissions"]
-      }
+      "filter": "datum.emission_rank <= 10"
     }
   ],
   "width": 400,
@@ -48,7 +42,7 @@
       "field": "Country",
       "type": "nominal",
       "sort": {"field": "Emissions", "order": "descending"},
-      "legend": {"title": "Country"}
+      "legend": {"title": "Top 10 Countries"}
     },
     "tooltip": [
       {"field": "Country", "type": "nominal", "title": "Country"},
