@@ -3,13 +3,21 @@
   "description": "Live UK Inflation data via API",
   "data": {
     "url": "https://api.economicsobservatory.com/gbr/cpic?format=csv",
-    "format": {"type": "csv"}
+    "format": {
+      "type": "csv"
+    }
   },
   "mark": "line",
   "encoding": {
-    "x": {"field": "date", "type": "temporal", "title": "Year"},
-    "y": {"field": "value", "type": "quantitative", "title": "CPI Inflation (%)"}
-  },
-  "width": 400,
-  "height": 300
+    "x": {
+      "field": "date", 
+      "type": "temporal", 
+      "title": "Year"
+    },
+    "y": {
+      "field": "value", 
+      "type": "quantitative", 
+      "title": "CPI Inflation (%)"
+    }
+  }
 }
