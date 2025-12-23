@@ -10,7 +10,6 @@
 
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -25,7 +24,6 @@
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <!-- NO-JS toggle -->
       <input class="nav__checkbox" type="checkbox" id="navTogglePortfolio" />
       <label class="nav__toggle" for="navTogglePortfolio" aria-label="Toggle navigation">☰</label>
 
@@ -49,7 +47,6 @@
     <section class="white-space" aria-label="Portfolio content">
       <div class="container portfolio-content">
 
-        <!-- TASK 1 -->
         <section class="task">
           <h2>Task 1: Hosting. Display charts in your own site</h2>
           <p>Two charts from Richard Davies' library were integrated.</p>
@@ -60,7 +57,6 @@
           </div>
         </section>
 
-        <!-- TASK 2 -->
         <section class="task">
           <h2>Task 2: Building. Create your own visualisations</h2>
           <p>Two charts were developed using the Economics Observatory Data Hub.</p>
@@ -71,7 +67,6 @@
           </div>
         </section>
 
-        <!-- TASK 3 -->
         <section class="task">
           <h2>Task 3: Debating. Use a visualisation in economic/policy commentary</h2>
           <p>
@@ -84,7 +79,6 @@
           </div>
         </section>
 
-        <!-- TASK 4 -->
         <section class="task">
           <h2>Task 4: Replication. Re-create, then improve, someone else's chart</h2>
           <p>
@@ -98,11 +92,28 @@
             <div class="chart-wrapper"><div id="vis7" class="vega-container"></div></div>
           </div>
 
-          <!-- ✅ FIXED: keep the chart INSIDE the frame using an inner scroll container -->
           <div class="chart-wrapper chart-wrapper--full">
             <div class="chart-scroll">
               <div id="vis8" class="vega-container vega-container--large"></div>
             </div>
+          </div>
+        </section>
+
+        <section class="task">
+          <h2>Task 5: Accessing data. Scraper and API</h2>
+          <p>This chart is powered by a live link to the Economics Observatory API, showing real-time inflation measures.</p>
+          
+          <div class="chart-wrapper chart-wrapper--full">
+            <div id="vis_api" class="vega-container"></div>
+          </div>
+
+          <div class="api-description" style="margin-top: 20px; font-size: 0.9em; line-height: 1.6;">
+            <p><strong>Functional Description:</strong></p>
+            <ul>
+              <li><strong>Base URL:</strong> <code>https://api.economicsobservatory.com</code></li>
+              <li><strong>Parameters:</strong> <code>/gbr/cpic</code> specifies the country (Great Britain) and the dataset (Consumer Price Index). The <code>?format=csv</code> suffix ensures the data is returned in a format readable by Vega-Lite.</li>
+              <li><strong>Final URL:</strong> <a href="https://api.economicsobservatory.com/gbr/cpic?format=csv" target="_blank">https://api.economicsobservatory.com/gbr/cpic?format=csv</a></li>
+            </ul>
           </div>
         </section>
 
@@ -163,6 +174,9 @@
 
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
+
+    // Task 5 Live API Chart
+    vegaEmbed("#vis_api", "graphs/api_inflation.json", embedStandard);
   </script>
 </body>
 </html>
