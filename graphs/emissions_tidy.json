@@ -26,17 +26,17 @@
     "y": {
       "field": "Emissions",
       "type": "quantitative",
-      "title": "Emissions"
+      "title": "Annual Emissions (MtCO2e)"
     },
     "color": {
       "field": "Country/territory/region/group",
       "type": "nominal",
-      "legend": {"title": "Country", "orient": "right"}
+      "legend": {"title": "Country"}
     },
     "tooltip": [
       {"field": "Country/territory/region/group", "title": "Country"},
-      {"field": "Year", "type": "temporal", "format": "%Y"},
-      {"field": "Emissions", "type": "quantitative", "format": ".2f"}
+      {"field": "Year", "type": "temporal", "format": "%Y", "title": "Year"},
+      {"field": "Emissions", "type": "quantitative", "format": ",.0f", "title": "Emissions"}
     ]
   }
 }
