@@ -1,59 +1,57 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Top 5 greenhouse gas emitters in 1970",
+  "description": "Top 5 greenhouse gas emitters in 1970 (lollipop chart, Mt CO2-eq)",
   "data": {
-    "url": "data/emissions_tidy.csv",
-    "format": {
-      "type": "csv"
-    }
+    "url": "../data/emissions_tidy.csv",
+    "format": { "type": "csv" }
   },
   "transform": [
     { "filter": "datum.Year == 1970" },
     {
-      "window": [
-        { "op": "rank", "as": "rank" }
-      ],
-      "sort": [
-        { "field": "Emissions", "order": "descending" }
-      ]
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "Emissions", "order": "descending" }]
     },
-    { "filter": "datum.rank <= 5" }
+    { "filter": "datum.rank <= 5" },
+    { "calculate": "datum.Emissions / 1000", "as": "Emissions_Mt" },
+    { "calculate": "format(datum.Emissions_Mt, ',.1f') + ' Mt'", "as": "Label_Mt" }
   ],
-  "mark": {
-    "type": "bar",
-    "cornerRadiusEnd": 4
-  },
-  "encoding": {
-    "y": {
-      "field": "Country",
-      "type": "nominal",
-      "sort": "-x",
-      "title": null
+  "layer": [
+    {
+      "mark": { "type": "bar", "cornerRadiusEnd": 6 },
+      "encoding": {
+        "y": {
+          "field": "Country",
+          "type": "nominal",
+          "sort": "-x",
+          "title": null
+        },
+        "x": {
+          "field": "Emissions_Mt",
+          "type": "quantitative",
+          "title": "Greenhouse Gas Emissions (Mt CO₂-eq)",
+          "axis": { "format": ",.0f" }
+        },
+        "tooltip": [
+          { "field": "Country", "type": "nominal", "title": "Country" },
+          { "field": "Year", "type": "quantitative", "title": "Year" },
+          { "field": "Emissions", "type": "quantitative", "title": "Emissions (kt CO₂-eq)", "format": ",.0f" },
+          { "field": "Emissions_Mt", "type": "quantitative", "title": "Emissions (Mt CO₂-eq)", "format": ",.1f" }
+        ]
+      }
     },
-    "x": {
-      "field": "Emissions",
-      "type": "quantitative",
-      "title": "Greenhouse Gas Emissions (kt CO₂-eq)"
-    },
-    "color": {
-      "field": "Country",
-      "type": "nominal",
-      "legend": null
-    },
-    "tooltip": [
-      { "field": "Country", "type": "nominal", "title": "Country" },
-      { "field": "Emissions", "type": "quantitative", "title": "Emissions (kt)" }
-    ]
-  },
-  "width": 600,
+    {
+      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 6 },
+      "encoding": {
+        "y": { "field": "Country", "type": "nominal", "sort": "-x" },
+        "x": { "field": "Emissions_Mt", "type": "quantitative" },
+        "text": { "field": "Label_Mt", "type": "nominal" }
+      }
+    }
+  ],
+  "width": 400,
   "height": 300,
   "config": {
-    "axis": {
-      "labelFontSize": 12,
-      "titleFontSize": 13
-    },
-    "view": {
-      "stroke": "transparent"
-    }
+    "axis": { "labelFontSize": 12, "titleFontSize": 13 },
+    "view": { "stroke": "transparent" }
   }
 }
