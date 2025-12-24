@@ -147,6 +147,17 @@
           </div>
         </section>
 
+        <section class="task">
+          <h2>Task 7: Top 5 Greenhouse Gas Emitters</h2>
+          <p style="text-align: center;">
+            This chart shows the five largest greenhouse gas emitters (kt CO₂-eq) in 1970 based on my tidy emissions dataset.
+          </p>
+
+          <div class="chart-wrapper" style="margin: 0 auto; max-width: 700px; display: flex; justify-content: center;">
+            <div id="vis_top5" class="vega-container"></div>
+          </div>
+        </section>
+
       </div>
     </section>
   </main>
@@ -190,6 +201,9 @@
     
     // Load Task 6 Scraper Chart
     vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
+
+    // Load Task 7 Top 5 Emitters Chart
+    vegaEmbed("#vis_top5", "graphs/top5_emitters_1970.json", embedStandard);
   </script>
 </body>
 </html>

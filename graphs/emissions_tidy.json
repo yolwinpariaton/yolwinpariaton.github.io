@@ -1,67 +1,59 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Top 5 Global Greenhouse Gas Emitters Over Time",
-    "subtitle": "Based on total cumulative emissions across all years (MtCO₂e)",
-    "anchor": "start",
-    "fontSize": 14
-  },
+  "description": "Top 5 greenhouse gas emitters in 1970",
   "data": {
-    "url": "data/emissions_tidy.csv"
+    "url": "data/emissions_tidy.csv",
+    "format": {
+      "type": "csv"
+    }
   },
   "transform": [
+    { "filter": "datum.Year == 1970" },
     {
-      "aggregate": [
-        {"op": "sum", "field": "Emissions", "as": "Total_Emissions"}
+      "window": [
+        { "op": "rank", "as": "rank" }
       ],
-      "groupby": ["Country"]
+      "sort": [
+        { "field": "Emissions", "order": "descending" }
+      ]
     },
-    {
-      "window": [{"op": "row_number", "as": "rank"}],
-      "sort": [{"field": "Total_Emissions", "order": "descending"}]
-    },
-    {
-      "filter": "datum.rank <= 5"
-    },
-    {
-      "lookup": "Country",
-      "from": {
-        "data": {"url": "data/emissions_tidy.csv"},
-        "key": "Country",
-        "fields": ["Year", "Emissions"]
-      }
-    }
+    { "filter": "datum.rank <= 5" }
   ],
-  "width": 400,
-  "height": 300,
-  "mark": {"type": "line", "point": true, "strokeWidth": 2.5},
+  "mark": {
+    "type": "bar",
+    "cornerRadiusEnd": 4
+  },
   "encoding": {
-    "x": {
-      "field": "Year",
-      "type": "temporal",
-      "title": "Year",
-      "axis": {"format": "%Y", "labelAngle": 0}
-    },
     "y": {
+      "field": "Country",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null
+    },
+    "x": {
       "field": "Emissions",
       "type": "quantitative",
-      "title": "Annual Emissions (MtCO₂e)",
-      "axis": {"format": ",.0f"}
+      "title": "Greenhouse Gas Emissions (kt CO₂-eq)"
     },
     "color": {
       "field": "Country",
       "type": "nominal",
-      "legend": {"title": "Top 5 Emitters", "orient": "right"},
-      "scale": {"scheme": "category10"}
+      "legend": null
     },
     "tooltip": [
-      {"field": "Country", "type": "nominal", "title": "Country"},
-      {"field": "Year", "type": "temporal", "format": "%Y", "title": "Year"},
-      {"field": "Emissions", "type": "quantitative", "format": ",.0f", "title": "Annual Emissions"}
+      { "field": "Country", "type": "nominal", "title": "Country" },
+      { "field": "Emissions", "type": "quantitative", "title": "Emissions (kt)" }
     ]
   },
+  "width": 600,
+  "height": 300,
   "config": {
-    "view": {"stroke": "transparent"},
-    "axis": {"grid": true, "gridColor": "#e0e0e0"}
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 13
+    },
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }
