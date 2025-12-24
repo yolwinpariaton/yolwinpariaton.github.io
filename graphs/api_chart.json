@@ -1,36 +1,31 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Top 5 greenhouse gas emitters in 1970",
+  "description": "UK inflation (consumer prices, annual %) from the World Bank API",
   "data": {
-    "url": "../data/emissions_tidy.csv",
-    "format": { "type": "csv" }
+    "url": "https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200",
+    "format": { "type": "json", "property": "1" }
   },
   "transform": [
-    { "filter": "datum.Year == 1970" },
-    {
-      "window": [{ "op": "rank", "as": "rank" }],
-      "sort": [{ "field": "Emissions", "order": "descending" }]
-    },
-    { "filter": "datum.rank <= 5" }
+    { "filter": "datum.value != null" },
+    { "calculate": "toNumber(datum.date)", "as": "Year" }
   ],
-  "mark": { "type": "bar", "cornerRadiusEnd": 4 },
+  "mark": { "type": "line", "point": true },
   "encoding": {
-    "y": {
-      "field": "Country",
-      "type": "nominal",
-      "sort": "-x",
-      "title": null
-    },
     "x": {
-      "field": "Emissions",
+      "field": "Year",
       "type": "quantitative",
-      "title": "Greenhouse Gas Emissions (kt CO₂-eq)"
+      "title": "Year",
+      "scale": { "nice": true }
     },
-    "color": { "field": "Country", "type": "nominal", "legend": null },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Inflation, consumer prices (annual %)",
+      "scale": { "nice": true }
+    },
     "tooltip": [
-      { "field": "Country", "type": "nominal", "title": "Country" },
       { "field": "Year", "type": "quantitative", "title": "Year" },
-      { "field": "Emissions", "type": "quantitative", "title": "Emissions (kt)" }
+      { "field": "value", "type": "quantitative", "title": "Inflation (annual %)" }
     ]
   },
   "width": 400,
