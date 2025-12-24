@@ -1,58 +1,42 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "UK inflation (World Bank)",
-    "subtitle": "Inflation, consumer prices (annual %) — live API",
-    "anchor": "start",
-    "fontSize": 14,
-    "subtitleFontSize": 12
+  "description": "Top 5 greenhouse gas emitters in 1970",
+  "data": {
+    "url": "../data/emissions_tidy.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "filter": "datum.Year == 1970" },
+    {
+      "window": [{ "op": "rank", "as": "rank" }],
+      "sort": [{ "field": "Emissions", "order": "descending" }]
+    },
+    { "filter": "datum.rank <= 5" }
+  ],
+  "mark": { "type": "bar", "cornerRadiusEnd": 4 },
+  "encoding": {
+    "y": {
+      "field": "Country",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null
+    },
+    "x": {
+      "field": "Emissions",
+      "type": "quantitative",
+      "title": "Greenhouse Gas Emissions (kt CO₂-eq)"
+    },
+    "color": { "field": "Country", "type": "nominal", "legend": null },
+    "tooltip": [
+      { "field": "Country", "type": "nominal", "title": "Country" },
+      { "field": "Year", "type": "quantitative", "title": "Year" },
+      { "field": "Emissions", "type": "quantitative", "title": "Emissions (kt)" }
+    ]
   },
   "width": 400,
   "height": 300,
-  "data": {
-    "url": "https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=100",
-    "format": { "type": "json", "property": "1" }
-  },
-  "transform": [
-    { "filter": "datum.value != null" },
-    { "calculate": "toDate(datum.date + '-01-01')", "as": "Date" }
-  ],
-  "layer": [
-    {
-      "mark": { "type": "line", "strokeWidth": 3, "color": "#0F5499" },
-      "encoding": {
-        "x": {
-          "field": "Date",
-          "type": "temporal",
-          "axis": { "title": null, "format": "%Y", "grid": false }
-        },
-        "y": {
-          "field": "value",
-          "type": "quantitative",
-          "axis": { "title": "Annual %", "grid": true },
-          "scale": { "nice": true }
-        },
-        "tooltip": [
-          { "field": "Date", "type": "temporal", "title": "Year", "format": "%Y" },
-          { "field": "value", "type": "quantitative", "title": "Inflation (%)", "format": ".2f" }
-        ]
-      }
-    },
-    {
-      "mark": { "type": "rule", "strokeDash": [6, 4], "strokeWidth": 1.5, "color": "#66605C" },
-      "encoding": { "y": { "datum": 2 } }
-    },
-    {
-      "data": { "values": [{ "label": "2% reference" }] },
-      "mark": { "type": "text", "align": "left", "baseline": "bottom", "dx": 4, "dy": -2, "fontSize": 10, "color": "#66605C" },
-      "encoding": {
-        "text": { "field": "label" },
-        "x": { "value": 0 },
-        "y": { "datum": 2 }
-      }
-    }
-  ],
   "config": {
+    "axis": { "labelFontSize": 12, "titleFontSize": 13 },
     "view": { "stroke": "transparent" }
   }
 }

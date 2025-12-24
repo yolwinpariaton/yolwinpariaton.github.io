@@ -100,13 +100,14 @@
         </section>
 
         <section class="task">
-          <h2>Task 5: Live API chart</h2>
+          <h2>Task 5: Accessing data: Scraper and API.</h2>
           <p style="text-align: center;">
-            This chart pulls UK inflation data live from the World Bank Indicators API.
+            This task has two parts: Part A (left) is a live API chart; Part B (right) is a chart built from locally scraped data.
           </p>
 
-          <div class="chart-wrapper" style="margin: 0 auto; max-width: 500px; display: flex; justify-content: center;">
-            <div id="vis_api" class="vega-container"></div>
+          <div class="charts-row">
+            <div class="chart-wrapper"><div id="vis_api" class="vega-container"></div></div>
+            <div class="chart-wrapper"><div id="vis_scrape" class="vega-container"></div></div>
           </div>
 
           <div style="margin-top: 16px; line-height: 1.6; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
@@ -122,39 +123,6 @@
                 </a>
               </li>
             </ul>
-          </div>
-        </section>
-
-        <section class="task">
-          <h2>Task 6: Scraped Data Chart</h2>
-          <p style="text-align: center;">
-            This chart uses data scraped from Wikipedia, converted into a tidy format for time-series analysis.
-          </p>
-          
-          <div class="chart-wrapper" style="margin: 0 auto; max-width: 500px; display: flex; justify-content: center;">
-            <div id="vis_scrape" class="vega-container"></div>
-          </div>
-
-          <div style="text-align: center; margin-top: 15px;">
-            <p>
-              <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz#scrollTo=q1-KSaUgwMFf" target="_blank" style="font-weight: bold;">
-                View Python Scraper (Google Colab)
-              </a>
-            </p>
-            <p style="font-style: italic; color: #555; max-width: 600px; margin: 0 auto;">
-              I scraped Wikipedia emissions data using BeautifulSoup, flattened MultiIndex headers, and melted the dataset into tidy format to create this multi-series time-series visualization.
-            </p>
-          </div>
-        </section>
-
-        <section class="task">
-          <h2>Task 7: Top 5 Greenhouse Gas Emitters</h2>
-          <p style="text-align: center;">
-            This chart shows the five largest greenhouse gas emitters (kt CO₂-eq) in 1970 based on my tidy emissions dataset.
-          </p>
-
-          <div class="chart-wrapper" style="margin: 0 auto; max-width: 700px; display: flex; justify-content: center;">
-            <div id="vis_top5" class="vega-container"></div>
           </div>
         </section>
 
@@ -199,11 +167,8 @@
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
     vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
     
-    // Load Task 6 Scraper Chart
+    // Load Task 5 Part B (Scraped Data Chart)
     vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
-
-    // Load Task 7 Top 5 Emitters Chart
-    vegaEmbed("#vis_top5", "graphs/top5_emitters_1970.json", embedStandard);
   </script>
 </body>
 </html>
