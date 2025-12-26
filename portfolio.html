@@ -10,6 +10,7 @@
 
   <link rel="stylesheet" href="css/style.css" />
 
+  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -47,6 +48,7 @@
     <section class="white-space" aria-label="Portfolio content">
       <div class="container portfolio-content">
 
+        <!-- TASK 1 -->
         <section class="task">
           <h2>Task 1: Hosting. Display charts in your own site</h2>
           <p>Two charts from Richard Davies' library were integrated.</p>
@@ -57,6 +59,7 @@
           </div>
         </section>
 
+        <!-- TASK 2 -->
         <section class="task">
           <h2>Task 2: Building. Create your own visualisations</h2>
           <p>Two charts were developed using the Economics Observatory Data Hub.</p>
@@ -67,6 +70,7 @@
           </div>
         </section>
 
+        <!-- TASK 3 -->
         <section class="task">
           <h2>Task 3: Debating. Use a visualisation in economic/policy commentary</h2>
           <p>
@@ -79,92 +83,61 @@
           </div>
         </section>
 
+        <!-- TASK 4 -->
         <section class="task">
           <h2>Task 4: Replication. Re-create, then improve, someone else's chart</h2>
           <p>
-            I saved the original chart image, replicated it in Vega-Lite, then improved readability with clearer labels, reference lines, and annotations.
+            Based on a Financial Times chart, I replicated the figure and improved it by adding an inflation target line, marking the peak, and adding clearer percentage labels.
           </p>
 
-          <h3 style="margin-top: 14px;">Original chart (image)</h3>
-          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
-            <img
-              src="images/financial_times.jpg"
-              alt="Financial Times original chart"
-              style="width:100%; height:300px; object-fit:contain; border-radius:10px; display:block;"
-            >
-          </div>
-
-          <h3 style="margin-top: 26px;">Replication (Vega-Lite)</h3>
-          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
-            <div id="vis7" class="vega-container" style="width:100%;"></div>
-          </div>
-
-          <h3 style="margin-top: 26px;">Improved version (Vega-Lite)</h3>
-          <p style="margin-top: 8px;">
-            Added target line, highlighted peak, improved axis formatting, and clarified labels to make the trend easier to interpret.
-          </p>
-
-          <div class="chart-wrapper chart-wrapper--full" style="margin-top: 12px;">
-            <div class="chart-scroll">
-              <div id="vis8" class="vega-container vega-container--large"></div>
+          <div class="charts-row">
+            <div class="chart-wrapper">
+              <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
             </div>
+            <div class="chart-wrapper"><div id="vis7" class="vega-container"></div></div>
+          </div>
+
+          <div class="chart-wrapper chart-wrapper--full">
+            <div id="vis8" class="vega-container vega-container--large"></div>
           </div>
         </section>
 
+        <!-- TASK 5 -->
         <section class="task">
           <h2>Task 5: Accessing data: Scraper and API</h2>
           <p>
             I created one chart from a live API call and one chart from scraped Wikipedia data, then cleaned and reshaped the scraped data into tidy format.
           </p>
 
-          <h3 style="margin-top: 14px;">Part A: API chart</h3>
-          <p>
-            This chart pulls UK inflation data directly from the World Bank Indicators API.
-          </p>
+          <h3>Part A: API chart</h3>
+          <p>This chart pulls UK inflation data directly from the World Bank Indicators API.</p>
 
-          <p><strong>Functional description of the API call</strong></p>
-          <ul style="list-style-position: inside; padding: 0;">
+          <div class="chart-wrapper">
+            <div id="vis_api" class="vega-container"></div>
+          </div>
+
+          <p><strong>API Documentation:</strong></p>
+          <ul>
             <li><strong>Base URL:</strong> <code>https://api.worldbank.org/v2</code></li>
-            <li><strong>Country:</strong> <code>/country/GBR</code></li>
-            <li><strong>Indicator:</strong> <code>/indicator/FP.CPI.TOTL.ZG</code></li>
-            <li><strong>Query parameters:</strong> <code>?format=json&amp;per_page=200</code></li>
-            <li>
-              <strong>Final URL used in the chart:</strong>
-              
-                href="https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                api.worldbank.org/.../FP.CPI.TOTL.ZG
-              </a>
-            </li>
+            <li><strong>Endpoint:</strong> <code>/country/GBR/indicator/FP.CPI.TOTL.ZG</code></li>
+            <li><strong>Parameters:</strong> <code>?format=json&per_page=200</code></li>
           </ul>
 
-          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
-            <div id="vis_api" class="vega-container" style="width:100%;"></div>
+          <h3>Part B: Scraped chart</h3>
+          <p>This chart uses emissions data scraped from Wikipedia, cleaned into tidy format.</p>
+
+          <div class="chart-wrapper">
+            <div id="vis_scrape" class="vega-container"></div>
           </div>
 
-          <h3 style="margin-top: 26px;">Part B: Scraped chart</h3>
           <p>
-            This chart uses emissions data scraped from Wikipedia, cleaned into tidy format, and visualises the five largest greenhouse gas emitters in 1970.
-          </p>
-
-          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
-            <div id="vis_scrape" class="vega-container" style="width:100%;"></div>
-          </div>
-
-          <p style="margin-top: 14px;">
-            I scraped Wikipedia tables, handled inconsistent headers, reshaped to tidy format, and validated units before plotting the top emitters for a single year.
-          </p>
-
-          <p style="margin-top: 6px;">
             <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" style="font-weight: bold;">
               Google Colab notebook (scraper and processing)
             </a>
           </p>
         </section>
 
-        <!-- TASK 6: Dashboard with Loops -->
+        <!-- TASK 6 -->
         <section class="task">
           <h2>Task 6: Loops. Build a dashboard</h2>
           <p>
@@ -174,7 +147,7 @@
           <p>
             <strong>Data source:</strong> World Bank API | 
             <strong>Period:</strong> 2000-2023 | 
-            <a href="https://colab.research.google.com/drive/1uNzblqPUEmysdTm3UBp0k3KuNogf3oSS?authuser=0#scrollTo=BLZpW2L-EUDo" target="_blank" style="font-weight: bold;">📊 Google Colab Notebook</a>
+            <a href="YOUR_COLAB_LINK_HERE" target="_blank" style="font-weight: bold;">📊 Google Colab Notebook</a>
           </p>
 
           <div class="dashboard-grid">
@@ -206,6 +179,58 @@
     </div>
   </footer>
 
-  <script src="js/details.js"></script>
+  <!-- Embed all charts - THIS MUST BE AT THE END OF BODY -->
+  <script>
+    // Embed options
+    const embedStandard = {
+      actions: false,
+      renderer: "svg",
+      width: 400,
+      height: 300
+    };
+
+    const embedTask3 = {
+      actions: false,
+      renderer: "svg",
+      width: 380,
+      height: 280
+    };
+
+    const embedLarge = {
+      actions: false,
+      renderer: "svg",
+      width: 900,
+      height: 380
+    };
+
+    // Tasks 1-2: Standard sizing
+    vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
+    vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
+    vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
+    vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
+
+    // Task 3: Constrained sizing
+    vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
+    vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
+
+    // Task 4: Original and improved
+    vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
+    vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
+    
+    // Task 5: API and Scraper
+    vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
+    vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
+
+    // Task 6: Dashboard - Using LOOP to embed 6 charts
+    const dashboardOptions = {
+      actions: false,
+      renderer: "svg"
+    };
+
+    // Loop to embed all 6 dashboard charts
+    for (let i = 1; i <= 6; i++) {
+      vegaEmbed(`#dash${i}`, `graphs/dashboard_${i}.json`, dashboardOptions);
+    }
+  </script>
 </body>
 </html>
