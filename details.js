@@ -28,12 +28,12 @@ const embedWide = {
 };
 
 // Tasks 1-5: Individual embeds
-vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
-vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
-vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
-vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
-vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
-vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
+vegaEmbed("#vis1", "graphs/dashboard1.json", embedStandard);
+vegaEmbed("#vis2", "graphs/dashboard2.json", embedStandard);
+vegaEmbed("#vis3", "graphs/dashboard3.json", embedStandard);
+vegaEmbed("#vis4", "graphs/dashboard4.json", embedStandard);
+vegaEmbed("#vis5", "graphs/dashboard5.json", embedTask3);
+vegaEmbed("#vis6", "graphs/dashboard6.json", embedTask3);
 
 // Task 4
 vegaEmbed("#vis7", "graphs/financial_times.json", embedWide);
