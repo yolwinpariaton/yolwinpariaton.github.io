@@ -5,22 +5,37 @@ const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300
 const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
 const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
 
+// Utility: embed with visible error message (so you don’t need to open console)
+function embedSafe(target, specOrUrl, options, label) {
+  return vegaEmbed(target, specOrUrl, options).catch((err) => {
+    console.error(`${label} error:`, err);
+    const el = document.querySelector(target);
+    if (el) {
+      el.innerHTML = `
+        <p style="margin:0; padding:10px; color:#b91c1c; font-size:13px; line-height:1.35;">
+          ${label} failed to load.<br>
+          Open DevTools → Console to see the exact error.
+        </p>`;
+    }
+  });
+}
+
 // -----------------------------
 // Tasks 1–5
 // -----------------------------
-vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
-vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
-vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
-vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
+embedSafe("#vis1", "graphs/uk_unemployment_chart.json", embedStandard, "Task 1 Chart 1");
+embedSafe("#vis2", "graphs/g7_inflation_chart.json", embedStandard, "Task 1 Chart 2");
+embedSafe("#vis3", "graphs/nigeria_chart.json", embedStandard, "Task 2 Chart 1");
+embedSafe("#vis4", "graphs/ethiopia_chart.json", embedStandard, "Task 2 Chart 2");
 
-vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
-vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
+embedSafe("#vis5", "graphs/uk_renewable.json", embedTask3, "Task 3 Chart 1");
+embedSafe("#vis6", "graphs/energy_prices.json", embedTask3, "Task 3 Chart 2");
 
-vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
-vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
+embedSafe("#vis7", "graphs/financial_times.json", embedStandard, "Task 4 Replication");
+embedSafe("#vis8", "graphs/financial_times2.json", embedLarge, "Task 4 Improved");
 
-vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
-vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
+embedSafe("#vis_api", "graphs/api_chart.json", embedStandard, "Task 5 API");
+embedSafe("#vis_scrape", "graphs/emissions_tidy.json", embedStandard, "Task 5 Scrape");
 
 // =============================
 // Task 6: Dashboard (data -> spec)
@@ -73,7 +88,6 @@ async function renderDashboard() {
     const dataPath = `graphs/dashboard${i}.json`;
     const targetId = `#dash${i}`;
     const el = document.querySelector(targetId);
-
     if (!el) continue;
 
     try {
@@ -101,9 +115,8 @@ async function renderDashboard() {
 renderDashboard();
 
 // =============================
-// Task 7: Maps
+// Task 7: Maps (CRITICAL: keep explicit size)
 // =============================
-// Key fix: ensure maps are not squeezed and have consistent height inside frames
 const mapOptions = {
   actions: false,
   renderer: "svg",
@@ -111,12 +124,11 @@ const mapOptions = {
   height: 320
 };
 
-vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapOptions)
-  .catch(err => console.error("Map Scotland error:", err));
+embedSafe("#map_scotland", "graphs/scotland_choropleth.json", mapOptions, "Scotland map");
+embedSafe("#map_wales", "graphs/wales_coordinates.json", mapOptions, "Wales map");
 
-vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapOptions)
-  .catch(err => console.error("Map Wales error:", err));
-
-  // Task 8: Big Data Charts
-vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
-vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
+// =============================
+// Task 8: Big Data Charts
+// =============================
+embedSafe("#vis_bread", "graphs/price_bread.json", embedStandard, "Task 8 Bread chart");
+embedSafe("#vis_beer", "graphs/price_beer.json", embedStandard, "Task 8 Beer chart");
