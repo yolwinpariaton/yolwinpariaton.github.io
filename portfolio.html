@@ -90,7 +90,7 @@
             <img
               src="images/financial_times.jpg"
               alt="Financial Times original chart"
-              style="width:100%; height:auto; max-height:300px; object-fit:contain; border-radius:10px; display:block;"
+              style="width:100%; height:300px; object-fit:contain; border-radius:10px; display:block;"
             >
           </div>
 
@@ -184,16 +184,17 @@
   </footer>
 
   <script>
+    // Key fix: make Vega charts fit the container (prevents overflow / weird framing)
     const embedOptions = {
       actions: false,
       renderer: "svg",
-      width: 400,
+      width: "container",
       height: 300
     };
 
     const embedStandard = { ...embedOptions };
-    const embedTask3 = { ...embedOptions, width: 380, height: 280 };
-    const embedLarge = { ...embedOptions, width: 800, height: 400 };
+    const embedTask3 = { ...embedOptions, height: 280 };
+    const embedLarge = { ...embedOptions, height: 400 };
 
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
     vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
