@@ -1,0 +1,122 @@
+[
+  {
+    "date": "2023",
+    "value": 33.0801144117865,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2022",
+    "value": 35.1369980576912,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2021",
+    "value": 29.2489791841395,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2020",
+    "value": 29.2112372453782,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2019",
+    "value": 33.1007061373899,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2018",
+    "value": 33.0552381952321,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2017",
+    "value": 32.216093479851,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2016",
+    "value": 30.7779753635731,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2015",
+    "value": 29.2459709877926,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2014",
+    "value": 30.2890138267133,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2013",
+    "value": 31.5119235000045,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2012",
+    "value": 31.469331617208,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2011",
+    "value": 32.0591396722646,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2010",
+    "value": 30.3048137840466,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2009",
+    "value": 27.9463641581244,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2008",
+    "value": 29.0571127381622,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2007",
+    "value": 27.3413721081452,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2006",
+    "value": 29.2919192465902,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2005",
+    "value": 27.3372722873845,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2004",
+    "value": 26.3040230027962,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2003",
+    "value": 26.0994438028613,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2002",
+    "value": 26.8046768666199,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2001",
+    "value": 27.1849267562592,
+    "indicator": "Imports (% of GDP)"
+  },
+  {
+    "date": "2000",
+    "value": 26.7816781759642,
+    "indicator": "Imports (% of GDP)"
+  }
+]

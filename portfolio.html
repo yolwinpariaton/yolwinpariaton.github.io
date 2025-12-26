@@ -130,7 +130,7 @@
             <li><strong>Query parameters:</strong> <code>?format=json&amp;per_page=200</code></li>
             <li>
               <strong>Final URL used in the chart:</strong>
-              <a
+              
                 href="https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -164,6 +164,29 @@
           </p>
         </section>
 
+        <!-- TASK 6: Dashboard with Loops -->
+        <section class="task">
+          <h2>Task 6: Loops. Build a dashboard</h2>
+          <p>
+            UK economic indicators dashboard: 6 time series downloaded via Python loop from World Bank API, embedded via JavaScript loop.
+          </p>
+          
+          <p>
+            <strong>Data source:</strong> World Bank API | 
+            <strong>Period:</strong> 2000-2023 | 
+            <a href="YOUR_COLAB_LINK_HERE" target="_blank" style="font-weight: bold;">📊 Google Colab Notebook</a>
+          </p>
+
+          <div class="dashboard-grid">
+            <div class="dashboard-chart" id="dash1"></div>
+            <div class="dashboard-chart" id="dash2"></div>
+            <div class="dashboard-chart" id="dash3"></div>
+            <div class="dashboard-chart" id="dash4"></div>
+            <div class="dashboard-chart" id="dash5"></div>
+            <div class="dashboard-chart" id="dash6"></div>
+          </div>
+        </section>
+
       </div>
     </section>
   </main>
@@ -183,30 +206,6 @@
     </div>
   </footer>
 
-  <script>
-    // Keep original sizing for Tasks 1–3 (prevents “compressed” charts)
-    const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
-    const embedTask3 = { actions: false, renderer: "svg", width: 380, height: 280 };
-    const embedLarge  = { actions: false, renderer: "svg", width: 800, height: 400 };
-
-    // Fix for Tasks 4–5 framing:
-    // Use responsive width *only* there, so charts are centered and fill the frame nicely.
-    const embedWide = { actions: false, renderer: "svg", width: "container", height: 300 };
-
-    vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
-    vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
-    vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
-    vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
-    vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
-    vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
-
-    // Task 4
-    vegaEmbed("#vis7", "graphs/financial_times.json", embedWide);
-    vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
-
-    // Task 5
-    vegaEmbed("#vis_api", "graphs/api_chart.json", embedWide);
-    vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedWide);
-  </script>
+  <script src="js/details.js"></script>
 </body>
 </html>
