@@ -1,0 +1,18 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "UK GDP Growth (%)",
+  "width": 180,
+  "height": 150,
+  "data": {
+    "url": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/data/NY.GDP.MKTP.KD.ZG.json"
+  },
+  "mark": {"type": "line", "color": "#3498db", "strokeWidth": 2},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "title": null, "axis": {"format": "%Y"}},
+    "y": {"field": "value", "type": "quantitative", "title": "Growth (%)", "scale": {"zero": false}},
+    "tooltip": [
+      {"field": "date", "type": "temporal", "format": "%Y", "title": "Year"},
+      {"field": "value", "type": "quantitative", "format": ".2f", "title": "GDP Growth (%)"}
+    ]
+  }
+}
