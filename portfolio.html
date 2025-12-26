@@ -86,7 +86,7 @@
           </p>
 
           <h3 style="margin-top: 14px;">Original chart (image)</h3>
-          <div class="chart-wrapper" style="margin-top: 12px; display:block;">
+          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
             <img
               src="images/financial_times.jpg"
               alt="Financial Times original chart"
@@ -95,8 +95,8 @@
           </div>
 
           <h3 style="margin-top: 26px;">Replication (Vega-Lite)</h3>
-          <div class="chart-wrapper" style="margin-top: 12px;">
-            <div id="vis7" class="vega-container"></div>
+          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
+            <div id="vis7" class="vega-container" style="width:100%;"></div>
           </div>
 
           <h3 style="margin-top: 26px;">Improved version (Vega-Lite)</h3>
@@ -140,8 +140,8 @@
             </li>
           </ul>
 
-          <div class="chart-wrapper" style="margin-top: 12px;">
-            <div id="vis_api" class="vega-container"></div>
+          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
+            <div id="vis_api" class="vega-container" style="width:100%;"></div>
           </div>
 
           <h3 style="margin-top: 26px;">Part B: Scraped chart</h3>
@@ -149,8 +149,8 @@
             This chart uses emissions data scraped from Wikipedia, cleaned into tidy format, and visualises the five largest greenhouse gas emitters in 1970.
           </p>
 
-          <div class="chart-wrapper" style="margin-top: 12px;">
-            <div id="vis_scrape" class="vega-container"></div>
+          <div class="chart-wrapper" style="margin-top:12px; max-width: 920px; margin-left:auto; margin-right:auto;">
+            <div id="vis_scrape" class="vega-container" style="width:100%;"></div>
           </div>
 
           <p style="margin-top: 14px;">
@@ -184,28 +184,14 @@
   </footer>
 
   <script>
-    // Fix: return to explicit sizes (prevents "compressed" charts),
-    // and only use the scroll wrapper for the large improved chart.
-    const embedStandard = {
-      actions: false,
-      renderer: "svg",
-      width: 400,
-      height: 300
-    };
+    // Keep original sizing for Tasks 1–3 (prevents “compressed” charts)
+    const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
+    const embedTask3 = { actions: false, renderer: "svg", width: 380, height: 280 };
+    const embedLarge  = { actions: false, renderer: "svg", width: 800, height: 400 };
 
-    const embedTask3 = {
-      actions: false,
-      renderer: "svg",
-      width: 380,
-      height: 280
-    };
-
-    const embedLarge = {
-      actions: false,
-      renderer: "svg",
-      width: 800,
-      height: 400
-    };
+    // Fix for Tasks 4–5 framing:
+    // Use responsive width *only* there, so charts are centered and fill the frame nicely.
+    const embedWide = { actions: false, renderer: "svg", width: "container", height: 300 };
 
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
     vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
@@ -214,11 +200,13 @@
     vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
     vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 
-    vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
+    // Task 4
+    vegaEmbed("#vis7", "graphs/financial_times.json", embedWide);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-    vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
-    vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
+    // Task 5
+    vegaEmbed("#vis_api", "graphs/api_chart.json", embedWide);
+    vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedWide);
   </script>
 </body>
 </html>
