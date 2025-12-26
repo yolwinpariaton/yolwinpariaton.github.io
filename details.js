@@ -116,3 +116,7 @@ vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapOptions)
 
 vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapOptions)
   .catch(err => console.error("Map Wales error:", err));
+
+  // Task 8: Big Data Charts
+vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
+vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);

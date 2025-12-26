@@ -1,0 +1,11 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Average Price: Draught Bitter (LRPD)",
+  "data": {"url": "data/price_beer_monthly.csv"},
+  "width": 300, "height": 250,
+  "mark": {"type": "line", "color": "#007bff"},
+  "encoding": {
+    "x": {"field": "dateISO", "type": "temporal", "title": "Year"},
+    "y": {"field": "price", "type": "quantitative", "title": "Price (£)"}
+  }
+}
