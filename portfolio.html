@@ -100,67 +100,44 @@
         </section>
 
         <section class="task">
-          <h2>Task 5: Accessing data: Scraper and API.</h2>
-          <p style="text-align: center;">
-            This task has two parts: Part A (left) uses a live API call, and Part B (right) uses locally scraped data.
+          <h2>Task 5: Accessing data: Scraper and API</h2>
+
+          <h3 style="margin-top: 14px;">Part A: API chart</h3>
+          <p>
+            This chart pulls UK inflation data directly from the World Bank Indicators API.
           </p>
 
-          <div class="charts-row">
+          <p><strong>Functional description of the API call</strong></p>
+          <ul style="list-style-position: inside; padding: 0;">
+            <li><strong>Base URL:</strong> <code>https://api.worldbank.org/v2</code></li>
+            <li><strong>Country:</strong> <code>/country/GBR</code></li>
+            <li><strong>Indicator:</strong> <code>/indicator/FP.CPI.TOTL.ZG</code></li>
+            <li><strong>Query parameters:</strong> <code>?format=json&amp;per_page=200</code></li>
+            <li><strong>Final URL used in the chart:</strong> <code>https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&amp;per_page=200</code></li>
+          </ul>
 
-            <!-- Part A -->
-            <div>
-              <p style="text-align: center; font-weight: 600; margin-bottom: 8px;">
-                Part A: Live API chart
-              </p>
-
-              <div class="chart-wrapper">
-                <div id="vis_api" class="vega-container"></div>
-              </div>
-
-              <div style="margin-top: 12px; line-height: 1.6; text-align: center;">
-                <p>
-                  This chart pulls UK inflation data directly from the World Bank Indicators API.
-                </p>
-
-                <p>
-                  <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" style="font-weight: bold;">
-                    View API code (Google Colab)
-                  </a>
-                </p>
-
-                <p><strong>Functional description of the API call</strong></p>
-                <ul style="list-style-position: inside; padding: 0; text-align: left; display: inline-block;">
-                  <li><strong>Base URL:</strong> <code>https://api.worldbank.org/v2</code></li>
-                  <li><strong>Country:</strong> <code>/country/GBR</code> (United Kingdom)</li>
-                  <li><strong>Indicator:</strong> <code>/indicator/FP.CPI.TOTL.ZG</code> (Inflation, consumer prices — annual %)</li>
-                  <li><strong>Query parameters:</strong> <code>?format=json&amp;per_page=200</code></li>
-                  <li>
-                    <strong>Final URL used in the chart:</strong>
-                    <a href="https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200" target="_blank" rel="noopener noreferrer">
-                      Link to API
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Part B -->
-            <div>
-              <p style="text-align: center; font-weight: 600; margin-bottom: 8px;">
-                Part B: Scraped data chart
-              </p>
-
-              <div class="chart-wrapper">
-                <div id="vis_scrape" class="vega-container"></div>
-              </div>
-
-              <p style="margin-top: 12px; font-style: italic; color: #555; text-align: center;">
-                This chart uses emissions data scraped from Wikipedia, cleaned into tidy format, and visualises the
-                five largest greenhouse gas emitters in 1970.
-              </p>
-            </div>
-
+          <div class="chart-wrapper" style="margin-top: 12px;">
+            <div id="vis_api" class="vega-container"></div>
           </div>
+
+          <h3 style="margin-top: 26px;">Part B: Scraped chart</h3>
+          <p>
+            This chart uses emissions data scraped from Wikipedia, cleaned into tidy format, and visualises the five largest greenhouse gas emitters in 1970.
+          </p>
+
+          <div class="chart-wrapper" style="margin-top: 12px;">
+            <div id="vis_scrape" class="vega-container"></div>
+          </div>
+
+          <p style="margin-top: 14px;">
+            I scraped Wikipedia tables, handled inconsistent headers, reshaped to tidy format, and validated units before plotting the top emitters for a single year.
+          </p>
+
+          <p style="margin-top: 6px;">
+            <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" style="font-weight: bold;">
+              Google Colab notebook (scraper and processing)
+            </a>
+          </p>
         </section>
 
       </div>
