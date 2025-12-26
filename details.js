@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         el.innerHTML = `
           <p style="margin:0; padding:10px; color:#b91c1c; font-size:13px; line-height:1.35;">
             Failed to load <code>${selector}</code>.<br>
-            Open DevTools Console for details.
+            Open DevTools Console for the error message.
           </p>`;
       }
     });
@@ -46,28 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "data": { "url": dataUrl, "format": { "type": "json" } },
-      "transform": [
-        { "calculate": "toDate(datum.date + '-01-01')", "as": "year" }
-      ],
-      "title": {
-        "text": chartTitle || "",
-        "fontSize": 12,
-        "anchor": "start",
-        "offset": 6
-      },
+      "transform": [{ "calculate": "toDate(datum.date + '-01-01')", "as": "year" }],
+      "title": { "text": chartTitle || "", "fontSize": 12, "anchor": "start", "offset": 6 },
       "mark": { "type": "line", "point": true },
       "encoding": {
-        "x": {
-          "field": "year",
-          "type": "temporal",
-          "title": null,
-          "axis": { "format": "%Y", "labelAngle": 0 }
-        },
-        "y": {
-          "field": "value",
-          "type": "quantitative",
-          "title": null
-        },
+        "x": { "field": "year", "type": "temporal", "title": null, "axis": { "format": "%Y", "labelAngle": 0 } },
+        "y": { "field": "value", "type": "quantitative", "title": null },
         "tooltip": [
           { "field": "indicator", "type": "nominal", "title": "Indicator" },
           { "field": "date", "type": "nominal", "title": "Year" },
@@ -76,10 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       "width": "container",
       "height": 170,
-      "config": {
-        "view": { "stroke": "transparent" },
-        "axis": { "labelFontSize": 10, "titleFontSize": 11 }
-      }
+      "config": { "view": { "stroke": "transparent" }, "axis": { "labelFontSize": 10, "titleFontSize": 11 } }
     };
   }
 
@@ -117,12 +98,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   // Task 7: Maps
   // =============================
-  // Container sizing avoids the “weird” look and makes both maps consistent.
+  // Key fix: stable height for maps, container width.
   const mapOptions = {
     actions: false,
     renderer: "svg",
     width: "container",
-    height: 300
+    height: 320
   };
 
   safeEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapOptions);
