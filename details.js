@@ -5,23 +5,72 @@ const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300
 const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
 const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
 
-// Utility: embed with visible error message (so you don’t need to open console)
+function showEmbedError(target, label, err) {
+  console.error(`${label} error:`, err);
+  const el = document.querySelector(target);
+  if (el) {
+    el.innerHTML = `
+      <p style="margin:0; padding:10px; color:#b91c1c; font-size:13px; line-height:1.35;">
+        ${label} failed to load.<br>
+        Open DevTools → Console to see the exact error.
+      </p>`;
+  }
+}
+
 function embedSafe(target, specOrUrl, options, label) {
-  return vegaEmbed(target, specOrUrl, options).catch((err) => {
-    console.error(`${label} error:`, err);
-    const el = document.querySelector(target);
-    if (el) {
-      el.innerHTML = `
-        <p style="margin:0; padding:10px; color:#b91c1c; font-size:13px; line-height:1.35;">
-          ${label} failed to load.<br>
-          Open DevTools → Console to see the exact error.
-        </p>`;
+  return vegaEmbed(target, specOrUrl, options).catch((err) => showEmbedError(target, label, err));
+}
+
+// =============================
+// IMPORTANT FIX: Patch spec data URLs
+// =============================
+// Vega resolves relative data URLs against the *page*, not the spec file.
+// This function prefixes relative data URLs with "graphs/" so they load.
+function isRelativeUrl(u) {
+  if (typeof u !== "string") return false;
+  if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("//")) return false;
+  if (u.startsWith("data:")) return false;
+  return true;
+}
+
+function patchDataUrls(node) {
+  if (!node || typeof node !== "object") return;
+
+  // If this node has data.url, patch it.
+  if (node.data && typeof node.data === "object" && "url" in node.data) {
+    const u = node.data.url;
+    if (isRelativeUrl(u) && !u.startsWith("graphs/")) {
+      node.data.url = `graphs/${u}`;
     }
-  });
+  }
+
+  // Recurse through all properties (covers layer/specs/etc.)
+  for (const key of Object.keys(node)) {
+    const v = node[key];
+    if (Array.isArray(v)) {
+      v.forEach(patchDataUrls);
+    } else if (v && typeof v === "object") {
+      patchDataUrls(v);
+    }
+  }
+}
+
+async function embedPatchedSpecFromFile(target, specPath, options, label) {
+  try {
+    const res = await fetch(specPath, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${specPath}`);
+    const spec = await res.json();
+
+    patchDataUrls(spec);
+
+    await vegaEmbed(target, spec, options);
+  } catch (err) {
+    showEmbedError(target, label, err);
+  }
 }
 
 // -----------------------------
-// Tasks 1–5
+// Tasks 1–5 (as before)
 // -----------------------------
 embedSafe("#vis1", "graphs/uk_unemployment_chart.json", embedStandard, "Task 1 Chart 1");
 embedSafe("#vis2", "graphs/g7_inflation_chart.json", embedStandard, "Task 1 Chart 2");
@@ -102,12 +151,7 @@ async function renderDashboard() {
 
       await vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), dashboardEmbedOptions);
     } catch (err) {
-      console.error(`Dashboard ${i} error:`, err);
-      el.innerHTML = `
-        <p style="margin:0; padding:8px; color:#b91c1c; font-size:13px; line-height:1.35;">
-          Dashboard ${i} failed to load.<br>
-          Check: <code>${dataPath}</code>
-        </p>`;
+      showEmbedError(targetId, `Dashboard ${i}`, err);
     }
   }
 }
@@ -115,7 +159,7 @@ async function renderDashboard() {
 renderDashboard();
 
 // =============================
-// Task 7: Maps (CRITICAL: keep explicit size)
+// Task 7: Maps (FIXED: patch internal data.url)
 // =============================
 const mapOptions = {
   actions: false,
@@ -124,11 +168,12 @@ const mapOptions = {
   height: 320
 };
 
-embedSafe("#map_scotland", "graphs/scotland_choropleth.json", mapOptions, "Scotland map");
-embedSafe("#map_wales", "graphs/wales_coordinates.json", mapOptions, "Wales map");
+// IMPORTANT: load spec file, patch its internal data URLs, then embed
+embedPatchedSpecFromFile("#map_scotland", "graphs/scotland_choropleth.json", mapOptions, "Scotland map");
+embedPatchedSpecFromFile("#map_wales", "graphs/wales_coordinates.json", mapOptions, "Wales map");
 
 // =============================
-// Task 8: Big Data Charts
+// Task 8: Big Data Charts (FIXED: patch internal data.url)
 // =============================
-embedSafe("#vis_bread", "graphs/price_bread.json", embedStandard, "Task 8 Bread chart");
-embedSafe("#vis_beer", "graphs/price_beer.json", embedStandard, "Task 8 Beer chart");
+embedPatchedSpecFromFile("#vis_bread", "graphs/price_bread.json", embedStandard, "Task 8 Bread chart");
+embedPatchedSpecFromFile("#vis_beer", "graphs/price_beer.json", embedStandard, "Task 8 Beer chart");
