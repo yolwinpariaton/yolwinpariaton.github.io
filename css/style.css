@@ -247,14 +247,13 @@ a:hover{ text-decoration: underline; }
   min-height: 320px;
 }
 
-/* ✅ Full width wrapper: DO NOT flex-center the inner chart */
+/* ✅ Full width wrapper */
 .chart-wrapper--full{
   margin-top: 20px;
   display: block;
   min-height: auto;
 }
 
-/* ✅ Scroll container keeps chart INSIDE frame */
 .chart-scroll{
   width: 100%;
   overflow-x: auto;
@@ -284,7 +283,7 @@ a:hover{ text-decoration: underline; }
   height: auto !important;
 }
 
-/* Task image sizing - should match chart height */
+/* Task image sizing */
 .task-img{
   width: 100%;
   height: 300px;
@@ -324,7 +323,6 @@ a:hover{ text-decoration: underline; }
 /* Responsive */
 @media (max-width: 860px){
   .nav{ flex-wrap: wrap; }
-
   .nav__toggle{ display:inline-block; }
 
   .nav__menu{
@@ -351,31 +349,17 @@ a:hover{ text-decoration: underline; }
   }
 }
 
-/* Dashboard Grid */
-.dashboard-grid {
+/* ==========================
+   Task 6 Dashboard
+   ========================== */
+.dashboard-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
   margin: 20px 0;
 }
 
-.dashboard-chart {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Dashboard Grid for Task 6 */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin: 20px 0;
-}
-
-.dashboard-chart {
+.dashboard-chart{
   background: white;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -385,15 +369,22 @@ a:hover{ text-decoration: underline; }
 }
 
 /* Responsive: 2 columns on tablets */
-@media (max-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+@media (max-width: 768px){
+  .dashboard-grid{ grid-template-columns: repeat(2, 1fr); }
 }
 
 /* Responsive: 1 column on phones */
-@media (max-width: 480px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 480px){
+  .dashboard-grid{ grid-template-columns: 1fr; }
+}
+
+/* Task 6 polish: keep embedded charts filling tiles nicely */
+.dashboard-chart .vega-embed{
+  width: 100%;
+}
+
+.dashboard-chart .vega-embed svg,
+.dashboard-chart .vega-embed canvas{
+  max-width: 100% !important;
+  height: auto !important;
 }

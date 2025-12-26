@@ -160,6 +160,31 @@
           </div>
         </section>
 
+        <!-- TASK 7: Maps -->
+        <section class="task">
+          <h2>Task 7: Maps. Base maps and choropleths</h2>
+          <p>
+            Two maps showing different visualization techniques: a choropleth map of Scotland showing population density,
+            and a coordinates map of Wales showing major cities.
+          </p>
+
+          <div class="charts-row">
+            <div class="chart-wrapper">
+              <h3 style="font-size: 14px; margin: 0 0 10px 0;">Scotland - Choropleth Map</h3>
+              <div id="map_scotland" class="vega-container"></div>
+            </div>
+            <div class="chart-wrapper">
+              <h3 style="font-size: 14px; margin: 0 0 10px 0;">Wales - Coordinates Map</h3>
+              <div id="map_wales" class="vega-container"></div>
+            </div>
+          </div>
+
+          <p style="margin-top: 15px; font-size: 14px; color: #666;">
+            <strong>Data sources:</strong> Population data from 2021 UK Census |
+            <strong>TopoJSON:</strong> UK-GeoJSON repository by martinjc
+          </p>
+        </section>
+
       </div>
     </section>
   </main>
@@ -177,113 +202,9 @@
         <p>© 2025 Yolwin Pariaton</p>
       </div>
     </div>
-
-    <!-- TASK 7: Maps -->
-<section class="task">
-  <h2>Task 7: Maps. Base maps and choropleths</h2>
-  <p>
-    Two maps showing different visualization techniques: a choropleth map of Scotland showing population density, 
-    and a coordinates map of Wales showing major cities.
-  </p>
-
-  <div class="charts-row">
-    <div class="chart-wrapper">
-      <h3 style="font-size: 14px; margin: 0 0 10px 0;">Scotland - Choropleth Map</h3>
-      <div id="map_scotland" class="vega-container"></div>
-    </div>
-    <div class="chart-wrapper">
-      <h3 style="font-size: 14px; margin: 0 0 10px 0;">Wales - Coordinates Map</h3>
-      <div id="map_wales" class="vega-container"></div>
-    </div>
-  </div>
-
-  <p style="margin-top: 15px; font-size: 14px; color: #666;">
-    <strong>Data sources:</strong> Population data from 2021 UK Census | 
-    <strong>TopoJSON:</strong> UK-GeoJSON repository by martinjc
-  </p>
-</section>
-    
   </footer>
 
-  <!-- Embed all charts - MUST BE AT END OF BODY -->
-  <script>
-  const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
-  const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
-  const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
-
-  vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
-  vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
-  vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
-  vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
-
-  vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
-  vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
-
-  vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
-  vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
-
-  vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
-  vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
-
-  // ===== Task 6: dashboard data files -> generate chart specs with titles =====
-  const dashboardEmbedOptions = {
-    actions: false,
-    renderer: "svg"
-  };
-
-  function dashboardSpec(dataUrl) {
-    return {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "data": { "url": dataUrl, "format": { "type": "json" } },
-      "transform": [
-        { "calculate": "toDate(datum.date + '-01-01')", "as": "year" }
-      ],
-      "title": {
-        "text": { "expr": "datum && datum.length ? datum[0].indicator : ''" },
-        "fontSize": 12,
-        "anchor": "start",
-        "offset": 6
-      },
-      "mark": { "type": "line", "point": true },
-      "encoding": {
-        "x": {
-          "field": "year",
-          "type": "temporal",
-          "title": null,
-          "axis": { "format": "%Y", "labelAngle": 0 }
-        },
-        "y": {
-          "field": "value",
-          "type": "quantitative",
-          "title": null
-        },
-        "tooltip": [
-          { "field": "indicator", "type": "nominal", "title": "Indicator" },
-          { "field": "date", "type": "nominal", "title": "Year" },
-          { "field": "value", "type": "quantitative", "title": "Value" }
-        ]
-      },
-      "width": "container",
-      "height": 170,
-      "config": {
-        "view": { "stroke": "transparent" },
-        "axis": { "labelFontSize": 10, "titleFontSize": 11 }
-      }
-    };
-  }
-
-  for (let i = 1; i <= 6; i++) {
-    const dataPath = `graphs/dashboard${i}.json`;
-    vegaEmbed(`#dash${i}`, dashboardSpec(dataPath), dashboardEmbedOptions)
-      .catch((err) => {
-        const el = document.querySelector(`#dash${i}`);
-        if (el) {
-          el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px; line-height:1.35;">
-            Dashboard ${i} failed to load.<br>
-            Check that <code>${dataPath}</code> exists (exact name/case) and is valid JSON.
-          </p>`;
-        }
-        console.error(`Dashboard ${i} error:`, err);
-      });
-  }
-</script>
+  <!-- Your embedding script (single source of truth) -->
+  <script src="js/details.js"></script>
+</body>
+</html>
