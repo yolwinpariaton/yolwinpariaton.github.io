@@ -10,3 +10,12 @@ const dashboardOptions = {
 for (let i = 1; i <= 6; i++) {
   vegaEmbed(`#dash${i}`, `graphs/dashboard${i}.json`, dashboardOptions);
 }
+
+// Task 7: Maps
+const mapOptions = {
+  actions: false,
+  renderer: "svg"
+};
+
+vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapOptions);
+vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapOptions);
