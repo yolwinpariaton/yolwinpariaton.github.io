@@ -8,22 +8,22 @@ const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380
 // -----------------------------
 // Tasks 1–5
 // -----------------------------
-vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard).catch(console.error);
-vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard).catch(console.error);
-vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard).catch(console.error);
-vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard).catch(console.error);
+vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
+vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
+vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
+vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
 
-vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3).catch(console.error);
-vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3).catch(console.error);
+vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
+vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 
-vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard).catch(console.error);
-vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge).catch(console.error);
+vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
+vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard).catch(console.error);
-vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard).catch(console.error);
+vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
+vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
 
 // =============================
-// Task 6: Dashboard
+// Task 6: Dashboard (data -> spec)
 // =============================
 const dashboardEmbedOptions = { actions: false, renderer: "svg" };
 
@@ -69,30 +69,38 @@ async function renderDashboard() {
       await vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), dashboardEmbedOptions);
     } catch (err) {
       console.error(`Dashboard ${i} error:`, err);
-      el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">
-        Dashboard ${i} failed to load. Check <code>${dataPath}</code>.
-      </p>`;
+      el.innerHTML = `
+        <p style="margin:0; padding:8px; color:#b91c1c; font-size:13px; line-height:1.35;">
+          Dashboard ${i} failed to load.<br>
+          Check: <code>${dataPath}</code>
+        </p>`;
     }
   }
 }
+
 renderDashboard();
 
 // =============================
-// Task 7: Maps (DO NOT override size here)
+// Task 7: Maps
 // =============================
-const mapOptions = { actions: false, renderer: "svg" };
+const mapEmbedOptions = { actions: false, renderer: "svg" };
 
-vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapOptions)
-  .catch(err => console.error("Map Scotland error:", err));
+vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapEmbedOptions)
+  .catch(err => {
+    console.error("Map Scotland error:", err);
+    const el = document.querySelector("#map_scotland");
+    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Scotland map failed to load.</p>`;
+  });
 
-vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapOptions)
-  .catch(err => console.error("Map Wales error:", err));
+vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapEmbedOptions)
+  .catch(err => {
+    console.error("Map Wales error:", err);
+    const el = document.querySelector("#map_wales");
+    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Wales map failed to load.</p>`;
+  });
 
 // =============================
-// Task 8: Big Data
+// Task 8
 // =============================
-vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard)
-  .catch(err => console.error("Bread chart error:", err));
-
-vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard)
-  .catch(err => console.error("Beer chart error:", err));
+vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
+vegaEmbed("#vis_beer",  "graphs/price_beer.json",  embedStandard);
