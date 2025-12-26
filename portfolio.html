@@ -199,12 +199,61 @@
     vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
     vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
 
-    // Task 6: IMPORTANT FIX — use the same filenames you actually have.
-    // If your files are named dashboard1.json ... dashboard6.json, keep this:
-    const dashboardOptions = { actions: false, renderer: "svg", width: 300, height: 200 };
+    // ===== Task 6 FIX: your dashboard*.json files are DATA, not chart specs =====
+    const dashboardEmbedOptions = {
+      actions: false,
+      renderer: "svg"
+    };
+
+    function dashboardSpec(dataUrl) {
+      return {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "data": { "url": dataUrl, "format": { "type": "json" } },
+        "transform": [
+          { "calculate": "toDate(datum.date + '-01-01')", "as": "year" }
+        ],
+        "mark": { "type": "line", "point": true },
+        "encoding": {
+          "x": {
+            "field": "year",
+            "type": "temporal",
+            "title": null,
+            "axis": { "format": "%Y", "labelAngle": 0 }
+          },
+          "y": {
+            "field": "value",
+            "type": "quantitative",
+            "title": null
+          },
+          "tooltip": [
+            { "field": "indicator", "type": "nominal", "title": "Indicator" },
+            { "field": "date", "type": "nominal", "title": "Year" },
+            { "field": "value", "type": "quantitative", "title": "Value" }
+          ]
+        },
+        "width": "container",
+        "height": 170,
+        "config": {
+          "view": { "stroke": "transparent" },
+          "axis": { "labelFontSize": 10, "titleFontSize": 11 }
+        }
+      };
+    }
 
     for (let i = 1; i <= 6; i++) {
-      vegaEmbed(`#dash${i}`, `graphs/dashboard${i}.json`, dashboardOptions);
+      const dataPath = `graphs/dashboard${i}.json`; // this must match your filenames exactly
+      vegaEmbed(`#dash${i}`, dashboardSpec(dataPath), dashboardEmbedOptions)
+        .catch((err) => {
+          // Visible failure message inside the tile
+          const el = document.querySelector(`#dash${i}`);
+          if (el) {
+            el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px; line-height:1.35;">
+              Dashboard ${i} failed to load.<br>
+              Check that <code>${dataPath}</code> exists (exact name/case) and is valid JSON.
+            </p>`;
+          }
+          console.error(`Dashboard ${i} error:`, err);
+        });
     }
   </script>
 </body>
