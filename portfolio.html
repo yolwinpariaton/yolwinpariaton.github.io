@@ -87,7 +87,11 @@
 
           <h3 style="margin-top: 14px;">Original chart (image)</h3>
           <div class="chart-wrapper" style="margin-top: 12px;">
-            <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
+            <img
+              src="images/financial_times.jpg"
+              alt="Financial Times original chart"
+              style="width:100%; height:auto; max-height:300px; object-fit:contain; border-radius:10px; display:block;"
+            >
           </div>
 
           <h3 style="margin-top: 26px;">Replication (Vega-Lite)</h3>
@@ -100,8 +104,10 @@
             Added target line, highlighted peak, improved axis formatting, and clarified labels to make the trend easier to interpret.
           </p>
 
-          <div class="chart-wrapper" style="margin-top: 12px; max-width: 900px; margin-left: auto; margin-right: auto;">
-            <div id="vis8" class="vega-container vega-container--large"></div>
+          <div class="chart-wrapper chart-wrapper--full" style="margin-top: 12px;">
+            <div class="chart-scroll">
+              <div id="vis8" class="vega-container vega-container--large"></div>
+            </div>
           </div>
         </section>
 
@@ -122,7 +128,16 @@
             <li><strong>Country:</strong> <code>/country/GBR</code></li>
             <li><strong>Indicator:</strong> <code>/indicator/FP.CPI.TOTL.ZG</code></li>
             <li><strong>Query parameters:</strong> <code>?format=json&amp;per_page=200</code></li>
-            <li><strong>Final URL used in the chart:</strong> <code>https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&amp;per_page=200</code></li>
+            <li>
+              <strong>Final URL used in the chart:</strong>
+              <a
+                href="https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                api.worldbank.org/.../FP.CPI.TOTL.ZG?format=json&amp;per_page=200
+              </a>
+            </li>
           </ul>
 
           <div class="chart-wrapper" style="margin-top: 12px;">
