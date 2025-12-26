@@ -86,7 +86,7 @@
           </p>
 
           <h3 style="margin-top: 14px;">Original chart (image)</h3>
-          <div class="chart-wrapper" style="margin-top: 12px;">
+          <div class="chart-wrapper" style="margin-top: 12px; display:block;">
             <img
               src="images/financial_times.jpg"
               alt="Financial Times original chart"
@@ -135,7 +135,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                api.worldbank.org/.../FP.CPI.TOTL.ZG?format=json&amp;per_page=200
+                api.worldbank.org/.../FP.CPI.TOTL.ZG
               </a>
             </li>
           </ul>
@@ -184,17 +184,28 @@
   </footer>
 
   <script>
-    // Key fix: make Vega charts fit the container (prevents overflow / weird framing)
-    const embedOptions = {
+    // Fix: return to explicit sizes (prevents "compressed" charts),
+    // and only use the scroll wrapper for the large improved chart.
+    const embedStandard = {
       actions: false,
       renderer: "svg",
-      width: "container",
+      width: 400,
       height: 300
     };
 
-    const embedStandard = { ...embedOptions };
-    const embedTask3 = { ...embedOptions, height: 280 };
-    const embedLarge = { ...embedOptions, height: 400 };
+    const embedTask3 = {
+      actions: false,
+      renderer: "svg",
+      width: 380,
+      height: 280
+    };
+
+    const embedLarge = {
+      actions: false,
+      renderer: "svg",
+      width: 800,
+      height: 400
+    };
 
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
     vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
