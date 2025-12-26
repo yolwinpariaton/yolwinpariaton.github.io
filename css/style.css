@@ -292,6 +292,14 @@ a:hover{ text-decoration: underline; }
   object-fit: cover;
 }
 
+/* Task 7: titles above frames */
+.chart-title{
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  color: var(--text);
+}
+
 /* Footer */
 .site-footer{
   background: #071a33;
@@ -387,27 +395,4 @@ a:hover{ text-decoration: underline; }
 .dashboard-chart .vega-embed canvas{
   max-width: 100% !important;
   height: auto !important;
-}
-
-/* ==========================
-   Task 7 Maps (KEY FIX)
-   Force stable SVG height only for maps
-   ========================== */
-.chart-wrapper.map-frame{
-  align-items: stretch;      /* don’t vertically center the map */
-  justify-content: stretch;  /* let it fill the frame */
-  min-height: 360px;         /* a bit taller for maps */
-}
-
-.chart-wrapper.map-frame .vega-container{
-  align-items: stretch;
-  justify-content: stretch;
-}
-
-/* Override the global "height:auto" only for maps */
-.chart-wrapper.map-frame .vega-embed,
-.chart-wrapper.map-frame .vega-embed > svg,
-.chart-wrapper.map-frame .vega-embed > canvas{
-  width: 100% !important;
-  height: 320px !important;  /* must match details.js mapOptions height */
 }

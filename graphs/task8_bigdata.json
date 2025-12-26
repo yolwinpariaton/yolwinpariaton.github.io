@@ -1,0 +1,28 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "UK Price Trends: Bread vs. Pub Beer",
+    "subtitle": "Monthly average prices 1988-2022. Source: LRPD",
+    "anchor": "start"
+  },
+  "data": {"url": "data/price_bread_monthly.csv"},
+  "width": 400,
+  "height": 300,
+  "layer": [
+    {
+      "mark": {"type": "line", "color": "#856404"},
+      "encoding": {
+        "x": {"field": "dateISO", "type": "temporal", "title": "Year"},
+        "y": {"field": "price", "type": "quantitative", "title": "Average Price (£)"}
+      }
+    },
+    {
+      "data": {"url": "data/price_beer_monthly.csv"},
+      "mark": {"type": "line", "color": "#007bff"},
+      "encoding": {
+        "x": {"field": "dateISO", "type": "temporal"},
+        "y": {"field": "price", "type": "quantitative"}
+      }
+    }
+  ]
+}
