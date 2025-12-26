@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -81,7 +80,33 @@
         </section>
 
         <section class="task">
-          <h2>Task 4: Accessing data: Scraper and API</h2>
+          <h2>Task 4: Replication. Re-create, then improve, someone else's chart</h2>
+          <p>
+            I saved the original chart image, replicated it in Vega-Lite, then improved readability with clearer labels, reference lines, and annotations.
+          </p>
+
+          <h3 style="margin-top: 14px;">Original chart (image)</h3>
+          <div class="chart-wrapper" style="margin-top: 12px;">
+            <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
+          </div>
+
+          <h3 style="margin-top: 26px;">Replication (Vega-Lite)</h3>
+          <div class="chart-wrapper" style="margin-top: 12px;">
+            <div id="vis7" class="vega-container"></div>
+          </div>
+
+          <h3 style="margin-top: 26px;">Improved version (Vega-Lite)</h3>
+          <p style="margin-top: 8px;">
+            Added target line, highlighted peak, improved axis formatting, and clarified labels to make the trend easier to interpret.
+          </p>
+
+          <div class="chart-wrapper" style="margin-top: 12px; max-width: 900px; margin-left: auto; margin-right: auto;">
+            <div id="vis8" class="vega-container vega-container--large"></div>
+          </div>
+        </section>
+
+        <section class="task">
+          <h2>Task 5: Accessing data: Scraper and API</h2>
           <p>
             I created one chart from a live API call and one chart from scraped Wikipedia data, then cleaned and reshaped the scraped data into tidy format.
           </p>
@@ -124,34 +149,6 @@
           </p>
         </section>
 
-        <section class="task">
-          <h2>Task 5: Replication. Re-create, then improve, someone else's chart</h2>
-          <p>
-            I saved an image of the original Financial Times chart, replicated it in Vega-Lite using traced data and matched styling, then improved readability with clearer labels and annotations.
-          </p>
-
-          <h3 style="margin-top: 14px;">Original chart (image)</h3>
-          <div class="chart-wrapper" style="margin-top: 12px;">
-            <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
-          </div>
-
-          <h3 style="margin-top: 26px;">Replication (Vega-Lite)</h3>
-          <div class="chart-wrapper" style="margin-top: 12px;">
-            <div id="vis7" class="vega-container"></div>
-          </div>
-
-          <h3 style="margin-top: 26px;">Improved version (Vega-Lite)</h3>
-          <p style="margin-top: 8px;">
-            I added an inflation target reference line, highlighted the peak, improved axis formatting, and clarified labels to make the trend easier to interpret.
-          </p>
-
-          <div class="chart-wrapper chart-wrapper--full" style="margin-top: 12px;">
-            <div class="chart-scroll">
-              <div id="vis8" class="vega-container vega-container--large"></div>
-            </div>
-          </div>
-        </section>
-
       </div>
     </section>
   </main>
@@ -190,12 +187,11 @@
     vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
     vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 
-    vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
-    vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
-
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
+
+    vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
+    vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
   </script>
 </body>
 </html>
-```
