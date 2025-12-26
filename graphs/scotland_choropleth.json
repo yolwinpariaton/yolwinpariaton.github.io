@@ -5,53 +5,55 @@
     "subtitle": "People per square kilometer (2021 Census)",
     "fontSize": 14
   },
-  "width": 400,
-  "height": 500,
+  "width": "container",
+  "height": 320,
+  "autosize": { "type": "fit", "contains": "padding" },
+
   "data": {
     "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
-    "format": {
-      "type": "topojson",
-      "feature": "lad"
-    }
+    "format": { "type": "topojson", "feature": "lad" }
   },
+
+  "projection": { "type": "mercator" },
+
   "transform": [
     {
       "lookup": "properties.LAD13NM",
       "from": {
         "data": {
           "values": [
-            {"area": "Aberdeen City", "density": 1208},
-            {"area": "Aberdeenshire", "density": 41},
-            {"area": "Angus", "density": 53},
-            {"area": "Argyll and Bute", "density": 13},
-            {"area": "City of Edinburgh", "density": 1948},
-            {"area": "Clackmannanshire", "density": 325},
-            {"area": "Dumfries and Galloway", "density": 24},
-            {"area": "Dundee City", "density": 2477},
-            {"area": "East Ayrshire", "density": 97},
-            {"area": "East Dunbartonshire", "density": 623},
-            {"area": "East Lothian", "density": 152},
-            {"area": "East Renfrewshire", "density": 543},
-            {"area": "Falkirk", "density": 518},
-            {"area": "Fife", "density": 281},
-            {"area": "Glasgow City", "density": 3521},
-            {"area": "Highland", "density": 9},
-            {"area": "Inverclyde", "density": 478},
-            {"area": "Midlothian", "density": 254},
-            {"area": "Moray", "density": 40},
-            {"area": "North Ayrshire", "density": 152},
-            {"area": "North Lanarkshire", "density": 733},
-            {"area": "Orkney Islands", "density": 22},
-            {"area": "Perth and Kinross", "density": 28},
-            {"area": "Renfrewshire", "density": 684},
-            {"area": "Scottish Borders", "density": 24},
-            {"area": "Shetland Islands", "density": 16},
-            {"area": "South Ayrshire", "density": 91},
-            {"area": "South Lanarkshire", "density": 183},
-            {"area": "Stirling", "density": 40},
-            {"area": "West Dunbartonshire", "density": 562},
-            {"area": "West Lothian", "density": 419},
-            {"area": "Na h-Eileanan an Iar", "density": 9}
+            { "area": "Aberdeen City", "density": 1208 },
+            { "area": "Aberdeenshire", "density": 41 },
+            { "area": "Angus", "density": 53 },
+            { "area": "Argyll and Bute", "density": 13 },
+            { "area": "City of Edinburgh", "density": 1948 },
+            { "area": "Clackmannanshire", "density": 325 },
+            { "area": "Dumfries and Galloway", "density": 24 },
+            { "area": "Dundee City", "density": 2477 },
+            { "area": "East Ayrshire", "density": 97 },
+            { "area": "East Dunbartonshire", "density": 623 },
+            { "area": "East Lothian", "density": 152 },
+            { "area": "East Renfrewshire", "density": 543 },
+            { "area": "Falkirk", "density": 518 },
+            { "area": "Fife", "density": 281 },
+            { "area": "Glasgow City", "density": 3521 },
+            { "area": "Highland", "density": 9 },
+            { "area": "Inverclyde", "density": 478 },
+            { "area": "Midlothian", "density": 254 },
+            { "area": "Moray", "density": 40 },
+            { "area": "North Ayrshire", "density": 152 },
+            { "area": "North Lanarkshire", "density": 733 },
+            { "area": "Orkney Islands", "density": 22 },
+            { "area": "Perth and Kinross", "density": 28 },
+            { "area": "Renfrewshire", "density": 684 },
+            { "area": "Scottish Borders", "density": 24 },
+            { "area": "Shetland Islands", "density": 16 },
+            { "area": "South Ayrshire", "density": 91 },
+            { "area": "South Lanarkshire", "density": 183 },
+            { "area": "Stirling", "density": 40 },
+            { "area": "West Dunbartonshire", "density": 562 },
+            { "area": "West Lothian", "density": 419 },
+            { "area": "Na h-Eileanan an Iar", "density": 9 }
           ]
         },
         "key": "area",
@@ -59,27 +61,19 @@
       }
     }
   ],
-  "projection": {
-    "type": "mercator"
-  },
-  "mark": {
-    "type": "geoshape",
-    "stroke": "white",
-    "strokeWidth": 0.5
-  },
+
+  "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.5 },
+
   "encoding": {
     "color": {
       "field": "density",
       "type": "quantitative",
-      "scale": {
-        "scheme": "blues",
-        "type": "log"
-      },
+      "scale": { "scheme": "blues", "type": "log" },
       "title": "Density (per km²)"
     },
     "tooltip": [
-      {"field": "properties.LAD13NM", "type": "nominal", "title": "Council Area"},
-      {"field": "density", "type": "quantitative", "title": "People per km²", "format": ",.0f"}
+      { "field": "properties.LAD13NM", "type": "nominal", "title": "Council Area" },
+      { "field": "density", "type": "quantitative", "title": "People per km²", "format": ",.0f" }
     ]
   }
 }

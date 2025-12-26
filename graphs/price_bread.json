@@ -1,11 +1,18 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "UK Inflation: White Bread (Monthly Mean)", "anchor": "start"},
-  "data": {"url": "data/price_bread_monthly.csv"},
-  "width": 300, "height": 250,
-  "mark": {"type": "line", "color": "#856404"},
+  "title": { "text": "UK Inflation: White Bread (Monthly Mean)", "anchor": "start" },
+  "data": {
+    "url": "data/price_bread_monthly.csv",
+    "format": {
+      "type": "csv",
+      "parse": { "dateISO": "date", "price": "number" }
+    }
+  },
+  "width": 300,
+  "height": 250,
+  "mark": { "type": "line" },
   "encoding": {
-    "x": {"field": "dateISO", "type": "temporal", "title": "Year"},
-    "y": {"field": "price", "type": "quantitative", "title": "Price (£)"}
+    "x": { "field": "dateISO", "type": "temporal", "title": "Year" },
+    "y": { "field": "price", "type": "quantitative", "title": "Price (£)" }
   }
 }
