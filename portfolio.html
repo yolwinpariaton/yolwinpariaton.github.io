@@ -120,7 +120,7 @@
           <ul>
             <li><strong>Base URL:</strong> <code>https://api.worldbank.org/v2</code></li>
             <li><strong>Endpoint:</strong> <code>/country/GBR/indicator/FP.CPI.TOTL.ZG</code></li>
-            <li><strong>Parameters:</strong> <code>?format=json&per_page=200</code></li>
+            <li><strong>Parameters:</strong> <code>?format=json&amp;per_page=200</code></li>
           </ul>
 
           <h3>Part B: Scraped chart</h3>
@@ -143,10 +143,10 @@
           <p>
             UK economic indicators dashboard: 6 time series downloaded via Python loop from World Bank API, embedded via JavaScript loop.
           </p>
-          
+
           <p>
-            <strong>Data source:</strong> World Bank API | 
-            <strong>Period:</strong> 2000-2023 | 
+            <strong>Data source:</strong> World Bank API |
+            <strong>Period:</strong> 2000-2023 |
             <a href="https://colab.research.google.com/drive/1uNzblqPUEmysdTm3UBp0k3KuNogf3oSS?authuser=0#scrollTo=BLZpW2L-EUDo" target="_blank" style="font-weight: bold;">📊 Google Colab Notebook</a>
           </p>
 
@@ -179,57 +179,30 @@
     </div>
   </footer>
 
-  <!-- Embed all charts - THIS MUST BE AT THE END OF BODY -->
+  <!-- Embed all charts - MUST BE AT END OF BODY -->
   <script>
-    // Embed options
-    const embedStandard = {
-      actions: false,
-      renderer: "svg",
-      width: 400,
-      height: 300
-    };
+    const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
+    const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
+    const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
 
-    const embedTask3 = {
-      actions: false,
-      renderer: "svg",
-      width: 380,
-      height: 280
-    };
-
-    const embedLarge = {
-      actions: false,
-      renderer: "svg",
-      width: 900,
-      height: 380
-    };
-
-    // Tasks 1-2: Standard sizing
     vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
     vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
     vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
     vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
 
-    // Task 3: Constrained sizing
     vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
     vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 
-    // Task 4: Original and improved
     vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
     vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
-    
-    // Task 5: API and Scraper
+
     vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
     vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
 
-    // Task 6: Dashboard - Using LOOP to embed 6 charts
-    const dashboardOptions = {
-      actions: false,
-      renderer: "svg",
-      width: 180,
-      height: 150
-    };
+    // Task 6: IMPORTANT FIX — use the same filenames you actually have.
+    // If your files are named dashboard1.json ... dashboard6.json, keep this:
+    const dashboardOptions = { actions: false, renderer: "svg", width: 300, height: 200 };
 
-    // Loop to embed all 6 dashboard charts
     for (let i = 1; i <= 6; i++) {
       vegaEmbed(`#dash${i}`, `graphs/dashboard${i}.json`, dashboardOptions);
     }
