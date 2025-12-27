@@ -277,8 +277,13 @@ a:hover{ text-decoration: underline; }
   border-radius: var(--radius);
   padding: 16px;
   box-shadow: var(--shadow);
-  overflow: hidden;
   position: relative;
+
+  /* IMPORTANT FIX:
+     Do NOT clip Vega charts. Many project charts are wider than the wrapper.
+     Let it scroll horizontally when needed. */
+  overflow-x: auto;
+  overflow-y: hidden;
 
   /* stack title + chart vertically */
   display: flex;
@@ -310,12 +315,6 @@ a:hover{ text-decoration: underline; }
   min-height: auto;
 }
 
-.chart-scroll{
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
 /* Chart container */
 .vega-container{
   width: 100%;
@@ -338,13 +337,15 @@ a:hover{ text-decoration: underline; }
   background: #f9f9f9;
 }
 
-/* Keep Vega responsive without breaking geo-projections */
+/* Keep Vega responsive */
 .vega-embed{
   max-width: 100% !important;
 }
 
-.chart-wrapper .vega-embed svg,
-.chart-wrapper .vega-embed canvas{
+/* Avoid SVG being clipped and improve scaling */
+.chart-wrapper .vega-embed,
+.chart-wrapper .vega-embed > svg,
+.chart-wrapper .vega-embed > canvas{
   max-width: 100% !important;
 }
 

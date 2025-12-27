@@ -1,11 +1,26 @@
 // =============================
 // Vega Embed Helpers / Options
 // =============================
-const embedStandard    = { actions: false, renderer: "svg", width: 400, height: 300 };
-const embedTask3       = { actions: false, renderer: "svg", width: 380, height: 280 };
-const embedLarge       = { actions: false, renderer: "svg", width: 900, height: 380 };
-const embedInteractive = { actions: false, renderer: "svg", width: 650, height: 420 };
-const embedTask10      = { actions: false, renderer: "svg", width: 650, height: 420 };
+
+const BASE_VL_CONFIG = {
+  view: { stroke: "transparent" },
+  background: "transparent",
+  title: { fontSize: 14, subtitleFontSize: 12, anchor: "start" },
+  axis: {
+    labelFontSize: 11,
+    titleFontSize: 12,
+    gridColor: "#e5e7eb",
+    domainColor: "#111827",
+    tickColor: "#111827"
+  },
+  legend: { labelFontSize: 11, titleFontSize: 12 }
+};
+
+const embedStandard    = { actions: false, renderer: "svg", width: 400, height: 300, config: BASE_VL_CONFIG };
+const embedTask3       = { actions: false, renderer: "svg", width: 380, height: 280, config: BASE_VL_CONFIG };
+const embedLarge       = { actions: false, renderer: "svg", width: 900, height: 380, config: BASE_VL_CONFIG };
+const embedInteractive = { actions: false, renderer: "svg", width: 650, height: 420, config: BASE_VL_CONFIG };
+const embedTask10      = { actions: false, renderer: "svg", width: 650, height: 420, config: BASE_VL_CONFIG };
 
 // -----------------------------
 // Safe embed: one failure will not break the rest
@@ -43,13 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
   safeEmbed("#vis7", "graphs/financial_times.json", embedStandard);
   safeEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-  safeEmbed("#vis_api", "graphs/api_chart.json", { actions: false, renderer: "svg", width: 450, height: 300 });
-  safeEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
+  safeEmbed("#vis_api", "graphs/api_chart.json", { actions: false, renderer: "svg", width: 450, height: 300, config: BASE_VL_CONFIG });
+  safeEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300, config: BASE_VL_CONFIG });
 
   // =============================
   // Task 6: Dashboard
   // =============================
-  const dashboardEmbedOptions = { actions: false, renderer: "svg" };
+  const dashboardEmbedOptions = { actions: false, renderer: "svg", config: BASE_VL_CONFIG };
 
   function dashboardSpec(dataUrl, chartTitle) {
     return {
@@ -69,10 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       "width": "container",
       "height": 170,
-      "config": {
-        "view": { "stroke": "transparent" },
-        "axis": { "labelFontSize": 10, "titleFontSize": 11 }
-      }
+      "config": BASE_VL_CONFIG
     };
   }
 
@@ -109,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================
   // Task 7: Maps (use your local JSONs)
   // =============================
-  safeEmbed("#map_scotland", "graphs/scotland_choropleth.json", { actions: false, renderer: "svg" });
-  safeEmbed("#map_wales", "graphs/wales_coordinates.json", { actions: false, renderer: "svg" });
+  safeEmbed("#map_scotland", "graphs/scotland_choropleth.json", { actions: false, renderer: "svg", config: BASE_VL_CONFIG });
+  safeEmbed("#map_wales", "graphs/wales_coordinates.json", { actions: false, renderer: "svg", config: BASE_VL_CONFIG });
 
   // =============================
   // Task 8: Big Data

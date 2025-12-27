@@ -1,15 +1,29 @@
 // ========================================
-// ENHANCED PROJECT CHARTS - UK COST OF LIVING CRISIS
-// (Fixed: correct GitHub path + safe embedding so one failure doesn't stop the rest)
+// PROJECT CHARTS - UK COST OF LIVING CRISIS
+// Consistency + robustness improvements
 // ========================================
 
-// ✅ Your repo info (as you provided)
 const GITHUB_USER = "yolwinpariaton";
 const GITHUB_REPO = "yolwinpariaton.github.io";
 const DATA_PATH = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/`;
 
-// Vega-Embed options (consistent rendering)
-const EMBED_OPTS = { actions: false, renderer: "svg" };
+// Consistent Vega-Lite configuration (applies across charts)
+const BASE_VL_CONFIG = {
+  view: { stroke: "transparent" },
+  background: "transparent",
+  title: { fontSize: 14, subtitleFontSize: 12, anchor: "start" },
+  axis: {
+    labelFontSize: 11,
+    titleFontSize: 12,
+    gridColor: "#e5e7eb",
+    domainColor: "#111827",
+    tickColor: "#111827"
+  },
+  legend: { labelFontSize: 11, titleFontSize: 12 }
+};
+
+// Vega-Embed options (also merge config into loaded specs)
+const EMBED_OPTS = { actions: false, renderer: "svg", config: BASE_VL_CONFIG };
 
 // -----------------------------
 // Safe embed: one failure will not break the rest
@@ -33,14 +47,10 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ----------------------------------------
   // Chart 1: Inflation (load from spec file)
-  // ----------------------------------------
   safeEmbed("#chart1", `${DATA_PATH}chart1_spec.json`);
 
-  // ----------------------------------------
   // Chart 2: Interactive Wage Squeeze
-  // ----------------------------------------
   safeEmbed("#chart2", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
@@ -75,8 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "y": {
         "field": "squeeze_index",
         "type": "quantitative",
-        "title": "Real Wage Index (2020=100)",
-        "scale": { "domain": [85, 110] }
+        "title": "Real Wage Index (2020=100)"
       },
       "color": {
         "field": "sector",
@@ -91,17 +100,13 @@ document.addEventListener("DOMContentLoaded", () => {
         { "field": "inflation", "title": "Inflation Rate", "format": ".1f" }
       ]
     },
-    "config": { "view": { "stroke": "transparent" } }
+    "config": BASE_VL_CONFIG
   });
 
-  // ----------------------------------------
   // Chart 3: Regional Map (load from spec file)
-  // ----------------------------------------
   safeEmbed("#chart3", `${DATA_PATH}chart3_spec.json`);
 
-  // ----------------------------------------
   // Chart 4: Energy Bill Impact Calculator
-  // ----------------------------------------
   safeEmbed("#chart4", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
@@ -140,11 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "title": "Date",
             "axis": { "format": "%b %y", "labelAngle": -45 }
           },
-          "y": {
-            "field": "monthly_bill",
-            "type": "quantitative",
-            "title": "Monthly Cost (£)"
-          },
+          "y": { "field": "monthly_bill", "type": "quantitative", "title": "Monthly Cost (£)" },
           "tooltip": [
             { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Date" },
             { "field": "monthly_bill", "title": "Bill (£)", "format": ".0f" }
@@ -173,12 +174,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     ],
-    "config": { "view": { "stroke": "transparent" } }
+    "config": BASE_VL_CONFIG
   });
 
-  // ----------------------------------------
   // Chart 5: Food Price Heatmap
-  // ----------------------------------------
   safeEmbed("#chart5", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
@@ -194,24 +193,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "field": "date",
         "type": "ordinal",
         "title": "Month",
-        "axis": { "labelAngle": -90, "labelLimit": 100 }
+        "axis": { "labelAngle": -90, "labelLimit": 110 }
       },
-      "y": {
-        "field": "category",
-        "type": "nominal",
-        "title": "Food Category"
-      },
+      "y": { "field": "category", "type": "nominal", "title": "Food Category" },
       "color": {
         "field": "inflation",
         "type": "quantitative",
-        "scale": {
-          "scheme": "redyellowgreen",
-          "reverse": true,
-          "domain": [-2, 25],
-          "clamp": true
-        },
-        "title": "Inflation %",
-        "legend": { "format": ".0f" }
+        "scale": { "scheme": "redyellowgreen", "reverse": true, "domain": [-2, 25], "clamp": true },
+        "title": "Inflation %"
       },
       "tooltip": [
         { "field": "category", "title": "Category" },
@@ -220,16 +209,10 @@ document.addEventListener("DOMContentLoaded", () => {
         { "field": "affordability_impact", "title": "Impact Level" }
       ]
     },
-    "config": {
-      "view": { "stroke": "transparent" },
-      "axis": { "domainWidth": 1 }
-    }
+    "config": BASE_VL_CONFIG
   });
 
-  // ----------------------------------------
   // Chart 6: Housing Affordability
-  // FIX: fold+filter bug (metricType should compare against 'metric', not datum.metric)
-  // ----------------------------------------
   safeEmbed("#chart6", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
@@ -269,11 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "encoding": {
       "x": { "field": "year", "type": "ordinal", "title": "Year" },
       "y": { "field": "value", "type": "quantitative", "title": "Ratio / Percentage" },
-      "color": {
-        "field": "metric",
-        "type": "nominal",
-        "legend": { "title": "Metric" }
-      },
+      "color": { "field": "metric", "type": "nominal", "legend": { "title": "Metric" } },
       "tooltip": [
         { "field": "city", "title": "City" },
         { "field": "year", "title": "Year" },
@@ -281,17 +260,13 @@ document.addEventListener("DOMContentLoaded", () => {
         { "field": "value", "title": "Value", "format": ".2f" },
         { "field": "house_price", "title": "Avg House Price", "format": "£,.0f" },
         { "field": "annual_rent", "title": "Annual Rent", "format": "£,.0f" },
-        { "field": "median_income", "title": "Median Income", "format": "£,.0f" },
-        { "field": "affordability_score", "title": "Affordability Score", "format": ".0f" }
+        { "field": "median_income", "title": "Median Income", "format": "£,.0f" }
       ]
     },
-    "config": { "view": { "stroke": "transparent" } }
+    "config": BASE_VL_CONFIG
   });
 
-  // ----------------------------------------
   // Chart 7: International Comparison
-  // FIX: invalid time format "%Q %Y" -> use "%b %Y" (works reliably)
-  // ----------------------------------------
   safeEmbed("#chart7", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
@@ -316,42 +291,24 @@ document.addEventListener("DOMContentLoaded", () => {
         "title": "Date",
         "axis": { "format": "%b %Y", "labelAngle": -45 }
       },
-      "y": {
-        "field": "inflation",
-        "type": "quantitative",
-        "title": "Inflation Rate (%)"
-      },
-      "color": {
-        "field": "country",
-        "type": "nominal",
-        "scale": { "scheme": "tableau10" }
-      },
-      "opacity": {
-        "condition": { "param": "countryHighlight", "value": 1 },
-        "value": 0.2
-      },
-      "size": {
-        "condition": { "param": "countryHighlight", "value": 3 },
-        "value": 1
-      },
+      "y": { "field": "inflation", "type": "quantitative", "title": "Inflation Rate (%)" },
+      "color": { "field": "country", "type": "nominal", "scale": { "scheme": "tableau10" } },
+      "opacity": { "condition": { "param": "countryHighlight", "value": 1 }, "value": 0.2 },
+      "size": { "condition": { "param": "countryHighlight", "value": 3 }, "value": 1 },
       "tooltip": [
         { "field": "country", "title": "Country" },
         { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Date" },
-        { "field": "inflation", "title": "Inflation", "format": ".1f" },
-        { "field": "real_wage_growth", "title": "Real Wage Growth", "format": ".1f" },
-        { "field": "crisis_severity", "title": "Crisis Severity Index" }
+        { "field": "inflation", "title": "Inflation", "format": ".1f" }
       ]
     },
-    "config": { "view": { "stroke": "transparent" } }
+    "config": BASE_VL_CONFIG
   });
 
-  // ----------------------------------------
   // Chart 8: Scenario Explorer
-  // ----------------------------------------
   safeEmbed("#chart8", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
-      "text": "Economic Scenario Explorer 2025-2027",
+      "text": "Economic Scenario Explorer 2025–2027",
       "subtitle": "Explore different economic futures"
     },
     "width": 750,
@@ -406,28 +363,10 @@ document.addEventListener("DOMContentLoaded", () => {
           "x": { "field": "date", "type": "temporal" },
           "y": { "field": "real_wage_growth", "type": "quantitative", "title": "Real Wage Growth (%)" }
         }
-      },
-      {
-        "mark": { "type": "line", "strokeWidth": 2, "color": "#9467bd", "opacity": 0.7 },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "unemployment", "type": "quantitative", "title": "Unemployment (%)" }
-        }
       }
     ],
     "resolve": { "scale": { "y": "independent" } },
-    "encoding": {
-      "tooltip": [
-        { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Date" },
-        { "field": "inflation", "title": "Inflation", "format": ".1f" },
-        { "field": "wage_growth", "title": "Wage Growth", "format": ".1f" },
-        { "field": "real_wage_growth", "title": "Real Wage Growth", "format": ".1f" },
-        { "field": "unemployment", "title": "Unemployment", "format": ".1f" },
-        { "field": "consumer_confidence", "title": "Consumer Confidence" },
-        { "field": "recession_probability", "title": "Recession Risk", "format": ".0f" }
-      ]
-    },
-    "config": { "view": { "stroke": "transparent" } }
+    "config": BASE_VL_CONFIG
   });
 
   console.log("✅ project-charts.js loaded and embed calls executed.");
