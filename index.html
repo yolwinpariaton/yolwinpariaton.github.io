@@ -3,13 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Yolwin Pariaton</title>
+  <meta name="description" content="Personal website of Yolwin Pariaton: portfolio and project work for LSE Automated Data Visualisation." />
+  <meta name="author" content="Yolwin Pariaton" />
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-  <header class="site-header">
-    <nav class="nav">
-      <a class="nav__home" href="index.html">Yolwin Pariaton</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav" aria-label="Primary">
+      <div class="nav__brand">
+        <a class="nav__home" href="index.html">Yolwin Pariaton</a>
+      </div>
+
+      <input class="nav__checkbox" type="checkbox" id="navToggleHome" />
+      <label class="nav__toggle" for="navToggleHome" aria-label="Toggle navigation">☰</label>
+
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html" aria-current="page">Home</a></li>
         <li><a class="nav__link" href="project.html">Project</a></li>
@@ -17,50 +30,60 @@
       </ul>
     </nav>
 
-    <section class="hero hero--bg">
+    <section class="hero hero--bg" aria-label="Home intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">Yolwin Pariaton</h1>
         <p class="hero__subtitle">LSE Data Science for Public Policy</p>
+
         <div class="hero__social">
-          <a class="btn btn--ghost" href="https://github.com/yolwinpariaton">GitHub</a>
-          <a class="btn btn--ghost" href="https://linkedin.com">LinkedIn</a>
+          <a class="btn btn--ghost" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn--ghost" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
     </section>
   </header>
 
   <main id="main">
-    <section class="section section--alt">
+    <section class="section section--alt" aria-label="Project preview">
       <div class="container two-col">
         <div class="two-col__text">
           <h2>Project</h2>
-          <p>Exploring automated data collection methods including APIs, web scraping, and reproducible workflows.</p>
+          <p>Examining the UK cost of living crisis through multiple economic indicators, automation, and interactive visualisations.</p>
           <a class="btn btn--flat" href="project.html">Explore project</a>
         </div>
         <div class="two-col__media">
-          <img class="media-img" src="images/living_cost.jpg" alt="Living Cost Analysis" />
+          <img class="media-img" src="images/living_cost.jpg" alt="Cost of living analysis preview image" />
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" aria-label="Portfolio preview">
       <div class="container two-col">
         <div class="two-col__media">
-          <img class="media-img" src="images/portfolio.jpg" alt="Data Portfolio" />
+          <img class="media-img" src="images/portfolio.jpg" alt="Portfolio preview image" />
         </div>
         <div class="two-col__text">
           <h2>Portfolio</h2>
-          <p>Weekly tasks showing interactive charts embedded with Vega-Lite and data analysis write-ups.</p>
+          <p>Weekly tasks showing Vega-Lite charts, maps, dashboards, and automated data workflows.</p>
           <a class="btn btn--flat" href="portfolio.html">Explore portfolio</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer__grid--centered">
-      <p>© 2025 Yolwin Pariaton | LSE Automated Data Visualisation</p>
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container footer__grid footer__grid--centered">
+      <div>
+        <h3 class="footer__title">Contact</h3>
+        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+      </div>
+
+      <div>
+        <h3 class="footer__title">About</h3>
+        <p>Built for the LSE Automated Data Visualisation Course.</p>
+        <p>© 2025 Yolwin Pariaton</p>
+      </div>
     </div>
   </footer>
 </body>

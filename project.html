@@ -11,9 +11,11 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/project.css" />
 
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <script defer src="js/project-charts.js"></script>
 </head>
 
 <body>
@@ -35,7 +37,7 @@
       </ul>
     </nav>
 
-    <section class="hero hero--project">
+    <section class="hero hero--project" aria-label="Project intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">The UK Cost of Living Crisis</h1>
@@ -46,7 +48,7 @@
 
   <main id="main">
     <div class="container project-container">
-      
+
       <!-- Project Summary -->
       <section class="project-intro">
         <div class="key-metrics">
@@ -69,16 +71,16 @@
       <section class="project-section">
         <h2>1. Aims</h2>
         <p>
-          This project examines the UK's cost of living crisis through a data-driven lens, focusing on the period from 2020 to 2024. 
-          The analysis seeks to quantify the crisis's impact across different dimensions: inflation dynamics, real wage erosion, 
-          regional disparities, and sectoral variations. By combining multiple data sources and visualization techniques, 
-          the project aims to provide a comprehensive picture of how rising costs have affected UK households, identify the most 
-          affected demographics and regions, and explore the underlying drivers of the crisis. The ultimate goal is to create an 
+          This project examines the UK's cost of living crisis through a data-driven lens, focusing on the period from 2020 to 2024.
+          The analysis seeks to quantify the crisis's impact across different dimensions: inflation dynamics, real wage erosion,
+          regional disparities, and sectoral variations. By combining multiple data sources and visualization techniques,
+          the project aims to provide a comprehensive picture of how rising costs have affected UK households, identify the most
+          affected demographics and regions, and explore the underlying drivers of the crisis. The ultimate goal is to create an
           accessible, updateable resource that tracks the crisis's evolution and informs policy discussions.
         </p>
       </section>
 
-      <!-- Chart 1: Inflation Timeline -->
+      <!-- Chart 1 -->
       <section class="chart-section">
         <h3>Chart 1: UK Inflation Timeline with Key Events</h3>
         <div class="chart-wrapper">
@@ -89,7 +91,7 @@
         </p>
       </section>
 
-      <!-- Chart 2: Real Wages -->
+      <!-- Chart 2 -->
       <section class="chart-section">
         <h3>Chart 2: Real Wages vs Inflation</h3>
         <div class="chart-wrapper">
@@ -104,22 +106,22 @@
       <section class="project-section">
         <h2>2. Data Sources & Automation</h2>
         <p>
-          The project utilizes multiple authoritative data sources, prioritizing APIs for automatic updates. Primary data comes from the 
-          Office for National Statistics (ONS) API, providing real-time access to inflation (CPIH, CPI), wage growth (AWE), and employment 
-          statistics. The Bank of England's Statistical Interactive Database supplies interest rate data and inflation expectations through 
-          their REST API. Energy prices are sourced from Ofgem's data portal using automated CSV downloads, while food prices utilize the 
+          The project utilizes multiple authoritative data sources, prioritizing APIs for automatic updates. Primary data comes from the
+          Office for National Statistics (ONS) API, providing real-time access to inflation (CPIH, CPI), wage growth (AWE), and employment
+          statistics. The Bank of England's Statistical Interactive Database supplies interest rate data and inflation expectations through
+          their REST API. Energy prices are sourced from Ofgem's data portal using automated CSV downloads, while food prices utilize the
           ONS's average prices dataset.
         </p>
         <p>
-          For international comparisons, the project integrates World Bank and OECD APIs, enabling cross-country inflation and wage analysis. 
-          Regional data combines ONS regional statistics with the English Indices of Multiple Deprivation. All data pipelines are automated 
-          using Python scripts that fetch, clean, and transform data daily. The automation includes error handling for API failures and data 
-          validation checks. Raw data is stored in JSON format on GitHub, with transformation scripts documented in accompanying Jupyter notebooks, 
+          For international comparisons, the project integrates World Bank and OECD APIs, enabling cross-country inflation and wage analysis.
+          Regional data combines ONS regional statistics with the English Indices of Multiple Deprivation. All data pipelines are automated
+          using Python scripts that fetch, clean, and transform data daily. The automation includes error handling for API failures and data
+          validation checks. Raw data is stored in JSON format on GitHub, with transformation scripts documented in accompanying Jupyter notebooks,
           ensuring complete reproducibility.
         </p>
       </section>
 
-      <!-- Chart 3: Regional Map -->
+      <!-- Chart 3 -->
       <section class="chart-section">
         <h3>Chart 3: Regional Cost Variations Across UK</h3>
         <div class="chart-wrapper">
@@ -130,7 +132,7 @@
         </p>
       </section>
 
-      <!-- Chart 4: Energy Prices Interactive -->
+      <!-- Chart 4 -->
       <section class="chart-section">
         <h3>Chart 4: Energy Price Cap Evolution</h3>
         <div class="chart-wrapper">
@@ -145,21 +147,21 @@
       <section class="project-section">
         <h2>3. Tools & Analytical Approach</h2>
         <p>
-          The analytical pipeline employs Python for data processing, with pandas handling data manipulation and requests managing API calls. 
-          A key challenge was harmonizing different data frequencies—converting weekly wage data to monthly for alignment with inflation series. 
-          This required developing custom interpolation functions that preserve seasonal patterns. The ONS API's pagination limits necessitated 
+          The analytical pipeline employs Python for data processing, with pandas handling data manipulation and requests managing API calls.
+          A key challenge was harmonizing different data frequencies—converting weekly wage data to monthly for alignment with inflation series.
+          This required developing custom interpolation functions that preserve seasonal patterns. The ONS API's pagination limits necessitated
           implementing recursive fetching for large datasets.
         </p>
         <p>
-          Visualization leverages Vega-Lite's declarative grammar, enabling responsive, interactive charts. Complex visualizations like the 
-          regional choropleth required merging ONS boundary data with economic indicators using GeoPandas. The energy price calculator 
-          presented unique challenges in modeling variable tariffs and government support schemes, solved by creating a parametric model 
-          that adjusts for household size and consumption patterns. All processing scripts are modularized for maintainability, with 
+          Visualization leverages Vega-Lite's declarative grammar, enabling responsive, interactive charts. Complex visualizations like the
+          regional choropleth required merging ONS boundary data with economic indicators using GeoPandas. The energy price calculator
+          presented unique challenges in modeling variable tariffs and government support schemes, solved by creating a parametric model
+          that adjusts for household size and consumption patterns. All processing scripts are modularized for maintainability, with
           automated testing ensuring data quality. GitHub Actions runs daily updates, maintaining data freshness without manual intervention.
         </p>
       </section>
 
-      <!-- Chart 5: Food Basket -->
+      <!-- Chart 5 -->
       <section class="chart-section">
         <h3>Chart 5: Essential Food Basket Price Index</h3>
         <div class="chart-wrapper">
@@ -170,7 +172,7 @@
         </p>
       </section>
 
-      <!-- Chart 6: Housing Costs -->
+      <!-- Chart 6 -->
       <section class="chart-section">
         <h3>Chart 6: Housing Costs by Region</h3>
         <div class="chart-wrapper">
@@ -181,7 +183,7 @@
         </p>
       </section>
 
-      <!-- Chart 7: International Comparison -->
+      <!-- Chart 7 -->
       <section class="chart-section">
         <h3>Chart 7: UK vs G7 Countries</h3>
         <div class="chart-wrapper">
@@ -192,7 +194,7 @@
         </p>
       </section>
 
-      <!-- Chart 8: Projections -->
+      <!-- Chart 8 -->
       <section class="chart-section">
         <h3>Chart 8: Future Scenarios Dashboard</h3>
         <div class="chart-wrapper">
@@ -203,35 +205,35 @@
         </p>
       </section>
 
-      <!-- CONCLUSIONS Section -->
+      <!-- CONCLUSIONS -->
       <section class="project-section">
         <h2>4. Conclusions</h2>
         <p>
-          The analysis reveals a multifaceted crisis where energy prices acted as the initial catalyst, but broader supply chain disruptions 
-          and labor market tightness sustained inflationary pressures. Real wages fell by 2.5% at the crisis peak, with lower-income 
-          households experiencing effectively higher inflation due to spending patterns concentrated on essentials. Regional disparities 
+          The analysis reveals a multifaceted crisis where energy prices acted as the initial catalyst, but broader supply chain disruptions
+          and labor market tightness sustained inflationary pressures. Real wages fell by 2.5% at the crisis peak, with lower-income
+          households experiencing effectively higher inflation due to spending patterns concentrated on essentials. Regional disparities
           are significant—London faces highest absolute costs, but Northern regions suffer greater relative impact given lower median incomes.
         </p>
         <p>
-          The interactive visualizations enable users to explore their specific circumstances, making abstract economic data personally relevant. 
-          This project provides a foundation for ongoing monitoring, with automated updates ensuring continued relevance. Future work could 
+          The interactive visualizations enable users to explore their specific circumstances, making abstract economic data personally relevant.
+          This project provides a foundation for ongoing monitoring, with automated updates ensuring continued relevance. Future work could
           expand sectoral analysis and incorporate micro-level household survey data for deeper demographic insights.
         </p>
       </section>
 
-      <!-- Data & Code Links -->
+      <!-- Links -->
       <section class="project-links">
         <h2>Resources & Replication</h2>
         <div class="link-grid">
-          <a href="https://github.com/YOUR_USERNAME/YOUR_REPO" target="_blank" class="resource-link">
+          <a href="https://github.com/YOUR_USERNAME/YOUR_REPO" target="_blank" rel="noopener" class="resource-link">
             <span class="link-icon">📊</span>
             <span class="link-text">GitHub Repository</span>
           </a>
-          <a href="https://colab.research.google.com/drive/YOUR_COLAB_LINK" target="_blank" class="resource-link">
+          <a href="https://colab.research.google.com/drive/YOUR_COLAB_LINK" target="_blank" rel="noopener" class="resource-link">
             <span class="link-icon">🐍</span>
             <span class="link-text">Python Analysis</span>
           </a>
-          <a href="data/README.md" target="_blank" class="resource-link">
+          <a href="data/README.md" target="_blank" rel="noopener" class="resource-link">
             <span class="link-icon">📝</span>
             <span class="link-text">Data Documentation</span>
           </a>
@@ -241,20 +243,19 @@
     </div>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" aria-label="Footer">
     <div class="container footer__grid footer__grid--centered">
       <div>
         <h3 class="footer__title">Contact</h3>
         <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
+
       <div>
         <h3 class="footer__title">About</h3>
-        <p>LSE MPA Data Science for Public Policy</p>
+        <p>Built for the LSE Automated Data Visualisation Course.</p>
         <p>© 2025 Yolwin Pariaton</p>
       </div>
     </div>
   </footer>
-
-  <script src="js/project-charts.js"></script>
 </body>
 </html>

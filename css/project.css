@@ -1,5 +1,7 @@
 /* Project-specific styles */
-.hero--project {
+
+/* Make project hero consistent with other pages (overlay + centered text) */
+.hero--project{
   position: relative;
   min-height: 60vh;
   display: grid;
@@ -7,24 +9,26 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.project-container {
+/* Use the global hero overlay from style.css; no extra needed */
+
+.project-container{
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-.project-intro {
+.project-intro{
   margin: 40px 0;
 }
 
-.key-metrics {
+.key-metrics{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin: 30px 0;
 }
 
-.metric {
+.metric{
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -32,37 +36,37 @@
   text-align: center;
 }
 
-.metric-value {
+.metric-value{
   display: block;
   font-size: 2.5em;
   font-weight: bold;
   color: var(--accent);
 }
 
-.metric-label {
+.metric-label{
   display: block;
   margin-top: 5px;
   font-size: 0.9em;
   color: var(--muted);
 }
 
-.project-section {
+.project-section{
   margin: 50px 0;
 }
 
-.project-section h2 {
+.project-section h2{
   color: var(--navy);
   border-bottom: 2px solid var(--accent);
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
 
-.project-section p {
+.project-section p{
   line-height: 1.6;
   margin-bottom: 15px;
 }
 
-.chart-section {
+.chart-section{
   margin: 40px 0;
   background: white;
   padding: 25px;
@@ -70,33 +74,33 @@
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-.chart-section h3 {
+.chart-section h3{
   margin-bottom: 20px;
   color: var(--navy);
 }
 
-.chart-description {
+.chart-description{
   margin-top: 15px;
   font-size: 0.9em;
   color: var(--muted);
   font-style: italic;
 }
 
-.project-links {
+.project-links{
   margin: 50px 0;
   padding: 30px;
   background: #f8f9fa;
   border-radius: 10px;
 }
 
-.link-grid {
+.link-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin-top: 20px;
 }
 
-.resource-link {
+.resource-link{
   display: flex;
   align-items: center;
   padding: 15px;
@@ -107,17 +111,17 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.resource-link:hover {
+.resource-link:hover{
   transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.link-icon {
+.link-icon{
   font-size: 1.5em;
   margin-right: 10px;
 }
 
-.link-text {
+.link-text{
   color: var(--text);
   font-weight: 600;
 }
