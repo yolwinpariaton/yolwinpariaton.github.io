@@ -254,6 +254,11 @@ a:hover{ text-decoration: underline; }
   display: block;
 }
 
+/* NEW: larger centered wrapper for Task 9 and Task 10 */
+.chart-wrapper--center-lg{
+  max-width: 720px;
+}
+
 /* Wide wrapper for Task 4 improved chart */
 .chart-wrapper--wide{
   max-width: 900px;
@@ -280,6 +285,11 @@ a:hover{ text-decoration: underline; }
   min-height: 400px;
 }
 
+/* NEW: taller container for bigger charts */
+.vega-container--tall{
+  min-height: 440px;
+}
+
 /* Map container for Task 7 */
 .map-container{
   min-height: 350px;
@@ -303,6 +313,11 @@ a:hover{ text-decoration: underline; }
   max-height: 280px;
   object-fit: contain;
   display: block;
+}
+
+/* NEW: bigger images for Task 10B */
+.task-img--big{
+  max-height: 420px;
 }
 
 /* Task centering for 4, 5, 9 */

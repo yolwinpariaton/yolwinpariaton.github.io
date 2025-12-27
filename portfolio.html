@@ -8,13 +8,15 @@
   <meta name="description" content="Portfolio page for course exercises and assignments for Automated Data Collection at LSE." />
   <meta name="author" content="Yolwin Pariaton" />
 
-  <!-- IMPORTANT: this must match your repo structure: /css/style.css -->
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Vega libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <!-- Vega libraries (defer ensures correct order + runs after HTML is parsed) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Your embed script (must load AFTER Vega libs) -->
+  <script defer src="details.js"></script>
 </head>
 
 <body>
@@ -36,7 +38,6 @@
       </ul>
     </nav>
 
-    <!-- HERO (background image is defined in css/style.css: .hero--portfolio) -->
     <section class="hero hero--portfolio" aria-label="Portfolio intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
@@ -211,24 +212,24 @@
           </div>
         </section>
 
-        <!-- TASK 9 -->
+        <!-- TASK 9 (bigger containers) -->
         <section class="task task-center">
           <h2>Task 9: Two interactive charts</h2>
           <p>
             Interactive visualizations allowing users to explore economic data through dropdowns, sliders, and dynamic filtering.
           </p>
 
-          <div class="chart-wrapper chart-wrapper--center">
+          <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
             <h3 style="font-size: 14px; margin: 0 0 10px 0;">Economic Indicators Dashboard</h3>
-            <div id="interactive1" class="vega-container"></div>
+            <div id="interactive1" class="vega-container vega-container--tall"></div>
             <p style="margin-top: 10px; font-size: 12px; color: #666;">
               Use the dropdown to switch between indicators and adjust the time range.
             </p>
           </div>
 
-          <div class="chart-wrapper chart-wrapper--center">
+          <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
             <h3 style="font-size: 14px; margin: 0 0 10px 0;">Correlation Explorer</h3>
-            <div id="interactive2" class="vega-container"></div>
+            <div id="interactive2" class="vega-container vega-container--tall"></div>
             <p style="margin-top: 10px; font-size: 12px; color: #666;">
               Select variables for each axis, filter by region, and toggle regression line.
             </p>
@@ -243,8 +244,8 @@
             The chart includes a mean reference line and an interactive decade filter.
           </p>
 
-          <div class="chart-wrapper chart-wrapper--center">
-            <div id="task10a" class="vega-container"></div>
+          <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
+            <div id="task10a" class="vega-container vega-container--tall"></div>
           </div>
         </section>
 
@@ -260,17 +261,17 @@
           <p><strong>Hypothesis:</strong> UK inflation is predictable from GDP growth, unemployment, and structural indicators,
             with reasonable out-of-sample performance between 2000 and 2023.</p>
 
-          <div class="chart-wrapper chart-wrapper--center">
+          <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
             <h3 style="font-size: 14px; margin: 0 0 10px 0;">Predictions (Test Period)</h3>
-            <img src="images/regression.png" alt="Model predictions vs actual inflation over test years" class="task-img">
+            <img src="images/regression.png" alt="Model predictions vs actual inflation over test years" class="task-img task-img--big">
             <p style="margin-top: 10px; font-size: 12px; color: #666;">
               Actual inflation vs predicted inflation (standardised y) for the holdout test years.
             </p>
           </div>
 
-          <div class="chart-wrapper chart-wrapper--center">
+          <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
             <h3 style="font-size: 14px; margin: 0 0 10px 0;">Feature Importance</h3>
-            <img src="images/features.png" alt="Feature importance from Ridge regression coefficients" class="task-img">
+            <img src="images/features.png" alt="Feature importance from Ridge regression coefficients" class="task-img task-img--big">
             <p style="margin-top: 10px; font-size: 12px; color: #666;">
               Ridge coefficient magnitudes indicate which predictors are most strongly associated with inflation in standardised space.
             </p>
@@ -302,8 +303,5 @@
       </div>
     </div>
   </footer>
-
-  <!-- Single source of truth for all embeds -->
-  <script src="details.js"></script>
 </body>
 </html>
