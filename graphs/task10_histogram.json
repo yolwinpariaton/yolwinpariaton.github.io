@@ -12,15 +12,6 @@
     "url": "graphs/dashboard1.json",
     "format": {"type": "json"}
   },
-  "transform": [
-    {"calculate": "toDate(datum.date + '-01-01')", "as": "year_date"},
-    {"calculate": "year(datum.year_date)", "as": "year_num"},
-    {
-      "calculate": "datum.year_num < 2010 ? '2000s' : datum.year_num < 2020 ? '2010s' : '2020s'",
-      "as": "decade"
-    },
-    {"filter": "isValid(datum.value) && datum.value != null"}
-  ],
   "params": [
     {
       "name": "decade_select",
@@ -61,32 +52,10 @@
       "as": "decade"
     },
     {"filter": "isValid(datum.value) && datum.value != null"},
-    {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"},
-    {
-      "aggregate": [
-        {"op": "mean", "field": "value", "as": "mean_val"},
-        {"op": "median", "field": "value", "as": "median_val"},
-        {"op": "stdev", "field": "value", "as": "stdev_val"},
-        {"op": "min", "field": "value", "as": "min_val"},
-        {"op": "max", "field": "value", "as": "max_val"},
-        {"op": "q1", "field": "value", "as": "q1_val"},
-        {"op": "q3", "field": "value", "as": "q3_val"}
-      ]
-    },
-    {
-      "calculate": "format(datum.mean_val, '.2f')",
-      "as": "mean_label"
-    },
-    {
-      "calculate": "'μ = ' + format(datum.mean_val, '.2f') + ', σ = ' + format(datum.stdev_val, '.2f')",
-      "as": "stats_label"
-    }
+    {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"}
   ],
   "layer": [
     {
-      "transform": [
-        {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"}
-      ],
       "mark": {
         "type": "bar",
         "opacity": 0.7,
@@ -97,7 +66,7 @@
         "x": {
           "field": "value",
           "type": "quantitative",
-          "bin": {"maxbins": {"expr": "bin_count"}},
+          "bin": {"maxbins": 20},
           "title": "Value",
           "axis": {
             "labelAngle": 0,
@@ -132,13 +101,11 @@
     },
     {
       "transform": [
-        {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"},
         {"filter": "show_density"},
         {
           "density": "value",
           "bandwidth": 0.5,
-          "as": ["value_density", "density"],
-          "extent": {"signal": "[domain('x')[0], domain('x')[1]]"}
+          "as": ["value_density", "density"]
         },
         {
           "calculate": "datum.density * 200",
@@ -165,7 +132,6 @@
     },
     {
       "transform": [
-        {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"},
         {
           "aggregate": [
             {"op": "mean", "field": "value", "as": "mean"}
@@ -206,7 +172,6 @@
     },
     {
       "transform": [
-        {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"},
         {"filter": "show_quartiles"},
         {
           "aggregate": [
@@ -265,7 +230,6 @@
     },
     {
       "transform": [
-        {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"},
         {
           "aggregate": [
             {"op": "mean", "field": "value", "as": "mean"},
@@ -289,14 +253,13 @@
         "color": "#7f8c8d"
       },
       "encoding": {
-        "x": {"value": {"expr": "width"}},
-        "y": {"value": 0},
+        "x": {"value": 590},
+        "y": {"value": 10},
         "text": {"field": "stats_text", "type": "nominal"}
       }
     },
     {
       "transform": [
-        {"filter": "decade_select == 'All Decades' || datum.decade == decade_select"},
         {
           "aggregate": [
             {"op": "min", "field": "value", "as": "min"},
@@ -318,7 +281,7 @@
       "encoding": {
         "x": {"field": "min", "type": "quantitative"},
         "x2": {"field": "max", "type": "quantitative"},
-        "y": {"value": {"expr": "height - 10"}},
+        "y": {"value": 390},
         "tooltip": [
           {"field": "min", "type": "quantitative", "title": "Min", "format": ".2f"},
           {"field": "max", "type": "quantitative", "title": "Max", "format": ".2f"},
