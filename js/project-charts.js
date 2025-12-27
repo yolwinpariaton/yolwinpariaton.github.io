@@ -1,60 +1,22 @@
 // ========================================
-// PROJECT CHARTS - UK COST OF LIVING CRISIS
+// ENHANCED PROJECT CHARTS - UK COST OF LIVING CRISIS
 // ========================================
 
-// ----------------------------
-// Configuration (your repo)
-// ----------------------------
-const GITHUB_USER = "yolwinpariaton";
-const GITHUB_REPO = "yolwinpariaton.github.io";
+const GITHUB_USER = "YOUR_USERNAME";
+const GITHUB_REPO = "YOUR_REPO";
 const DATA_PATH = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/`;
 
-// Chart 1: Enhanced Inflation with Decomposition
-vegaEmbed('#chart1', {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "UK Inflation Crisis: Component Analysis",
-    "subtitle": "Click legend to isolate components"
-  },
-  "width": 750,
-  "height": 450,
-  "data": {"url": `${DATA_PATH}chart1_inflation_advanced.json`},
-  "mark": "area",
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "axis": {"format": "%b %Y", "labelAngle": -45}
-    },
-    "y": {
-      "field": "value",
-      "type": "quantitative",
-      "stack": "zero",
-      "title": "Contribution to Inflation (%)"
-    },
-    "color": {
-      "field": "component",
-      "type": "nominal",
-      "scale": {
-        "domain": ["Energy", "Food", "Core"],
-        "range": ["#ff4444", "#ff9800", "#2196f3"]
-      }
-    },
-    "opacity": {
-      "condition": {"param": "hover", "value": 1},
-      "value": 0.7
-    }
-  },
-  "params": [{
-    "name": "hover",
-    "select": {"type": "point", "on": "mouseover", "clear": "mouseout"}
-  }]
-});
+// Chart 1: Enhanced Inflation with Decomposition - Load from spec
+vegaEmbed('#chart1', `${DATA_PATH}chart1_spec.json`)
+  .catch(console.error);
 
 // Chart 2: Interactive Wage Squeeze Dashboard
 vegaEmbed('#chart2', {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Real Wage Squeeze by Sector",
+  "title": {
+    "text": "Real Wage Squeeze by Sector",
+    "subtitle": "Track how different sectors are affected by inflation"
+  },
   "width": 750,
   "height": 450,
   "data": {"url": `${DATA_PATH}chart2_wage_squeeze.json`},
@@ -72,23 +34,46 @@ vegaEmbed('#chart2', {
   "transform": [
     {"filter": "sectorSelect == 'All' || datum.sector == sectorSelect"}
   ],
-  "mark": {"type": "line", "point": true},
+  "mark": {"type": "line", "point": true, "strokeWidth": 2},
   "encoding": {
-    "x": {"field": "date", "type": "temporal"},
-    "y": {"field": "squeeze_index", "type": "quantitative", "title": "Real Wage Index (2020=100)"},
-    "color": {"field": "sector", "type": "nominal"},
-    "strokeWidth": {"condition": {"param": "hover", "value": 4}, "value": 2},
-    "opacity": {"condition": {"param": "hover", "value": 1}, "value": 0.7}
+    "x": {
+      "field": "date", 
+      "type": "temporal",
+      "title": "Date",
+      "axis": {"format": "%b %Y", "labelAngle": -45}
+    },
+    "y": {
+      "field": "squeeze_index", 
+      "type": "quantitative", 
+      "title": "Real Wage Index (2020=100)",
+      "scale": {"domain": [85, 110]}
+    },
+    "color": {
+      "field": "sector", 
+      "type": "nominal",
+      "scale": {"scheme": "category10"},
+      "legend": {"title": "Sector"}
+    },
+    "tooltip": [
+      {"field": "date", "type": "temporal", "format": "%B %Y", "title": "Date"},
+      {"field": "sector", "title": "Sector"},
+      {"field": "squeeze_index", "title": "Real Wage Index", "format": ".1f"},
+      {"field": "inflation", "title": "Inflation Rate", "format": ".1f%"}
+    ]
   }
-});
+}).catch(console.error);
 
-// Chart 3: Advanced Regional Map
-vegaEmbed('#chart3', `${DATA_PATH}chart3_spec.json`);
+// Chart 3: Advanced Regional Map - Load from spec
+vegaEmbed('#chart3', `${DATA_PATH}chart3_spec.json`)
+  .catch(console.error);
 
-// Chart 4: Energy Calculator
+// Chart 4: Energy Bill Impact Calculator
 vegaEmbed('#chart4', {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Energy Bill Impact Calculator",
+  "title": {
+    "text": "Energy Bill Impact Calculator",
+    "subtitle": "See how different household types are affected"
+  },
   "width": 750,
   "height": 450,
   "data": {"url": `${DATA_PATH}chart4_energy_detailed.json`},
@@ -101,6 +86,11 @@ vegaEmbed('#chart4', {
         "options": ["Small Flat", "Medium House", "Large House", "Student Accommodation"],
         "name": "Household Type: "
       }
+    },
+    {
+      "name": "showSupport",
+      "value": true,
+      "bind": {"input": "checkbox", "name": "Show Government Support "}
     }
   ],
   "transform": [
@@ -108,53 +98,104 @@ vegaEmbed('#chart4', {
   ],
   "layer": [
     {
-      "mark": {"type": "bar", "opacity": 0.7},
+      "mark": {"type": "area", "opacity": 0.6, "color": "#ff6b6b"},
       "encoding": {
-        "x": {"field": "date", "type": "temporal", "axis": {"format": "%b %y"}},
-        "y": {"field": "monthly_bill", "type": "quantitative", "title": "Monthly Bill (£)"},
-        "color": {"value": "#ff6b6b"}
+        "x": {
+          "field": "date", 
+          "type": "temporal", 
+          "title": "Date",
+          "axis": {"format": "%b %y", "labelAngle": -45}
+        },
+        "y": {
+          "field": "monthly_bill", 
+          "type": "quantitative", 
+          "title": "Monthly Cost (£)"
+        },
+        "tooltip": [
+          {"field": "date", "type": "temporal", "format": "%B %Y"},
+          {"field": "monthly_bill", "title": "Bill (£)", "format": ".0f"}
+        ]
       }
     },
     {
-      "mark": {"type": "bar", "opacity": 0.9},
+      "transform": [{"filter": "showSupport"}],
+      "mark": {"type": "area", "opacity": 0.8, "color": "#51cf66"},
       "encoding": {
         "x": {"field": "date", "type": "temporal"},
         "y": {"field": "government_support", "type": "quantitative"},
-        "color": {"value": "#51cf66"}
+        "tooltip": [
+          {"field": "government_support", "title": "Support (£)", "format": ".0f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 3, "color": "darkblue"},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "net_bill", "type": "quantitative"},
+        "tooltip": [
+          {"field": "net_bill", "title": "Net Bill (£)", "format": ".0f"}
+        ]
       }
     }
   ]
-});
+}).catch(console.error);
 
 // Chart 5: Food Price Heatmap
 vegaEmbed('#chart5', {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Food Category Inflation Heatmap",
+  "title": {
+    "text": "Food Category Inflation Heatmap",
+    "subtitle": "Monthly inflation rates by food category"
+  },
   "width": 750,
   "height": 400,
   "data": {"url": `${DATA_PATH}chart5_food_heatmap.json`},
   "mark": "rect",
   "encoding": {
-    "x": {"field": "date", "type": "ordinal", "title": "Month"},
-    "y": {"field": "category", "type": "nominal", "title": "Food Category"},
+    "x": {
+      "field": "date", 
+      "type": "ordinal", 
+      "title": "Month",
+      "axis": {"labelAngle": -90, "labelLimit": 100}
+    },
+    "y": {
+      "field": "category", 
+      "type": "nominal", 
+      "title": "Food Category"
+    },
     "color": {
       "field": "inflation",
       "type": "quantitative",
-      "scale": {"scheme": "redyellowgreen", "reverse": true, "domain": [-2, 25]},
-      "title": "Inflation %"
+      "scale": {
+        "scheme": "redyellowgreen", 
+        "reverse": true, 
+        "domain": [-2, 25],
+        "clamp": true
+      },
+      "title": "Inflation %",
+      "legend": {"format": ".0f"}
     },
     "tooltip": [
       {"field": "category", "title": "Category"},
       {"field": "date", "title": "Month"},
-      {"field": "inflation", "title": "Inflation", "format": ".1f%"}
+      {"field": "inflation", "title": "Inflation", "format": ".1f%"},
+      {"field": "affordability_impact", "title": "Impact Level"}
     ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domainWidth": 1}
   }
-});
+}).catch(console.error);
 
-// Chart 6: Housing Crisis Dashboard
+// Chart 6: Housing Affordability Crisis
 vegaEmbed('#chart6', {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Housing Affordability Crisis",
+  "title": {
+    "text": "Housing Affordability Crisis by City",
+    "subtitle": "Price-to-income and rent-to-income ratios"
+  },
   "width": 750,
   "height": 450,
   "data": {"url": `${DATA_PATH}chart6_housing_crisis.json`},
@@ -167,35 +208,65 @@ vegaEmbed('#chart6', {
         "options": ["London", "Manchester", "Birmingham", "Edinburgh", "Cardiff", "Leeds", "Bristol", "Newcastle"],
         "name": "Select City: "
       }
+    },
+    {
+      "name": "metricType",
+      "value": "both",
+      "bind": {
+        "input": "radio",
+        "options": ["both", "price_to_income", "rent_to_income"],
+        "labels": ["Both", "House Prices", "Rent"],
+        "name": "Show: "
+      }
     }
   ],
   "transform": [
-    {"filter": "datum.city == citySelect"}
+    {"filter": "datum.city == citySelect"},
+    {"fold": ["price_to_income", "rent_to_income", "mortgage_to_income"], "as": ["metric", "value"]},
+    {"filter": "metricType == 'both' || datum.metric == metricType"}
   ],
-  "layer": [
-    {
-      "mark": {"type": "line", "strokeWidth": 3},
-      "encoding": {
-        "x": {"field": "year", "type": "ordinal"},
-        "y": {"field": "price_to_income", "type": "quantitative", "title": "Ratio"},
-        "color": {"value": "#e74c3c"}
+  "mark": {"type": "line", "strokeWidth": 3, "point": {"size": 100}},
+  "encoding": {
+    "x": {
+      "field": "year", 
+      "type": "ordinal",
+      "title": "Year"
+    },
+    "y": {
+      "field": "value", 
+      "type": "quantitative",
+      "title": "Ratio / Percentage"
+    },
+    "color": {
+      "field": "metric",
+      "type": "nominal",
+      "scale": {
+        "domain": ["price_to_income", "rent_to_income", "mortgage_to_income"],
+        "range": ["#e74c3c", "#3498db", "#f39c12"]
+      },
+      "legend": {
+        "title": "Metric",
+        "labelExpr": "datum.value == 'price_to_income' ? 'Price/Income Ratio' : datum.value == 'rent_to_income' ? 'Rent/Income %' : 'Mortgage/Income %'"
       }
     },
-    {
-      "mark": {"type": "line", "strokeWidth": 3, "strokeDash": [5, 5]},
-      "encoding": {
-        "x": {"field": "year", "type": "ordinal"},
-        "y": {"field": "rent_to_income", "type": "quantitative"},
-        "color": {"value": "#3498db"}
-      }
-    }
-  ]
-});
+    "tooltip": [
+      {"field": "city", "title": "City"},
+      {"field": "year", "title": "Year"},
+      {"field": "house_price", "title": "Avg House Price", "format": "£,.0f"},
+      {"field": "annual_rent", "title": "Annual Rent", "format": "£,.0f"},
+      {"field": "median_income", "title": "Median Income", "format": "£,.0f"},
+      {"field": "affordability_score", "title": "Affordability Score", "format": ".0f"}
+    ]
+  }
+}).catch(console.error);
 
-// Chart 7: G20 Comparison
+// Chart 7: G20 International Comparison
 vegaEmbed('#chart7', {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "G20 Crisis Comparison",
+  "title": {
+    "text": "G20 Countries: Inflation Crisis Comparison",
+    "subtitle": "Click on country names in legend to highlight"
+  },
   "width": 750,
   "height": 450,
   "data": {"url": `${DATA_PATH}chart7_g20_comparison.json`},
@@ -206,11 +277,25 @@ vegaEmbed('#chart7', {
       "bind": "legend"
     }
   ],
-  "mark": {"type": "line", "strokeWidth": 2},
+  "mark": {"type": "line", "strokeWidth": 2, "point": {"size": 20}},
   "encoding": {
-    "x": {"field": "date", "type": "temporal"},
-    "y": {"field": "inflation", "type": "quantitative", "title": "Inflation Rate (%)"},
-    "color": {"field": "country", "type": "nominal"},
+    "x": {
+      "field": "date", 
+      "type": "temporal",
+      "title": "Date",
+      "axis": {"format": "%Q %Y"}
+    },
+    "y": {
+      "field": "inflation", 
+      "type": "quantitative", 
+      "title": "Inflation Rate (%)",
+      "scale": {"domain": [-1, 15]}
+    },
+    "color": {
+      "field": "country", 
+      "type": "nominal",
+      "scale": {"scheme": "tableau10"}
+    },
     "opacity": {
       "condition": {"param": "countryHighlight", "value": 1},
       "value": 0.2
@@ -218,14 +303,24 @@ vegaEmbed('#chart7', {
     "size": {
       "condition": {"param": "countryHighlight", "value": 3},
       "value": 1
-    }
+    },
+    "tooltip": [
+      {"field": "country", "title": "Country"},
+      {"field": "date", "type": "temporal", "format": "%Q %Y", "title": "Quarter"},
+      {"field": "inflation", "title": "Inflation", "format": ".1f%"},
+      {"field": "real_wage_growth", "title": "Real Wage Growth", "format": ".1f%"},
+      {"field": "crisis_severity", "title": "Crisis Severity Index"}
+    ]
   }
-});
+}).catch(console.error);
 
-// Chart 8: Scenario Explorer
+// Chart 8: Interactive Economic Scenario Explorer
 vegaEmbed('#chart8', {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Economic Scenario Explorer 2025-2027",
+  "title": {
+    "text": "Economic Scenario Explorer 2025-2027",
+    "subtitle": "Explore different economic futures"
+  },
   "width": 750,
   "height": 450,
   "data": {"url": `${DATA_PATH}chart8_scenarios_enhanced.json`},
@@ -240,28 +335,75 @@ vegaEmbed('#chart8', {
       }
     },
     {
-      "name": "metricSelect",
-      "value": "inflation",
-      "bind": {
-        "input": "radio",
-        "options": ["inflation", "real_wage_growth", "unemployment", "consumer_confidence"],
-        "name": "Metric: "
-      }
+      "name": "showConfidence",
+      "value": false,
+      "bind": {"input": "checkbox", "name": "Show Confidence Bands "}
     }
   ],
   "transform": [
-    {"filter": "datum.scenario == scenarioSelect"},
-    {"fold": ["inflation", "real_wage_growth", "unemployment", "consumer_confidence"]},
-    {"filter": "datum.key == metricSelect"}
+    {"filter": "datum.scenario == scenarioSelect"}
   ],
-  "mark": {"type": "area", "line": true, "point": true},
+  "layer": [
+    {
+      "mark": {"type": "area", "opacity": 0.2, "color": "gray"},
+      "transform": [{"filter": "showConfidence"}],
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "recession_probability", "type": "quantitative", "scale": {"domain": [0, 100]}},
+        "y2": {"value": 0}
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 3, "color": "#ff7f0e"},
+      "encoding": {
+        "x": {
+          "field": "date", 
+          "type": "temporal", 
+          "title": "Date",
+          "axis": {"format": "%b %Y", "labelAngle": -45}
+        },
+        "y": {
+          "field": "inflation", 
+          "type": "quantitative",
+          "title": "Rate (%)",
+          "scale": {"domain": [-2, 10]}
+        }
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 3, "color": "#2ca02c"},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "wage_growth", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 2, "strokeDash": [5, 5], "color": "#d62728"},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "real_wage_growth", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 2, "color": "#9467bd", "opacity": 0.7},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "unemployment", "type": "quantitative"}
+      }
+    }
+  ],
+  "resolve": {"scale": {"y": "independent"}},
   "encoding": {
-    "x": {"field": "date", "type": "temporal", "title": ""},
-    "y": {"field": "value", "type": "quantitative", "title": {"expr": "metricSelect"}},
-    "color": {"value": "#9b59b6"},
     "tooltip": [
-      {"field": "date", "type": "temporal", "format": "%B %Y"},
-      {"field": "value", "type": "quantitative", "format": ".1f"}
+      {"field": "date", "type": "temporal", "format": "%B %Y", "title": "Date"},
+      {"field": "inflation", "title": "Inflation", "format": ".1f%"},
+      {"field": "wage_growth", "title": "Wage Growth", "format": ".1f%"},
+      {"field": "real_wage_growth", "title": "Real Wage Growth", "format": ".1f%"},
+      {"field": "unemployment", "title": "Unemployment", "format": ".1f%"},
+      {"field": "consumer_confidence", "title": "Consumer Confidence"},
+      {"field": "recession_probability", "title": "Recession Risk", "format": ".0f%"}
     ]
   }
-});
+}).catch(console.error);
+
+console.log("✅ All charts loaded successfully!");
