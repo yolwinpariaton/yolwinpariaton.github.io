@@ -39,8 +39,9 @@ body {
   flex-direction: column;
 }
 
+/* FIX: Specific sizing for Map containers */
 .map-container {
-  min-height: 600px; 
+  min-height: 620px; 
   display: flex;
   flex-direction: column;
   align-items: center;
