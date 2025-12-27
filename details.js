@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   safeEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
 
   // =============================
-  // Task 6: Dashboard (restored + robust)
+  // Task 6: Dashboard
   // =============================
   const dashboardEmbedOptions = { actions: false, renderer: "svg" };
 

@@ -258,7 +258,7 @@ a:hover{ text-decoration: underline; }
 }
 
 .portfolio-content .task{
-  margin-bottom: 50px;
+  margin-bottom: 62px;
 }
 
 /* Charts layout */
@@ -388,6 +388,12 @@ a:hover{ text-decoration: underline; }
   text-align: center;
 }
 
+/* Back to top */
+.back-top{
+  margin-top: 20px;
+  text-align: center;
+}
+
 /* Footer */
 .site-footer{
   background: #071a33;
@@ -398,7 +404,7 @@ a:hover{ text-decoration: underline; }
 
 .footer__grid{
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 22px;
   align-items: start;
 }

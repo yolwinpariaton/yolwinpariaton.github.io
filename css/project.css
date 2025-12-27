@@ -1,15 +1,13 @@
 /* Project-specific styles */
 
-/* Make project hero consistent with other pages (overlay + centered text) */
+/* Landing-style hero with background image (like portfolio) */
 .hero--project{
   position: relative;
-  min-height: 60vh;
+  min-height: 70vh;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: url("../images/living_cost.jpg") center/cover no-repeat;
 }
-
-/* Use the global hero overlay from style.css; no extra needed */
 
 .project-container{
   max-width: 900px;
@@ -56,7 +54,7 @@
 
 .project-section h2{
   color: var(--navy);
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid #000;
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
