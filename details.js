@@ -104,3 +104,12 @@ vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapEmbedOptions)
 // =============================
 vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
 vegaEmbed("#vis_beer",  "graphs/price_beer.json",  embedStandard);
+
+// Task 9: Interactive Charts
+const interactiveOptions = {
+  actions: false,
+  renderer: "svg"
+};
+
+vegaEmbed("#interactive1", "graphs/interactive_economy.json", interactiveOptions);
+vegaEmbed("#interactive2", "graphs/interactive_scatter.json", interactiveOptions);

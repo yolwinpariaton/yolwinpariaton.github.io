@@ -1,0 +1,179 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "UK Economic Indicators - Interactive Explorer",
+    "subtitle": "Select an indicator and adjust the time period",
+    "fontSize": 14
+  },
+  "width": 500,
+  "height": 350,
+  "data": {
+    "values": [
+      {"year": 2010, "indicator": "GDP Growth", "value": 1.9, "category": "Growth"},
+      {"year": 2011, "indicator": "GDP Growth", "value": 1.5, "category": "Growth"},
+      {"year": 2012, "indicator": "GDP Growth", "value": 1.5, "category": "Growth"},
+      {"year": 2013, "indicator": "GDP Growth", "value": 2.1, "category": "Growth"},
+      {"year": 2014, "indicator": "GDP Growth", "value": 2.6, "category": "Growth"},
+      {"year": 2015, "indicator": "GDP Growth", "value": 2.4, "category": "Growth"},
+      {"year": 2016, "indicator": "GDP Growth", "value": 2.2, "category": "Growth"},
+      {"year": 2017, "indicator": "GDP Growth", "value": 2.1, "category": "Growth"},
+      {"year": 2018, "indicator": "GDP Growth", "value": 1.7, "category": "Growth"},
+      {"year": 2019, "indicator": "GDP Growth", "value": 1.7, "category": "Growth"},
+      {"year": 2020, "indicator": "GDP Growth", "value": -9.3, "category": "Growth"},
+      {"year": 2021, "indicator": "GDP Growth", "value": 7.6, "category": "Growth"},
+      {"year": 2022, "indicator": "GDP Growth", "value": 4.1, "category": "Growth"},
+      {"year": 2023, "indicator": "GDP Growth", "value": 0.5, "category": "Growth"},
+      
+      {"year": 2010, "indicator": "Inflation", "value": 3.3, "category": "Prices"},
+      {"year": 2011, "indicator": "Inflation", "value": 4.5, "category": "Prices"},
+      {"year": 2012, "indicator": "Inflation", "value": 2.8, "category": "Prices"},
+      {"year": 2013, "indicator": "Inflation", "value": 2.6, "category": "Prices"},
+      {"year": 2014, "indicator": "Inflation", "value": 1.5, "category": "Prices"},
+      {"year": 2015, "indicator": "Inflation", "value": 0.0, "category": "Prices"},
+      {"year": 2016, "indicator": "Inflation", "value": 0.7, "category": "Prices"},
+      {"year": 2017, "indicator": "Inflation", "value": 2.7, "category": "Prices"},
+      {"year": 2018, "indicator": "Inflation", "value": 2.5, "category": "Prices"},
+      {"year": 2019, "indicator": "Inflation", "value": 1.8, "category": "Prices"},
+      {"year": 2020, "indicator": "Inflation", "value": 0.9, "category": "Prices"},
+      {"year": 2021, "indicator": "Inflation", "value": 2.6, "category": "Prices"},
+      {"year": 2022, "indicator": "Inflation", "value": 9.1, "category": "Prices"},
+      {"year": 2023, "indicator": "Inflation", "value": 7.3, "category": "Prices"},
+      
+      {"year": 2010, "indicator": "Unemployment", "value": 7.8, "category": "Labor"},
+      {"year": 2011, "indicator": "Unemployment", "value": 8.1, "category": "Labor"},
+      {"year": 2012, "indicator": "Unemployment", "value": 7.9, "category": "Labor"},
+      {"year": 2013, "indicator": "Unemployment", "value": 7.6, "category": "Labor"},
+      {"year": 2014, "indicator": "Unemployment", "value": 6.1, "category": "Labor"},
+      {"year": 2015, "indicator": "Unemployment", "value": 5.3, "category": "Labor"},
+      {"year": 2016, "indicator": "Unemployment", "value": 4.8, "category": "Labor"},
+      {"year": 2017, "indicator": "Unemployment", "value": 4.4, "category": "Labor"},
+      {"year": 2018, "indicator": "Unemployment", "value": 4.1, "category": "Labor"},
+      {"year": 2019, "indicator": "Unemployment", "value": 3.8, "category": "Labor"},
+      {"year": 2020, "indicator": "Unemployment", "value": 4.5, "category": "Labor"},
+      {"year": 2021, "indicator": "Unemployment", "value": 4.6, "category": "Labor"},
+      {"year": 2022, "indicator": "Unemployment", "value": 3.7, "category": "Labor"},
+      {"year": 2023, "indicator": "Unemployment", "value": 4.2, "category": "Labor"},
+      
+      {"year": 2010, "indicator": "Interest Rate", "value": 0.5, "category": "Monetary"},
+      {"year": 2011, "indicator": "Interest Rate", "value": 0.5, "category": "Monetary"},
+      {"year": 2012, "indicator": "Interest Rate", "value": 0.5, "category": "Monetary"},
+      {"year": 2013, "indicator": "Interest Rate", "value": 0.5, "category": "Monetary"},
+      {"year": 2014, "indicator": "Interest Rate", "value": 0.5, "category": "Monetary"},
+      {"year": 2015, "indicator": "Interest Rate", "value": 0.5, "category": "Monetary"},
+      {"year": 2016, "indicator": "Interest Rate", "value": 0.25, "category": "Monetary"},
+      {"year": 2017, "indicator": "Interest Rate", "value": 0.5, "category": "Monetary"},
+      {"year": 2018, "indicator": "Interest Rate", "value": 0.75, "category": "Monetary"},
+      {"year": 2019, "indicator": "Interest Rate", "value": 0.75, "category": "Monetary"},
+      {"year": 2020, "indicator": "Interest Rate", "value": 0.1, "category": "Monetary"},
+      {"year": 2021, "indicator": "Interest Rate", "value": 0.25, "category": "Monetary"},
+      {"year": 2022, "indicator": "Interest Rate", "value": 3.5, "category": "Monetary"},
+      {"year": 2023, "indicator": "Interest Rate", "value": 5.25, "category": "Monetary"}
+    ]
+  },
+  "params": [
+    {
+      "name": "indicatorSelect",
+      "value": "GDP Growth",
+      "bind": {
+        "input": "select",
+        "options": ["GDP Growth", "Inflation", "Unemployment", "Interest Rate"],
+        "labels": ["GDP Growth (%)", "Inflation Rate (%)", "Unemployment Rate (%)", "Interest Rate (%)"],
+        "name": "Select Indicator: "
+      }
+    },
+    {
+      "name": "yearRange",
+      "value": [2010, 2023],
+      "bind": {
+        "input": "range",
+        "min": 2010,
+        "max": 2023,
+        "step": 1,
+        "name": "Year Range: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.indicator == indicatorSelect"},
+    {"filter": "datum.year >= yearRange[0] && datum.year <= yearRange[1]"}
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.3
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "temporal",
+          "title": "Year"
+        },
+        "y": {
+          "field": "value",
+          "type": "quantitative",
+          "title": "Value (%)"
+        },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Growth", "Prices", "Labor", "Monetary"],
+            "range": ["#2ca02c", "#ff7f0e", "#1f77b4", "#d62728"]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "temporal",
+          "title": "Year"
+        },
+        "y": {
+          "field": "value",
+          "type": "quantitative",
+          "title": "Value (%)"
+        },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "size": 100,
+        "filled": true
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "value",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "indicator", "title": "Indicator"},
+          {"field": "year", "type": "temporal", "format": "%Y", "title": "Year"},
+          {"field": "value", "type": "quantitative", "format": ".2f", "title": "Value (%)"}
+        ]
+      }
+    }
+  ]
+}
