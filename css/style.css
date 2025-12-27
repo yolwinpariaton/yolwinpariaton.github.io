@@ -59,3 +59,17 @@ body {
 @media (max-width: 860px) {
   .charts-row { grid-template-columns: 1fr; }
 }
+
+/* Keep all your original CSS here */
+
+/* Add ONLY these two rules at the very bottom to ensure maps behave */
+.chart-wrapper {
+  min-height: 450px; /* Prevents maps from squashing */
+  display: flex;
+  flex-direction: column;
+}
+
+.vega-container {
+  width: 100%;
+  height: 100%;
+}

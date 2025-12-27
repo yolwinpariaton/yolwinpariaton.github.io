@@ -2,12 +2,10 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Scotland Population Density",
-    "subtitle": "People per square km (2021 Census)",
-    "anchor": "start",
-    "fontSize": 16
+    "anchor": "start"
   },
-  "width": 400,
-  "height": 500,
+  "width": "container",
+  "height": 400,
   "data": {
     "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sct/lad.json",
     "format": {"type": "topojson", "feature": "lad"}
@@ -15,7 +13,7 @@
   "projection": {
     "type": "mercator",
     "center": [-4.1, 57.8],
-    "scale": 3200
+    "scale": 2500
   },
   "transform": [
     {
@@ -34,12 +32,11 @@
     "color": {
       "field": "Density",
       "type": "quantitative",
-      "scale": {"type": "log", "scheme": "blues"},
-      "legend": {"title": "Density (per km²)", "orient": "right"}
+      "scale": {"type": "log", "scheme": "blues"}
     },
     "tooltip": [
-      {"field": "properties.LAD13NM", "type": "nominal", "title": "Council Area"},
-      {"field": "Density", "type": "quantitative", "title": "Density"}
+      {"field": "properties.LAD13NM", "title": "Council"},
+      {"field": "Density", "title": "Density"}
     ]
   }
 }
