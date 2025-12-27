@@ -29,7 +29,9 @@ function safeEmbed(selector, spec, options) {
   });
 }
 
-// Run after DOM is parsed (defer already does this, but keep it explicit)
+// =============================
+// Run AFTER DOM is ready
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
 
   // -----------------------------
@@ -50,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   safeEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
 
   // =============================
-  // Task 6: Dashboard
+  // Task 6: Dashboard (looped, dynamic titles)
   // =============================
   const dashboardEmbedOptions = { actions: false, renderer: "svg" };
 
@@ -62,7 +64,12 @@ document.addEventListener("DOMContentLoaded", () => {
       "title": { "text": chartTitle || "", "fontSize": 12, "anchor": "start", "offset": 6 },
       "mark": { "type": "line", "point": true },
       "encoding": {
-        "x": { "field": "year", "type": "temporal", "title": null, "axis": { "format": "%Y", "labelAngle": 0 } },
+        "x": {
+          "field": "year",
+          "type": "temporal",
+          "title": null,
+          "axis": { "format": "%Y", "labelAngle": 0 }
+        },
         "y": { "field": "value", "type": "quantitative", "title": null },
         "tooltip": [
           { "field": "indicator", "type": "nominal", "title": "Indicator" },
@@ -72,7 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       "width": "container",
       "height": 170,
-      "config": { "view": { "stroke": "transparent" }, "axis": { "labelFontSize": 10, "titleFontSize": 11 } }
+      "config": {
+        "view": { "stroke": "transparent" },
+        "axis": { "labelFontSize": 10, "titleFontSize": 11 }
+      }
     };
   }
 
@@ -96,15 +106,18 @@ document.addEventListener("DOMContentLoaded", () => {
         await vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), dashboardEmbedOptions);
       } catch (err) {
         console.error(`Dashboard ${i} error:`, err);
-        el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Dashboard ${i} failed.</p>`;
+        el.innerHTML = `
+          <p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">
+            Dashboard ${i} failed.
+          </p>
+        `;
       }
     }
   }
   renderDashboard();
 
   // =============================
-  // Task 7: Maps
-  // IMPORTANT: Use YOUR local JSON files in /graphs/
+  // Task 7: Maps (local JSON files)
   // =============================
   safeEmbed("#map_scotland", "graphs/scotland_choropleth.json", { actions: false, renderer: "svg" });
   safeEmbed("#map_wales", "graphs/wales_coordinates.json", { actions: false, renderer: "svg" });
@@ -116,13 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
   safeEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
 
   // =============================
-  // Task 9: Interactive Charts (bigger)
+  // Task 9: Interactive Charts (larger)
   // =============================
   safeEmbed("#interactive1", "graphs/interactive_economy.json", embedInteractive);
   safeEmbed("#interactive2", "graphs/interactive_scatter.json", embedInteractive);
 
   // =============================
-  // Task 10: Advanced Analytics (bigger)
+  // Task 10: Advanced Analytics
   // =============================
   safeEmbed("#task10a", "graphs/task10_histogram.json", embedTask10);
 
