@@ -17,7 +17,7 @@ function safeEmbed(selector, spec, options) {
   if (!el) return;
   vegaEmbed(selector, spec, options).catch(err => {
     console.error(`Embed failed: ${selector}`, err);
-    el.innerHTML = `<div style="padding:20px; color:red;">Map failed to load. Check console.</div>`;
+    el.innerHTML = `<div style="padding:20px; color:red;">Chart failed to load.</div>`;
   });
 }
 

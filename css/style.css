@@ -39,7 +39,6 @@ body {
   flex-direction: column;
 }
 
-/* Fix for Map Display */
 .map-container {
   min-height: 600px; 
   display: flex;
