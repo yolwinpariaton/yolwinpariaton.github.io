@@ -4,7 +4,7 @@
 const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
 const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
 const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
-const embedBigger   = { actions: false, renderer: "svg", width: 680, height: 420 };
+const embedBigger   = { actions: false, renderer: "svg", width: 650, height: 380 };
 
 // -----------------------------
 // Tasks 1–5
@@ -77,7 +77,7 @@ async function renderDashboard() {
 renderDashboard();
 
 // =============================
-// Task 7: Maps (embed YOUR JSON files)
+// Task 7: Maps (embed your JSON files)
 // =============================
 vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", { actions: false, renderer: "svg" })
   .catch(err => {
@@ -100,12 +100,12 @@ vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
 vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
 
 // =============================
-// Task 9: Interactive Charts (BIGGER)
+// Task 9: Interactive Charts (bigger)
 // =============================
 vegaEmbed("#interactive1", "graphs/interactive_economy.json", embedBigger);
 vegaEmbed("#interactive2", "graphs/interactive_scatter.json", embedBigger);
 
 // =============================
-// Task 10: Advanced Analytics (BIGGER)
+// Task 10: Advanced Analytics (bigger)
 // =============================
 vegaEmbed("#task10a", "graphs/task10_histogram.json", embedBigger);

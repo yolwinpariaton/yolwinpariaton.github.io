@@ -31,3 +31,23 @@
   min-height: 460px;
   background: #f9f9f9;
 }
+
+/* =========================================================
+   SAFE OVERRIDES — Task 7 maps + Task 9/10 sizing
+   Append this to the END of style.css
+   ========================================================= */
+
+/* Make Task 9 & 10 centered cards wider */
+.chart-wrapper--center{
+  max-width: 740px;
+}
+
+/* Maps: increase height without changing the rest of the site */
+.map-container{
+  min-height: 420px;
+}
+
+/* Make Task 10B images bigger */
+.task-img{
+  max-height: 420px;
+}
