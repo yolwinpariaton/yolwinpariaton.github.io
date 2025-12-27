@@ -77,12 +77,12 @@ async function renderDashboard() {
     }
   }
 }
-
 renderDashboard();
 
 // =============================
 // Task 7: Maps
 // =============================
+// IMPORTANT: do not force width/height here; let the map JSON control sizing
 const mapEmbedOptions = { actions: false, renderer: "svg" };
 
 vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapEmbedOptions)

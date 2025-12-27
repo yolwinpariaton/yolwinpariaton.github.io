@@ -403,13 +403,13 @@ a:hover{ text-decoration: underline; }
   color: var(--text);
 }
 
-/* Task 7: make sure maps are visible and not collapsed */
+/* Task 7: map wrapper (keeps maps from collapsing) */
+.map-wrapper{
+  min-height: 360px;
+}
+
+/* Ensure map containers have height even before Vega renders */
 #map_scotland, #map_wales{
   width: 100%;
   min-height: 320px;
-}
-
-#map_scotland .vega-embed,
-#map_wales .vega-embed{
-  width: 100% !important;
 }

@@ -160,7 +160,7 @@
           </div>
         </section>
 
-        <!-- TASK 7: Maps -->
+        <!-- TASK 7 -->
         <section class="task">
           <h2>Task 7: Maps. Base maps and choropleths</h2>
           <p>
@@ -215,60 +215,6 @@
 
       </div>
     </section>
-
-    <!-- TASK 7: Maps -->
-<section class="task">
-  <h2>Task 7: Maps. Base maps and choropleths</h2>
-  <p>
-    Two maps showing different visualization techniques: a choropleth map of Scotland showing population density,
-    and a coordinates map of Wales showing major cities.
-  </p>
-
-  <div class="charts-row">
-    <div>
-      <h3 class="chart-title">Scotland - Choropleth Map</h3>
-      <div class="chart-wrapper">
-        <div id="map_scotland" class="vega-container"></div>
-      </div>
-    </div>
-
-    <div>
-      <h3 class="chart-title">Wales - Coordinates Map</h3>
-      <div class="chart-wrapper">
-        <div id="map_wales" class="vega-container"></div>
-      </div>
-    </div>
-  </div>
-
-  <p style="margin-top: 15px; font-size: 14px; color: #666;">
-    <strong>Data sources:</strong> Population data from 2021 UK Census |
-    <strong>TopoJSON:</strong> UK-GeoJSON repository by martinjc
-  </p>
-</section>
-
-<!-- TASK 8 -->
-<section class="task">
-  <h2>Task 8: Big Data. Extracting a story from millions of prices</h2>
-  <p style="text-align: center;">
-    I processed the LRPD (40M+ rows) by filtering for specific staple items and collapsing thousands of price quotes into monthly averages. This reveals long-term inflation trends for a supermarket staple vs. a service-based luxury.
-  </p>
-
-  <div class="charts-row">
-    <div class="chart-wrapper">
-      <div id="vis_bread" class="vega-container"></div>
-    </div>
-    <div class="chart-wrapper">
-      <div id="vis_beer" class="vega-container"></div>
-    </div>
-  </div>
-
-  <div style="text-align: center; margin-top: 15px;">
-    <p style="font-style: italic; color: #555; max-width: 800px; margin: 0 auto;">
-      <strong>Note:</strong> To prevent website lag, the data was reduced from millions of observations to monthly means using Python in Google Colab before visualization.
-    </p>
-  </div>
-</section>
-
   </main>
 
   <footer class="site-footer" aria-label="Footer">
@@ -286,7 +232,7 @@
     </div>
   </footer>
 
-  <!-- Your embedding script (single source of truth) -->
+  <!-- Single source of truth for all embeds -->
   <script src="details.js"></script>
 </body>
 </html>
