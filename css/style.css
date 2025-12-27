@@ -213,7 +213,7 @@ a:hover{ text-decoration: underline; }
 }
 
 /* =========================
-   Index layout helpers
+   Section layout
    ========================= */
 .section{
   padding: 70px 0;
@@ -250,7 +250,6 @@ a:hover{ text-decoration: underline; }
   object-fit: cover;
 }
 
-/* White content area after hero */
 .white-space{
   background: #ffffff;
   padding: 70px 0;
@@ -278,36 +277,26 @@ a:hover{ text-decoration: underline; }
   padding: 16px;
   box-shadow: var(--shadow);
   position: relative;
-
-  /* IMPORTANT FIX:
-     Do NOT clip Vega charts. Many project charts are wider than the wrapper.
-     Let it scroll horizontally when needed. */
   overflow-x: auto;
   overflow-y: hidden;
-
-  /* stack title + chart vertically */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-
   min-height: 320px;
 }
 
-/* Center wrapper for Tasks 4, 5, 9 */
 .chart-wrapper--center{
   max-width: 500px;
   margin: 20px auto;
   display: block;
 }
 
-/* Larger center wrapper for Task 9/10 */
 .chart-wrapper--center-lg{
   max-width: 760px;
 }
 
-/* Wide wrapper for Task 4 improved chart */
 .chart-wrapper--wide{
   max-width: 900px;
   margin: 20px auto;
@@ -315,7 +304,6 @@ a:hover{ text-decoration: underline; }
   min-height: auto;
 }
 
-/* Chart container */
 .vega-container{
   width: 100%;
   display: flex;
@@ -331,25 +319,22 @@ a:hover{ text-decoration: underline; }
   min-height: 420px;
 }
 
-/* Map container for Task 7 */
+/* Map container for Task 7 FIX */
 .map-container{
-  min-height: 350px;
-  background: #f9f9f9;
+  min-height: 520px;
+  background: #ffffff;
 }
 
-/* Keep Vega responsive */
 .vega-embed{
   max-width: 100% !important;
 }
 
-/* Avoid SVG being clipped and improve scaling */
 .chart-wrapper .vega-embed,
 .chart-wrapper .vega-embed > svg,
 .chart-wrapper .vega-embed > canvas{
   max-width: 100% !important;
 }
 
-/* Task image sizing - keep frame */
 .task-img{
   width: 100%;
   height: auto;
@@ -362,7 +347,6 @@ a:hover{ text-decoration: underline; }
   max-height: 420px;
 }
 
-/* Task centering for 4, 5, 9 */
 .task-center{
   text-align: center;
 }
@@ -380,7 +364,6 @@ a:hover{ text-decoration: underline; }
   padding: 0;
 }
 
-/* Task 7: titles inside frames */
 .chart-title{
   font-size: 14px;
   margin: 0 0 15px 0;
@@ -389,13 +372,11 @@ a:hover{ text-decoration: underline; }
   text-align: center;
 }
 
-/* Back to top */
 .back-top{
   margin-top: 20px;
   text-align: center;
 }
 
-/* Footer */
 .site-footer{
   background: #071a33;
   color: var(--white);
@@ -423,7 +404,6 @@ a:hover{ text-decoration: underline; }
 
 .site-footer a{ color: var(--white); text-decoration: underline; }
 
-/* Task 6 Dashboard */
 .dashboard-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -440,46 +420,26 @@ a:hover{ text-decoration: underline; }
   min-height: 200px;
 }
 
-/* Responsive */
 @media (max-width: 960px){
-  .two-col{
-    grid-template-columns: 1fr;
-  }
-  .media-img{
-    max-width: 520px;
-  }
+  .two-col{ grid-template-columns: 1fr; }
+  .media-img{ max-width: 520px; }
 }
 
 @media (max-width: 860px){
   .nav{ flex-wrap: wrap; }
   .nav__toggle{ display:inline-block; }
-
   .nav__menu{
     display: none;
     width: 100%;
     padding-top: 10px;
     justify-content: flex-start;
   }
-
-  .nav__checkbox:checked ~ .nav__menu{
-    display: flex;
-  }
-
-  .charts-row{
-    grid-template-columns: 1fr;
-  }
-
-  .footer__grid{
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-grid{
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .nav__checkbox:checked ~ .nav__menu{ display: flex; }
+  .charts-row{ grid-template-columns: 1fr; }
+  .footer__grid{ grid-template-columns: 1fr; }
+  .dashboard-grid{ grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px){
-  .dashboard-grid{
-    grid-template-columns: 1fr;
-  }
+  .dashboard-grid{ grid-template-columns: 1fr; }
 }
