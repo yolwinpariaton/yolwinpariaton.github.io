@@ -1,20 +1,17 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Scotland Population Density",
-    "subtitle": "People per square km (2021 Census)",
-    "fontSize": 14
+    "text": "Scotland: Population Density by Council Area",
+    "subtitle": "People per km² (approx., 2021–2022). Choropleth by Local Authority.",
+    "anchor": "start",
+    "fontSize": 14,
+    "subtitleFontSize": 12
   },
   "width": 380,
   "height": 400,
-  "projection": {
-    "type": "mercator",
-    "center": [-4.1, 57.6],
-    "scale": 2600
-  },
   "data": {
     "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
-    "format": {"type": "json", "property": "features"}
+    "format": { "type": "json", "property": "features" }
   },
   "transform": [
     {
@@ -22,57 +19,87 @@
       "from": {
         "data": {
           "values": [
-            {"area": "Aberdeen City", "density": 1208},
-            {"area": "Aberdeenshire", "density": 41},
-            {"area": "Angus", "density": 53},
-            {"area": "Argyll and Bute", "density": 13},
-            {"area": "City of Edinburgh", "density": 1948},
-            {"area": "Clackmannanshire", "density": 325},
-            {"area": "Dumfries and Galloway", "density": 24},
-            {"area": "Dundee City", "density": 2477},
-            {"area": "East Ayrshire", "density": 97},
-            {"area": "East Dunbartonshire", "density": 623},
-            {"area": "East Lothian", "density": 152},
-            {"area": "East Renfrewshire", "density": 543},
-            {"area": "Falkirk", "density": 518},
-            {"area": "Fife", "density": 281},
-            {"area": "Glasgow City", "density": 3521},
-            {"area": "Highland", "density": 9},
-            {"area": "Inverclyde", "density": 478},
-            {"area": "Midlothian", "density": 254},
-            {"area": "Moray", "density": 40},
-            {"area": "North Ayrshire", "density": 152},
-            {"area": "North Lanarkshire", "density": 733},
-            {"area": "Orkney Islands", "density": 22},
-            {"area": "Perth and Kinross", "density": 28},
-            {"area": "Renfrewshire", "density": 684},
-            {"area": "Scottish Borders", "density": 24},
-            {"area": "Shetland Islands", "density": 16},
-            {"area": "South Ayrshire", "density": 91},
-            {"area": "South Lanarkshire", "density": 183},
-            {"area": "Stirling", "density": 40},
-            {"area": "West Dunbartonshire", "density": 562},
-            {"area": "West Lothian", "density": 419},
-            {"area": "Na h-Eileanan an Iar", "density": 9}
+            { "area": "Aberdeen City", "density": 1208 },
+            { "area": "Aberdeenshire", "density": 41 },
+            { "area": "Angus", "density": 53 },
+            { "area": "Argyll and Bute", "density": 13 },
+            { "area": "City of Edinburgh", "density": 1948 },
+            { "area": "Clackmannanshire", "density": 325 },
+            { "area": "Dumfries and Galloway", "density": 24 },
+            { "area": "Dundee City", "density": 2477 },
+            { "area": "East Ayrshire", "density": 97 },
+            { "area": "East Dunbartonshire", "density": 623 },
+            { "area": "East Lothian", "density": 152 },
+            { "area": "East Renfrewshire", "density": 543 },
+            { "area": "Falkirk", "density": 518 },
+            { "area": "Fife", "density": 281 },
+            { "area": "Glasgow City", "density": 3521 },
+            { "area": "Highland", "density": 9 },
+            { "area": "Inverclyde", "density": 478 },
+            { "area": "Midlothian", "density": 254 },
+            { "area": "Moray", "density": 40 },
+            { "area": "North Ayrshire", "density": 152 },
+            { "area": "North Lanarkshire", "density": 733 },
+            { "area": "Orkney Islands", "density": 22 },
+            { "area": "Perth and Kinross", "density": 28 },
+            { "area": "Renfrewshire", "density": 684 },
+            { "area": "Scottish Borders", "density": 24 },
+            { "area": "Shetland Islands", "density": 16 },
+            { "area": "South Ayrshire", "density": 91 },
+            { "area": "South Lanarkshire", "density": 183 },
+            { "area": "Stirling", "density": 40 },
+            { "area": "West Dunbartonshire", "density": 562 },
+            { "area": "West Lothian", "density": 419 },
+            { "area": "Na h-Eileanan an Iar", "density": 9 }
           ]
         },
         "key": "area",
         "fields": ["density"]
       }
+    },
+    { "calculate": "isValid(datum.density) ? datum.density : null", "as": "density_clean" }
+  ],
+  "projection": { "type": "mercator" },
+  "layer": [
+    {
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.6 },
+      "encoding": {
+        "color": {
+          "field": "density_clean",
+          "type": "quantitative",
+          "title": "People per km²",
+          "scale": { "scheme": "teals", "type": "log" },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 240,
+            "labelOverlap": true
+          }
+        },
+        "opacity": {
+          "condition": { "test": "datum.density_clean != null", "value": 1 },
+          "value": 0.25
+        },
+        "tooltip": [
+          { "field": "properties.LAD13NM", "type": "nominal", "title": "Council Area" },
+          { "field": "density_clean", "type": "quantitative", "title": "Density (per km²)", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.density_clean == null" }],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.6,
+        "fill": "#f1f5f9"
+      }
     }
   ],
-  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.3},
-  "encoding": {
-    "color": {
-      "field": "density",
-      "type": "quantitative",
-      "scale": {"scheme": "blues", "type": "log"},
-      "title": "Density"
-    },
-    "tooltip": [
-      {"field": "properties.LAD13NM", "type": "nominal", "title": "Council"},
-      {"field": "density", "type": "quantitative", "title": "Pop/km²"}
-    ]
-  },
-  "config": {"view": {"stroke": "transparent"}}
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "axis": { "labelFontSize": 11, "titleFontSize": 12 },
+    "legend": { "labelFontSize": 11, "titleFontSize": 12 }
+  }
 }
