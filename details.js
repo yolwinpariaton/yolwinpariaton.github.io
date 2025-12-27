@@ -5,14 +5,6 @@ const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300
 const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
 const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
 
-// Task 7 map options - with explicit sizing
-const mapOptions = { 
-  actions: false, 
-  renderer: "svg",
-  width: 380,
-  height: 400
-};
-
 // -----------------------------
 // Tasks 1–5
 // -----------------------------
@@ -27,11 +19,12 @@ vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
 vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-vegaEmbed("#vis_api", "graphs/api_chart.json", embedStandard);
-vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", embedStandard);
+// Task 5 - Center these charts
+vegaEmbed("#vis_api", "graphs/api_chart.json", { actions: false, renderer: "svg", width: 450, height: 300 });
+vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
 
 // =============================
-// Task 6: Dashboard (data -> spec)
+// Task 6: Dashboard
 // =============================
 const dashboardEmbedOptions = { actions: false, renderer: "svg" };
 
@@ -77,45 +70,68 @@ async function renderDashboard() {
       await vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), dashboardEmbedOptions);
     } catch (err) {
       console.error(`Dashboard ${i} error:`, err);
-      el.innerHTML = `
-        <p style="margin:0; padding:8px; color:#b91c1c; font-size:13px; line-height:1.35;">
-          Dashboard ${i} failed to load.<br>
-          Check: <code>${dataPath}</code>
-        </p>`;
+      el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Dashboard ${i} failed to load.</p>`;
     }
   }
 }
 renderDashboard();
 
 // =============================
-// Task 7: Maps - Fixed with proper sizing
+// Task 7: Maps - Direct embed
 // =============================
-vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapOptions)
-  .catch(err => {
-    console.error("Map Scotland error:", err);
-    const el = document.querySelector("#map_scotland");
-    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Scotland map failed to load. Check console for details.</p>`;
-  });
+// Try embedding the maps directly with specs
+const scotlandSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Scotland Population Density",
+  "width": 350,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
+    "format": {"type": "topojson", "feature": "lad"}
+  },
+  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+  "encoding": {
+    "color": {
+      "value": "#4A90E2"
+    },
+    "tooltip": [
+      {"field": "properties.LAD13NM", "type": "nominal", "title": "Area"}
+    ]
+  }
+};
 
-vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapOptions)
-  .catch(err => {
-    console.error("Map Wales error:", err);
-    const el = document.querySelector("#map_wales");
-    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Wales map failed to load. Check console for details.</p>`;
-  });
+const walesSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Wales Major Cities",
+  "width": 350,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
+    "format": {"type": "topojson", "feature": "lad"}
+  },
+  "mark": {"type": "geoshape", "fill": "#e8f4f8", "stroke": "#333", "strokeWidth": 0.5}
+};
+
+vegaEmbed("#map_scotland", scotlandSpec, { actions: false, renderer: "svg" })
+  .catch(err => console.error("Scotland map error:", err));
+
+vegaEmbed("#map_wales", walesSpec, { actions: false, renderer: "svg" })
+  .catch(err => console.error("Wales map error:", err));
 
 // =============================
 // Task 8: Big Data
 // =============================
 vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
-vegaEmbed("#vis_beer",  "graphs/price_beer.json",  embedStandard);
+vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
 
 // =============================
-// Task 9: Interactive Charts
+// Task 9: Interactive Charts - Smaller size
 // =============================
 const interactiveOptions = {
   actions: false,
-  renderer: "svg"
+  renderer: "svg",
+  width: 420,
+  height: 320
 };
 
 vegaEmbed("#interactive1", "graphs/interactive_economy.json", interactiveOptions);
