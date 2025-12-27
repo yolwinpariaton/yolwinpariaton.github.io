@@ -9,285 +9,259 @@ const GITHUB_USER = "yolwinpariaton";
 const GITHUB_REPO = "yolwinpariaton.github.io";
 const DATA_PATH = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/`;
 
-// ----------------------------
-// Embed options (CONSISTENT)
-// ----------------------------
-const embedProject = {
-  actions: false,
-  renderer: "svg"
-};
+// Chart 1: Enhanced Inflation with Decomposition
+vegaEmbed('#chart1', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "UK Inflation Crisis: Component Analysis",
+    "subtitle": "Click legend to isolate components"
+  },
+  "width": 750,
+  "height": 450,
+  "data": {"url": `${DATA_PATH}chart1_inflation_advanced.json`},
+  "mark": "area",
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "axis": {"format": "%b %Y", "labelAngle": -45}
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "stack": "zero",
+      "title": "Contribution to Inflation (%)"
+    },
+    "color": {
+      "field": "component",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Energy", "Food", "Core"],
+        "range": ["#ff4444", "#ff9800", "#2196f3"]
+      }
+    },
+    "opacity": {
+      "condition": {"param": "hover", "value": 1},
+      "value": 0.7
+    }
+  },
+  "params": [{
+    "name": "hover",
+    "select": {"type": "point", "on": "mouseover", "clear": "mouseout"}
+  }]
+});
 
-// Safe embed so one broken chart never kills the rest
-function safeEmbed(selector, specOrUrl, options = embedProject) {
-  const el = document.querySelector(selector);
-  if (!el) {
-    console.warn(`Missing element: ${selector}`);
-    return;
+// Chart 2: Interactive Wage Squeeze Dashboard
+vegaEmbed('#chart2', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Real Wage Squeeze by Sector",
+  "width": 750,
+  "height": 450,
+  "data": {"url": `${DATA_PATH}chart2_wage_squeeze.json`},
+  "params": [
+    {
+      "name": "sectorSelect",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": ["All", "Public Sector", "Private Sector", "Finance", "Retail", "Healthcare"],
+        "name": "Select Sector: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "sectorSelect == 'All' || datum.sector == sectorSelect"}
+  ],
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal"},
+    "y": {"field": "squeeze_index", "type": "quantitative", "title": "Real Wage Index (2020=100)"},
+    "color": {"field": "sector", "type": "nominal"},
+    "strokeWidth": {"condition": {"param": "hover", "value": 4}, "value": 2},
+    "opacity": {"condition": {"param": "hover", "value": 1}, "value": 0.7}
   }
+});
 
-  vegaEmbed(selector, specOrUrl, options).catch(err => {
-    console.error(`Embed failed: ${selector}`, err);
-    el.innerHTML = `
-      <div style="padding:14px; text-align:center; color:#b91c1c; font-size:13px;">
-        Chart failed to load.
-      </div>
-    `;
-  });
-}
+// Chart 3: Advanced Regional Map
+vegaEmbed('#chart3', `${DATA_PATH}chart3_spec.json`);
 
-// Run after DOM is parsed
-document.addEventListener("DOMContentLoaded", () => {
-
-  // ------------------------------------
-  // Chart 1: Inflation Timeline (from spec file)
-  // ------------------------------------
-  safeEmbed("#chart1", `${DATA_PATH}chart1_spec.json`, {
-    ...embedProject,
-    // keep responsive if your spec uses fixed widths; Vega-Lite respects spec width, but this helps in small screens
-    defaultStyle: true
-  });
-
-  // ------------------------------------
-  // Chart 2: Wages vs Inflation (from spec file)
-  // ------------------------------------
-  safeEmbed("#chart2", `${DATA_PATH}chart2_spec.json`, {
-    ...embedProject,
-    defaultStyle: true
-  });
-
-  // ------------------------------------
-  // Chart 3: Regional "Map"/Bubble plot (CONSISTENT config)
-  // NOTE: This is NOT a choropleth; it’s a coordinate/bubble map.
-  // ------------------------------------
-  const chart3Spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Cost of Living Index by UK Region", "fontSize": 14 },
-    "width": 700,
-    "height": 500,
-    "data": { "url": `${DATA_PATH}chart3_regional_costs.json`, "format": { "type": "json" } },
-    "projection": { "type": "mercator" },
-    "mark": { "type": "circle", "opacity": 0.8, "stroke": "white", "strokeWidth": 1 },
-    "encoding": {
-      "longitude": { "field": "lon", "type": "quantitative" },
-      "latitude": { "field": "lat", "type": "quantitative" },
-      "size": {
-        "field": "cost_index",
-        "type": "quantitative",
-        "scale": { "range": [100, 1000] },
-        "title": "Cost Index"
-      },
-      "color": {
-        "field": "cost_index",
-        "type": "quantitative",
-        "scale": { "scheme": "orangered" },
-        "title": "Cost Index"
-      },
-      "tooltip": [
-        { "field": "region", "type": "nominal", "title": "Region" },
-        { "field": "cost_index", "type": "quantitative", "title": "Cost Index", "format": ".0f" }
-      ]
-    },
-    "config": { "view": { "stroke": "transparent" } }
-  };
-  safeEmbed("#chart3", chart3Spec);
-
-  // ------------------------------------
-  // Chart 4: Energy Prices (Interactive)
-  // FIXES:
-  // - Use one y-scale for BOTH lines (cap and effective_bill) so they’re comparable
-  // - Remove incorrect y-domain [0,400] (cap is in £ thousands)
-  // ------------------------------------
-  const chart4Spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Energy Price Cap and Typical Bills", "fontSize": 14 },
-    "width": 700,
-    "height": 400,
-    "data": { "url": `${DATA_PATH}chart4_energy_prices.json`, "format": { "type": "json" } },
-    "params": [
-      {
-        "name": "showSupport",
-        "value": true,
-        "bind": { "input": "checkbox", "name": "Show Government Support " }
+// Chart 4: Energy Calculator
+vegaEmbed('#chart4', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Energy Bill Impact Calculator",
+  "width": 750,
+  "height": 450,
+  "data": {"url": `${DATA_PATH}chart4_energy_detailed.json`},
+  "params": [
+    {
+      "name": "householdType",
+      "value": "Medium House",
+      "bind": {
+        "input": "radio",
+        "options": ["Small Flat", "Medium House", "Large House", "Student Accommodation"],
+        "name": "Household Type: "
       }
-    ],
-    "layer": [
-      {
-        "mark": { "type": "line", "strokeWidth": 3 },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal", "title": "Date" },
-          "y": { "field": "cap", "type": "quantitative", "title": "Annual Amount (£)" },
-          "color": { "value": "#1f77b4" },
-          "tooltip": [
-            { "field": "date", "type": "temporal", "title": "Date" },
-            { "field": "cap", "type": "quantitative", "title": "Cap (£)", "format": ",.0f" }
-          ]
-        }
-      },
-      {
-        "transform": [{ "filter": "showSupport" }],
-        "mark": { "type": "line", "strokeWidth": 2, "strokeDash": [4, 4] },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "effective_bill", "type": "quantitative" },
-          "color": { "value": "#2ca02c" },
-          "tooltip": [
-            { "field": "date", "type": "temporal", "title": "Date" },
-            { "field": "effective_bill", "type": "quantitative", "title": "Effective bill (£)", "format": ",.0f" }
-          ]
-        }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.household_type == householdType"}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "bar", "opacity": 0.7},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal", "axis": {"format": "%b %y"}},
+        "y": {"field": "monthly_bill", "type": "quantitative", "title": "Monthly Bill (£)"},
+        "color": {"value": "#ff6b6b"}
       }
-    ],
-    "config": { "view": { "stroke": "transparent" } }
-  };
-  safeEmbed("#chart4", chart4Spec);
-
-  // ------------------------------------
-  // Chart 5: Food Basket
-  // FIX: strokeWidth must be in mark, not encoding
-  // ------------------------------------
-  const chart5Spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Essential Food Price Index (2020 = 100)", "fontSize": 14 },
-    "width": 700,
-    "height": 400,
-    "data": { "url": `${DATA_PATH}chart5_food_basket.json`, "format": { "type": "json" } },
-    "mark": { "type": "line", "strokeWidth": 2 },
-    "encoding": {
-      "x": { "field": "date", "type": "temporal", "title": "Date" },
-      "y": { "field": "price_index", "type": "quantitative", "title": "Price Index" },
-      "color": { "field": "item", "type": "nominal", "title": "Food Item" },
-      "tooltip": [
-        { "field": "date", "type": "temporal", "title": "Date" },
-        { "field": "item", "type": "nominal", "title": "Item" },
-        { "field": "price_index", "type": "quantitative", "title": "Index", "format": ".1f" }
-      ]
     },
-    "config": { "view": { "stroke": "transparent" } }
-  };
-  safeEmbed("#chart5", chart5Spec);
-
-  // ------------------------------------
-  // Chart 6: Housing Costs
-  // FIX:
-  // - Your tooltip referenced mortgage but mortgage is not shown in marks.
-  // - If your dataset has both rent and mortgage, a cleaner approach is to reshape to long-form.
-  // - Here we keep your structure, but we only tooltip fields that exist reliably.
-  // ------------------------------------
-  const chart6Spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Housing Costs by Region", "fontSize": 14 },
-    "width": 700,
-    "height": 400,
-    "data": { "url": `${DATA_PATH}chart6_housing_costs.json`, "format": { "type": "json" } },
-    "mark": { "type": "bar" },
-    "encoding": {
-      "x": { "field": "region", "type": "nominal", "title": "Region" },
-      "y": { "field": "rent", "type": "quantitative", "title": "Monthly Rent (£)" },
-      "color": { "field": "region", "type": "nominal", "legend": null },
-      "column": { "field": "year", "type": "ordinal", "title": "Year" },
-      "tooltip": [
-        { "field": "region", "type": "nominal", "title": "Region" },
-        { "field": "year", "type": "ordinal", "title": "Year" },
-        { "field": "rent", "type": "quantitative", "title": "Rent (£)", "format": ",.0f" }
-      ]
-    },
-    "config": { "view": { "stroke": "transparent" } }
-  };
-  safeEmbed("#chart6", chart6Spec);
-
-  // ------------------------------------
-  // Chart 7: International Comparison
-  // ------------------------------------
-  const chart7Spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "G7 Inflation Comparison", "fontSize": 14 },
-    "width": 700,
-    "height": 400,
-    "data": { "url": `${DATA_PATH}chart7_g7_comparison.json`, "format": { "type": "json" } },
-    "mark": { "type": "line", "strokeWidth": 2 },
-    "encoding": {
-      "x": { "field": "date", "type": "temporal", "title": "Date" },
-      "y": { "field": "inflation", "type": "quantitative", "title": "Inflation Rate (%)" },
-      "color": {
-        "field": "country",
-        "type": "nominal",
-        "title": "Country",
-        "scale": { "scheme": "category10" }
-      },
-      "tooltip": [
-        { "field": "date", "type": "temporal", "title": "Date" },
-        { "field": "country", "type": "nominal", "title": "Country" },
-        { "field": "inflation", "type": "quantitative", "title": "Inflation (%)", "format": ".1f" }
-      ]
-    },
-    "config": { "view": { "stroke": "transparent" } }
-  };
-  safeEmbed("#chart7", chart7Spec);
-
-  // ------------------------------------
-  // Chart 8: Future Scenarios (Interactive)
-  // NOTE:
-  // - Your layer uses different measures; without separate axes this can be misleading.
-  // - Here we keep your structure but ensure tooltips and view config are consistent.
-  // ------------------------------------
-  const chart8Spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Future Economic Scenarios", "fontSize": 14 },
-    "width": 700,
-    "height": 400,
-    "data": { "url": `${DATA_PATH}chart8_future_scenarios.json`, "format": { "type": "json" } },
-    "params": [
-      {
-        "name": "scenarioSelect",
-        "value": "Base Case",
-        "bind": {
-          "input": "select",
-          "options": ["Optimistic", "Base Case", "Pessimistic"],
-          "name": "Select Scenario: "
-        }
+    {
+      "mark": {"type": "bar", "opacity": 0.9},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"field": "government_support", "type": "quantitative"},
+        "color": {"value": "#51cf66"}
       }
-    ],
-    "transform": [{ "filter": "datum.scenario == scenarioSelect" }],
-    "layer": [
-      {
-        "mark": { "type": "area", "opacity": 0.3 },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal", "title": "Date" },
-          "y": { "field": "inflation", "type": "quantitative", "title": "Rate (%)" },
-          "color": { "value": "#ff7f0e" },
-          "tooltip": [
-            { "field": "date", "type": "temporal", "title": "Date" },
-            { "field": "inflation", "type": "quantitative", "title": "Inflation", "format": ".1f" }
-          ]
-        }
-      },
-      {
-        "mark": { "type": "line", "strokeWidth": 2 },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "wage_growth", "type": "quantitative" },
-          "color": { "value": "#2ca02c" },
-          "tooltip": [
-            { "field": "date", "type": "temporal", "title": "Date" },
-            { "field": "wage_growth", "type": "quantitative", "title": "Wage growth", "format": ".1f" }
-          ]
-        }
-      },
-      {
-        "mark": { "type": "line", "strokeWidth": 2, "strokeDash": [4, 4] },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "real_wage_growth", "type": "quantitative" },
-          "color": { "value": "#d62728" },
-          "tooltip": [
-            { "field": "date", "type": "temporal", "title": "Date" },
-            { "field": "real_wage_growth", "type": "quantitative", "title": "Real wage growth", "format": ".1f" }
-          ]
-        }
-      }
-    ],
-    "config": { "view": { "stroke": "transparent" } }
-  };
-  safeEmbed("#chart8", chart8Spec);
+    }
+  ]
+});
 
+// Chart 5: Food Price Heatmap
+vegaEmbed('#chart5', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Food Category Inflation Heatmap",
+  "width": 750,
+  "height": 400,
+  "data": {"url": `${DATA_PATH}chart5_food_heatmap.json`},
+  "mark": "rect",
+  "encoding": {
+    "x": {"field": "date", "type": "ordinal", "title": "Month"},
+    "y": {"field": "category", "type": "nominal", "title": "Food Category"},
+    "color": {
+      "field": "inflation",
+      "type": "quantitative",
+      "scale": {"scheme": "redyellowgreen", "reverse": true, "domain": [-2, 25]},
+      "title": "Inflation %"
+    },
+    "tooltip": [
+      {"field": "category", "title": "Category"},
+      {"field": "date", "title": "Month"},
+      {"field": "inflation", "title": "Inflation", "format": ".1f%"}
+    ]
+  }
+});
+
+// Chart 6: Housing Crisis Dashboard
+vegaEmbed('#chart6', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Housing Affordability Crisis",
+  "width": 750,
+  "height": 450,
+  "data": {"url": `${DATA_PATH}chart6_housing_crisis.json`},
+  "params": [
+    {
+      "name": "citySelect",
+      "value": "London",
+      "bind": {
+        "input": "select",
+        "options": ["London", "Manchester", "Birmingham", "Edinburgh", "Cardiff", "Leeds", "Bristol", "Newcastle"],
+        "name": "Select City: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.city == citySelect"}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "line", "strokeWidth": 3},
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"field": "price_to_income", "type": "quantitative", "title": "Ratio"},
+        "color": {"value": "#e74c3c"}
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 3, "strokeDash": [5, 5]},
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"field": "rent_to_income", "type": "quantitative"},
+        "color": {"value": "#3498db"}
+      }
+    }
+  ]
+});
+
+// Chart 7: G20 Comparison
+vegaEmbed('#chart7', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "G20 Crisis Comparison",
+  "width": 750,
+  "height": 450,
+  "data": {"url": `${DATA_PATH}chart7_g20_comparison.json`},
+  "params": [
+    {
+      "name": "countryHighlight",
+      "select": {"type": "point", "fields": ["country"]},
+      "bind": "legend"
+    }
+  ],
+  "mark": {"type": "line", "strokeWidth": 2},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal"},
+    "y": {"field": "inflation", "type": "quantitative", "title": "Inflation Rate (%)"},
+    "color": {"field": "country", "type": "nominal"},
+    "opacity": {
+      "condition": {"param": "countryHighlight", "value": 1},
+      "value": 0.2
+    },
+    "size": {
+      "condition": {"param": "countryHighlight", "value": 3},
+      "value": 1
+    }
+  }
+});
+
+// Chart 8: Scenario Explorer
+vegaEmbed('#chart8', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Economic Scenario Explorer 2025-2027",
+  "width": 750,
+  "height": 450,
+  "data": {"url": `${DATA_PATH}chart8_scenarios_enhanced.json`},
+  "params": [
+    {
+      "name": "scenarioSelect",
+      "value": "Soft Landing",
+      "bind": {
+        "input": "select",
+        "options": ["Soft Landing", "Stagflation", "Recession", "Second Wave Crisis"],
+        "name": "Select Scenario: "
+      }
+    },
+    {
+      "name": "metricSelect",
+      "value": "inflation",
+      "bind": {
+        "input": "radio",
+        "options": ["inflation", "real_wage_growth", "unemployment", "consumer_confidence"],
+        "name": "Metric: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.scenario == scenarioSelect"},
+    {"fold": ["inflation", "real_wage_growth", "unemployment", "consumer_confidence"]},
+    {"filter": "datum.key == metricSelect"}
+  ],
+  "mark": {"type": "area", "line": true, "point": true},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "title": ""},
+    "y": {"field": "value", "type": "quantitative", "title": {"expr": "metricSelect"}},
+    "color": {"value": "#9b59b6"},
+    "tooltip": [
+      {"field": "date", "type": "temporal", "format": "%B %Y"},
+      {"field": "value", "type": "quantitative", "format": ".1f"}
+    ]
+  }
 });

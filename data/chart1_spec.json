@@ -1,49 +1,110 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "UK CPI Inflation Rate with Key Events",
-  "width": 700,
-  "height": 400,
-  "data": {
-    "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/data/chart1_inflation_timeline.json"
+  "title": {
+    "text": "UK Inflation Decomposition & Key Events",
+    "subtitle": "Contribution by component with policy responses"
   },
-  "transform": [
-    {
-      "filter": "datum.type == 'CPI'"
-    }
-  ],
+  "width": 750,
+  "height": 450,
+  "data": {
+    "url": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/data/chart1_inflation_advanced.json"
+  },
   "layer": [
     {
       "mark": {
         "type": "area",
-        "line": {
-          "color": "#1f77b4"
-        },
-        "color": {
-          "x1": 1,
-          "y1": 1,
-          "x2": 1,
-          "y2": 0,
-          "gradient": "linear",
-          "stops": [
-            {
-              "offset": 0,
-              "color": "#1f77b4"
-            },
-            {
-              "offset": 1,
-              "color": "#aec7e8"
-            }
-          ]
-        }
+        "opacity": 0.7
       },
       "encoding": {
         "x": {
           "field": "date",
           "type": "temporal",
-          "title": "Date"
+          "title": ""
         },
         "y": {
-          "field": "inflation",
+          "field": "food",
+          "type": "quantitative",
+          "stack": "zero"
+        },
+        "color": {
+          "value": "#ff9800"
+        },
+        "tooltip": [
+          {
+            "field": "food",
+            "title": "Food Contribution",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.7
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "energy",
+          "type": "quantitative",
+          "stack": "zero"
+        },
+        "color": {
+          "value": "#f44336"
+        },
+        "tooltip": [
+          {
+            "field": "energy",
+            "title": "Energy Contribution",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.7
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "core",
+          "type": "quantitative",
+          "stack": "zero"
+        },
+        "color": {
+          "value": "#2196f3"
+        },
+        "tooltip": [
+          {
+            "field": "core",
+            "title": "Core Contribution",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "color": "black"
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "headline",
           "type": "quantitative",
           "title": "Inflation Rate (%)"
         },
@@ -54,8 +115,8 @@
             "format": "%B %Y"
           },
           {
-            "field": "inflation",
-            "title": "Inflation (%)",
+            "field": "headline",
+            "title": "Headline CPI",
             "format": ".1f"
           }
         ]
@@ -65,17 +126,19 @@
       "data": {
         "values": [
           {
-            "y": 2
+            "y": 2,
+            "label": "BoE Target"
           }
         ]
       },
       "mark": {
         "type": "rule",
         "strokeDash": [
-          4,
+          8,
           4
         ],
-        "color": "red"
+        "color": "red",
+        "strokeWidth": 2
       },
       "encoding": {
         "y": {
@@ -84,5 +147,10 @@
         }
       }
     }
-  ]
+  ],
+  "resolve": {
+    "scale": {
+      "color": "independent"
+    }
+  }
 }
