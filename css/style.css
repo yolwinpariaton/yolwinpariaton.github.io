@@ -1,4 +1,3 @@
-/* ROOT VARIABLES */
 :root {
   --navy: #0b1f3a;
   --white: #ffffff;
@@ -10,7 +9,6 @@
   --shadow: 0 10px 30px rgba(2, 6, 23, 0.10);
 }
 
-/* GENERAL STYLES */
 body {
   margin: 0;
   font-family: sans-serif;
@@ -24,11 +22,10 @@ body {
   padding: 0 20px;
 }
 
-/* CHART & MAP LAYOUT */
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 24px;
   margin: 40px 0;
 }
 
@@ -36,24 +33,23 @@ body {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 24px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  overflow: hidden;
 }
 
-/* Fix for Task 7: Map Containers */
+/* Fix for Map Display */
 .map-container {
-  min-height: 580px; 
-  width: 100%;
+  min-height: 600px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .vega-container {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  height: 100%;
 }
 
 .vega-embed {

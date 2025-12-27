@@ -1,16 +1,16 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Major Cities and Towns in Wales",
-    "subtitle": "Population size shown by circle size. Source: ONS",
-    "anchor": "start",
-    "fontSize": 16
+    "text": "Wales: Tourist Attractions & Landmarks",
+    "subtitle": "Major destinations with annual visitor numbers (millions)",
+    "fontSize": 16,
+    "anchor": "start"
   },
   "width": 400,
   "height": 500,
   "projection": {
     "type": "mercator",
-    "center": [-3.7, 52.3],
+    "center": [-3.8, 52.4],
     "scale": 7000
   },
   "layer": [
@@ -29,26 +29,35 @@
     {
       "data": {
         "values": [
-          {"city": "Cardiff", "lat": 51.4816, "lon": -3.1791, "pop": 362400},
-          {"city": "Swansea", "lat": 51.6214, "lon": -3.9436, "pop": 245500},
-          {"city": "Newport", "lat": 51.5837, "lon": -2.9977, "pop": 154700},
-          {"city": "Wrexham", "lat": 53.0430, "lon": -2.9925, "pop": 65600},
-          {"city": "Bangor", "lat": 53.2274, "lon": -4.1293, "pop": 18300}
+          {"name": "Snowdonia", "lat": 53.0685, "lon": -3.9086, "visitors": 4.27, "type": "National Park"},
+          {"name": "Brecon Beacons", "lat": 51.8799, "lon": -3.4354, "visitors": 3.85, "type": "National Park"},
+          {"name": "Pembrokeshire Coast", "lat": 51.6721, "lon": -5.0527, "visitors": 4.2, "type": "National Park"},
+          {"name": "Cardiff Castle", "lat": 51.4822, "lon": -3.1812, "visitors": 2.1, "type": "Castle"},
+          {"name": "Caernarfon Castle", "lat": 53.1393, "lon": -4.2769, "visitors": 0.68, "type": "Castle"},
+          {"name": "Llandudno", "lat": 53.3239, "lon": -3.8261, "visitors": 1.85, "type": "Resort"},
+          {"name": "Tenby", "lat": 51.6729, "lon": -4.7036, "visitors": 0.95, "type": "Resort"},
+          {"name": "Anglesey", "lat": 53.2500, "lon": -4.3333, "visitors": 1.72, "type": "Island"}
         ]
       },
-      "mark": {"type": "circle", "color": "#7c3aed", "opacity": 0.7},
+      "mark": {"type": "circle", "filled": true, "opacity": 0.8, "stroke": "white", "strokeWidth": 1.5},
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude": {"field": "lat", "type": "quantitative"},
         "size": {
-          "field": "pop",
+          "field": "visitors",
           "type": "quantitative",
-          "scale": {"range": [50, 1000]},
-          "legend": {"title": "Population", "orient": "bottom-right"}
+          "scale": {"range": [100, 1000]},
+          "legend": {"title": "Visitors (M)", "orient": "bottom-left"}
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "scale": {"scheme": "category10"},
+          "legend": {"title": "Type", "orient": "top-right"}
         },
         "tooltip": [
-          {"field": "city", "title": "City"},
-          {"field": "pop", "title": "Population", "format": ","}
+          {"field": "name", "type": "nominal", "title": "Place"},
+          {"field": "visitors", "type": "quantitative", "title": "Visitors (M)"}
         ]
       }
     }
