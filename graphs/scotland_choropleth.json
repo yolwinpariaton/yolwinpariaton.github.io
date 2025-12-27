@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Scotland Population Density",
-    "subtitle": "Log scale: People per km² (2021 Census)",
+    "subtitle": "People per square km (2021 Census)",
     "fontSize": 14
   },
   "width": 380,
@@ -61,7 +61,7 @@
       }
     }
   ],
-  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.3},
+  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.4},
   "encoding": {
     "color": {
       "field": "density",
