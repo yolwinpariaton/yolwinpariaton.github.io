@@ -247,9 +247,9 @@ a:hover{ text-decoration: underline; }
   min-height: 320px;
 }
 
-/* Center wrapper for Tasks 4, 5, 9 */
+/* Center wrapper for Tasks 4, 5, 9, 10 */
 .chart-wrapper--center{
-  max-width: 500px;
+  max-width: 740px; /* bigger */
   margin: 20px auto;
   display: block;
 }
@@ -282,7 +282,7 @@ a:hover{ text-decoration: underline; }
 
 /* Map container for Task 7 */
 .map-container{
-  min-height: 350px;
+  min-height: 440px; /* taller maps */
   background: #f9f9f9;
 }
 
@@ -296,11 +296,11 @@ a:hover{ text-decoration: underline; }
   max-width: 100% !important;
 }
 
-/* Task image sizing - keep frame */
+/* Task image sizing - bigger for Task 10B */
 .task-img{
   width: 100%;
   height: auto;
-  max-height: 280px;
+  max-height: 440px;
   object-fit: contain;
   display: block;
 }
