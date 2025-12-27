@@ -1,110 +1,138 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Wales: Major Places by Population",
-    "subtitle": "Coordinates map. Bubble size shows population (approx.).",
+    "text": "Wales: Tourist Attractions & National Parks",
+    "subtitle": "Major tourist destinations with annual visitor numbers (millions)",
+    "fontSize": 16,
+    "fontWeight": "bold",
+    "subtitleFontSize": 13,
     "anchor": "start",
-    "fontSize": 14,
-    "subtitleFontSize": 12
+    "color": "#2c3e50"
   },
-  "width": 380,
-  "height": 400,
+  "width": 450,
+  "height": 500,
   "projection": {
     "type": "mercator",
-    "center": [-3.7, 52.35],
-    "scale": 7200
+    "center": [-3.5, 52.3],
+    "scale": 8000
   },
   "layer": [
     {
       "data": {
         "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
-        "format": { "type": "json", "property": "features" }
+        "format": {"type": "topojson", "feature": "lad"}
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#f8fafc",
-        "stroke": "#94a3b8",
-        "strokeWidth": 0.6
+        "fill": "#e8f5e9",
+        "stroke": "#4caf50",
+        "strokeWidth": 0.5
       }
     },
     {
       "data": {
         "values": [
-          { "place": "Cardiff", "lat": 51.4816, "lon": -3.1791, "population": 362400 },
-          { "place": "Swansea", "lat": 51.6214, "lon": -3.9436, "population": 246466 },
-          { "place": "Newport", "lat": 51.5842, "lon": -2.9977, "population": 156447 },
-          { "place": "Wrexham", "lat": 53.0469, "lon": -2.9916, "population": 65692 },
-          { "place": "Barry", "lat": 51.3997, "lon": -3.2838, "population": 54673 },
-          { "place": "Bridgend", "lat": 51.5043, "lon": -3.5773, "population": 46757 },
-          { "place": "Llanelli", "lat": 51.6821, "lon": -4.1626, "population": 43878 },
-          { "place": "Merthyr Tydfil", "lat": 51.7487, "lon": -3.3816, "population": 43820 },
-          { "place": "Caerphilly", "lat": 51.5742, "lon": -3.2180, "population": 41402 },
-          { "place": "Port Talbot", "lat": 51.5906, "lon": -3.7986, "population": 37276 },
-          { "place": "Pontypridd", "lat": 51.6021, "lon": -3.3420, "population": 32694 },
-          { "place": "Colwyn Bay", "lat": 53.2946, "lon": -3.7277, "population": 34284 },
-          { "place": "Rhyl", "lat": 53.3192, "lon": -3.4916, "population": 25149 },
-          { "place": "Abergavenny", "lat": 51.8241, "lon": -3.0166, "population": 10078 }
+          {"name": "Snowdonia", "lat": 53.0685, "lon": -3.9086, "visitors": 4.27, "type": "National Park", "icon": "🏔️"},
+          {"name": "Brecon Beacons", "lat": 51.8799, "lon": -3.4354, "visitors": 3.85, "type": "National Park", "icon": "🏔️"},
+          {"name": "Pembrokeshire Coast", "lat": 51.6721, "lon": -5.0527, "visitors": 4.2, "type": "National Park", "icon": "🏖️"},
+          {"name": "Cardiff Castle", "lat": 51.4822, "lon": -3.1812, "visitors": 2.1, "type": "Castle", "icon": "🏰"},
+          {"name": "Caernarfon Castle", "lat": 53.1393, "lon": -4.2769, "visitors": 0.68, "type": "Castle", "icon": "🏰"},
+          {"name": "Conwy Castle", "lat": 53.2803, "lon": -3.8253, "visitors": 0.56, "type": "Castle", "icon": "🏰"},
+          {"name": "St Fagans Museum", "lat": 51.4867, "lon": -3.2719, "visitors": 0.65, "type": "Museum", "icon": "🏛️"},
+          {"name": "Portmeirion", "lat": 52.9134, "lon": -4.0983, "visitors": 0.24, "type": "Village", "icon": "🏘️"},
+          {"name": "Big Pit Mining Museum", "lat": 51.7794, "lon": -3.1077, "visitors": 0.15, "type": "Museum", "icon": "⛏️"},
+          {"name": "Llandudno", "lat": 53.3239, "lon": -3.8261, "visitors": 1.85, "type": "Resort", "icon": "🏖️"},
+          {"name": "Tenby", "lat": 51.6729, "lon": -4.7036, "visitors": 0.95, "type": "Resort", "icon": "🏖️"},
+          {"name": "Hay-on-Wye", "lat": 52.0742, "lon": -3.1257, "visitors": 0.35, "type": "Town", "icon": "📚"},
+          {"name": "Anglesey", "lat": 53.2500, "lon": -4.3333, "visitors": 1.72, "type": "Island", "icon": "🏝️"},
+          {"name": "Gower Peninsula", "lat": 51.5881, "lon": -4.1771, "visitors": 2.5, "type": "AONB", "icon": "🌊"}
         ]
       },
+      "transform": [
+        {"calculate": "datum.visitors * 50", "as": "size_scaled"}
+      ],
       "mark": {
         "type": "circle",
-        "opacity": 0.85,
-        "stroke": "#ffffff",
-        "strokeWidth": 1.2
+        "opacity": 0.8,
+        "stroke": "white",
+        "strokeWidth": 2
       },
       "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
         "size": {
-          "field": "population",
+          "field": "visitors",
           "type": "quantitative",
-          "title": "Population",
-          "scale": { "range": [40, 900] }
+          "scale": {"range": [100, 1000]},
+          "legend": {
+            "title": "Annual Visitors (millions)",
+            "orient": "bottom-left"
+          }
         },
         "color": {
-          "field": "population",
-          "type": "quantitative",
-          "title": "Population",
-          "scale": { "scheme": "blues" },
+          "field": "type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["National Park", "Castle", "Museum", "Resort", "Village", "Town", "Island", "AONB"],
+            "range": ["#2e7d32", "#d32f2f", "#1976d2", "#00acc1", "#7b1fa2", "#f57c00", "#0097a7", "#388e3c"]
+          },
           "legend": {
-            "orient": "bottom",
-            "direction": "horizontal",
-            "gradientLength": 240
+            "title": "Attraction Type",
+            "orient": "top-right"
           }
         },
         "tooltip": [
-          { "field": "place", "type": "nominal", "title": "Place" },
-          { "field": "population", "type": "quantitative", "title": "Population", "format": ",.0f" }
+          {"field": "name", "type": "nominal", "title": "Attraction"},
+          {"field": "type", "type": "nominal", "title": "Type"},
+          {"field": "visitors", "type": "quantitative", "title": "Annual Visitors", "format": ".2f million"},
+          {"field": "icon", "type": "nominal", "title": "Symbol"}
         ]
       }
     },
     {
       "data": {
         "values": [
-          { "place": "Cardiff", "lat": 51.4816, "lon": -3.1791, "population": 362400 },
-          { "place": "Swansea", "lat": 51.6214, "lon": -3.9436, "population": 246466 },
-          { "place": "Newport", "lat": 51.5842, "lon": -2.9977, "population": 156447 },
-          { "place": "Wrexham", "lat": 53.0469, "lon": -2.9916, "population": 65692 }
+          {"name": "Snowdonia", "lat": 53.0685, "lon": -3.9086, "icon": "🏔️"},
+          {"name": "Cardiff Castle", "lat": 51.4822, "lon": -3.1812, "icon": "🏰"},
+          {"name": "Pembrokeshire", "lat": 51.6721, "lon": -5.0527, "icon": "🏖️"},
+          {"name": "Gower", "lat": 51.5881, "lon": -4.1771, "icon": "🌊"}
         ]
       },
       "mark": {
         "type": "text",
         "fontSize": 11,
         "fontWeight": "bold",
-        "dx": 10,
-        "dy": -8,
-        "fill": "#0f172a"
+        "dy": -15
       },
       "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
-        "text": { "field": "place" }
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "name"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"name": "Cardiff", "lat": 51.4816, "lon": -3.1791},
+          {"name": "Swansea", "lat": 51.6214, "lon": -3.9436},
+          {"name": "Newport", "lat": 51.5842, "lon": -2.9977}
+        ]
+      },
+      "mark": {
+        "type": "square",
+        "size": 50,
+        "fill": "black",
+        "opacity": 0.7
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "tooltip": [{"field": "name", "title": "City"}]
       }
     }
   ],
   "config": {
-    "background": "transparent",
-    "view": { "stroke": "transparent" },
-    "legend": { "labelFontSize": 11, "titleFontSize": 12 }
+    "view": {"stroke": "transparent"},
+    "background": "#f0f8ff"
   }
 }

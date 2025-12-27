@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "UK Economic Indicator — Distribution, Shocks, and Regime Shifts",
-    "subtitle": "Advanced analytics: (1) distribution histogram + density, (2) de-trended residuals, (3) shock analysis via YoY change heatmap. Use the controls to explore.",
+    "text": "Advanced Analytics: UK Indicator Shocks and Distribution",
+    "subtitle": "Histogram + density of YoY changes and σ-based shock detection over time (data: graphs/dashboard1.json)",
     "anchor": "start",
     "fontSize": 16,
     "subtitleFontSize": 12
@@ -12,15 +12,6 @@
     "format": { "type": "json" }
   },
   "params": [
-    {
-      "name": "viewMode",
-      "value": "Distribution",
-      "bind": {
-        "input": "select",
-        "options": ["Distribution", "De-trended residuals", "Shock heatmap"],
-        "name": "View: "
-      }
-    },
     {
       "name": "decade_select",
       "value": "All",
@@ -33,27 +24,29 @@
     {
       "name": "bin_count",
       "value": 24,
-      "bind": { "input": "range", "min": 10, "max": 45, "step": 1, "name": "Bins: " }
-    },
-    {
-      "name": "shock_threshold",
-      "value": 2.0,
-      "bind": { "input": "range", "min": 0.5, "max": 6, "step": 0.25, "name": "Shock threshold (σ): " }
+      "bind": {
+        "input": "range",
+        "min": 10,
+        "max": 45,
+        "step": 1,
+        "name": "Histogram bins: "
+      }
     },
     {
       "name": "show_density",
       "value": true,
-      "bind": { "input": "checkbox", "name": "Density curve " }
+      "bind": { "input": "checkbox", "name": "Show density curve " }
     },
     {
-      "name": "show_quartiles",
-      "value": true,
-      "bind": { "input": "checkbox", "name": "Quartiles " }
-    },
-    {
-      "name": "show_events",
-      "value": true,
-      "bind": { "input": "checkbox", "name": "Event markers " }
+      "name": "sigma_threshold",
+      "value": 2.0,
+      "bind": {
+        "input": "range",
+        "min": 1.0,
+        "max": 4.0,
+        "step": 0.25,
+        "name": "Shock threshold (σ): "
+      }
     }
   ],
   "transform": [
@@ -63,38 +56,46 @@
       "calculate": "datum.year < 2010 ? '2000s' : datum.year < 2020 ? '2010s' : '2020s'",
       "as": "decade"
     },
-    { "filter": "isValid(datum.value) && datum.value != null" },
+    { "filter": "isValid(datum.value) && datum.value != null && isValid(datum.year)" },
     { "filter": "decade_select == 'All' || datum.decade == decade_select" },
-
-    { "window": [{ "op": "lag", "field": "value", "as": "lag1" }], "sort": [{ "field": "year", "order": "ascending" }] },
-    { "calculate": "isValid(datum.lag1) ? (datum.value / datum.lag1 - 1) * 100 : null", "as": "pct_change" },
-
     {
-      "regression": "value",
-      "on": "year",
-      "extent": [2000, 2023],
-      "as": ["year_fit", "trend"]
-    }
+      "window": [{ "op": "lag", "field": "value", "as": "prev_value" }],
+      "sort": [{ "field": "year", "order": "ascending" }]
+    },
+    {
+      "calculate": "isValid(datum.prev_value) && datum.prev_value != 0 ? (datum.value / datum.prev_value - 1) * 100 : null",
+      "as": "yoy_pct"
+    },
+    { "filter": "datum.yoy_pct != null" },
+    {
+      "joinaggregate": [
+        { "op": "mean", "field": "yoy_pct", "as": "mu" },
+        { "op": "stdev", "field": "yoy_pct", "as": "sd" }
+      ]
+    },
+    {
+      "calculate": "datum.sd > 0 ? (datum.yoy_pct - datum.mu) / datum.sd : 0",
+      "as": "z"
+    },
+    { "calculate": "abs(datum.z) >= sigma_threshold", "as": "is_shock" }
   ],
-  "resolve": { "scale": { "y": "independent" } },
   "vconcat": [
     {
-      "transform": [{ "filter": "viewMode == 'Distribution'" }],
-      "title": { "text": "A) Distribution view: histogram + density + reference lines", "anchor": "start", "fontSize": 13, "offset": 8 },
+      "title": {
+        "text": "A) Distribution of year-on-year changes",
+        "anchor": "start",
+        "fontSize": 13,
+        "offset": 8
+      },
       "layer": [
         {
-          "mark": {
-            "type": "bar",
-            "cornerRadiusTopLeft": 3,
-            "cornerRadiusTopRight": 3,
-            "opacity": 0.88
-          },
+          "mark": { "type": "bar", "opacity": 0.8, "cornerRadius": 3 },
           "encoding": {
             "x": {
-              "field": "value",
+              "field": "yoy_pct",
               "type": "quantitative",
               "bin": { "maxbins": { "expr": "bin_count" } },
-              "title": "Value",
+              "title": "YoY change (%)",
               "axis": { "labelAngle": 0, "gridOpacity": 0.25 }
             },
             "y": {
@@ -104,225 +105,87 @@
               "axis": { "gridOpacity": 0.25 }
             },
             "color": {
-              "field": "decade",
-              "type": "nominal",
-              "title": "Decade",
-              "scale": { "domain": ["2000s", "2010s", "2020s"], "range": ["#2563eb", "#f97316", "#22c55e"] }
+              "condition": { "test": "datum.is_shock", "value": "#ef4444" },
+              "value": "#2563eb"
             },
             "tooltip": [
               { "aggregate": "count", "title": "Count" },
-              { "field": "value", "type": "quantitative", "title": "Bin", "bin": true },
-              { "field": "decade", "title": "Decade" }
+              { "field": "yoy_pct", "type": "quantitative", "title": "Bin Range", "bin": true }
             ]
           }
         },
         {
           "transform": [
             { "filter": "show_density" },
-            { "density": "value", "bandwidth": 0.6, "as": ["x", "density"] },
-            { "joinaggregate": [{ "op": "max", "field": "density", "as": "maxDensity" }] },
-            { "calculate": "datum.density / datum.maxDensity", "as": "density01" }
+            { "density": "yoy_pct", "bandwidth": 0.8, "as": ["x", "density"] }
           ],
-          "mark": { "type": "line", "strokeWidth": 2.5, "color": "#0f172a" },
+          "mark": { "type": "line", "strokeWidth": 2.5, "color": "#111827" },
           "encoding": {
             "x": { "field": "x", "type": "quantitative" },
-            "y": { "field": "density01", "type": "quantitative", "axis": null, "scale": { "domain": [0, 1] } }
+            "y": {
+              "field": "density",
+              "type": "quantitative",
+              "title": "Density",
+              "axis": { "orient": "right", "grid": false }
+            }
           }
-        },
-        {
-          "transform": [
-            {
-              "aggregate": [
-                { "op": "mean", "field": "value", "as": "mean" },
-                { "op": "median", "field": "value", "as": "median" }
-              ]
-            }
-          ],
-          "layer": [
-            {
-              "mark": { "type": "rule", "strokeWidth": 2.5, "color": "#111827" },
-              "encoding": {
-                "x": { "field": "mean", "type": "quantitative" },
-                "tooltip": [{ "field": "mean", "type": "quantitative", "title": "Mean", "format": ".2f" }]
-              }
-            },
-            {
-              "mark": { "type": "rule", "strokeWidth": 2, "strokeDash": [6, 4], "color": "#6b7280" },
-              "encoding": {
-                "x": { "field": "median", "type": "quantitative" },
-                "tooltip": [{ "field": "median", "type": "quantitative", "title": "Median", "format": ".2f" }]
-              }
-            }
-          ]
-        },
-        {
-          "transform": [
-            { "filter": "show_quartiles" },
-            { "aggregate": [{ "op": "q1", "field": "value", "as": "q1" }, { "op": "q3", "field": "value", "as": "q3" }] }
-          ],
-          "layer": [
-            {
-              "mark": { "type": "rule", "strokeWidth": 1.5, "strokeDash": [3, 3], "color": "#94a3b8" },
-              "encoding": { "x": { "field": "q1", "type": "quantitative" }, "tooltip": [{ "field": "q1", "title": "Q1", "format": ".2f" }] }
-            },
-            {
-              "mark": { "type": "rule", "strokeWidth": 1.5, "strokeDash": [3, 3], "color": "#94a3b8" },
-              "encoding": { "x": { "field": "q3", "type": "quantitative" }, "tooltip": [{ "field": "q3", "title": "Q3", "format": ".2f" }] }
-            }
-          ]
         }
       ],
-      "width": 700,
-      "height": 300
+      "resolve": { "scale": { "y": "independent" } },
+      "width": 600,
+      "height": 250
     },
-
     {
-      "transform": [{ "filter": "viewMode == 'De-trended residuals'" }],
-      "title": { "text": "B) De-trended view: actual vs linear trend, plus residual shocks (σ-based)", "anchor": "start", "fontSize": 13, "offset": 8 },
-      "vconcat": [
-        {
-          "layer": [
-            {
-              "mark": { "type": "line", "strokeWidth": 2.5, "color": "#2563eb" },
-              "encoding": {
-                "x": { "field": "year_date", "type": "temporal", "title": "Year", "axis": { "format": "%Y" } },
-                "y": { "field": "value", "type": "quantitative", "title": "Value" },
-                "tooltip": [
-                  { "field": "year", "title": "Year" },
-                  { "field": "value", "title": "Value", "format": ".2f" }
-                ]
-              }
-            },
-            {
-              "mark": { "type": "line", "strokeWidth": 2, "strokeDash": [6, 4], "color": "#111827" },
-              "encoding": {
-                "x": { "field": "year_fit", "type": "temporal" },
-                "y": { "field": "trend", "type": "quantitative" },
-                "tooltip": [
-                  { "field": "year_fit", "type": "temporal", "format": "%Y", "title": "Year" },
-                  { "field": "trend", "title": "Trend", "format": ".2f" }
-                ]
-              }
-            }
-          ],
-          "width": 700,
-          "height": 200
-        },
-        {
-          "transform": [
-            {
-              "lookup": "year",
-              "from": {
-                "data": { "url": "graphs/dashboard1.json", "format": { "type": "json" } },
-                "key": "date",
-                "fields": ["value"]
-              }
-            },
-            { "calculate": "datum.value - datum.trend", "as": "resid" },
-            { "joinaggregate": [{ "op": "stdev", "field": "resid", "as": "resid_sd" }, { "op": "mean", "field": "resid", "as": "resid_mean" }] },
-            { "calculate": "(datum.resid - datum.resid_mean) / datum.resid_sd", "as": "z" },
-            { "calculate": "abs(datum.z) >= shock_threshold", "as": "is_shock" }
-          ],
-          "layer": [
-            {
-              "mark": { "type": "rule", "color": "#94a3b8" },
-              "encoding": { "y": { "datum": 0 } }
-            },
-            {
-              "mark": { "type": "line", "strokeWidth": 2, "color": "#6b7280" },
-              "encoding": {
-                "x": { "field": "year_date", "type": "temporal", "title": "Year", "axis": { "format": "%Y" } },
-                "y": { "field": "resid", "type": "quantitative", "title": "Residual (value − trend)" },
-                "tooltip": [
-                  { "field": "year", "title": "Year" },
-                  { "field": "resid", "title": "Residual", "format": ".2f" },
-                  { "field": "z", "title": "Shock (σ)", "format": ".2f" }
-                ]
-              }
-            },
-            {
-              "transform": [{ "filter": "show_events && datum.is_shock" }],
-              "mark": { "type": "point", "filled": true, "size": 90, "color": "#ef4444" },
-              "encoding": {
-                "x": { "field": "year_date", "type": "temporal" },
-                "y": { "field": "resid", "type": "quantitative" },
-                "tooltip": [
-                  { "field": "year", "title": "Year" },
-                  { "field": "resid", "title": "Residual", "format": ".2f" },
-                  { "field": "z", "title": "Shock (σ)", "format": ".2f" }
-                ]
-              }
-            }
-          ],
-          "width": 700,
-          "height": 200
-        }
-      ]
-    },
-
-    {
-      "transform": [{ "filter": "viewMode == 'Shock heatmap'" }],
-      "title": { "text": "C) Shock heatmap: year-to-year % change (highlighting unusually large movements)", "anchor": "start", "fontSize": 13, "offset": 8 },
-      "transform": [
-        { "filter": "pct_change != null" },
-        { "calculate": "datum.pct_change", "as": "shock" },
-        { "joinaggregate": [{ "op": "stdev", "field": "shock", "as": "shock_sd" }, { "op": "mean", "field": "shock", "as": "shock_mean" }] },
-        { "calculate": "(datum.shock - datum.shock_mean) / datum.shock_sd", "as": "shock_z" },
-        { "calculate": "abs(datum.shock_z) >= shock_threshold", "as": "big_move" }
-      ],
+      "title": {
+        "text": "B) Shock analysis over time (z-score thresholding)",
+        "anchor": "start",
+        "fontSize": 13,
+        "offset": 8
+      },
       "layer": [
         {
-          "mark": { "type": "rect", "cornerRadius": 4 },
+          "transform": [
+            { "calculate": "datum.mu + sigma_threshold * datum.sd", "as": "upper_band" },
+            { "calculate": "datum.mu - sigma_threshold * datum.sd", "as": "lower_band" }
+          ],
+          "layer": [
+            {
+              "mark": { "type": "rule", "strokeWidth": 1, "color": "#cbd5e1", "strokeDash": [4, 2] },
+              "encoding": { "y": { "field": "upper_band", "type": "quantitative" } }
+            },
+            {
+              "mark": { "type": "rule", "strokeWidth": 1, "color": "#cbd5e1", "strokeDash": [4, 2] },
+              "encoding": { "y": { "field": "lower_band", "type": "quantitative" } }
+            }
+          ]
+        },
+        {
+          "mark": { "type": "line", "strokeWidth": 2, "color": "#2563eb" },
           "encoding": {
-            "x": {
-              "field": "year_date",
-              "type": "temporal",
-              "title": "Year",
-              "axis": { "format": "%Y", "labelAngle": 0, "tickCount": 10 }
-            },
-            "y": { "value": 0, "axis": null },
-            "color": {
-              "field": "shock",
-              "type": "quantitative",
-              "title": "YoY % change",
-              "scale": { "scheme": "redyellowgreen", "reverse": true, "domainMid": 0, "clamp": true }
-            },
-            "tooltip": [
-              { "field": "year", "title": "Year" },
-              { "field": "shock", "title": "YoY % change", "format": ".2f" },
-              { "field": "shock_z", "title": "Shock (σ)", "format": ".2f" }
-            ]
+            "x": { "field": "year_date", "type": "temporal", "title": "Year" },
+            "y": { "field": "yoy_pct", "type": "quantitative", "title": "YoY change (%)" }
           }
         },
         {
-          "transform": [{ "filter": "show_events && datum.big_move" }],
-          "mark": { "type": "text", "fontSize": 12, "fontWeight": "bold", "color": "#111827", "baseline": "middle" },
+          "transform": [{ "filter": "datum.is_shock" }],
+          "mark": { "type": "point", "filled": true, "size": 80, "color": "#ef4444" },
           "encoding": {
             "x": { "field": "year_date", "type": "temporal" },
-            "y": { "value": 0 },
-            "text": { "value": "!" },
+            "y": { "field": "yoy_pct", "type": "quantitative" },
             "tooltip": [
               { "field": "year", "title": "Year" },
-              { "field": "shock", "title": "YoY % change", "format": ".2f" },
-              { "field": "shock_z", "title": "Shock (σ)", "format": ".2f" }
+              { "field": "yoy_pct", "title": "Change", "format": ".2f" },
+              { "field": "z", "title": "σ Shock Level", "format": ".2f" }
             ]
           }
         }
       ],
-      "width": 700,
-      "height": 80
+      "width": 600,
+      "height": 250
     }
   ],
   "config": {
-    "background": "#ffffff",
     "view": { "stroke": "transparent" },
-    "axis": {
-      "labelFontSize": 11,
-      "titleFontSize": 12,
-      "gridColor": "#e5e7eb",
-      "domainColor": "#111827",
-      "tickColor": "#111827"
-    },
-    "legend": { "labelFontSize": 11, "titleFontSize": 12 }
+    "axis": { "gridColor": "#e2e8f0" }
   }
 }

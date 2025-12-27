@@ -1,105 +1,129 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Scotland: Population Density by Council Area",
-    "subtitle": "People per km² (approx., 2021–2022). Choropleth by Local Authority.",
+    "text": "Scotland: Index of Multiple Deprivation 2020",
+    "subtitle": "Most deprived areas shown in darker colors - SIMD quintiles by council area",
+    "fontSize": 16,
+    "fontWeight": "bold",
+    "subtitleFontSize": 13,
     "anchor": "start",
-    "fontSize": 14,
-    "subtitleFontSize": 12
+    "color": "#2c3e50"
   },
-  "width": 380,
-  "height": 400,
-  "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
-    "format": { "type": "json", "property": "features" }
+  "width": 450,
+  "height": 500,
+  "projection": {
+    "type": "albers",
+    "center": [-4, 57],
+    "rotate": [0, 0, 0],
+    "parallels": [50, 60],
+    "scale": 3500
   },
-  "transform": [
-    {
-      "lookup": "properties.LAD13NM",
-      "from": {
-        "data": {
-          "values": [
-            { "area": "Aberdeen City", "density": 1208 },
-            { "area": "Aberdeenshire", "density": 41 },
-            { "area": "Angus", "density": 53 },
-            { "area": "Argyll and Bute", "density": 13 },
-            { "area": "City of Edinburgh", "density": 1948 },
-            { "area": "Clackmannanshire", "density": 325 },
-            { "area": "Dumfries and Galloway", "density": 24 },
-            { "area": "Dundee City", "density": 2477 },
-            { "area": "East Ayrshire", "density": 97 },
-            { "area": "East Dunbartonshire", "density": 623 },
-            { "area": "East Lothian", "density": 152 },
-            { "area": "East Renfrewshire", "density": 543 },
-            { "area": "Falkirk", "density": 518 },
-            { "area": "Fife", "density": 281 },
-            { "area": "Glasgow City", "density": 3521 },
-            { "area": "Highland", "density": 9 },
-            { "area": "Inverclyde", "density": 478 },
-            { "area": "Midlothian", "density": 254 },
-            { "area": "Moray", "density": 40 },
-            { "area": "North Ayrshire", "density": 152 },
-            { "area": "North Lanarkshire", "density": 733 },
-            { "area": "Orkney Islands", "density": 22 },
-            { "area": "Perth and Kinross", "density": 28 },
-            { "area": "Renfrewshire", "density": 684 },
-            { "area": "Scottish Borders", "density": 24 },
-            { "area": "Shetland Islands", "density": 16 },
-            { "area": "South Ayrshire", "density": 91 },
-            { "area": "South Lanarkshire", "density": 183 },
-            { "area": "Stirling", "density": 40 },
-            { "area": "West Dunbartonshire", "density": 562 },
-            { "area": "West Lothian", "density": 419 },
-            { "area": "Na h-Eileanan an Iar", "density": 9 }
-          ]
-        },
-        "key": "area",
-        "fields": ["density"]
-      }
-    },
-    { "calculate": "isValid(datum.density) ? datum.density : null", "as": "density_clean" }
-  ],
-  "projection": { "type": "mercator" },
   "layer": [
     {
-      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 0.6 },
+      "data": {
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
+        "format": {"type": "topojson", "feature": "lad"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.LAD13NM",
+          "from": {
+            "data": {
+              "values": [
+                {"area": "Glasgow City", "deprivation": 85, "unemployment": 7.2, "income": 22500},
+                {"area": "Inverclyde", "deprivation": 78, "unemployment": 6.8, "income": 23100},
+                {"area": "Dundee City", "deprivation": 76, "unemployment": 6.5, "income": 23800},
+                {"area": "West Dunbartonshire", "deprivation": 74, "unemployment": 6.3, "income": 24200},
+                {"area": "North Ayrshire", "deprivation": 72, "unemployment": 6.1, "income": 24600},
+                {"area": "Clackmannanshire", "deprivation": 68, "unemployment": 5.8, "income": 25300},
+                {"area": "East Ayrshire", "deprivation": 66, "unemployment": 5.6, "income": 25800},
+                {"area": "North Lanarkshire", "deprivation": 64, "unemployment": 5.4, "income": 26200},
+                {"area": "Renfrewshire", "deprivation": 62, "unemployment": 5.2, "income": 26800},
+                {"area": "South Lanarkshire", "deprivation": 58, "unemployment": 4.9, "income": 27500},
+                {"area": "Fife", "deprivation": 56, "unemployment": 4.7, "income": 28100},
+                {"area": "Falkirk", "deprivation": 54, "unemployment": 4.5, "income": 28700},
+                {"area": "South Ayrshire", "deprivation": 52, "unemployment": 4.3, "income": 29300},
+                {"area": "West Lothian", "deprivation": 48, "unemployment": 4.0, "income": 30200},
+                {"area": "Dumfries and Galloway", "deprivation": 46, "unemployment": 3.8, "income": 30800},
+                {"area": "Argyll and Bute", "deprivation": 44, "unemployment": 3.6, "income": 31400},
+                {"area": "Highland", "deprivation": 42, "unemployment": 3.4, "income": 32000},
+                {"area": "Stirling", "deprivation": 40, "unemployment": 3.2, "income": 32600},
+                {"area": "Angus", "deprivation": 38, "unemployment": 3.0, "income": 33200},
+                {"area": "Scottish Borders", "deprivation": 36, "unemployment": 2.8, "income": 33800},
+                {"area": "Midlothian", "deprivation": 34, "unemployment": 2.6, "income": 34400},
+                {"area": "Perth and Kinross", "deprivation": 32, "unemployment": 2.4, "income": 35000},
+                {"area": "Moray", "deprivation": 30, "unemployment": 2.2, "income": 35600},
+                {"area": "East Lothian", "deprivation": 28, "unemployment": 2.0, "income": 36200},
+                {"area": "Aberdeen City", "deprivation": 26, "unemployment": 1.8, "income": 36800},
+                {"area": "East Renfrewshire", "deprivation": 24, "unemployment": 1.6, "income": 37400},
+                {"area": "Aberdeenshire", "deprivation": 22, "unemployment": 1.4, "income": 38000},
+                {"area": "East Dunbartonshire", "deprivation": 20, "unemployment": 1.2, "income": 38600},
+                {"area": "City of Edinburgh", "deprivation": 35, "unemployment": 2.9, "income": 39200},
+                {"area": "Orkney Islands", "deprivation": 25, "unemployment": 1.5, "income": 34000},
+                {"area": "Shetland Islands", "deprivation": 23, "unemployment": 1.3, "income": 35500},
+                {"area": "Na h-Eileanan an Iar", "deprivation": 45, "unemployment": 3.7, "income": 31000}
+              ]
+            },
+            "key": "area",
+            "fields": ["deprivation", "unemployment", "income"]
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 1
+      },
       "encoding": {
         "color": {
-          "field": "density_clean",
+          "field": "deprivation",
           "type": "quantitative",
-          "title": "People per km²",
-          "scale": { "scheme": "teals", "type": "log" },
+          "title": "Deprivation Score",
+          "scale": {
+            "scheme": "redyellowgreen",
+            "reverse": true,
+            "domain": [20, 85]
+          },
           "legend": {
-            "orient": "bottom",
-            "direction": "horizontal",
-            "gradientLength": 240,
-            "labelOverlap": true
+            "orient": "bottom-right",
+            "gradientLength": 200,
+            "titleFontSize": 12,
+            "labelFontSize": 11
           }
         },
-        "opacity": {
-          "condition": { "test": "datum.density_clean != null", "value": 1 },
-          "value": 0.25
-        },
         "tooltip": [
-          { "field": "properties.LAD13NM", "type": "nominal", "title": "Council Area" },
-          { "field": "density_clean", "type": "quantitative", "title": "Density (per km²)", "format": ",.0f" }
+          {"field": "properties.LAD13NM", "type": "nominal", "title": "Council Area"},
+          {"field": "deprivation", "type": "quantitative", "title": "Deprivation Score", "format": ".0f"},
+          {"field": "unemployment", "type": "quantitative", "title": "Unemployment %", "format": ".1f"},
+          {"field": "income", "type": "quantitative", "title": "Median Income", "format": "£,.0f"}
         ]
       }
     },
     {
-      "transform": [{ "filter": "datum.density_clean == null" }],
+      "data": {
+        "values": [
+          {"city": "Edinburgh", "lat": 55.9533, "lon": -3.1883, "label": "Edinburgh"},
+          {"city": "Glasgow", "lat": 55.8642, "lon": -4.2518, "label": "Glasgow"},
+          {"city": "Aberdeen", "lat": 57.1497, "lon": -2.0943, "label": "Aberdeen"},
+          {"city": "Dundee", "lat": 56.4620, "lon": -2.9707, "label": "Dundee"},
+          {"city": "Inverness", "lat": 57.4778, "lon": -4.2247, "label": "Inverness"}
+        ]
+      },
       "mark": {
-        "type": "geoshape",
-        "stroke": "#ffffff",
-        "strokeWidth": 0.6,
-        "fill": "#f1f5f9"
+        "type": "text",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "dy": -8
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "label"}
       }
     }
   ],
   "config": {
-    "background": "transparent",
-    "view": { "stroke": "transparent" },
-    "axis": { "labelFontSize": 11, "titleFontSize": 12 },
-    "legend": { "labelFontSize": 11, "titleFontSize": 12 }
+    "view": {"stroke": "transparent"},
+    "background": "#f8f9fa"
   }
 }
