@@ -1,0 +1,86 @@
+[
+  {
+    "date": "2020-01-01",
+    "cap": 1179,
+    "typical_bill": 98,
+    "support": "No Support",
+    "effective_bill": 98
+  },
+  {
+    "date": "2020-04-01",
+    "cap": 1126,
+    "typical_bill": 94,
+    "support": "No Support",
+    "effective_bill": 94
+  },
+  {
+    "date": "2020-10-01",
+    "cap": 1042,
+    "typical_bill": 87,
+    "support": "No Support",
+    "effective_bill": 87
+  },
+  {
+    "date": "2021-04-01",
+    "cap": 1138,
+    "typical_bill": 95,
+    "support": "No Support",
+    "effective_bill": 95
+  },
+  {
+    "date": "2021-10-01",
+    "cap": 1277,
+    "typical_bill": 106,
+    "support": "No Support",
+    "effective_bill": 106
+  },
+  {
+    "date": "2022-04-01",
+    "cap": 1971,
+    "typical_bill": 164,
+    "support": "No Support",
+    "effective_bill": 164
+  },
+  {
+    "date": "2022-10-01",
+    "cap": 3549,
+    "typical_bill": 296,
+    "support": "Energy Price Guarantee Active",
+    "effective_bill": 208
+  },
+  {
+    "date": "2023-01-01",
+    "cap": 4279,
+    "typical_bill": 357,
+    "support": "Energy Price Guarantee Active",
+    "effective_bill": 208
+  },
+  {
+    "date": "2023-04-01",
+    "cap": 3280,
+    "typical_bill": 273,
+    "support": "Energy Price Guarantee Active",
+    "effective_bill": 208
+  },
+  {
+    "date": "2023-07-01",
+    "cap": 2074,
+    "typical_bill": 173,
+    "support": "No Support",
+    "effective_bill": 173
+  },
+  {
+    "date": "2023-10-01",
+    "cap": 1923,
+    "typical_bill": 160,
+    "support": "No Support",
+    "effective_bill": 160
+  },
+  {
+    "date": "2024-01-01",
+    "cap": 1928,
+    "typical_bill": 161,
+    "support": "No Support",
+    "effective_bill": 161
+  }
+]

@@ -3,8 +3,8 @@
 // ========================================
 
 // Configuration
-const GITHUB_USER = "YOUR_USERNAME";
-const GITHUB_REPO = "YOUR_REPO";
+const GITHUB_USER = "yolwinpariaton";
+const GITHUB_REPO = "yolwinpariaton.github.io";
 const DATA_PATH = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/`;
 
 // Chart 1: Inflation Timeline

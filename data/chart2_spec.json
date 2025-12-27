@@ -1,0 +1,58 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Nominal vs Real Wage Growth",
+  "width": 700,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/data/chart2_wages_inflation.json"
+  },
+  "transform": [
+    {
+      "fold": [
+        "nominal_wages",
+        "inflation",
+        "real_wages"
+      ],
+      "as": [
+        "measure",
+        "value"
+      ]
+    }
+  ],
+  "mark": "line",
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": "Date"
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Growth Rate (%)"
+    },
+    "color": {
+      "field": "measure",
+      "type": "nominal",
+      "title": "Measure",
+      "scale": {
+        "domain": [
+          "nominal_wages",
+          "inflation",
+          "real_wages"
+        ],
+        "range": [
+          "#2ca02c",
+          "#ff7f0e",
+          "#d62728"
+        ]
+      },
+      "legend": {
+        "labelExpr": "datum.value == 'nominal_wages' ? 'Nominal Wages' : datum.value == 'real_wages' ? 'Real Wages' : 'Inflation'"
+      }
+    },
+    "strokeWidth": {
+      "value": 2
+    }
+  }
+}

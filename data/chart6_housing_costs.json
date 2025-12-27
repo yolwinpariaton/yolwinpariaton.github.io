@@ -1,0 +1,177 @@
+[
+  {
+    "year": 2020,
+    "region": "London",
+    "rent": 1800,
+    "mortgage": 2200,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2021,
+    "region": "London",
+    "rent": 1908,
+    "mortgage": 2376,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2022,
+    "region": "London",
+    "rent": 2016,
+    "mortgage": 2552,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2023,
+    "region": "London",
+    "rent": 2124,
+    "mortgage": 2728,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2024,
+    "region": "London",
+    "rent": 2232,
+    "mortgage": 2904,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2020,
+    "region": "South East",
+    "rent": 1200,
+    "mortgage": 1560,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2021,
+    "region": "South East",
+    "rent": 1248,
+    "mortgage": 1638,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2022,
+    "region": "South East",
+    "rent": 1296,
+    "mortgage": 1716,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2023,
+    "region": "South East",
+    "rent": 1344,
+    "mortgage": 1794,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2024,
+    "region": "South East",
+    "rent": 1392,
+    "mortgage": 1872,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2020,
+    "region": "North West",
+    "rent": 800,
+    "mortgage": 1040,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2021,
+    "region": "North West",
+    "rent": 832,
+    "mortgage": 1092,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2022,
+    "region": "North West",
+    "rent": 864,
+    "mortgage": 1144,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2023,
+    "region": "North West",
+    "rent": 896,
+    "mortgage": 1196,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2024,
+    "region": "North West",
+    "rent": 928,
+    "mortgage": 1248,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2020,
+    "region": "Scotland",
+    "rent": 750,
+    "mortgage": 975,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2021,
+    "region": "Scotland",
+    "rent": 780,
+    "mortgage": 1024,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2022,
+    "region": "Scotland",
+    "rent": 810,
+    "mortgage": 1072,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2023,
+    "region": "Scotland",
+    "rent": 840,
+    "mortgage": 1121,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2024,
+    "region": "Scotland",
+    "rent": 870,
+    "mortgage": 1170,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2020,
+    "region": "Wales",
+    "rent": 700,
+    "mortgage": 910,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2021,
+    "region": "Wales",
+    "rent": 728,
+    "mortgage": 956,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2022,
+    "region": "Wales",
+    "rent": 756,
+    "mortgage": 1001,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2023,
+    "region": "Wales",
+    "rent": 784,
+    "mortgage": 1046,
+    "type": "Average Monthly Cost (\u00a3)"
+  },
+  {
+    "year": 2024,
+    "region": "Wales",
+    "rent": 812,
+    "mortgage": 1092,
+    "type": "Average Monthly Cost (\u00a3)"
+  }
+]

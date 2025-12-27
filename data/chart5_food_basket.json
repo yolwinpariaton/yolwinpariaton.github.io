@@ -1,0 +1,1772 @@
+[
+  {
+    "date": "2020-01-31",
+    "item": "Bread",
+    "price_index": 101.6
+  },
+  {
+    "date": "2020-01-31",
+    "item": "Milk",
+    "price_index": 100.2
+  },
+  {
+    "date": "2020-01-31",
+    "item": "Eggs",
+    "price_index": 101.2
+  },
+  {
+    "date": "2020-01-31",
+    "item": "Chicken",
+    "price_index": 101.6
+  },
+  {
+    "date": "2020-01-31",
+    "item": "Potatoes",
+    "price_index": 99.3
+  },
+  {
+    "date": "2020-01-31",
+    "item": "Rice",
+    "price_index": 98.4
+  },
+  {
+    "date": "2020-02-29",
+    "item": "Bread",
+    "price_index": 98.9
+  },
+  {
+    "date": "2020-02-29",
+    "item": "Milk",
+    "price_index": 99.7
+  },
+  {
+    "date": "2020-02-29",
+    "item": "Eggs",
+    "price_index": 101.3
+  },
+  {
+    "date": "2020-02-29",
+    "item": "Chicken",
+    "price_index": 101.4
+  },
+  {
+    "date": "2020-02-29",
+    "item": "Potatoes",
+    "price_index": 98.0
+  },
+  {
+    "date": "2020-02-29",
+    "item": "Rice",
+    "price_index": 100.0
+  },
+  {
+    "date": "2020-03-31",
+    "item": "Bread",
+    "price_index": 99.7
+  },
+  {
+    "date": "2020-03-31",
+    "item": "Milk",
+    "price_index": 98.9
+  },
+  {
+    "date": "2020-03-31",
+    "item": "Eggs",
+    "price_index": 98.5
+  },
+  {
+    "date": "2020-03-31",
+    "item": "Chicken",
+    "price_index": 99.4
+  },
+  {
+    "date": "2020-03-31",
+    "item": "Potatoes",
+    "price_index": 101.8
+  },
+  {
+    "date": "2020-03-31",
+    "item": "Rice",
+    "price_index": 99.3
+  },
+  {
+    "date": "2020-04-30",
+    "item": "Bread",
+    "price_index": 100.1
+  },
+  {
+    "date": "2020-04-30",
+    "item": "Milk",
+    "price_index": 100.8
+  },
+  {
+    "date": "2020-04-30",
+    "item": "Eggs",
+    "price_index": 99.5
+  },
+  {
+    "date": "2020-04-30",
+    "item": "Chicken",
+    "price_index": 101.9
+  },
+  {
+    "date": "2020-04-30",
+    "item": "Potatoes",
+    "price_index": 101.8
+  },
+  {
+    "date": "2020-04-30",
+    "item": "Rice",
+    "price_index": 99.0
+  },
+  {
+    "date": "2020-05-31",
+    "item": "Bread",
+    "price_index": 100.0
+  },
+  {
+    "date": "2020-05-31",
+    "item": "Milk",
+    "price_index": 99.2
+  },
+  {
+    "date": "2020-05-31",
+    "item": "Eggs",
+    "price_index": 99.1
+  },
+  {
+    "date": "2020-05-31",
+    "item": "Chicken",
+    "price_index": 98.1
+  },
+  {
+    "date": "2020-05-31",
+    "item": "Potatoes",
+    "price_index": 100.4
+  },
+  {
+    "date": "2020-05-31",
+    "item": "Rice",
+    "price_index": 100.0
+  },
+  {
+    "date": "2020-06-30",
+    "item": "Bread",
+    "price_index": 98.2
+  },
+  {
+    "date": "2020-06-30",
+    "item": "Milk",
+    "price_index": 99.1
+  },
+  {
+    "date": "2020-06-30",
+    "item": "Eggs",
+    "price_index": 101.6
+  },
+  {
+    "date": "2020-06-30",
+    "item": "Chicken",
+    "price_index": 99.0
+  },
+  {
+    "date": "2020-06-30",
+    "item": "Potatoes",
+    "price_index": 98.6
+  },
+  {
+    "date": "2020-06-30",
+    "item": "Rice",
+    "price_index": 100.0
+  },
+  {
+    "date": "2020-07-31",
+    "item": "Bread",
+    "price_index": 101.9
+  },
+  {
+    "date": "2020-07-31",
+    "item": "Milk",
+    "price_index": 99.0
+  },
+  {
+    "date": "2020-07-31",
+    "item": "Eggs",
+    "price_index": 100.7
+  },
+  {
+    "date": "2020-07-31",
+    "item": "Chicken",
+    "price_index": 101.0
+  },
+  {
+    "date": "2020-07-31",
+    "item": "Potatoes",
+    "price_index": 99.0
+  },
+  {
+    "date": "2020-07-31",
+    "item": "Rice",
+    "price_index": 100.9
+  },
+  {
+    "date": "2020-08-31",
+    "item": "Bread",
+    "price_index": 99.5
+  },
+  {
+    "date": "2020-08-31",
+    "item": "Milk",
+    "price_index": 100.5
+  },
+  {
+    "date": "2020-08-31",
+    "item": "Eggs",
+    "price_index": 100.5
+  },
+  {
+    "date": "2020-08-31",
+    "item": "Chicken",
+    "price_index": 100.1
+  },
+  {
+    "date": "2020-08-31",
+    "item": "Potatoes",
+    "price_index": 98.4
+  },
+  {
+    "date": "2020-08-31",
+    "item": "Rice",
+    "price_index": 101.3
+  },
+  {
+    "date": "2020-09-30",
+    "item": "Bread",
+    "price_index": 99.3
+  },
+  {
+    "date": "2020-09-30",
+    "item": "Milk",
+    "price_index": 98.7
+  },
+  {
+    "date": "2020-09-30",
+    "item": "Eggs",
+    "price_index": 98.2
+  },
+  {
+    "date": "2020-09-30",
+    "item": "Chicken",
+    "price_index": 100.4
+  },
+  {
+    "date": "2020-09-30",
+    "item": "Potatoes",
+    "price_index": 100.7
+  },
+  {
+    "date": "2020-09-30",
+    "item": "Rice",
+    "price_index": 98.1
+  },
+  {
+    "date": "2020-10-31",
+    "item": "Bread",
+    "price_index": 100.0
+  },
+  {
+    "date": "2020-10-31",
+    "item": "Milk",
+    "price_index": 98.9
+  },
+  {
+    "date": "2020-10-31",
+    "item": "Eggs",
+    "price_index": 100.6
+  },
+  {
+    "date": "2020-10-31",
+    "item": "Chicken",
+    "price_index": 98.7
+  },
+  {
+    "date": "2020-10-31",
+    "item": "Potatoes",
+    "price_index": 100.8
+  },
+  {
+    "date": "2020-10-31",
+    "item": "Rice",
+    "price_index": 99.5
+  },
+  {
+    "date": "2020-11-30",
+    "item": "Bread",
+    "price_index": 101.7
+  },
+  {
+    "date": "2020-11-30",
+    "item": "Milk",
+    "price_index": 98.6
+  },
+  {
+    "date": "2020-11-30",
+    "item": "Eggs",
+    "price_index": 99.4
+  },
+  {
+    "date": "2020-11-30",
+    "item": "Chicken",
+    "price_index": 98.5
+  },
+  {
+    "date": "2020-11-30",
+    "item": "Potatoes",
+    "price_index": 101.7
+  },
+  {
+    "date": "2020-11-30",
+    "item": "Rice",
+    "price_index": 101.5
+  },
+  {
+    "date": "2020-12-31",
+    "item": "Bread",
+    "price_index": 99.0
+  },
+  {
+    "date": "2020-12-31",
+    "item": "Milk",
+    "price_index": 100.6
+  },
+  {
+    "date": "2020-12-31",
+    "item": "Eggs",
+    "price_index": 101.3
+  },
+  {
+    "date": "2020-12-31",
+    "item": "Chicken",
+    "price_index": 100.2
+  },
+  {
+    "date": "2020-12-31",
+    "item": "Potatoes",
+    "price_index": 100.1
+  },
+  {
+    "date": "2020-12-31",
+    "item": "Rice",
+    "price_index": 99.0
+  },
+  {
+    "date": "2021-01-31",
+    "item": "Bread",
+    "price_index": 98.4
+  },
+  {
+    "date": "2021-01-31",
+    "item": "Milk",
+    "price_index": 101.6
+  },
+  {
+    "date": "2021-01-31",
+    "item": "Eggs",
+    "price_index": 101.6
+  },
+  {
+    "date": "2021-01-31",
+    "item": "Chicken",
+    "price_index": 100.5
+  },
+  {
+    "date": "2021-01-31",
+    "item": "Potatoes",
+    "price_index": 99.4
+  },
+  {
+    "date": "2021-01-31",
+    "item": "Rice",
+    "price_index": 99.4
+  },
+  {
+    "date": "2021-02-28",
+    "item": "Bread",
+    "price_index": 100.9
+  },
+  {
+    "date": "2021-02-28",
+    "item": "Milk",
+    "price_index": 101.6
+  },
+  {
+    "date": "2021-02-28",
+    "item": "Eggs",
+    "price_index": 101.5
+  },
+  {
+    "date": "2021-02-28",
+    "item": "Chicken",
+    "price_index": 101.1
+  },
+  {
+    "date": "2021-02-28",
+    "item": "Potatoes",
+    "price_index": 100.6
+  },
+  {
+    "date": "2021-02-28",
+    "item": "Rice",
+    "price_index": 98.3
+  },
+  {
+    "date": "2021-03-31",
+    "item": "Bread",
+    "price_index": 98.6
+  },
+  {
+    "date": "2021-03-31",
+    "item": "Milk",
+    "price_index": 101.6
+  },
+  {
+    "date": "2021-03-31",
+    "item": "Eggs",
+    "price_index": 100.4
+  },
+  {
+    "date": "2021-03-31",
+    "item": "Chicken",
+    "price_index": 98.0
+  },
+  {
+    "date": "2021-03-31",
+    "item": "Potatoes",
+    "price_index": 98.4
+  },
+  {
+    "date": "2021-03-31",
+    "item": "Rice",
+    "price_index": 100.7
+  },
+  {
+    "date": "2021-04-30",
+    "item": "Bread",
+    "price_index": 98.0
+  },
+  {
+    "date": "2021-04-30",
+    "item": "Milk",
+    "price_index": 98.6
+  },
+  {
+    "date": "2021-04-30",
+    "item": "Eggs",
+    "price_index": 100.2
+  },
+  {
+    "date": "2021-04-30",
+    "item": "Chicken",
+    "price_index": 100.8
+  },
+  {
+    "date": "2021-04-30",
+    "item": "Potatoes",
+    "price_index": 100.6
+  },
+  {
+    "date": "2021-04-30",
+    "item": "Rice",
+    "price_index": 98.9
+  },
+  {
+    "date": "2021-05-31",
+    "item": "Bread",
+    "price_index": 100.8
+  },
+  {
+    "date": "2021-05-31",
+    "item": "Milk",
+    "price_index": 98.9
+  },
+  {
+    "date": "2021-05-31",
+    "item": "Eggs",
+    "price_index": 99.3
+  },
+  {
+    "date": "2021-05-31",
+    "item": "Chicken",
+    "price_index": 101.0
+  },
+  {
+    "date": "2021-05-31",
+    "item": "Potatoes",
+    "price_index": 100.6
+  },
+  {
+    "date": "2021-05-31",
+    "item": "Rice",
+    "price_index": 101.4
+  },
+  {
+    "date": "2021-06-30",
+    "item": "Bread",
+    "price_index": 101.0
+  },
+  {
+    "date": "2021-06-30",
+    "item": "Milk",
+    "price_index": 101.2
+  },
+  {
+    "date": "2021-06-30",
+    "item": "Eggs",
+    "price_index": 101.2
+  },
+  {
+    "date": "2021-06-30",
+    "item": "Chicken",
+    "price_index": 100.6
+  },
+  {
+    "date": "2021-06-30",
+    "item": "Potatoes",
+    "price_index": 100.6
+  },
+  {
+    "date": "2021-06-30",
+    "item": "Rice",
+    "price_index": 101.0
+  },
+  {
+    "date": "2021-07-31",
+    "item": "Bread",
+    "price_index": 102.0
+  },
+  {
+    "date": "2021-07-31",
+    "item": "Milk",
+    "price_index": 102.5
+  },
+  {
+    "date": "2021-07-31",
+    "item": "Eggs",
+    "price_index": 102.5
+  },
+  {
+    "date": "2021-07-31",
+    "item": "Chicken",
+    "price_index": 101.3
+  },
+  {
+    "date": "2021-07-31",
+    "item": "Potatoes",
+    "price_index": 101.3
+  },
+  {
+    "date": "2021-07-31",
+    "item": "Rice",
+    "price_index": 102.0
+  },
+  {
+    "date": "2021-08-31",
+    "item": "Bread",
+    "price_index": 103.0
+  },
+  {
+    "date": "2021-08-31",
+    "item": "Milk",
+    "price_index": 103.8
+  },
+  {
+    "date": "2021-08-31",
+    "item": "Eggs",
+    "price_index": 103.8
+  },
+  {
+    "date": "2021-08-31",
+    "item": "Chicken",
+    "price_index": 102.0
+  },
+  {
+    "date": "2021-08-31",
+    "item": "Potatoes",
+    "price_index": 102.0
+  },
+  {
+    "date": "2021-08-31",
+    "item": "Rice",
+    "price_index": 103.0
+  },
+  {
+    "date": "2021-09-30",
+    "item": "Bread",
+    "price_index": 104.0
+  },
+  {
+    "date": "2021-09-30",
+    "item": "Milk",
+    "price_index": 105.0
+  },
+  {
+    "date": "2021-09-30",
+    "item": "Eggs",
+    "price_index": 105.0
+  },
+  {
+    "date": "2021-09-30",
+    "item": "Chicken",
+    "price_index": 102.7
+  },
+  {
+    "date": "2021-09-30",
+    "item": "Potatoes",
+    "price_index": 102.7
+  },
+  {
+    "date": "2021-09-30",
+    "item": "Rice",
+    "price_index": 104.0
+  },
+  {
+    "date": "2021-10-31",
+    "item": "Bread",
+    "price_index": 105.1
+  },
+  {
+    "date": "2021-10-31",
+    "item": "Milk",
+    "price_index": 106.3
+  },
+  {
+    "date": "2021-10-31",
+    "item": "Eggs",
+    "price_index": 106.3
+  },
+  {
+    "date": "2021-10-31",
+    "item": "Chicken",
+    "price_index": 103.4
+  },
+  {
+    "date": "2021-10-31",
+    "item": "Potatoes",
+    "price_index": 103.4
+  },
+  {
+    "date": "2021-10-31",
+    "item": "Rice",
+    "price_index": 105.1
+  },
+  {
+    "date": "2021-11-30",
+    "item": "Bread",
+    "price_index": 106.1
+  },
+  {
+    "date": "2021-11-30",
+    "item": "Milk",
+    "price_index": 107.6
+  },
+  {
+    "date": "2021-11-30",
+    "item": "Eggs",
+    "price_index": 107.6
+  },
+  {
+    "date": "2021-11-30",
+    "item": "Chicken",
+    "price_index": 104.0
+  },
+  {
+    "date": "2021-11-30",
+    "item": "Potatoes",
+    "price_index": 104.0
+  },
+  {
+    "date": "2021-11-30",
+    "item": "Rice",
+    "price_index": 106.1
+  },
+  {
+    "date": "2021-12-31",
+    "item": "Bread",
+    "price_index": 107.1
+  },
+  {
+    "date": "2021-12-31",
+    "item": "Milk",
+    "price_index": 108.9
+  },
+  {
+    "date": "2021-12-31",
+    "item": "Eggs",
+    "price_index": 108.9
+  },
+  {
+    "date": "2021-12-31",
+    "item": "Chicken",
+    "price_index": 104.7
+  },
+  {
+    "date": "2021-12-31",
+    "item": "Potatoes",
+    "price_index": 104.7
+  },
+  {
+    "date": "2021-12-31",
+    "item": "Rice",
+    "price_index": 107.1
+  },
+  {
+    "date": "2022-01-31",
+    "item": "Bread",
+    "price_index": 108.1
+  },
+  {
+    "date": "2022-01-31",
+    "item": "Milk",
+    "price_index": 110.2
+  },
+  {
+    "date": "2022-01-31",
+    "item": "Eggs",
+    "price_index": 110.2
+  },
+  {
+    "date": "2022-01-31",
+    "item": "Chicken",
+    "price_index": 105.4
+  },
+  {
+    "date": "2022-01-31",
+    "item": "Potatoes",
+    "price_index": 105.4
+  },
+  {
+    "date": "2022-01-31",
+    "item": "Rice",
+    "price_index": 108.1
+  },
+  {
+    "date": "2022-02-28",
+    "item": "Bread",
+    "price_index": 109.1
+  },
+  {
+    "date": "2022-02-28",
+    "item": "Milk",
+    "price_index": 111.3
+  },
+  {
+    "date": "2022-02-28",
+    "item": "Eggs",
+    "price_index": 111.3
+  },
+  {
+    "date": "2022-02-28",
+    "item": "Chicken",
+    "price_index": 106.0
+  },
+  {
+    "date": "2022-02-28",
+    "item": "Potatoes",
+    "price_index": 106.0
+  },
+  {
+    "date": "2022-02-28",
+    "item": "Rice",
+    "price_index": 109.1
+  },
+  {
+    "date": "2022-03-31",
+    "item": "Bread",
+    "price_index": 110.1
+  },
+  {
+    "date": "2022-03-31",
+    "item": "Milk",
+    "price_index": 112.6
+  },
+  {
+    "date": "2022-03-31",
+    "item": "Eggs",
+    "price_index": 112.6
+  },
+  {
+    "date": "2022-03-31",
+    "item": "Chicken",
+    "price_index": 106.7
+  },
+  {
+    "date": "2022-03-31",
+    "item": "Potatoes",
+    "price_index": 106.7
+  },
+  {
+    "date": "2022-03-31",
+    "item": "Rice",
+    "price_index": 110.1
+  },
+  {
+    "date": "2022-04-30",
+    "item": "Bread",
+    "price_index": 111.1
+  },
+  {
+    "date": "2022-04-30",
+    "item": "Milk",
+    "price_index": 113.9
+  },
+  {
+    "date": "2022-04-30",
+    "item": "Eggs",
+    "price_index": 113.9
+  },
+  {
+    "date": "2022-04-30",
+    "item": "Chicken",
+    "price_index": 107.4
+  },
+  {
+    "date": "2022-04-30",
+    "item": "Potatoes",
+    "price_index": 107.4
+  },
+  {
+    "date": "2022-04-30",
+    "item": "Rice",
+    "price_index": 111.1
+  },
+  {
+    "date": "2022-05-31",
+    "item": "Bread",
+    "price_index": 112.1
+  },
+  {
+    "date": "2022-05-31",
+    "item": "Milk",
+    "price_index": 115.2
+  },
+  {
+    "date": "2022-05-31",
+    "item": "Eggs",
+    "price_index": 115.2
+  },
+  {
+    "date": "2022-05-31",
+    "item": "Chicken",
+    "price_index": 108.1
+  },
+  {
+    "date": "2022-05-31",
+    "item": "Potatoes",
+    "price_index": 108.1
+  },
+  {
+    "date": "2022-05-31",
+    "item": "Rice",
+    "price_index": 112.1
+  },
+  {
+    "date": "2022-06-30",
+    "item": "Bread",
+    "price_index": 112.9
+  },
+  {
+    "date": "2022-06-30",
+    "item": "Milk",
+    "price_index": 115.4
+  },
+  {
+    "date": "2022-06-30",
+    "item": "Eggs",
+    "price_index": 112.6
+  },
+  {
+    "date": "2022-06-30",
+    "item": "Chicken",
+    "price_index": 107.2
+  },
+  {
+    "date": "2022-06-30",
+    "item": "Potatoes",
+    "price_index": 106.6
+  },
+  {
+    "date": "2022-06-30",
+    "item": "Rice",
+    "price_index": 110.5
+  },
+  {
+    "date": "2022-07-31",
+    "item": "Bread",
+    "price_index": 114.8
+  },
+  {
+    "date": "2022-07-31",
+    "item": "Milk",
+    "price_index": 114.4
+  },
+  {
+    "date": "2022-07-31",
+    "item": "Eggs",
+    "price_index": 117.4
+  },
+  {
+    "date": "2022-07-31",
+    "item": "Chicken",
+    "price_index": 108.8
+  },
+  {
+    "date": "2022-07-31",
+    "item": "Potatoes",
+    "price_index": 109.8
+  },
+  {
+    "date": "2022-07-31",
+    "item": "Rice",
+    "price_index": 112.0
+  },
+  {
+    "date": "2022-08-31",
+    "item": "Bread",
+    "price_index": 112.5
+  },
+  {
+    "date": "2022-08-31",
+    "item": "Milk",
+    "price_index": 115.0
+  },
+  {
+    "date": "2022-08-31",
+    "item": "Eggs",
+    "price_index": 113.2
+  },
+  {
+    "date": "2022-08-31",
+    "item": "Chicken",
+    "price_index": 109.3
+  },
+  {
+    "date": "2022-08-31",
+    "item": "Potatoes",
+    "price_index": 106.7
+  },
+  {
+    "date": "2022-08-31",
+    "item": "Rice",
+    "price_index": 109.1
+  },
+  {
+    "date": "2022-09-30",
+    "item": "Bread",
+    "price_index": 112.9
+  },
+  {
+    "date": "2022-09-30",
+    "item": "Milk",
+    "price_index": 113.1
+  },
+  {
+    "date": "2022-09-30",
+    "item": "Eggs",
+    "price_index": 117.6
+  },
+  {
+    "date": "2022-09-30",
+    "item": "Chicken",
+    "price_index": 110.7
+  },
+  {
+    "date": "2022-09-30",
+    "item": "Potatoes",
+    "price_index": 110.5
+  },
+  {
+    "date": "2022-09-30",
+    "item": "Rice",
+    "price_index": 111.2
+  },
+  {
+    "date": "2022-10-31",
+    "item": "Bread",
+    "price_index": 109.1
+  },
+  {
+    "date": "2022-10-31",
+    "item": "Milk",
+    "price_index": 117.6
+  },
+  {
+    "date": "2022-10-31",
+    "item": "Eggs",
+    "price_index": 114.6
+  },
+  {
+    "date": "2022-10-31",
+    "item": "Chicken",
+    "price_index": 110.8
+  },
+  {
+    "date": "2022-10-31",
+    "item": "Potatoes",
+    "price_index": 110.8
+  },
+  {
+    "date": "2022-10-31",
+    "item": "Rice",
+    "price_index": 114.1
+  },
+  {
+    "date": "2022-11-30",
+    "item": "Bread",
+    "price_index": 110.8
+  },
+  {
+    "date": "2022-11-30",
+    "item": "Milk",
+    "price_index": 114.3
+  },
+  {
+    "date": "2022-11-30",
+    "item": "Eggs",
+    "price_index": 117.1
+  },
+  {
+    "date": "2022-11-30",
+    "item": "Chicken",
+    "price_index": 106.9
+  },
+  {
+    "date": "2022-11-30",
+    "item": "Potatoes",
+    "price_index": 106.0
+  },
+  {
+    "date": "2022-11-30",
+    "item": "Rice",
+    "price_index": 112.3
+  },
+  {
+    "date": "2022-12-31",
+    "item": "Bread",
+    "price_index": 114.6
+  },
+  {
+    "date": "2022-12-31",
+    "item": "Milk",
+    "price_index": 116.2
+  },
+  {
+    "date": "2022-12-31",
+    "item": "Eggs",
+    "price_index": 115.4
+  },
+  {
+    "date": "2022-12-31",
+    "item": "Chicken",
+    "price_index": 105.6
+  },
+  {
+    "date": "2022-12-31",
+    "item": "Potatoes",
+    "price_index": 108.7
+  },
+  {
+    "date": "2022-12-31",
+    "item": "Rice",
+    "price_index": 114.9
+  },
+  {
+    "date": "2023-01-31",
+    "item": "Bread",
+    "price_index": 109.8
+  },
+  {
+    "date": "2023-01-31",
+    "item": "Milk",
+    "price_index": 115.1
+  },
+  {
+    "date": "2023-01-31",
+    "item": "Eggs",
+    "price_index": 117.3
+  },
+  {
+    "date": "2023-01-31",
+    "item": "Chicken",
+    "price_index": 109.4
+  },
+  {
+    "date": "2023-01-31",
+    "item": "Potatoes",
+    "price_index": 109.2
+  },
+  {
+    "date": "2023-01-31",
+    "item": "Rice",
+    "price_index": 113.2
+  },
+  {
+    "date": "2023-02-28",
+    "item": "Bread",
+    "price_index": 111.2
+  },
+  {
+    "date": "2023-02-28",
+    "item": "Milk",
+    "price_index": 113.8
+  },
+  {
+    "date": "2023-02-28",
+    "item": "Eggs",
+    "price_index": 116.9
+  },
+  {
+    "date": "2023-02-28",
+    "item": "Chicken",
+    "price_index": 109.9
+  },
+  {
+    "date": "2023-02-28",
+    "item": "Potatoes",
+    "price_index": 110.2
+  },
+  {
+    "date": "2023-02-28",
+    "item": "Rice",
+    "price_index": 114.5
+  },
+  {
+    "date": "2023-03-31",
+    "item": "Bread",
+    "price_index": 112.1
+  },
+  {
+    "date": "2023-03-31",
+    "item": "Milk",
+    "price_index": 115.0
+  },
+  {
+    "date": "2023-03-31",
+    "item": "Eggs",
+    "price_index": 116.8
+  },
+  {
+    "date": "2023-03-31",
+    "item": "Chicken",
+    "price_index": 108.9
+  },
+  {
+    "date": "2023-03-31",
+    "item": "Potatoes",
+    "price_index": 109.2
+  },
+  {
+    "date": "2023-03-31",
+    "item": "Rice",
+    "price_index": 113.8
+  },
+  {
+    "date": "2023-04-30",
+    "item": "Bread",
+    "price_index": 114.3
+  },
+  {
+    "date": "2023-04-30",
+    "item": "Milk",
+    "price_index": 114.0
+  },
+  {
+    "date": "2023-04-30",
+    "item": "Eggs",
+    "price_index": 114.3
+  },
+  {
+    "date": "2023-04-30",
+    "item": "Chicken",
+    "price_index": 105.6
+  },
+  {
+    "date": "2023-04-30",
+    "item": "Potatoes",
+    "price_index": 108.5
+  },
+  {
+    "date": "2023-04-30",
+    "item": "Rice",
+    "price_index": 109.2
+  },
+  {
+    "date": "2023-05-31",
+    "item": "Bread",
+    "price_index": 111.8
+  },
+  {
+    "date": "2023-05-31",
+    "item": "Milk",
+    "price_index": 115.3
+  },
+  {
+    "date": "2023-05-31",
+    "item": "Eggs",
+    "price_index": 113.7
+  },
+  {
+    "date": "2023-05-31",
+    "item": "Chicken",
+    "price_index": 108.5
+  },
+  {
+    "date": "2023-05-31",
+    "item": "Potatoes",
+    "price_index": 105.2
+  },
+  {
+    "date": "2023-05-31",
+    "item": "Rice",
+    "price_index": 109.2
+  },
+  {
+    "date": "2023-06-30",
+    "item": "Bread",
+    "price_index": 113.9
+  },
+  {
+    "date": "2023-06-30",
+    "item": "Milk",
+    "price_index": 114.2
+  },
+  {
+    "date": "2023-06-30",
+    "item": "Eggs",
+    "price_index": 112.8
+  },
+  {
+    "date": "2023-06-30",
+    "item": "Chicken",
+    "price_index": 108.1
+  },
+  {
+    "date": "2023-06-30",
+    "item": "Potatoes",
+    "price_index": 109.6
+  },
+  {
+    "date": "2023-06-30",
+    "item": "Rice",
+    "price_index": 110.3
+  },
+  {
+    "date": "2023-07-31",
+    "item": "Bread",
+    "price_index": 112.7
+  },
+  {
+    "date": "2023-07-31",
+    "item": "Milk",
+    "price_index": 112.5
+  },
+  {
+    "date": "2023-07-31",
+    "item": "Eggs",
+    "price_index": 112.3
+  },
+  {
+    "date": "2023-07-31",
+    "item": "Chicken",
+    "price_index": 108.2
+  },
+  {
+    "date": "2023-07-31",
+    "item": "Potatoes",
+    "price_index": 108.2
+  },
+  {
+    "date": "2023-07-31",
+    "item": "Rice",
+    "price_index": 112.8
+  },
+  {
+    "date": "2023-08-31",
+    "item": "Bread",
+    "price_index": 113.4
+  },
+  {
+    "date": "2023-08-31",
+    "item": "Milk",
+    "price_index": 117.9
+  },
+  {
+    "date": "2023-08-31",
+    "item": "Eggs",
+    "price_index": 115.1
+  },
+  {
+    "date": "2023-08-31",
+    "item": "Chicken",
+    "price_index": 106.9
+  },
+  {
+    "date": "2023-08-31",
+    "item": "Potatoes",
+    "price_index": 109.8
+  },
+  {
+    "date": "2023-08-31",
+    "item": "Rice",
+    "price_index": 110.6
+  },
+  {
+    "date": "2023-09-30",
+    "item": "Bread",
+    "price_index": 111.6
+  },
+  {
+    "date": "2023-09-30",
+    "item": "Milk",
+    "price_index": 112.5
+  },
+  {
+    "date": "2023-09-30",
+    "item": "Eggs",
+    "price_index": 112.2
+  },
+  {
+    "date": "2023-09-30",
+    "item": "Chicken",
+    "price_index": 110.8
+  },
+  {
+    "date": "2023-09-30",
+    "item": "Potatoes",
+    "price_index": 110.0
+  },
+  {
+    "date": "2023-09-30",
+    "item": "Rice",
+    "price_index": 113.2
+  },
+  {
+    "date": "2023-10-31",
+    "item": "Bread",
+    "price_index": 111.5
+  },
+  {
+    "date": "2023-10-31",
+    "item": "Milk",
+    "price_index": 113.0
+  },
+  {
+    "date": "2023-10-31",
+    "item": "Eggs",
+    "price_index": 112.9
+  },
+  {
+    "date": "2023-10-31",
+    "item": "Chicken",
+    "price_index": 106.5
+  },
+  {
+    "date": "2023-10-31",
+    "item": "Potatoes",
+    "price_index": 108.3
+  },
+  {
+    "date": "2023-10-31",
+    "item": "Rice",
+    "price_index": 113.3
+  },
+  {
+    "date": "2023-11-30",
+    "item": "Bread",
+    "price_index": 113.0
+  },
+  {
+    "date": "2023-11-30",
+    "item": "Milk",
+    "price_index": 113.7
+  },
+  {
+    "date": "2023-11-30",
+    "item": "Eggs",
+    "price_index": 117.7
+  },
+  {
+    "date": "2023-11-30",
+    "item": "Chicken",
+    "price_index": 109.4
+  },
+  {
+    "date": "2023-11-30",
+    "item": "Potatoes",
+    "price_index": 108.3
+  },
+  {
+    "date": "2023-11-30",
+    "item": "Rice",
+    "price_index": 112.7
+  },
+  {
+    "date": "2023-12-31",
+    "item": "Bread",
+    "price_index": 111.5
+  },
+  {
+    "date": "2023-12-31",
+    "item": "Milk",
+    "price_index": 113.5
+  },
+  {
+    "date": "2023-12-31",
+    "item": "Eggs",
+    "price_index": 114.1
+  },
+  {
+    "date": "2023-12-31",
+    "item": "Chicken",
+    "price_index": 109.5
+  },
+  {
+    "date": "2023-12-31",
+    "item": "Potatoes",
+    "price_index": 105.1
+  },
+  {
+    "date": "2023-12-31",
+    "item": "Rice",
+    "price_index": 109.7
+  },
+  {
+    "date": "2024-01-31",
+    "item": "Bread",
+    "price_index": 109.3
+  },
+  {
+    "date": "2024-01-31",
+    "item": "Milk",
+    "price_index": 112.2
+  },
+  {
+    "date": "2024-01-31",
+    "item": "Eggs",
+    "price_index": 117.1
+  },
+  {
+    "date": "2024-01-31",
+    "item": "Chicken",
+    "price_index": 109.2
+  },
+  {
+    "date": "2024-01-31",
+    "item": "Potatoes",
+    "price_index": 107.8
+  },
+  {
+    "date": "2024-01-31",
+    "item": "Rice",
+    "price_index": 109.6
+  },
+  {
+    "date": "2024-02-29",
+    "item": "Bread",
+    "price_index": 111.9
+  },
+  {
+    "date": "2024-02-29",
+    "item": "Milk",
+    "price_index": 114.8
+  },
+  {
+    "date": "2024-02-29",
+    "item": "Eggs",
+    "price_index": 113.0
+  },
+  {
+    "date": "2024-02-29",
+    "item": "Chicken",
+    "price_index": 107.6
+  },
+  {
+    "date": "2024-02-29",
+    "item": "Potatoes",
+    "price_index": 107.4
+  },
+  {
+    "date": "2024-02-29",
+    "item": "Rice",
+    "price_index": 112.7
+  },
+  {
+    "date": "2024-03-31",
+    "item": "Bread",
+    "price_index": 112.8
+  },
+  {
+    "date": "2024-03-31",
+    "item": "Milk",
+    "price_index": 112.3
+  },
+  {
+    "date": "2024-03-31",
+    "item": "Eggs",
+    "price_index": 114.2
+  },
+  {
+    "date": "2024-03-31",
+    "item": "Chicken",
+    "price_index": 108.8
+  },
+  {
+    "date": "2024-03-31",
+    "item": "Potatoes",
+    "price_index": 108.0
+  },
+  {
+    "date": "2024-03-31",
+    "item": "Rice",
+    "price_index": 114.1
+  },
+  {
+    "date": "2024-04-30",
+    "item": "Bread",
+    "price_index": 113.0
+  },
+  {
+    "date": "2024-04-30",
+    "item": "Milk",
+    "price_index": 113.0
+  },
+  {
+    "date": "2024-04-30",
+    "item": "Eggs",
+    "price_index": 112.4
+  },
+  {
+    "date": "2024-04-30",
+    "item": "Chicken",
+    "price_index": 108.9
+  },
+  {
+    "date": "2024-04-30",
+    "item": "Potatoes",
+    "price_index": 105.2
+  },
+  {
+    "date": "2024-04-30",
+    "item": "Rice",
+    "price_index": 112.5
+  },
+  {
+    "date": "2024-05-31",
+    "item": "Bread",
+    "price_index": 114.6
+  },
+  {
+    "date": "2024-05-31",
+    "item": "Milk",
+    "price_index": 115.5
+  },
+  {
+    "date": "2024-05-31",
+    "item": "Eggs",
+    "price_index": 114.3
+  },
+  {
+    "date": "2024-05-31",
+    "item": "Chicken",
+    "price_index": 108.9
+  },
+  {
+    "date": "2024-05-31",
+    "item": "Potatoes",
+    "price_index": 107.7
+  },
+  {
+    "date": "2024-05-31",
+    "item": "Rice",
+    "price_index": 112.3
+  },
+  {
+    "date": "2024-06-30",
+    "item": "Bread",
+    "price_index": 114.6
+  },
+  {
+    "date": "2024-06-30",
+    "item": "Milk",
+    "price_index": 114.3
+  },
+  {
+    "date": "2024-06-30",
+    "item": "Eggs",
+    "price_index": 117.8
+  },
+  {
+    "date": "2024-06-30",
+    "item": "Chicken",
+    "price_index": 110.4
+  },
+  {
+    "date": "2024-06-30",
+    "item": "Potatoes",
+    "price_index": 106.2
+  },
+  {
+    "date": "2024-06-30",
+    "item": "Rice",
+    "price_index": 109.4
+  },
+  {
+    "date": "2024-07-31",
+    "item": "Bread",
+    "price_index": 109.6
+  },
+  {
+    "date": "2024-07-31",
+    "item": "Milk",
+    "price_index": 112.1
+  },
+  {
+    "date": "2024-07-31",
+    "item": "Eggs",
+    "price_index": 112.6
+  },
+  {
+    "date": "2024-07-31",
+    "item": "Chicken",
+    "price_index": 109.1
+  },
+  {
+    "date": "2024-07-31",
+    "item": "Potatoes",
+    "price_index": 105.4
+  },
+  {
+    "date": "2024-07-31",
+    "item": "Rice",
+    "price_index": 110.9
+  },
+  {
+    "date": "2024-08-31",
+    "item": "Bread",
+    "price_index": 114.1
+  },
+  {
+    "date": "2024-08-31",
+    "item": "Milk",
+    "price_index": 112.1
+  },
+  {
+    "date": "2024-08-31",
+    "item": "Eggs",
+    "price_index": 116.9
+  },
+  {
+    "date": "2024-08-31",
+    "item": "Chicken",
+    "price_index": 106.7
+  },
+  {
+    "date": "2024-08-31",
+    "item": "Potatoes",
+    "price_index": 105.7
+  },
+  {
+    "date": "2024-08-31",
+    "item": "Rice",
+    "price_index": 113.2
+  },
+  {
+    "date": "2024-09-30",
+    "item": "Bread",
+    "price_index": 112.8
+  },
+  {
+    "date": "2024-09-30",
+    "item": "Milk",
+    "price_index": 117.3
+  },
+  {
+    "date": "2024-09-30",
+    "item": "Eggs",
+    "price_index": 116.4
+  },
+  {
+    "date": "2024-09-30",
+    "item": "Chicken",
+    "price_index": 109.8
+  },
+  {
+    "date": "2024-09-30",
+    "item": "Potatoes",
+    "price_index": 106.7
+  },
+  {
+    "date": "2024-09-30",
+    "item": "Rice",
+    "price_index": 110.1
+  },
+  {
+    "date": "2024-10-31",
+    "item": "Bread",
+    "price_index": 113.5
+  },
+  {
+    "date": "2024-10-31",
+    "item": "Milk",
+    "price_index": 116.8
+  },
+  {
+    "date": "2024-10-31",
+    "item": "Eggs",
+    "price_index": 117.9
+  },
+  {
+    "date": "2024-10-31",
+    "item": "Chicken",
+    "price_index": 107.5
+  },
+  {
+    "date": "2024-10-31",
+    "item": "Potatoes",
+    "price_index": 107.2
+  },
+  {
+    "date": "2024-10-31",
+    "item": "Rice",
+    "price_index": 113.7
+  },
+  {
+    "date": "2024-11-30",
+    "item": "Bread",
+    "price_index": 111.0
+  },
+  {
+    "date": "2024-11-30",
+    "item": "Milk",
+    "price_index": 117.6
+  },
+  {
+    "date": "2024-11-30",
+    "item": "Eggs",
+    "price_index": 117.2
+  },
+  {
+    "date": "2024-11-30",
+    "item": "Chicken",
+    "price_index": 107.6
+  },
+  {
+    "date": "2024-11-30",
+    "item": "Potatoes",
+    "price_index": 109.5
+  },
+  {
+    "date": "2024-11-30",
+    "item": "Rice",
+    "price_index": 113.5
+  }
+]
