@@ -4,7 +4,7 @@
 const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
 const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
 const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
-const embedBigger   = { actions: false, renderer: "svg", width: 650, height: 380 };
+const embedBigger   = { actions: false, renderer: "svg", width: 680, height: 420 };
 
 // -----------------------------
 // Tasks 1–5
@@ -83,18 +83,14 @@ vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", { actions: false, 
   .catch(err => {
     console.error("Scotland map error:", err);
     document.querySelector("#map_scotland").innerHTML =
-      `<div style="padding:20px; text-align:center; color:#666;">
-        <p>Scotland map not loading.</p>
-      </div>`;
+      `<div style="padding:20px; text-align:center; color:#666;"><p>Scotland map not loading.</p></div>`;
   });
 
 vegaEmbed("#map_wales", "graphs/wales_coordinates.json", { actions: false, renderer: "svg" })
   .catch(err => {
     console.error("Wales map error:", err);
     document.querySelector("#map_wales").innerHTML =
-      `<div style="padding:20px; text-align:center; color:#666;">
-        <p>Wales map not loading.</p>
-      </div>`;
+      `<div style="padding:20px; text-align:center; color:#666;"><p>Wales map not loading.</p></div>`;
   });
 
 // =============================

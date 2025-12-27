@@ -6,7 +6,7 @@
     "fontSize": 14
   },
   "width": "container",
-  "height": 420,
+  "height": 440,
   "projection": { "type": "mercator" },
   "layer": [
     {
@@ -18,12 +18,7 @@
         "type": "geoshape",
         "fill": "#e8f4f8",
         "stroke": "#333",
-        "strokeWidth": 0.6
-      },
-      "encoding": {
-        "tooltip": [
-          { "field": "properties.LAD13NM", "type": "nominal", "title": "Local Authority" }
-        ]
+        "strokeWidth": 0.7
       }
     },
     {
@@ -51,12 +46,22 @@
           { "city": "Abergavenny", "lat": 51.8241, "lon": -3.0166, "population": 10078 }
         ]
       },
-      "mark": { "type": "circle", "opacity": 0.8, "stroke": "white", "strokeWidth": 1 },
+      "mark": { "type": "circle", "opacity": 0.85, "stroke": "white", "strokeWidth": 1 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
-        "size": { "field": "population", "type": "quantitative", "scale": { "range": [80, 700] }, "title": "Population" },
-        "color": { "field": "population", "type": "quantitative", "scale": { "scheme": "orangered" }, "title": "Population" },
+        "size": {
+          "field": "population",
+          "type": "quantitative",
+          "scale": { "range": [60, 900] },
+          "title": "Population"
+        },
+        "color": {
+          "field": "population",
+          "type": "quantitative",
+          "scale": { "scheme": "orangered" },
+          "title": "Population"
+        },
         "tooltip": [
           { "field": "city", "type": "nominal", "title": "City" },
           { "field": "population", "type": "quantitative", "title": "Population", "format": ",.0f" }
