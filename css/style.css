@@ -247,12 +247,6 @@ a:hover{ text-decoration: underline; }
   min-height: 320px;
 }
 
-/* Image wrapper for Task 4 */
-.chart-wrapper--image{
-  padding: 0;
-  overflow: hidden;
-}
-
 /* Full width wrapper */
 .chart-wrapper--full{
   margin-top: 20px;
@@ -262,8 +256,9 @@ a:hover{ text-decoration: underline; }
 
 /* Center wrapper for Task 5 */
 .chart-wrapper--center{
-  max-width: 600px;
+  max-width: 500px;
   margin: 20px auto;
+  display: block;
 }
 
 .chart-scroll{
@@ -294,12 +289,13 @@ a:hover{ text-decoration: underline; }
   max-width: 100% !important;
 }
 
-/* Task image sizing */
+/* Task image sizing - keep frame */
 .task-img{
   width: 100%;
-  height: 100%;
-  display: block;
+  height: auto;
+  max-height: 280px;
   object-fit: contain;
+  display: block;
 }
 
 /* Task 5 centering */
@@ -314,26 +310,17 @@ a:hover{ text-decoration: underline; }
 .centered-list{
   display: inline-block;
   text-align: left;
-  margin: 15px auto;
+  list-style-position: inside;
+  padding: 0;
 }
 
-/* Task 7: titles above frames */
+/* Task 7: titles inside frames */
 .chart-title{
   font-size: 14px;
-  margin: 0 0 10px 0;
+  margin: 0 0 15px 0;
   font-weight: 700;
   color: var(--text);
-}
-
-/* Task 7: map wrapper */
-.map-wrapper{
-  min-height: 400px;
-}
-
-/* Ensure map containers have height even before Vega renders */
-#map_scotland, #map_wales{
-  width: 100%;
-  min-height: 380px;
+  text-align: center;
 }
 
 /* Footer */
@@ -381,71 +368,6 @@ a:hover{ text-decoration: underline; }
   min-height: 200px;
 }
 
-/* Task 9 Interactive Charts */
-.interactive-wrapper {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-}
-
-.interactive-wrapper h3 {
-  margin: 0 0 15px 0;
-  color: var(--navy);
-  font-size: 16px;
-}
-
-.vega-container-large {
-  width: 100%;
-  min-height: 450px;
-}
-
-.chart-note {
-  margin-top: 15px;
-  padding: 10px;
-  background: #f0f4f8;
-  border-left: 3px solid var(--accent);
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Style for Vega-Lite controls */
-.vega-bindings {
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.vega-bind {
-  margin-bottom: 10px;
-}
-
-.vega-bind-name {
-  display: inline-block;
-  width: 150px;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--navy);
-}
-
-.vega-bind input[type="select"],
-.vega-bind select {
-  padding: 5px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  font-size: 13px;
-}
-
-.vega-bind input[type="checkbox"] {
-  margin-left: 5px;
-}
-
-.vega-bind input[type="range"] {
-  width: 200px;
-}
-
 /* Responsive */
 @media (max-width: 860px){
   .nav{ flex-wrap: wrap; }
@@ -473,68 +395,10 @@ a:hover{ text-decoration: underline; }
   .dashboard-grid{
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  .vega-bind-name {
-    display: block;
-    margin-bottom: 5px;
-  }
 }
 
 @media (max-width: 480px){
   .dashboard-grid{
     grid-template-columns: 1fr;
   }
-}
-
-/* Task 4 - Fix image containment */
-.chart-wrapper--image {
-  padding: 10px;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chart-wrapper--image .task-img {
-  width: 100%;
-  height: auto;
-  max-height: 280px;
-  object-fit: contain;
-  display: block;
-}
-
-/* Task 5 - Center everything */
-.task-center {
-  text-align: center;
-}
-
-.task-center .chart-wrapper--center {
-  max-width: 500px;
-  margin: 20px auto;
-  display: block;
-}
-
-.task-center .centered-list {
-  display: inline-block;
-  text-align: left;
-  list-style-position: inside;
-  padding: 0;
-}
-
-/* Task 7 - Ensure maps show */
-.map-wrapper {
-  min-height: 450px;
-  background: #f5f5f5;
-  position: relative;
-}
-
-/* Task 9 - Make charts smaller */
-.task .interactive-wrapper {
-  padding: 15px;
-}
-
-.task .interactive-wrapper .vega-container-large {
-  min-height: 350px;
-  max-width: 450px;
-  margin: 0 auto;
 }

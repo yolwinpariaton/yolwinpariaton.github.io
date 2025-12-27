@@ -19,7 +19,6 @@ vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
 vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-// Task 5 - Center these charts
 vegaEmbed("#vis_api", "graphs/api_chart.json", { actions: false, renderer: "svg", width: 450, height: 300 });
 vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
 
@@ -70,53 +69,36 @@ async function renderDashboard() {
       await vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), dashboardEmbedOptions);
     } catch (err) {
       console.error(`Dashboard ${i} error:`, err);
-      el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Dashboard ${i} failed to load.</p>`;
+      el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Dashboard ${i} failed.</p>`;
     }
   }
 }
 renderDashboard();
 
 // =============================
-// Task 7: Maps - Direct embed
+// Task 7: Maps - Use files from your repo
 // =============================
-// Try embedding the maps directly with specs
-const scotlandSpec = {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Scotland Population Density",
-  "width": 350,
-  "height": 400,
-  "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
-    "format": {"type": "topojson", "feature": "lad"}
-  },
-  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
-  "encoding": {
-    "color": {
-      "value": "#4A90E2"
-    },
-    "tooltip": [
-      {"field": "properties.LAD13NM", "type": "nominal", "title": "Area"}
-    ]
-  }
-};
+// Make sure scotland_choropleth.json and wales_coordinates.json exist in your graphs folder
+vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", embedStandard)
+  .catch(err => {
+    console.error("Scotland map error:", err);
+    // If the file doesn't exist, show a placeholder
+    document.querySelector("#map_scotland").innerHTML = 
+      `<div style="padding:20px; text-align:center; color:#666;">
+        <p>Scotland map not loading.</p>
+        <p style="font-size:12px;">Check that scotland_choropleth.json exists in graphs folder</p>
+      </div>`;
+  });
 
-const walesSpec = {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Wales Major Cities",
-  "width": 350,
-  "height": 400,
-  "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
-    "format": {"type": "topojson", "feature": "lad"}
-  },
-  "mark": {"type": "geoshape", "fill": "#e8f4f8", "stroke": "#333", "strokeWidth": 0.5}
-};
-
-vegaEmbed("#map_scotland", scotlandSpec, { actions: false, renderer: "svg" })
-  .catch(err => console.error("Scotland map error:", err));
-
-vegaEmbed("#map_wales", walesSpec, { actions: false, renderer: "svg" })
-  .catch(err => console.error("Wales map error:", err));
+vegaEmbed("#map_wales", "graphs/wales_coordinates.json", embedStandard)
+  .catch(err => {
+    console.error("Wales map error:", err);
+    document.querySelector("#map_wales").innerHTML = 
+      `<div style="padding:20px; text-align:center; color:#666;">
+        <p>Wales map not loading.</p>
+        <p style="font-size:12px;">Check that wales_coordinates.json exists in graphs folder</p>
+      </div>`;
+  });
 
 // =============================
 // Task 8: Big Data
@@ -125,14 +107,7 @@ vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
 vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
 
 // =============================
-// Task 9: Interactive Charts - Smaller size
+// Task 9: Interactive Charts - Same size as others
 // =============================
-const interactiveOptions = {
-  actions: false,
-  renderer: "svg",
-  width: 420,
-  height: 320
-};
-
-vegaEmbed("#interactive1", "graphs/interactive_economy.json", interactiveOptions);
-vegaEmbed("#interactive2", "graphs/interactive_scatter.json", interactiveOptions);
+vegaEmbed("#interactive1", "graphs/interactive_economy.json", embedStandard);
+vegaEmbed("#interactive2", "graphs/interactive_scatter.json", embedStandard);

@@ -91,7 +91,7 @@
           </p>
 
           <div class="charts-row">
-            <div class="chart-wrapper chart-wrapper--image">
+            <div class="chart-wrapper">
               <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
             </div>
             <div class="chart-wrapper"><div id="vis7" class="vega-container"></div></div>
@@ -169,18 +169,14 @@
           </p>
 
           <div class="charts-row">
-            <div>
+            <div class="chart-wrapper">
               <h3 class="chart-title">Scotland - Choropleth Map</h3>
-              <div class="chart-wrapper map-wrapper">
-                <div id="map_scotland" class="vega-container"></div>
-              </div>
+              <div id="map_scotland" class="vega-container"></div>
             </div>
 
-            <div>
+            <div class="chart-wrapper">
               <h3 class="chart-title">Wales - Coordinates Map</h3>
-              <div class="chart-wrapper map-wrapper">
-                <div id="map_wales" class="vega-container"></div>
-              </div>
+              <div id="map_wales" class="vega-container"></div>
             </div>
           </div>
 
@@ -221,19 +217,19 @@
           </p>
 
           <div class="charts-row">
-            <div class="interactive-wrapper">
-              <h3>Economic Indicators Dashboard</h3>
-              <div id="interactive1" class="vega-container-large"></div>
-              <p class="chart-note">
-                Use the dropdown to switch between indicators and the slider to adjust the time range.
+            <div class="chart-wrapper">
+              <h3 style="font-size: 14px; margin: 0 0 10px 0;">Economic Indicators Dashboard</h3>
+              <div id="interactive1" class="vega-container"></div>
+              <p style="margin-top: 10px; font-size: 12px; color: #666;">
+                Use the dropdown to switch between indicators and adjust the time range.
               </p>
             </div>
 
-            <div class="interactive-wrapper">
-              <h3>Correlation Explorer</h3>
-              <div id="interactive2" class="vega-container-large"></div>
-              <p class="chart-note">
-                Select different variables for each axis, filter by region, and toggle the regression line.
+            <div class="chart-wrapper">
+              <h3 style="font-size: 14px; margin: 0 0 10px 0;">Correlation Explorer</h3>
+              <div id="interactive2" class="vega-container"></div>
+              <p style="margin-top: 10px; font-size: 12px; color: #666;">
+                Select variables for each axis, filter by region, and toggle regression line.
               </p>
             </div>
           </div>
