@@ -121,36 +121,6 @@
           }
         ]
       }
-    },
-    {
-      "data": {
-        "values": [
-          {
-            "y": 2,
-            "label": "BoE Target"
-          }
-        ]
-      },
-      "mark": {
-        "type": "rule",
-        "strokeDash": [
-          8,
-          4
-        ],
-        "color": "red",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "y": {
-          "field": "y",
-          "type": "quantitative"
-        }
-      }
     }
-  ],
-  "resolve": {
-    "scale": {
-      "color": "independent"
-    }
-  }
+  ]
 }

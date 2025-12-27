@@ -1,0 +1,2362 @@
+[
+  {
+    "date": "2020-01-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-01-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-01-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-01-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-02-29",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-02-29",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-02-29",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-02-29",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-03-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-03-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-03-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-03-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-04-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-04-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-04-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-04-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-05-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-05-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-05-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-05-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-06-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-06-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-06-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-06-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-07-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-07-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-07-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-07-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-08-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-08-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-08-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-08-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-09-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-09-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-09-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-09-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-10-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-10-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-10-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-10-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-11-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-11-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-11-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-11-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-12-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-12-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-12-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2020-12-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-01-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-01-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-01-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-01-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-02-28",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-02-28",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-02-28",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-02-28",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-03-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 14,
+    "monthly_bill": 121,
+    "government_support": 0,
+    "net_bill": 121,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-03-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 175,
+    "government_support": 0,
+    "net_bill": 175,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-03-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 14,
+    "monthly_bill": 252,
+    "government_support": 0,
+    "net_bill": 252,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-03-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 14,
+    "monthly_bill": 67,
+    "government_support": 0,
+    "net_bill": 67,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-04-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 17,
+    "monthly_bill": 141,
+    "government_support": 0,
+    "net_bill": 141,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-04-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 205,
+    "government_support": 0,
+    "net_bill": 205,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-04-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 297,
+    "government_support": 0,
+    "net_bill": 297,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-04-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 17,
+    "monthly_bill": 77,
+    "government_support": 0,
+    "net_bill": 77,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-05-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 17,
+    "monthly_bill": 141,
+    "government_support": 0,
+    "net_bill": 141,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-05-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 205,
+    "government_support": 0,
+    "net_bill": 205,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-05-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 297,
+    "government_support": 0,
+    "net_bill": 297,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-05-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 17,
+    "monthly_bill": 77,
+    "government_support": 0,
+    "net_bill": 77,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-06-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 17,
+    "monthly_bill": 141,
+    "government_support": 0,
+    "net_bill": 141,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-06-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 205,
+    "government_support": 0,
+    "net_bill": 205,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-06-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 297,
+    "government_support": 0,
+    "net_bill": 297,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-06-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 17,
+    "monthly_bill": 77,
+    "government_support": 0,
+    "net_bill": 77,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-07-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 17,
+    "monthly_bill": 141,
+    "government_support": 0,
+    "net_bill": 141,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-07-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 205,
+    "government_support": 0,
+    "net_bill": 205,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-07-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 297,
+    "government_support": 0,
+    "net_bill": 297,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-07-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 17,
+    "monthly_bill": 77,
+    "government_support": 0,
+    "net_bill": 77,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-08-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 17,
+    "monthly_bill": 141,
+    "government_support": 0,
+    "net_bill": 141,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-08-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 205,
+    "government_support": 0,
+    "net_bill": 205,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-08-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 297,
+    "government_support": 0,
+    "net_bill": 297,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-08-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 17,
+    "monthly_bill": 77,
+    "government_support": 0,
+    "net_bill": 77,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-09-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 17,
+    "monthly_bill": 141,
+    "government_support": 0,
+    "net_bill": 141,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-09-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 205,
+    "government_support": 0,
+    "net_bill": 205,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-09-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 17,
+    "monthly_bill": 297,
+    "government_support": 0,
+    "net_bill": 297,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-09-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 17,
+    "monthly_bill": 77,
+    "government_support": 0,
+    "net_bill": 77,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-10-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 20,
+    "monthly_bill": 161,
+    "government_support": 0,
+    "net_bill": 161,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-10-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 235,
+    "government_support": 0,
+    "net_bill": 235,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-10-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 342,
+    "government_support": 0,
+    "net_bill": 342,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-10-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 20,
+    "monthly_bill": 87,
+    "government_support": 0,
+    "net_bill": 87,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-11-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 20,
+    "monthly_bill": 161,
+    "government_support": 0,
+    "net_bill": 161,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-11-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 235,
+    "government_support": 0,
+    "net_bill": 235,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-11-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 342,
+    "government_support": 0,
+    "net_bill": 342,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-11-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 20,
+    "monthly_bill": 87,
+    "government_support": 0,
+    "net_bill": 87,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-12-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 20,
+    "monthly_bill": 161,
+    "government_support": 0,
+    "net_bill": 161,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-12-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 235,
+    "government_support": 0,
+    "net_bill": 235,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-12-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 342,
+    "government_support": 0,
+    "net_bill": 342,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2021-12-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 20,
+    "monthly_bill": 87,
+    "government_support": 0,
+    "net_bill": 87,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-01-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 20,
+    "monthly_bill": 161,
+    "government_support": 0,
+    "net_bill": 161,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-01-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 235,
+    "government_support": 0,
+    "net_bill": 235,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-01-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 342,
+    "government_support": 0,
+    "net_bill": 342,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-01-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 20,
+    "monthly_bill": 87,
+    "government_support": 0,
+    "net_bill": 87,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-02-28",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 20,
+    "monthly_bill": 161,
+    "government_support": 0,
+    "net_bill": 161,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-02-28",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 235,
+    "government_support": 0,
+    "net_bill": 235,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-02-28",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 342,
+    "government_support": 0,
+    "net_bill": 342,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-02-28",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 20,
+    "monthly_bill": 87,
+    "government_support": 0,
+    "net_bill": 87,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-03-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 20,
+    "monthly_bill": 161,
+    "government_support": 0,
+    "net_bill": 161,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-03-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 235,
+    "government_support": 0,
+    "net_bill": 235,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-03-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 20,
+    "monthly_bill": 342,
+    "government_support": 0,
+    "net_bill": 342,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-03-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 20,
+    "monthly_bill": 87,
+    "government_support": 0,
+    "net_bill": 87,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-04-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 28,
+    "monthly_bill": 215,
+    "government_support": 0,
+    "net_bill": 215,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-04-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 315,
+    "government_support": 0,
+    "net_bill": 315,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-04-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 462,
+    "government_support": 0,
+    "net_bill": 462,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-04-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 28,
+    "monthly_bill": 113,
+    "government_support": 0,
+    "net_bill": 113,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-05-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 28,
+    "monthly_bill": 215,
+    "government_support": 0,
+    "net_bill": 215,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-05-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 315,
+    "government_support": 0,
+    "net_bill": 315,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-05-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 462,
+    "government_support": 0,
+    "net_bill": 462,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-05-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 28,
+    "monthly_bill": 113,
+    "government_support": 0,
+    "net_bill": 113,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-06-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 28,
+    "monthly_bill": 215,
+    "government_support": 0,
+    "net_bill": 215,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-06-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 315,
+    "government_support": 0,
+    "net_bill": 315,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-06-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 462,
+    "government_support": 0,
+    "net_bill": 462,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-06-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 28,
+    "monthly_bill": 113,
+    "government_support": 0,
+    "net_bill": 113,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-07-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 28,
+    "monthly_bill": 215,
+    "government_support": 0,
+    "net_bill": 215,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-07-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 315,
+    "government_support": 0,
+    "net_bill": 315,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-07-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 462,
+    "government_support": 0,
+    "net_bill": 462,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-07-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 28,
+    "monthly_bill": 113,
+    "government_support": 0,
+    "net_bill": 113,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-08-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 28,
+    "monthly_bill": 215,
+    "government_support": 0,
+    "net_bill": 215,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-08-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 315,
+    "government_support": 0,
+    "net_bill": 315,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-08-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 462,
+    "government_support": 0,
+    "net_bill": 462,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-08-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 28,
+    "monthly_bill": 113,
+    "government_support": 0,
+    "net_bill": 113,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-09-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 28,
+    "monthly_bill": 215,
+    "government_support": 0,
+    "net_bill": 215,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-09-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 315,
+    "government_support": 0,
+    "net_bill": 315,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-09-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 28,
+    "monthly_bill": 462,
+    "government_support": 0,
+    "net_bill": 462,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-09-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 28,
+    "monthly_bill": 113,
+    "government_support": 0,
+    "net_bill": 113,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-10-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-10-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-10-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-10-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-11-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-11-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-11-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-11-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-12-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-12-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-12-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2022-12-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-01-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-01-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-01-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-01-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-02-28",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-02-28",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-02-28",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-02-28",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-03-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-03-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-03-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-03-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-04-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-04-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-04-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-04-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-05-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-05-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-05-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-05-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-06-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 34,
+    "monthly_bill": 255,
+    "government_support": 66,
+    "net_bill": 189,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-06-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 375,
+    "government_support": 66,
+    "net_bill": 309,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-06-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 34,
+    "monthly_bill": 552,
+    "government_support": 66,
+    "net_bill": 486,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-06-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 34,
+    "monthly_bill": 133,
+    "government_support": 40,
+    "net_bill": 93,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-07-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-07-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-07-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-07-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-08-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-08-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-08-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-08-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-09-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-09-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-09-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-09-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-10-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-10-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-10-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-10-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-11-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-11-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-11-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-11-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-12-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-12-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-12-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2023-12-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-01-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-01-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-01-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-01-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-02-29",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-02-29",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-02-29",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-02-29",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-03-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-03-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-03-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-03-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-04-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-04-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-04-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-04-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-05-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-05-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-05-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-05-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-06-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-06-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-06-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-06-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-07-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-07-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-07-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-07-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-08-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-08-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-08-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-08-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-09-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-09-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-09-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-09-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-10-31",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-10-31",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-10-31",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-10-31",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-11-30",
+    "household_type": "Small Flat",
+    "monthly_kwh": 666.6666666666666,
+    "price_per_kwh": 27,
+    "monthly_bill": 208,
+    "government_support": 0,
+    "net_bill": 208,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-11-30",
+    "household_type": "Medium House",
+    "monthly_kwh": 1000.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 305,
+    "government_support": 0,
+    "net_bill": 305,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-11-30",
+    "household_type": "Large House",
+    "monthly_kwh": 1500.0,
+    "price_per_kwh": 27,
+    "monthly_bill": 447,
+    "government_support": 0,
+    "net_bill": 447,
+    "year_on_year_change": 0
+  },
+  {
+    "date": "2024-11-30",
+    "household_type": "Student Accommodation",
+    "monthly_kwh": 333.3333333333333,
+    "price_per_kwh": 27,
+    "monthly_bill": 110,
+    "government_support": 0,
+    "net_bill": 110,
+    "year_on_year_change": 0
+  }
+]

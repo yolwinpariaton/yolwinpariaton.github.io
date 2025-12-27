@@ -1,0 +1,3482 @@
+[
+  {
+    "date": "2020-01",
+    "category": "Bread & Cereals",
+    "inflation": 3.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Meat",
+    "inflation": 1.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Fish",
+    "inflation": 2.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Dairy & Eggs",
+    "inflation": 1.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Oils & Fats",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Fruit",
+    "inflation": 0.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Vegetables",
+    "inflation": 3.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Sugar & Sweets",
+    "inflation": 2.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 3.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-01",
+    "category": "Ready Meals",
+    "inflation": 2.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Bread & Cereals",
+    "inflation": 3.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Meat",
+    "inflation": 3.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Fish",
+    "inflation": 4.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Dairy & Eggs",
+    "inflation": 0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Oils & Fats",
+    "inflation": 6.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Fruit",
+    "inflation": 3.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Vegetables",
+    "inflation": 2.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Sugar & Sweets",
+    "inflation": 3.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Non-alcoholic Beverages",
+    "inflation": -1.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-02",
+    "category": "Ready Meals",
+    "inflation": 1.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Bread & Cereals",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Meat",
+    "inflation": 1.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Fish",
+    "inflation": 0.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Dairy & Eggs",
+    "inflation": 4.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Oils & Fats",
+    "inflation": -1.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Fruit",
+    "inflation": 4.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Vegetables",
+    "inflation": 2.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Sugar & Sweets",
+    "inflation": 1.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Non-alcoholic Beverages",
+    "inflation": -0.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-03",
+    "category": "Ready Meals",
+    "inflation": -1.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Bread & Cereals",
+    "inflation": 2.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Meat",
+    "inflation": 2.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Fish",
+    "inflation": 1.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Dairy & Eggs",
+    "inflation": 1.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Oils & Fats",
+    "inflation": 3.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Fruit",
+    "inflation": 5.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Vegetables",
+    "inflation": 4.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Sugar & Sweets",
+    "inflation": -0.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-04",
+    "category": "Ready Meals",
+    "inflation": -0.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Bread & Cereals",
+    "inflation": 2.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Meat",
+    "inflation": 1.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Fish",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Dairy & Eggs",
+    "inflation": -0.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Oils & Fats",
+    "inflation": 1.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Fruit",
+    "inflation": 2.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Vegetables",
+    "inflation": 4.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Sugar & Sweets",
+    "inflation": -1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 4.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-05",
+    "category": "Ready Meals",
+    "inflation": 1.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Bread & Cereals",
+    "inflation": 2.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Meat",
+    "inflation": 3.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Fish",
+    "inflation": 0.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Dairy & Eggs",
+    "inflation": 6.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Oils & Fats",
+    "inflation": 0.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Fruit",
+    "inflation": 4.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Vegetables",
+    "inflation": 4.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Sugar & Sweets",
+    "inflation": 1.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-06",
+    "category": "Ready Meals",
+    "inflation": -1.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Bread & Cereals",
+    "inflation": 2.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Meat",
+    "inflation": 1.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Fish",
+    "inflation": -0.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Dairy & Eggs",
+    "inflation": -0.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Oils & Fats",
+    "inflation": 1.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Fruit",
+    "inflation": 4.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Vegetables",
+    "inflation": 2.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Sugar & Sweets",
+    "inflation": 4.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 2.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-07",
+    "category": "Ready Meals",
+    "inflation": 4.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Bread & Cereals",
+    "inflation": 2.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Meat",
+    "inflation": 2.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Fish",
+    "inflation": -0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Dairy & Eggs",
+    "inflation": 0.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Oils & Fats",
+    "inflation": 2.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Fruit",
+    "inflation": 3.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Vegetables",
+    "inflation": 4.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Sugar & Sweets",
+    "inflation": 3.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Non-alcoholic Beverages",
+    "inflation": -1.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-08",
+    "category": "Ready Meals",
+    "inflation": 3.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Bread & Cereals",
+    "inflation": 3.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Meat",
+    "inflation": 2.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Fish",
+    "inflation": -1.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Dairy & Eggs",
+    "inflation": 4.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Oils & Fats",
+    "inflation": 6.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Fruit",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Vegetables",
+    "inflation": 2.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Sugar & Sweets",
+    "inflation": 2.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 0.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-09",
+    "category": "Ready Meals",
+    "inflation": 0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Bread & Cereals",
+    "inflation": -0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Meat",
+    "inflation": 3.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Fish",
+    "inflation": 6.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Dairy & Eggs",
+    "inflation": 3.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Oils & Fats",
+    "inflation": 2.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Fruit",
+    "inflation": 4.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Vegetables",
+    "inflation": 4.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Sugar & Sweets",
+    "inflation": 5.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 0.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-10",
+    "category": "Ready Meals",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Bread & Cereals",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Meat",
+    "inflation": 2.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Fish",
+    "inflation": 1.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Dairy & Eggs",
+    "inflation": 1.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Oils & Fats",
+    "inflation": 2.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Fruit",
+    "inflation": 3.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Vegetables",
+    "inflation": 4.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Sugar & Sweets",
+    "inflation": 2.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 2.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-11",
+    "category": "Ready Meals",
+    "inflation": 0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Bread & Cereals",
+    "inflation": 3.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Meat",
+    "inflation": 3.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Fish",
+    "inflation": -0.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Dairy & Eggs",
+    "inflation": 1.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Oils & Fats",
+    "inflation": -1.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Fruit",
+    "inflation": 2.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Vegetables",
+    "inflation": 5.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Sugar & Sweets",
+    "inflation": 3.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 0.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2020-12",
+    "category": "Ready Meals",
+    "inflation": -1.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Bread & Cereals",
+    "inflation": 2.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Meat",
+    "inflation": 6.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Fish",
+    "inflation": -1.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Dairy & Eggs",
+    "inflation": 0.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Oils & Fats",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Fruit",
+    "inflation": 5.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Vegetables",
+    "inflation": 8.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Sugar & Sweets",
+    "inflation": 4.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 0.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-01",
+    "category": "Ready Meals",
+    "inflation": 3.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Bread & Cereals",
+    "inflation": 5.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Meat",
+    "inflation": 4.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Fish",
+    "inflation": 5.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Dairy & Eggs",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Oils & Fats",
+    "inflation": -0.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Fruit",
+    "inflation": 4.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Vegetables",
+    "inflation": 4.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Sugar & Sweets",
+    "inflation": 4.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Non-alcoholic Beverages",
+    "inflation": -1.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-02",
+    "category": "Ready Meals",
+    "inflation": 0.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Bread & Cereals",
+    "inflation": 3.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Meat",
+    "inflation": 5.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Fish",
+    "inflation": -1.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Dairy & Eggs",
+    "inflation": 4.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Oils & Fats",
+    "inflation": -0.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Fruit",
+    "inflation": 5.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Vegetables",
+    "inflation": 3.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Sugar & Sweets",
+    "inflation": 0.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 0.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-03",
+    "category": "Ready Meals",
+    "inflation": 1.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Bread & Cereals",
+    "inflation": 2.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Meat",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Fish",
+    "inflation": 2.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Dairy & Eggs",
+    "inflation": -1.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Oils & Fats",
+    "inflation": 1.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Fruit",
+    "inflation": 5.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Vegetables",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Sugar & Sweets",
+    "inflation": 4.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 2.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-04",
+    "category": "Ready Meals",
+    "inflation": 1.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Bread & Cereals",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Meat",
+    "inflation": 1.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Fish",
+    "inflation": 2.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Dairy & Eggs",
+    "inflation": 2.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Oils & Fats",
+    "inflation": 2.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Fruit",
+    "inflation": 4.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Vegetables",
+    "inflation": 3.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Sugar & Sweets",
+    "inflation": -0.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 4.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-05",
+    "category": "Ready Meals",
+    "inflation": 2.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Bread & Cereals",
+    "inflation": 3.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Meat",
+    "inflation": -0.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Fish",
+    "inflation": -0.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Dairy & Eggs",
+    "inflation": 2.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Oils & Fats",
+    "inflation": 2.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Fruit",
+    "inflation": 4.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Vegetables",
+    "inflation": 2.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Sugar & Sweets",
+    "inflation": 0.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 5.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-06",
+    "category": "Ready Meals",
+    "inflation": 0.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Bread & Cereals",
+    "inflation": -0.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Meat",
+    "inflation": 1.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Fish",
+    "inflation": 5.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Dairy & Eggs",
+    "inflation": -0.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Oils & Fats",
+    "inflation": 0.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Fruit",
+    "inflation": -0.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Vegetables",
+    "inflation": 2.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Sugar & Sweets",
+    "inflation": 3.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 1.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-07",
+    "category": "Ready Meals",
+    "inflation": 2.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Bread & Cereals",
+    "inflation": -0.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Meat",
+    "inflation": 1.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Fish",
+    "inflation": -0.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Dairy & Eggs",
+    "inflation": 0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Oils & Fats",
+    "inflation": 1.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Fruit",
+    "inflation": 4.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Vegetables",
+    "inflation": 5.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Sugar & Sweets",
+    "inflation": 0.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 3.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-08",
+    "category": "Ready Meals",
+    "inflation": 2.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Bread & Cereals",
+    "inflation": 3.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Meat",
+    "inflation": -1.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Fish",
+    "inflation": -2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Dairy & Eggs",
+    "inflation": 3.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Oils & Fats",
+    "inflation": 0.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Fruit",
+    "inflation": 0.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Vegetables",
+    "inflation": 2.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Sugar & Sweets",
+    "inflation": 1.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 3.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-09",
+    "category": "Ready Meals",
+    "inflation": 0.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Bread & Cereals",
+    "inflation": 3.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Meat",
+    "inflation": 1.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Fish",
+    "inflation": 1.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Dairy & Eggs",
+    "inflation": -1.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Oils & Fats",
+    "inflation": 0.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Fruit",
+    "inflation": 2.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Vegetables",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Sugar & Sweets",
+    "inflation": 4.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 2.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-10",
+    "category": "Ready Meals",
+    "inflation": 1.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Bread & Cereals",
+    "inflation": 3.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Meat",
+    "inflation": 2.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Fish",
+    "inflation": 1.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Dairy & Eggs",
+    "inflation": 1.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Oils & Fats",
+    "inflation": -0.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Fruit",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Vegetables",
+    "inflation": 1.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Sugar & Sweets",
+    "inflation": 0.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Non-alcoholic Beverages",
+    "inflation": -1.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-11",
+    "category": "Ready Meals",
+    "inflation": 3.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Bread & Cereals",
+    "inflation": 1.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Meat",
+    "inflation": 5.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Fish",
+    "inflation": -1.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Dairy & Eggs",
+    "inflation": 1.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Oils & Fats",
+    "inflation": 0.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Fruit",
+    "inflation": 3.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Vegetables",
+    "inflation": 4.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Sugar & Sweets",
+    "inflation": 3.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 2.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2021-12",
+    "category": "Ready Meals",
+    "inflation": 2.5,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2022-01",
+    "category": "Bread & Cereals",
+    "inflation": 13.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-01",
+    "category": "Meat",
+    "inflation": 9.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-01",
+    "category": "Fish",
+    "inflation": 9.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-01",
+    "category": "Dairy & Eggs",
+    "inflation": 20.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-01",
+    "category": "Oils & Fats",
+    "inflation": 17.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-01",
+    "category": "Fruit",
+    "inflation": 14.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-01",
+    "category": "Vegetables",
+    "inflation": 13.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-01",
+    "category": "Sugar & Sweets",
+    "inflation": 18.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-01",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 8.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-01",
+    "category": "Ready Meals",
+    "inflation": 11.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-02",
+    "category": "Bread & Cereals",
+    "inflation": 14.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-02",
+    "category": "Meat",
+    "inflation": 7.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2022-02",
+    "category": "Fish",
+    "inflation": 9.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-02",
+    "category": "Dairy & Eggs",
+    "inflation": 16.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-02",
+    "category": "Oils & Fats",
+    "inflation": 15.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-02",
+    "category": "Fruit",
+    "inflation": 15.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-02",
+    "category": "Vegetables",
+    "inflation": 16.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-02",
+    "category": "Sugar & Sweets",
+    "inflation": 15.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-02",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-02",
+    "category": "Ready Meals",
+    "inflation": 11.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-03",
+    "category": "Bread & Cereals",
+    "inflation": 16.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-03",
+    "category": "Meat",
+    "inflation": 11.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-03",
+    "category": "Fish",
+    "inflation": 9.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-03",
+    "category": "Dairy & Eggs",
+    "inflation": 17.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-03",
+    "category": "Oils & Fats",
+    "inflation": 18.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-03",
+    "category": "Fruit",
+    "inflation": 14.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-03",
+    "category": "Vegetables",
+    "inflation": 15.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-03",
+    "category": "Sugar & Sweets",
+    "inflation": 13.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-03",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-03",
+    "category": "Ready Meals",
+    "inflation": 12.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-04",
+    "category": "Bread & Cereals",
+    "inflation": 17.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-04",
+    "category": "Meat",
+    "inflation": 9.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-04",
+    "category": "Fish",
+    "inflation": 10.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-04",
+    "category": "Dairy & Eggs",
+    "inflation": 17.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-04",
+    "category": "Oils & Fats",
+    "inflation": 18.0,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-04",
+    "category": "Fruit",
+    "inflation": 12.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-04",
+    "category": "Vegetables",
+    "inflation": 9.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-04",
+    "category": "Sugar & Sweets",
+    "inflation": 18.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-04",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-04",
+    "category": "Ready Meals",
+    "inflation": 8.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-05",
+    "category": "Bread & Cereals",
+    "inflation": 13.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-05",
+    "category": "Meat",
+    "inflation": 10.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-05",
+    "category": "Fish",
+    "inflation": 7.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2022-05",
+    "category": "Dairy & Eggs",
+    "inflation": 16.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-05",
+    "category": "Oils & Fats",
+    "inflation": 21.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-05",
+    "category": "Fruit",
+    "inflation": 10.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-05",
+    "category": "Vegetables",
+    "inflation": 8.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-05",
+    "category": "Sugar & Sweets",
+    "inflation": 14.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-05",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 7.2,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2022-05",
+    "category": "Ready Meals",
+    "inflation": 7.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2022-06",
+    "category": "Bread & Cereals",
+    "inflation": 10.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-06",
+    "category": "Meat",
+    "inflation": 11.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-06",
+    "category": "Fish",
+    "inflation": 11.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-06",
+    "category": "Dairy & Eggs",
+    "inflation": 18.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-06",
+    "category": "Oils & Fats",
+    "inflation": 21.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-06",
+    "category": "Fruit",
+    "inflation": 15.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-06",
+    "category": "Vegetables",
+    "inflation": 11.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-06",
+    "category": "Sugar & Sweets",
+    "inflation": 12.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-06",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-06",
+    "category": "Ready Meals",
+    "inflation": 10.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-07",
+    "category": "Bread & Cereals",
+    "inflation": 10.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-07",
+    "category": "Meat",
+    "inflation": 6.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2022-07",
+    "category": "Fish",
+    "inflation": 10.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-07",
+    "category": "Dairy & Eggs",
+    "inflation": 19.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-07",
+    "category": "Oils & Fats",
+    "inflation": 16.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-07",
+    "category": "Fruit",
+    "inflation": 9.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-07",
+    "category": "Vegetables",
+    "inflation": 9.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-07",
+    "category": "Sugar & Sweets",
+    "inflation": 16.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-07",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-07",
+    "category": "Ready Meals",
+    "inflation": 9.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-08",
+    "category": "Bread & Cereals",
+    "inflation": 15.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-08",
+    "category": "Meat",
+    "inflation": 13.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-08",
+    "category": "Fish",
+    "inflation": 12.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-08",
+    "category": "Dairy & Eggs",
+    "inflation": 16.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-08",
+    "category": "Oils & Fats",
+    "inflation": 17.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-08",
+    "category": "Fruit",
+    "inflation": 13.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-08",
+    "category": "Vegetables",
+    "inflation": 14.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-08",
+    "category": "Sugar & Sweets",
+    "inflation": 13.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-08",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-08",
+    "category": "Ready Meals",
+    "inflation": 8.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-09",
+    "category": "Bread & Cereals",
+    "inflation": 11.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-09",
+    "category": "Meat",
+    "inflation": 8.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-09",
+    "category": "Fish",
+    "inflation": 11.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-09",
+    "category": "Dairy & Eggs",
+    "inflation": 18.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-09",
+    "category": "Oils & Fats",
+    "inflation": 17.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-09",
+    "category": "Fruit",
+    "inflation": 10.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-09",
+    "category": "Vegetables",
+    "inflation": 15.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-09",
+    "category": "Sugar & Sweets",
+    "inflation": 15.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-09",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-09",
+    "category": "Ready Meals",
+    "inflation": 10.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-10",
+    "category": "Bread & Cereals",
+    "inflation": 15.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-10",
+    "category": "Meat",
+    "inflation": 9.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-10",
+    "category": "Fish",
+    "inflation": 12.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-10",
+    "category": "Dairy & Eggs",
+    "inflation": 17.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-10",
+    "category": "Oils & Fats",
+    "inflation": 16.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-10",
+    "category": "Fruit",
+    "inflation": 18.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-10",
+    "category": "Vegetables",
+    "inflation": 13.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-10",
+    "category": "Sugar & Sweets",
+    "inflation": 14.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-10",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-10",
+    "category": "Ready Meals",
+    "inflation": 11.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Bread & Cereals",
+    "inflation": 13.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Meat",
+    "inflation": 9.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Fish",
+    "inflation": 8.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Dairy & Eggs",
+    "inflation": 19.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-11",
+    "category": "Oils & Fats",
+    "inflation": 17.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-11",
+    "category": "Fruit",
+    "inflation": 12.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Vegetables",
+    "inflation": 14.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Sugar & Sweets",
+    "inflation": 14.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-11",
+    "category": "Ready Meals",
+    "inflation": 12.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-12",
+    "category": "Bread & Cereals",
+    "inflation": 12.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-12",
+    "category": "Meat",
+    "inflation": 6.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2022-12",
+    "category": "Fish",
+    "inflation": 10.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-12",
+    "category": "Dairy & Eggs",
+    "inflation": 20.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-12",
+    "category": "Oils & Fats",
+    "inflation": 17.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2022-12",
+    "category": "Fruit",
+    "inflation": 14.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-12",
+    "category": "Vegetables",
+    "inflation": 13.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-12",
+    "category": "Sugar & Sweets",
+    "inflation": 11.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-12",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2022-12",
+    "category": "Ready Meals",
+    "inflation": 7.3,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-01",
+    "category": "Bread & Cereals",
+    "inflation": 15.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-01",
+    "category": "Meat",
+    "inflation": 6.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-01",
+    "category": "Fish",
+    "inflation": 11.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-01",
+    "category": "Dairy & Eggs",
+    "inflation": 20.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-01",
+    "category": "Oils & Fats",
+    "inflation": 16.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-01",
+    "category": "Fruit",
+    "inflation": 14.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-01",
+    "category": "Vegetables",
+    "inflation": 15.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-01",
+    "category": "Sugar & Sweets",
+    "inflation": 14.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-01",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-01",
+    "category": "Ready Meals",
+    "inflation": 7.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-02",
+    "category": "Bread & Cereals",
+    "inflation": 17.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-02",
+    "category": "Meat",
+    "inflation": 6.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-02",
+    "category": "Fish",
+    "inflation": 9.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-02",
+    "category": "Dairy & Eggs",
+    "inflation": 17.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-02",
+    "category": "Oils & Fats",
+    "inflation": 19.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-02",
+    "category": "Fruit",
+    "inflation": 12.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-02",
+    "category": "Vegetables",
+    "inflation": 12.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-02",
+    "category": "Sugar & Sweets",
+    "inflation": 17.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-02",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 8.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-02",
+    "category": "Ready Meals",
+    "inflation": 5.1,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-03",
+    "category": "Bread & Cereals",
+    "inflation": 16.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-03",
+    "category": "Meat",
+    "inflation": 10.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-03",
+    "category": "Fish",
+    "inflation": 5.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-03",
+    "category": "Dairy & Eggs",
+    "inflation": 20.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-03",
+    "category": "Oils & Fats",
+    "inflation": 16.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-03",
+    "category": "Fruit",
+    "inflation": 8.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-03",
+    "category": "Vegetables",
+    "inflation": 9.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-03",
+    "category": "Sugar & Sweets",
+    "inflation": 21.0,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-03",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 5.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-03",
+    "category": "Ready Meals",
+    "inflation": 11.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-04",
+    "category": "Bread & Cereals",
+    "inflation": 15.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-04",
+    "category": "Meat",
+    "inflation": 8.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-04",
+    "category": "Fish",
+    "inflation": 11.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-04",
+    "category": "Dairy & Eggs",
+    "inflation": 19.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-04",
+    "category": "Oils & Fats",
+    "inflation": 18.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-04",
+    "category": "Fruit",
+    "inflation": 8.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-04",
+    "category": "Vegetables",
+    "inflation": 11.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-04",
+    "category": "Sugar & Sweets",
+    "inflation": 19.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-04",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-04",
+    "category": "Ready Meals",
+    "inflation": 10.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Bread & Cereals",
+    "inflation": 13.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Meat",
+    "inflation": 12.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Fish",
+    "inflation": 8.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Dairy & Eggs",
+    "inflation": 17.0,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-05",
+    "category": "Oils & Fats",
+    "inflation": 18.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-05",
+    "category": "Fruit",
+    "inflation": 12.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Vegetables",
+    "inflation": 12.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Sugar & Sweets",
+    "inflation": 12.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-05",
+    "category": "Ready Meals",
+    "inflation": 9.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-06",
+    "category": "Bread & Cereals",
+    "inflation": 15.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-06",
+    "category": "Meat",
+    "inflation": 8.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-06",
+    "category": "Fish",
+    "inflation": 11.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-06",
+    "category": "Dairy & Eggs",
+    "inflation": 23.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-06",
+    "category": "Oils & Fats",
+    "inflation": 17.6,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-06",
+    "category": "Fruit",
+    "inflation": 14.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-06",
+    "category": "Vegetables",
+    "inflation": 6.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-06",
+    "category": "Sugar & Sweets",
+    "inflation": 15.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-06",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 14.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-06",
+    "category": "Ready Meals",
+    "inflation": 12.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-07",
+    "category": "Bread & Cereals",
+    "inflation": 12.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-07",
+    "category": "Meat",
+    "inflation": 10.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-07",
+    "category": "Fish",
+    "inflation": 6.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-07",
+    "category": "Dairy & Eggs",
+    "inflation": 19.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-07",
+    "category": "Oils & Fats",
+    "inflation": 21.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-07",
+    "category": "Fruit",
+    "inflation": 11.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-07",
+    "category": "Vegetables",
+    "inflation": 11.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-07",
+    "category": "Sugar & Sweets",
+    "inflation": 15.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-07",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-07",
+    "category": "Ready Meals",
+    "inflation": 8.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-08",
+    "category": "Bread & Cereals",
+    "inflation": 15.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-08",
+    "category": "Meat",
+    "inflation": 8.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-08",
+    "category": "Fish",
+    "inflation": 5.9,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-08",
+    "category": "Dairy & Eggs",
+    "inflation": 15.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-08",
+    "category": "Oils & Fats",
+    "inflation": 16.6,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-08",
+    "category": "Fruit",
+    "inflation": 11.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-08",
+    "category": "Vegetables",
+    "inflation": 12.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-08",
+    "category": "Sugar & Sweets",
+    "inflation": 12.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-08",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-08",
+    "category": "Ready Meals",
+    "inflation": 7.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-09",
+    "category": "Bread & Cereals",
+    "inflation": 11.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-09",
+    "category": "Meat",
+    "inflation": 8.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-09",
+    "category": "Fish",
+    "inflation": 9.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-09",
+    "category": "Dairy & Eggs",
+    "inflation": 18.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-09",
+    "category": "Oils & Fats",
+    "inflation": 21.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-09",
+    "category": "Fruit",
+    "inflation": 11.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-09",
+    "category": "Vegetables",
+    "inflation": 8.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-09",
+    "category": "Sugar & Sweets",
+    "inflation": 13.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-09",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-09",
+    "category": "Ready Meals",
+    "inflation": 13.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-10",
+    "category": "Bread & Cereals",
+    "inflation": 13.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-10",
+    "category": "Meat",
+    "inflation": 10.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-10",
+    "category": "Fish",
+    "inflation": 9.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-10",
+    "category": "Dairy & Eggs",
+    "inflation": 15.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-10",
+    "category": "Oils & Fats",
+    "inflation": 20.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-10",
+    "category": "Fruit",
+    "inflation": 14.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-10",
+    "category": "Vegetables",
+    "inflation": 12.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-10",
+    "category": "Sugar & Sweets",
+    "inflation": 11.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-10",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 7.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2023-10",
+    "category": "Ready Meals",
+    "inflation": 11.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-11",
+    "category": "Bread & Cereals",
+    "inflation": 14.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-11",
+    "category": "Meat",
+    "inflation": 13.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-11",
+    "category": "Fish",
+    "inflation": 10.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-11",
+    "category": "Dairy & Eggs",
+    "inflation": 18.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-11",
+    "category": "Oils & Fats",
+    "inflation": 20.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-11",
+    "category": "Fruit",
+    "inflation": 16.6,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-11",
+    "category": "Vegetables",
+    "inflation": 16.0,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-11",
+    "category": "Sugar & Sweets",
+    "inflation": 14.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-11",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 9.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-11",
+    "category": "Ready Meals",
+    "inflation": 8.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-12",
+    "category": "Bread & Cereals",
+    "inflation": 15.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-12",
+    "category": "Meat",
+    "inflation": 12.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-12",
+    "category": "Fish",
+    "inflation": 8.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-12",
+    "category": "Dairy & Eggs",
+    "inflation": 19.6,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-12",
+    "category": "Oils & Fats",
+    "inflation": 17.6,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-12",
+    "category": "Fruit",
+    "inflation": 16.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-12",
+    "category": "Vegetables",
+    "inflation": 12.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-12",
+    "category": "Sugar & Sweets",
+    "inflation": 15.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2023-12",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2023-12",
+    "category": "Ready Meals",
+    "inflation": 8.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-01",
+    "category": "Bread & Cereals",
+    "inflation": 16.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-01",
+    "category": "Meat",
+    "inflation": 7.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-01",
+    "category": "Fish",
+    "inflation": 10.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-01",
+    "category": "Dairy & Eggs",
+    "inflation": 15.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-01",
+    "category": "Oils & Fats",
+    "inflation": 15.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-01",
+    "category": "Fruit",
+    "inflation": 17.6,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-01",
+    "category": "Vegetables",
+    "inflation": 18.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-01",
+    "category": "Sugar & Sweets",
+    "inflation": 15.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-01",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 13.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-01",
+    "category": "Ready Meals",
+    "inflation": 11.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-02",
+    "category": "Bread & Cereals",
+    "inflation": 16.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-02",
+    "category": "Meat",
+    "inflation": 12.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-02",
+    "category": "Fish",
+    "inflation": 14.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-02",
+    "category": "Dairy & Eggs",
+    "inflation": 19.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-02",
+    "category": "Oils & Fats",
+    "inflation": 16.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-02",
+    "category": "Fruit",
+    "inflation": 16.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-02",
+    "category": "Vegetables",
+    "inflation": 12.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-02",
+    "category": "Sugar & Sweets",
+    "inflation": 18.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-02",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-02",
+    "category": "Ready Meals",
+    "inflation": 10.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-03",
+    "category": "Bread & Cereals",
+    "inflation": 13.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-03",
+    "category": "Meat",
+    "inflation": 10.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-03",
+    "category": "Fish",
+    "inflation": 6.6,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-03",
+    "category": "Dairy & Eggs",
+    "inflation": 15.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-03",
+    "category": "Oils & Fats",
+    "inflation": 19.4,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-03",
+    "category": "Fruit",
+    "inflation": 12.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-03",
+    "category": "Vegetables",
+    "inflation": 12.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-03",
+    "category": "Sugar & Sweets",
+    "inflation": 18.0,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-03",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 8.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-03",
+    "category": "Ready Meals",
+    "inflation": 11.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-04",
+    "category": "Bread & Cereals",
+    "inflation": 11.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-04",
+    "category": "Meat",
+    "inflation": 10.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-04",
+    "category": "Fish",
+    "inflation": 11.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-04",
+    "category": "Dairy & Eggs",
+    "inflation": 16.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-04",
+    "category": "Oils & Fats",
+    "inflation": 17.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-04",
+    "category": "Fruit",
+    "inflation": 10.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-04",
+    "category": "Vegetables",
+    "inflation": 12.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-04",
+    "category": "Sugar & Sweets",
+    "inflation": 15.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-04",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-04",
+    "category": "Ready Meals",
+    "inflation": 7.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-05",
+    "category": "Bread & Cereals",
+    "inflation": 11.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-05",
+    "category": "Meat",
+    "inflation": 7.8,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-05",
+    "category": "Fish",
+    "inflation": 9.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-05",
+    "category": "Dairy & Eggs",
+    "inflation": 23.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-05",
+    "category": "Oils & Fats",
+    "inflation": 16.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-05",
+    "category": "Fruit",
+    "inflation": 11.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-05",
+    "category": "Vegetables",
+    "inflation": 9.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-05",
+    "category": "Sugar & Sweets",
+    "inflation": 14.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-05",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 7.0,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-05",
+    "category": "Ready Meals",
+    "inflation": 8.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-06",
+    "category": "Bread & Cereals",
+    "inflation": 15.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-06",
+    "category": "Meat",
+    "inflation": 10.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-06",
+    "category": "Fish",
+    "inflation": 12.5,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-06",
+    "category": "Dairy & Eggs",
+    "inflation": 17.9,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-06",
+    "category": "Oils & Fats",
+    "inflation": 15.3,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-06",
+    "category": "Fruit",
+    "inflation": 10.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-06",
+    "category": "Vegetables",
+    "inflation": 10.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-06",
+    "category": "Sugar & Sweets",
+    "inflation": 14.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-06",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 11.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-06",
+    "category": "Ready Meals",
+    "inflation": 11.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-07",
+    "category": "Bread & Cereals",
+    "inflation": 11.7,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-07",
+    "category": "Meat",
+    "inflation": 10.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-07",
+    "category": "Fish",
+    "inflation": 8.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-07",
+    "category": "Dairy & Eggs",
+    "inflation": 17.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-07",
+    "category": "Oils & Fats",
+    "inflation": 19.2,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-07",
+    "category": "Fruit",
+    "inflation": 10.6,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-07",
+    "category": "Vegetables",
+    "inflation": 11.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-07",
+    "category": "Sugar & Sweets",
+    "inflation": 16.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-07",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-07",
+    "category": "Ready Meals",
+    "inflation": 9.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Bread & Cereals",
+    "inflation": 13.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Meat",
+    "inflation": 8.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Fish",
+    "inflation": 13.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Dairy & Eggs",
+    "inflation": 17.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-08",
+    "category": "Oils & Fats",
+    "inflation": 17.0,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-08",
+    "category": "Fruit",
+    "inflation": 14.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Vegetables",
+    "inflation": 13.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Sugar & Sweets",
+    "inflation": 13.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-08",
+    "category": "Ready Meals",
+    "inflation": 10.8,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-09",
+    "category": "Bread & Cereals",
+    "inflation": 14.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-09",
+    "category": "Meat",
+    "inflation": 9.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-09",
+    "category": "Fish",
+    "inflation": 7.4,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-09",
+    "category": "Dairy & Eggs",
+    "inflation": 17.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-09",
+    "category": "Oils & Fats",
+    "inflation": 18.7,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-09",
+    "category": "Fruit",
+    "inflation": 12.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-09",
+    "category": "Vegetables",
+    "inflation": 12.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-09",
+    "category": "Sugar & Sweets",
+    "inflation": 15.8,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-09",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 10.4,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-09",
+    "category": "Ready Meals",
+    "inflation": 6.7,
+    "affordability_impact": "Low"
+  },
+  {
+    "date": "2024-10",
+    "category": "Bread & Cereals",
+    "inflation": 16.1,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-10",
+    "category": "Meat",
+    "inflation": 9.3,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-10",
+    "category": "Fish",
+    "inflation": 10.2,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-10",
+    "category": "Dairy & Eggs",
+    "inflation": 17.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-10",
+    "category": "Oils & Fats",
+    "inflation": 18.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-10",
+    "category": "Fruit",
+    "inflation": 14.1,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-10",
+    "category": "Vegetables",
+    "inflation": 12.0,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-10",
+    "category": "Sugar & Sweets",
+    "inflation": 15.5,
+    "affordability_impact": "High"
+  },
+  {
+    "date": "2024-10",
+    "category": "Non-alcoholic Beverages",
+    "inflation": 12.9,
+    "affordability_impact": "Medium"
+  },
+  {
+    "date": "2024-10",
+    "category": "Ready Meals",
+    "inflation": 7.9,
+    "affordability_impact": "Low"
+  }
+]
