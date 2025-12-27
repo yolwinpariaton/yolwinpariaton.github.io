@@ -4,98 +4,257 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Project | Yolwin Pariaton</title>
-  <meta name="description" content="Main research project page for Automated Data Collection at LSE." />
+  <title>Project | The UK Cost of Living Crisis</title>
+  <meta name="description" content="Data analysis project examining the UK cost of living crisis through multiple economic indicators." />
+  <meta name="author" content="Yolwin Pariaton" />
 
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
 
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="page-header">
+  <header class="site-header" id="top">
     <nav class="nav" aria-label="Primary">
       <div class="nav__brand">
         <a class="nav__home" href="index.html">Yolwin Pariaton</a>
       </div>
 
-      <button class="nav__toggle" aria-expanded="false" aria-controls="navMenu">
-        <span class="sr-only">Toggle navigation</span>
-        ☰
-      </button>
+      <input class="nav__checkbox" type="checkbox" id="navToggleProject" />
+      <label class="nav__toggle" for="navToggleProject" aria-label="Toggle navigation">☰</label>
 
-      <ul class="nav__menu" id="navMenu">
+      <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
         <li><a class="nav__link" href="project.html" aria-current="page">Project</a></li>
         <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
-        <li><a class="nav__link" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
-        <li><a class="nav__link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
       </ul>
     </nav>
 
-    <div class="container page-hero">
-      <h1>Project</h1>
-      <p class="lead">
-        Full write-up of the main research project (methods, data, results, and reflections).
-      </p>
-    </div>
+    <section class="hero hero--project">
+      <div class="hero__overlay"></div>
+      <div class="hero__center">
+        <h1 class="hero__title">The UK Cost of Living Crisis</h1>
+        <p class="hero__subtitle">An Economic Data Analysis</p>
+      </div>
+    </section>
   </header>
 
-  <main id="main" class="container page-content">
-    <section class="content-block">
-      <h2>Research Question</h2>
-      <p>
-        Write your research question here in 1–2 sentences. Explain why it matters and what you aim to learn.
-      </p>
-    </section>
+  <main id="main">
+    <div class="container project-container">
+      
+      <!-- Project Summary -->
+      <section class="project-intro">
+        <div class="key-metrics">
+          <div class="metric">
+            <span class="metric-value">11.1%</span>
+            <span class="metric-label">Peak Inflation (Oct 2022)</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">-2.5%</span>
+            <span class="metric-label">Real Wage Growth (2022)</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">54%</span>
+            <span class="metric-label">Energy Price Rise (2021-23)</span>
+          </div>
+        </div>
+      </section>
 
-    <section class="content-block">
-      <h2>Data & Collection</h2>
-      <p>
-        Describe data sources, how you collected the data (APIs, scraping, etc.), and how you ensured quality and ethics.
-      </p>
-    </section>
+      <!-- AIMS Section -->
+      <section class="project-section">
+        <h2>1. Aims</h2>
+        <p>
+          This project examines the UK's cost of living crisis through a data-driven lens, focusing on the period from 2020 to 2024. 
+          The analysis seeks to quantify the crisis's impact across different dimensions: inflation dynamics, real wage erosion, 
+          regional disparities, and sectoral variations. By combining multiple data sources and visualization techniques, 
+          the project aims to provide a comprehensive picture of how rising costs have affected UK households, identify the most 
+          affected demographics and regions, and explore the underlying drivers of the crisis. The ultimate goal is to create an 
+          accessible, updateable resource that tracks the crisis's evolution and informs policy discussions.
+        </p>
+      </section>
 
-    <section class="content-block">
-      <h2>Methods</h2>
-      <ul>
-        <li>Method 1 (e.g., preprocessing)</li>
-        <li>Method 2 (e.g., model/ranking approach)</li>
-        <li>Method 3 (e.g., evaluation/robustness)</li>
-      </ul>
-    </section>
+      <!-- Chart 1: Inflation Timeline -->
+      <section class="chart-section">
+        <h3>Chart 1: UK Inflation Timeline with Key Events</h3>
+        <div class="chart-wrapper">
+          <div id="chart1" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          Monthly CPI inflation showing the dramatic rise from 2021, peaking at 11.1% in October 2022.
+        </p>
+      </section>
 
-    <section class="content-block">
-      <h2>Key Results</h2>
-      <p>
-        Summarize the most important findings. Add a figure later if you want.
-      </p>
-      <img class="responsive-img" src="images/project-placeholder.svg" alt="Placeholder visualization" />
-    </section>
+      <!-- Chart 2: Real Wages -->
+      <section class="chart-section">
+        <h3>Chart 2: Real Wages vs Inflation</h3>
+        <div class="chart-wrapper">
+          <div id="chart2" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          The divergence between nominal wage growth and inflation reveals the squeeze on household purchasing power.
+        </p>
+      </section>
 
-    <section class="content-block">
-      <h2>Next Steps</h2>
-      <p>
-        What would you improve with more time? More data? Better evaluation? Alternative methods?
-      </p>
-    </section>
+      <!-- DATA Section -->
+      <section class="project-section">
+        <h2>2. Data Sources & Automation</h2>
+        <p>
+          The project utilizes multiple authoritative data sources, prioritizing APIs for automatic updates. Primary data comes from the 
+          Office for National Statistics (ONS) API, providing real-time access to inflation (CPIH, CPI), wage growth (AWE), and employment 
+          statistics. The Bank of England's Statistical Interactive Database supplies interest rate data and inflation expectations through 
+          their REST API. Energy prices are sourced from Ofgem's data portal using automated CSV downloads, while food prices utilize the 
+          ONS's average prices dataset.
+        </p>
+        <p>
+          For international comparisons, the project integrates World Bank and OECD APIs, enabling cross-country inflation and wage analysis. 
+          Regional data combines ONS regional statistics with the English Indices of Multiple Deprivation. All data pipelines are automated 
+          using Python scripts that fetch, clean, and transform data daily. The automation includes error handling for API failures and data 
+          validation checks. Raw data is stored in JSON format on GitHub, with transformation scripts documented in accompanying Jupyter notebooks, 
+          ensuring complete reproducibility.
+        </p>
+      </section>
 
-    <p>
-      <a class="link" href="index.html">← Back to Home</a>
-    </p>
+      <!-- Chart 3: Regional Map -->
+      <section class="chart-section">
+        <h3>Chart 3: Regional Cost Variations Across UK</h3>
+        <div class="chart-wrapper">
+          <div id="chart3" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          Cost of living index by region, showing London and South East experiencing highest price pressures.
+        </p>
+      </section>
+
+      <!-- Chart 4: Energy Prices Interactive -->
+      <section class="chart-section">
+        <h3>Chart 4: Energy Price Cap Evolution</h3>
+        <div class="chart-wrapper">
+          <div id="chart4" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          Interactive chart showing the energy price cap changes and their impact on typical household bills.
+        </p>
+      </section>
+
+      <!-- TOOLS Section -->
+      <section class="project-section">
+        <h2>3. Tools & Analytical Approach</h2>
+        <p>
+          The analytical pipeline employs Python for data processing, with pandas handling data manipulation and requests managing API calls. 
+          A key challenge was harmonizing different data frequencies—converting weekly wage data to monthly for alignment with inflation series. 
+          This required developing custom interpolation functions that preserve seasonal patterns. The ONS API's pagination limits necessitated 
+          implementing recursive fetching for large datasets.
+        </p>
+        <p>
+          Visualization leverages Vega-Lite's declarative grammar, enabling responsive, interactive charts. Complex visualizations like the 
+          regional choropleth required merging ONS boundary data with economic indicators using GeoPandas. The energy price calculator 
+          presented unique challenges in modeling variable tariffs and government support schemes, solved by creating a parametric model 
+          that adjusts for household size and consumption patterns. All processing scripts are modularized for maintainability, with 
+          automated testing ensuring data quality. GitHub Actions runs daily updates, maintaining data freshness without manual intervention.
+        </p>
+      </section>
+
+      <!-- Chart 5: Food Basket -->
+      <section class="chart-section">
+        <h3>Chart 5: Essential Food Basket Price Index</h3>
+        <div class="chart-wrapper">
+          <div id="chart5" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          Tracking prices of essential food items reveals food inflation outpacing general CPI.
+        </p>
+      </section>
+
+      <!-- Chart 6: Housing Costs -->
+      <section class="chart-section">
+        <h3>Chart 6: Housing Costs by Region</h3>
+        <div class="chart-wrapper">
+          <div id="chart6" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          Rent and mortgage payment changes across UK regions, highlighting affordability crisis.
+        </p>
+      </section>
+
+      <!-- Chart 7: International Comparison -->
+      <section class="chart-section">
+        <h3>Chart 7: UK vs G7 Countries</h3>
+        <div class="chart-wrapper">
+          <div id="chart7" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          Comparative analysis showing UK's inflation trajectory relative to other major economies.
+        </p>
+      </section>
+
+      <!-- Chart 8: Projections -->
+      <section class="chart-section">
+        <h3>Chart 8: Future Scenarios Dashboard</h3>
+        <div class="chart-wrapper">
+          <div id="chart8" class="vega-container"></div>
+        </div>
+        <p class="chart-description">
+          Interactive projections allowing users to explore different economic scenarios.
+        </p>
+      </section>
+
+      <!-- CONCLUSIONS Section -->
+      <section class="project-section">
+        <h2>4. Conclusions</h2>
+        <p>
+          The analysis reveals a multifaceted crisis where energy prices acted as the initial catalyst, but broader supply chain disruptions 
+          and labor market tightness sustained inflationary pressures. Real wages fell by 2.5% at the crisis peak, with lower-income 
+          households experiencing effectively higher inflation due to spending patterns concentrated on essentials. Regional disparities 
+          are significant—London faces highest absolute costs, but Northern regions suffer greater relative impact given lower median incomes.
+        </p>
+        <p>
+          The interactive visualizations enable users to explore their specific circumstances, making abstract economic data personally relevant. 
+          This project provides a foundation for ongoing monitoring, with automated updates ensuring continued relevance. Future work could 
+          expand sectoral analysis and incorporate micro-level household survey data for deeper demographic insights.
+        </p>
+      </section>
+
+      <!-- Data & Code Links -->
+      <section class="project-links">
+        <h2>Resources & Replication</h2>
+        <div class="link-grid">
+          <a href="https://github.com/YOUR_USERNAME/YOUR_REPO" target="_blank" class="resource-link">
+            <span class="link-icon">📊</span>
+            <span class="link-text">GitHub Repository</span>
+          </a>
+          <a href="https://colab.research.google.com/drive/YOUR_COLAB_LINK" target="_blank" class="resource-link">
+            <span class="link-icon">🐍</span>
+            <span class="link-text">Python Analysis</span>
+          </a>
+          <a href="data/README.md" target="_blank" class="resource-link">
+            <span class="link-icon">📝</span>
+            <span class="link-text">Data Documentation</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer__grid">
+    <div class="container footer__grid footer__grid--centered">
       <div>
-        <p>Contact: <a href="mailto:yolwin.pariaton@example.com">yolwin.pariaton@example.com</a></p>
+        <h3 class="footer__title">Contact</h3>
+        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
       <div>
-        <p>© <span id="year"></span> Yolwin Pariaton</p>
+        <h3 class="footer__title">About</h3>
+        <p>LSE MPA Data Science for Public Policy</p>
+        <p>© 2025 Yolwin Pariaton</p>
       </div>
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/project-charts.js"></script>
 </body>
 </html>
