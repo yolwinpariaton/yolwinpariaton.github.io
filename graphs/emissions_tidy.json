@@ -1,57 +1,430 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Top 5 greenhouse gas emitters in 1970 (lollipop chart, Mt CO2-eq)",
+  "title": {
+    "text": "Global Greenhouse Gas Emissions Evolution",
+    "subtitle": "Interactive exploration of top emitters from 1970 to present",
+    "fontSize": 18,
+    "fontWeight": "bold",
+    "anchor": "start",
+    "color": "#2c3e50",
+    "subtitleFontSize": 14,
+    "subtitleColor": "#7f8c8d"
+  },
   "data": {
     "url": "../data/emissions_tidy.csv",
-    "format": { "type": "csv" }
+    "format": {"type": "csv"}
   },
-  "transform": [
-    { "filter": "datum.Year == 1970" },
+  "params": [
     {
-      "window": [{ "op": "rank", "as": "rank" }],
-      "sort": [{ "field": "Emissions", "order": "descending" }]
+      "name": "yearSelect",
+      "value": 1970,
+      "bind": {
+        "input": "range",
+        "min": 1970,
+        "max": 2020,
+        "step": 5,
+        "name": "Select Year: "
+      }
     },
-    { "filter": "datum.rank <= 5" },
-    { "calculate": "datum.Emissions / 1000", "as": "Emissions_Mt" },
-    { "calculate": "format(datum.Emissions_Mt, ',.1f') + ' Mt'", "as": "Label_Mt" }
-  ],
-  "layer": [
     {
-      "mark": { "type": "bar", "cornerRadiusEnd": 6 },
-      "encoding": {
-        "y": {
-          "field": "Country",
-          "type": "nominal",
-          "sort": "-x",
-          "title": null
+      "name": "topN",
+      "value": 10,
+      "bind": {
+        "input": "select",
+        "options": [5, 10, 15, 20],
+        "labels": ["Top 5", "Top 10", "Top 15", "Top 20"],
+        "name": "Number of Countries: "
+      }
+    },
+    {
+      "name": "chartType",
+      "value": "bar",
+      "bind": {
+        "input": "radio",
+        "options": ["bar", "lollipop", "bubble"],
+        "labels": ["Bar Chart", "Lollipop", "Bubble"],
+        "name": "Chart Type: "
+      }
+    },
+    {
+      "name": "showChange",
+      "value": false,
+      "bind": {
+        "input": "checkbox",
+        "name": "Show % Change from 1970 "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Year == yearSelect"},
+    {"calculate": "datum.Emissions / 1000", "as": "Emissions_Mt"},
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "Emissions_Mt", "order": "descending"}]
+    },
+    {"filter": "datum.rank <= topN"},
+    {
+      "lookup": "Country",
+      "from": {
+        "data": {
+          "url": "../data/emissions_tidy.csv",
+          "format": {"type": "csv"}
         },
-        "x": {
-          "field": "Emissions_Mt",
-          "type": "quantitative",
-          "title": "Greenhouse Gas Emissions (Mt CO₂-eq)",
-          "axis": { "format": ",.0f" }
-        },
-        "tooltip": [
-          { "field": "Country", "type": "nominal", "title": "Country" },
-          { "field": "Year", "type": "quantitative", "title": "Year" },
-          { "field": "Emissions", "type": "quantitative", "title": "Emissions (kt CO₂-eq)", "format": ",.0f" },
-          { "field": "Emissions_Mt", "type": "quantitative", "title": "Emissions (Mt CO₂-eq)", "format": ",.1f" }
+        "key": "Country",
+        "fields": ["Emissions"],
+        "as": ["Emissions_1970"],
+        "transform": [
+          {"filter": "datum.Year == 1970"}
         ]
       }
     },
     {
-      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 6 },
-      "encoding": {
-        "y": { "field": "Country", "type": "nominal", "sort": "-x" },
-        "x": { "field": "Emissions_Mt", "type": "quantitative" },
-        "text": { "field": "Label_Mt", "type": "nominal" }
-      }
+      "calculate": "datum.Emissions_1970 ? ((datum.Emissions - datum.Emissions_1970) / datum.Emissions_1970) * 100 : 0",
+      "as": "change_pct"
+    },
+    {
+      "calculate": "datum.rank == 1 ? '🥇' : datum.rank == 2 ? '🥈' : datum.rank == 3 ? '🥉' : ''",
+      "as": "medal"
+    },
+    {
+      "calculate": "datum.Country + ' ' + datum.medal",
+      "as": "country_label"
+    },
+    {
+      "calculate": "format(datum.Emissions_Mt, ',.0f') + ' Mt CO₂'",
+      "as": "emissions_label"
+    },
+    {
+      "calculate": "datum.change_pct > 0 ? '+' + format(datum.change_pct, '.1f') + '%' : format(datum.change_pct, '.1f') + '%'",
+      "as": "change_label"
+    },
+    {
+      "calculate": "datum.Emissions_Mt / 50",
+      "as": "bubble_size"
     }
   ],
-  "width": 400,
-  "height": 300,
+  "vconcat": [
+    {
+      "width": 700,
+      "height": 450,
+      "layer": [
+        {
+          "transform": [{"filter": "chartType == 'bar'"}],
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "cornerRadiusEnd": 4,
+                "opacity": 0.9,
+                "tooltip": true
+              },
+              "encoding": {
+                "x": {
+                  "field": "Emissions_Mt",
+                  "type": "quantitative",
+                  "title": "Greenhouse Gas Emissions (Mt CO₂-eq)",
+                  "axis": {
+                    "format": ",.0f",
+                    "labelAngle": 0,
+                    "gridOpacity": 0.3
+                  },
+                  "scale": {"domain": [0, {"expr": "chartType == 'bubble' ? 15000 : null"}]}
+                },
+                "y": {
+                  "field": "country_label",
+                  "type": "nominal",
+                  "sort": "-x",
+                  "title": null,
+                  "axis": {
+                    "labelFontSize": 12,
+                    "labelLimit": 200
+                  }
+                },
+                "color": {
+                  "field": "Emissions_Mt",
+                  "type": "quantitative",
+                  "scale": {
+                    "scheme": "redyellowgreen",
+                    "reverse": true
+                  },
+                  "legend": {
+                    "title": "Emissions (Mt)",
+                    "orient": "right",
+                    "format": ",.0f"
+                  }
+                },
+                "tooltip": [
+                  {"field": "Country", "title": "Country"},
+                  {"field": "rank", "title": "Rank"},
+                  {"field": "Emissions_Mt", "title": "Emissions", "format": ",.1f"},
+                  {"field": "change_pct", "title": "Change from 1970", "format": ".1f%"},
+                  {"field": "Year", "title": "Year"}
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "middle",
+                "dx": 5,
+                "fontSize": 11,
+                "fontWeight": "bold"
+              },
+              "encoding": {
+                "x": {"field": "Emissions_Mt", "type": "quantitative"},
+                "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
+                "text": {"field": "emissions_label"},
+                "color": {"value": "white"}
+              }
+            },
+            {
+              "transform": [{"filter": "showChange"}],
+              "mark": {
+                "type": "text",
+                "align": "right",
+                "baseline": "middle",
+                "dx": -5,
+                "fontSize": 10,
+                "fontStyle": "italic"
+              },
+              "encoding": {
+                "x": {"value": 0},
+                "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
+                "text": {"field": "change_label"},
+                "color": {
+                  "condition": {
+                    "test": "datum.change_pct > 0",
+                    "value": "#e74c3c"
+                  },
+                  "value": "#27ae60"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "transform": [{"filter": "chartType == 'lollipop'"}],
+          "layer": [
+            {
+              "mark": {
+                "type": "rule",
+                "strokeWidth": 2,
+                "opacity": 0.7
+              },
+              "encoding": {
+                "x": {"field": "Emissions_Mt", "type": "quantitative"},
+                "x2": {"value": 0},
+                "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
+                "color": {
+                  "field": "Emissions_Mt",
+                  "type": "quantitative",
+                  "scale": {"scheme": "viridis"}
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "point",
+                "size": 200,
+                "filled": true,
+                "opacity": 0.9
+              },
+              "encoding": {
+                "x": {
+                  "field": "Emissions_Mt",
+                  "type": "quantitative",
+                  "title": "Greenhouse Gas Emissions (Mt CO₂-eq)",
+                  "axis": {"format": ",.0f"}
+                },
+                "y": {
+                  "field": "country_label",
+                  "type": "nominal",
+                  "sort": "-x",
+                  "title": null
+                },
+                "color": {
+                  "field": "Emissions_Mt",
+                  "type": "quantitative",
+                  "scale": {"scheme": "viridis"}
+                },
+                "tooltip": [
+                  {"field": "Country", "title": "Country"},
+                  {"field": "rank", "title": "Rank"},
+                  {"field": "Emissions_Mt", "title": "Emissions (Mt)", "format": ",.1f"},
+                  {"field": "change_pct", "title": "Change from 1970", "format": ".1f%"}
+                ]
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "left",
+                "dx": 15,
+                "fontSize": 11
+              },
+              "encoding": {
+                "x": {"field": "Emissions_Mt", "type": "quantitative"},
+                "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
+                "text": {"field": "emissions_label"}
+              }
+            }
+          ]
+        },
+        {
+          "transform": [{"filter": "chartType == 'bubble'"}],
+          "mark": {
+            "type": "circle",
+            "opacity": 0.8,
+            "stroke": "white",
+            "strokeWidth": 2
+          },
+          "encoding": {
+            "x": {
+              "field": "rank",
+              "type": "quantitative",
+              "title": "Ranking Position",
+              "axis": {
+                "tickMinStep": 1,
+                "labelAngle": 0
+              },
+              "scale": {"reverse": true, "domain": [0, {"expr": "topN + 1"}]}
+            },
+            "y": {
+              "field": "Emissions_Mt",
+              "type": "quantitative",
+              "title": "Emissions (Mt CO₂-eq)",
+              "scale": {"type": "log"}
+            },
+            "size": {
+              "field": "Emissions_Mt",
+              "type": "quantitative",
+              "scale": {"range": [100, 2000]},
+              "legend": null
+            },
+            "color": {
+              "field": "Country",
+              "type": "nominal",
+              "scale": {"scheme": "tableau20"},
+              "legend": {
+                "title": "Country",
+                "columns": 2,
+                "symbolSize": 100
+              }
+            },
+            "tooltip": [
+              {"field": "Country", "title": "Country"},
+              {"field": "rank", "title": "Rank"},
+              {"field": "Emissions_Mt", "title": "Emissions", "format": ",.1f"},
+              {"field": "change_pct", "title": "Change from 1970", "format": ".1f%"}
+            ]
+          }
+        },
+        {
+          "transform": [
+            {"filter": "chartType == 'bubble'"},
+            {"filter": "datum.rank <= 3"}
+          ],
+          "mark": {
+            "type": "text",
+            "fontSize": 11,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "x": {"field": "rank", "type": "quantitative"},
+            "y": {"field": "Emissions_Mt", "type": "quantitative"},
+            "text": {"field": "Country"}
+          }
+        }
+      ]
+    },
+    {
+      "width": 700,
+      "height": 100,
+      "title": {
+        "text": "Historical Context: Total Global Emissions",
+        "fontSize": 14,
+        "anchor": "start"
+      },
+      "layer": [
+        {
+          "data": {
+            "url": "../data/emissions_tidy.csv",
+            "format": {"type": "csv"}
+          },
+          "transform": [
+            {
+              "aggregate": [
+                {"op": "sum", "field": "Emissions", "as": "total_emissions"}
+              ],
+              "groupby": ["Year"]
+            },
+            {"calculate": "datum.total_emissions / 1000", "as": "total_Mt"}
+          ],
+          "mark": {
+            "type": "area",
+            "line": {"color": "#3498db"},
+            "color": {
+              "gradient": "linear",
+              "stops": [
+                {"offset": 0, "color": "#3498db"},
+                {"offset": 1, "color": "#ecf0f1"}
+              ]
+            },
+            "opacity": 0.6
+          },
+          "encoding": {
+            "x": {
+              "field": "Year",
+              "type": "quantitative",
+              "title": null,
+              "axis": {"format": "d", "labelAngle": 0}
+            },
+            "y": {
+              "field": "total_Mt",
+              "type": "quantitative",
+              "title": "Total Global Emissions (Mt)",
+              "axis": {"format": ",.0f"}
+            }
+          }
+        },
+        {
+          "data": {"values": [{}]},
+          "transform": [
+            {"calculate": "yearSelect", "as": "selected_year"}
+          ],
+          "mark": {
+            "type": "rule",
+            "strokeWidth": 3,
+            "color": "#e74c3c",
+            "strokeDash": [5, 5]
+          },
+          "encoding": {
+            "x": {"field": "selected_year", "type": "quantitative"}
+          }
+        }
+      ]
+    }
+  ],
   "config": {
-    "axis": { "labelFontSize": 12, "titleFontSize": 13 },
-    "view": { "stroke": "transparent" }
+    "view": {
+      "stroke": "transparent",
+      "continuousWidth": 700,
+      "continuousHeight": 450
+    },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 13,
+      "titleFontWeight": "bold",
+      "gridOpacity": 0.2
+    },
+    "legend": {
+      "labelFontSize": 10,
+      "titleFontSize": 11
+    },
+    "title": {
+      "fontSize": 14,
+      "fontWeight": "bold"
+    }
   }
 }
