@@ -183,3 +183,8 @@ vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
 // =============================
 vegaEmbed("#interactive1", "graphs/interactive_economy.json", embedStandard);
 vegaEmbed("#interactive2", "graphs/interactive_scatter.json", embedStandard);
+
+// =============================
+// Task 10: Advanced Analytics
+// =============================
+vegaEmbed("#task10a", "graphs/task10_histogram.json", { actions: false, renderer: "svg" });

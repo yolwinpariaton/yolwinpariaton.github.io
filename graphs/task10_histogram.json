@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Task 10A — Distribution of a UK Indicator (Histogram + Mean)",
+    "subtitle": "Histogram of yearly values from Task 6 data; includes mean reference line and decade filter.",
+    "anchor": "start"
+  },
+  "data": {
+    "url": "graphs/dashboard1.json",
+    "format": { "type": "json" }
+  },
+  "transform": [
+    { "calculate": "toDate(datum.date + '-01-01')", "as": "year_date" },
+    { "calculate": "year(datum.year_date)", "as": "year_num" },
+    {
+      "calculate": "datum.year_num < 2010 ? '2000–2009' : datum.year_num < 2020 ? '2010–2019' : '2020–2023'",
+      "as": "decade"
+    },
+    { "filter": "isValid(datum.value) && datum.value != null" }
+  ],
+  "params": [
+    {
+      "name": "decade_select",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": ["All", "2000–2009", "2010–2019", "2020–2023"],
+        "name": "Decade: "
+      }
+    }
+  ],
+  "transform": [
+    { "calculate": "toDate(datum.date + '-01-01')", "as": "year_date" },
+    { "calculate": "year(datum.year_date)", "as": "year_num" },
+    {
+      "calculate": "datum.year_num < 2010 ? '2000–2009' : datum.year_num < 2020 ? '2010–2019' : '2020–2023'",
+      "as": "decade"
+    },
+    { "filter": "isValid(datum.value) && datum.value != null" },
+    { "filter": "decade_select == 'All' || datum.decade == decade_select" }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "bar", "tooltip": true },
+      "encoding": {
+        "x": {
+          "field": "value",
+          "type": "quantitative",
+          "bin": { "maxbins": 18 },
+          "title": "Value (binned)"
+        },
+        "y": { "aggregate": "count", "type": "quantitative", "title": "Count" },
+        "tooltip": [
+          { "field": "indicator", "type": "nominal", "title": "Indicator" },
+          { "field": "decade", "type": "nominal", "title": "Decade" },
+          {
+            "field": "value",
+            "type": "quantitative",
+            "title": "Value (example)",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [{ "aggregate": [{ "op": "mean", "field": "value", "as": "mean_value" }] }],
+      "mark": { "type": "rule", "strokeWidth": 2 },
+      "encoding": {
+        "x": { "field": "mean_value", "type": "quantitative" },
+        "tooltip": [{ "field": "mean_value", "type": "quantitative", "title": "Mean", "format": ".2f" }]
+      }
+    },
+    {
+      "transform": [{ "aggregate": [{ "op": "mean", "field": "value", "as": "mean_value" }] }],
+      "mark": { "type": "text", "align": "left", "dx": 6, "dy": -130 },
+      "encoding": {
+        "x": { "field": "mean_value", "type": "quantitative" },
+        "text": { "field": "mean_value", "type": "quantitative", "format": ".2f" }
+      }
+    }
+  ],
+  "width": "container",
+  "height": 320,
+  "config": {
+    "view": { "stroke": "transparent" },
+    "axis": { "labelFontSize": 11, "titleFontSize": 12 }
+  }
+}
