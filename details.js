@@ -5,6 +5,14 @@ const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300
 const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
 const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
 
+// Task 7 map options - with explicit sizing
+const mapOptions = { 
+  actions: false, 
+  renderer: "svg",
+  width: 380,
+  height: 400
+};
+
 // -----------------------------
 // Tasks 1–5
 // -----------------------------
@@ -80,32 +88,31 @@ async function renderDashboard() {
 renderDashboard();
 
 // =============================
-// Task 7: Maps
+// Task 7: Maps - Fixed with proper sizing
 // =============================
-// IMPORTANT: do not force width/height here; let the map JSON control sizing
-const mapEmbedOptions = { actions: false, renderer: "svg" };
-
-vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapEmbedOptions)
+vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", mapOptions)
   .catch(err => {
     console.error("Map Scotland error:", err);
     const el = document.querySelector("#map_scotland");
-    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Scotland map failed to load.</p>`;
+    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Scotland map failed to load. Check console for details.</p>`;
   });
 
-vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapEmbedOptions)
+vegaEmbed("#map_wales", "graphs/wales_coordinates.json", mapOptions)
   .catch(err => {
     console.error("Map Wales error:", err);
     const el = document.querySelector("#map_wales");
-    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Wales map failed to load.</p>`;
+    if (el) el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Wales map failed to load. Check console for details.</p>`;
   });
 
 // =============================
-// Task 8
+// Task 8: Big Data
 // =============================
 vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
 vegaEmbed("#vis_beer",  "graphs/price_beer.json",  embedStandard);
 
+// =============================
 // Task 9: Interactive Charts
+// =============================
 const interactiveOptions = {
   actions: false,
   renderer: "svg"
