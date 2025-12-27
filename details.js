@@ -76,27 +76,99 @@ async function renderDashboard() {
 renderDashboard();
 
 // =============================
-// Task 7: Maps - Use files from your repo
+// Task 7: Maps - Inline specifications
 // =============================
-// Make sure scotland_choropleth.json and wales_coordinates.json exist in your graphs folder
-vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", embedStandard)
+
+// Scotland Choropleth Map Specification
+const scotlandMapSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 380,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
+    "format": {"type": "topojson", "feature": "lad"}
+  },
+  "projection": {"type": "mercator"},
+  "mark": {
+    "type": "geoshape",
+    "fill": "lightblue",
+    "stroke": "white",
+    "strokeWidth": 0.5
+  },
+  "encoding": {
+    "tooltip": [
+      {"field": "properties.LAD13NM", "type": "nominal", "title": "Council Area"}
+    ]
+  }
+};
+
+// Wales Coordinates Map Specification  
+const walesMapSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 380,
+  "height": 350,
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
+        "format": {"type": "topojson", "feature": "lad"}
+      },
+      "projection": {"type": "mercator"},
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8f4f8",
+        "stroke": "#333",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"city": "Cardiff", "lat": 51.4816, "lon": -3.1791, "population": 362400},
+          {"city": "Swansea", "lat": 51.6214, "lon": -3.9436, "population": 246466},
+          {"city": "Newport", "lat": 51.5842, "lon": -2.9977, "population": 156447}
+        ]
+      },
+      "projection": {"type": "mercator"},
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "white"
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "size": {
+          "field": "population",
+          "type": "quantitative",
+          "scale": {"range": [100, 500]}
+        },
+        "color": {"value": "red"},
+        "tooltip": [
+          {"field": "city", "title": "City"},
+          {"field": "population", "title": "Population", "format": ","}
+        ]
+      }
+    }
+  ]
+};
+
+// Embed the maps
+vegaEmbed("#map_scotland", scotlandMapSpec, { actions: false, renderer: "svg" })
   .catch(err => {
     console.error("Scotland map error:", err);
-    // If the file doesn't exist, show a placeholder
     document.querySelector("#map_scotland").innerHTML = 
       `<div style="padding:20px; text-align:center; color:#666;">
         <p>Scotland map not loading.</p>
-        <p style="font-size:12px;">Check that scotland_choropleth.json exists in graphs folder</p>
       </div>`;
   });
 
-vegaEmbed("#map_wales", "graphs/wales_coordinates.json", embedStandard)
+vegaEmbed("#map_wales", walesMapSpec, { actions: false, renderer: "svg" })
   .catch(err => {
     console.error("Wales map error:", err);
     document.querySelector("#map_wales").innerHTML = 
       `<div style="padding:20px; text-align:center; color:#666;">
         <p>Wales map not loading.</p>
-        <p style="font-size:12px;">Check that wales_coordinates.json exists in graphs folder</p>
       </div>`;
   });
 
@@ -107,7 +179,7 @@ vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
 vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
 
 // =============================
-// Task 9: Interactive Charts - Same size as others
+// Task 9: Interactive Charts
 // =============================
 vegaEmbed("#interactive1", "graphs/interactive_economy.json", embedStandard);
 vegaEmbed("#interactive2", "graphs/interactive_scatter.json", embedStandard);

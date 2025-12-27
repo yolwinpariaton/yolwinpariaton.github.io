@@ -247,18 +247,19 @@ a:hover{ text-decoration: underline; }
   min-height: 320px;
 }
 
-/* Full width wrapper */
-.chart-wrapper--full{
-  margin-top: 20px;
-  display: block;
-  min-height: auto;
-}
-
-/* Center wrapper for Task 5 */
+/* Center wrapper for Tasks 4, 5, 9 */
 .chart-wrapper--center{
   max-width: 500px;
   margin: 20px auto;
   display: block;
+}
+
+/* Wide wrapper for Task 4 improved chart */
+.chart-wrapper--wide{
+  max-width: 900px;
+  margin: 20px auto;
+  display: block;
+  min-height: auto;
 }
 
 .chart-scroll{
@@ -277,6 +278,12 @@ a:hover{ text-decoration: underline; }
 
 .vega-container--large{
   min-height: 400px;
+}
+
+/* Map container for Task 7 */
+.map-container{
+  min-height: 350px;
+  background: #f9f9f9;
 }
 
 /* Keep Vega responsive without breaking geo-projections */
@@ -298,13 +305,15 @@ a:hover{ text-decoration: underline; }
   display: block;
 }
 
-/* Task 5 centering */
+/* Task centering for 4, 5, 9 */
 .task-center{
   text-align: center;
 }
 
 .task-center h3{
   margin: 30px 0 15px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .centered-list{
