@@ -1,45 +1,26 @@
 // =============================
-// Robust Vega Embed Helpers
+// Vega Embed Helpers / Options
 // =============================
-
-// Base embed options
 const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
 const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
 const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
 
-// Bigger embeds for Task 9 and Task 10A (only these)
-const embedBigger   = { actions: false, renderer: "svg", width: 650, height: 380 };
-
-// Safe embed: checks element exists + catches errors so one failure won't stop the rest
-function safeEmbed(targetSelector, specOrUrl, options) {
-  const el = document.querySelector(targetSelector);
-  if (!el) return; // container not on this page
-  return vegaEmbed(targetSelector, specOrUrl, options).catch((err) => {
-    console.error(`Vega embed failed for ${targetSelector}:`, err);
-    el.innerHTML = `
-      <div style="padding:14px; text-align:center; color:#666; font-size:13px;">
-        <p style="margin:0;"><strong>Chart failed to load.</strong></p>
-      </div>`;
-  });
-}
-
-// =============================
+// -----------------------------
 // Tasks 1–5
-// =============================
-safeEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
-safeEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
+// -----------------------------
+vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
+vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
+vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
+vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
 
-safeEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
-safeEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
+vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
+vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 
-safeEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
-safeEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
+vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
+vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-safeEmbed("#vis7", "graphs/financial_times.json", embedStandard);
-safeEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
-
-safeEmbed("#vis_api", "graphs/api_chart.json", { actions: false, renderer: "svg", width: 450, height: 300 });
-safeEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
+vegaEmbed("#vis_api", "graphs/api_chart.json", { actions: false, renderer: "svg", width: 450, height: 300 });
+vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
 
 // =============================
 // Task 6: Dashboard
@@ -50,9 +31,7 @@ function dashboardSpec(dataUrl, chartTitle) {
   return {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "data": { "url": dataUrl, "format": { "type": "json" } },
-    "transform": [
-      { "calculate": "toDate(datum.date + '-01-01')", "as": "year" }
-    ],
+    "transform": [{ "calculate": "toDate(datum.date + '-01-01')", "as": "year" }],
     "title": { "text": chartTitle || "", "fontSize": 12, "anchor": "start", "offset": 6 },
     "mark": { "type": "line", "point": true },
     "encoding": {
@@ -97,24 +76,116 @@ async function renderDashboard() {
 renderDashboard();
 
 // =============================
-// Task 7: Maps (use your JSON files in graphs/)
+// Task 7: Maps - Inline specifications
+// FIX: martinjc files are GeoJSON, so use format.type="json" and property="features"
 // =============================
-safeEmbed("#map_scotland", "graphs/scotland_choropleth.json", { actions: false, renderer: "svg" });
-safeEmbed("#map_wales", "graphs/wales_coordinates.json", { actions: false, renderer: "svg" });
+
+// Scotland Choropleth Map Specification
+const scotlandMapSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 380,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
+    "format": { "type": "json", "property": "features" }
+  },
+  "projection": { "type": "mercator" },
+  "mark": {
+    "type": "geoshape",
+    "fill": "lightblue",
+    "stroke": "white",
+    "strokeWidth": 0.5
+  },
+  "encoding": {
+    "tooltip": [
+      { "field": "properties.LAD13NM", "type": "nominal", "title": "Council Area" }
+    ]
+  }
+};
+
+// Wales Coordinates Map Specification
+const walesMapSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 380,
+  "height": 350,
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
+        "format": { "type": "json", "property": "features" }
+      },
+      "projection": { "type": "mercator" },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8f4f8",
+        "stroke": "#333",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "values": [
+          { "city": "Cardiff", "lat": 51.4816, "lon": -3.1791, "population": 362400 },
+          { "city": "Swansea", "lat": 51.6214, "lon": -3.9436, "population": 246466 },
+          { "city": "Newport", "lat": 51.5842, "lon": -2.9977, "population": 156447 }
+        ]
+      },
+      "projection": { "type": "mercator" },
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "white"
+      },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
+        "size": {
+          "field": "population",
+          "type": "quantitative",
+          "scale": { "range": [100, 500] }
+        },
+        "color": { "value": "red" },
+        "tooltip": [
+          { "field": "city", "title": "City" },
+          { "field": "population", "title": "Population", "format": "," }
+        ]
+      }
+    }
+  ]
+};
+
+// Embed the maps
+vegaEmbed("#map_scotland", scotlandMapSpec, { actions: false, renderer: "svg" })
+  .catch(err => {
+    console.error("Scotland map error:", err);
+    document.querySelector("#map_scotland").innerHTML =
+      `<div style="padding:20px; text-align:center; color:#666;">
+        <p>Scotland map not loading.</p>
+      </div>`;
+  });
+
+vegaEmbed("#map_wales", walesMapSpec, { actions: false, renderer: "svg" })
+  .catch(err => {
+    console.error("Wales map error:", err);
+    document.querySelector("#map_wales").innerHTML =
+      `<div style="padding:20px; text-align:center; color:#666;">
+        <p>Wales map not loading.</p>
+      </div>`;
+  });
 
 // =============================
 // Task 8: Big Data
 // =============================
-safeEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
-safeEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
+vegaEmbed("#vis_bread", "graphs/price_bread.json", embedStandard);
+vegaEmbed("#vis_beer", "graphs/price_beer.json", embedStandard);
 
 // =============================
-// Task 9: Interactive Charts (bigger)
+// Task 9: Interactive Charts
 // =============================
-safeEmbed("#interactive1", "graphs/interactive_economy.json", embedBigger);
-safeEmbed("#interactive2", "graphs/interactive_scatter.json", embedBigger);
+vegaEmbed("#interactive1", "graphs/interactive_economy.json", embedStandard);
+vegaEmbed("#interactive2", "graphs/interactive_scatter.json", embedStandard);
 
 // =============================
-// Task 10: Advanced Analytics (bigger)
+// Task 10: Advanced Analytics
 // =============================
-safeEmbed("#task10a", "graphs/task10_histogram.json", embedBigger);
+vegaEmbed("#task10a", "graphs/task10_histogram.json", { actions: false, renderer: "svg" });
