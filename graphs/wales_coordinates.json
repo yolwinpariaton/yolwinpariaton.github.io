@@ -7,7 +7,11 @@
   },
   "width": 380,
   "height": 400,
-  "projection": { "type": "mercator" },
+  "projection": { 
+    "type": "mercator",
+    "center": [-3.7, 52.3],
+    "scale": 6000 
+  },
   "layer": [
     {
       "data": {
@@ -16,8 +20,8 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#e8f4f8",
-        "stroke": "#333",
+        "fill": "#f0f0f0",
+        "stroke": "#888",
         "strokeWidth": 0.5
       }
     },
@@ -53,14 +57,14 @@
         "size": {
           "field": "population",
           "type": "quantitative",
-          "scale": { "range": [50, 500] },
+          "scale": { "range": [20, 1000] },
           "title": "Population"
         },
         "color": {
           "field": "population",
           "type": "quantitative",
-          "scale": { "scheme": "orangered" },
-          "title": "Population"
+          "scale": { "scheme": "reds" },
+          "legend": null
         },
         "tooltip": [
           { "field": "city", "type": "nominal", "title": "City" },
