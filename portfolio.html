@@ -8,6 +8,7 @@
   <meta name="description" content="Portfolio page for course exercises and assignments for Automated Data Collection at LSE." />
   <meta name="author" content="Yolwin Pariaton" />
 
+  <!-- IMPORTANT: this must match your repo structure: /css/style.css -->
   <link rel="stylesheet" href="css/style.css" />
 
   <!-- Vega libraries -->
@@ -35,11 +36,12 @@
       </ul>
     </nav>
 
+    <!-- HERO (background image is defined in css/style.css: .hero--portfolio) -->
     <section class="hero hero--portfolio" aria-label="Portfolio intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">Portfolio</h1>
-        <p class="hero__subtitle">Data Science & Visualisation Tasks</p>
+        <p class="hero__subtitle">Data Science &amp; Visualisation Tasks</p>
       </div>
     </section>
   </header>
@@ -83,7 +85,7 @@
           </div>
         </section>
 
-        <!-- TASK 4 - Changed to vertical layout -->
+        <!-- TASK 4 -->
         <section class="task task-center">
           <h2>Task 4: Replication. Re-create, then improve, someone else's chart</h2>
           <p>
@@ -135,7 +137,7 @@
           </div>
 
           <p style="text-align: center;">
-            <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" style="font-weight: bold;">
+            <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" rel="noopener" style="font-weight: bold;">
               Google Colab notebook (scraper and processing)
             </a>
           </p>
@@ -151,7 +153,7 @@
           <p>
             <strong>Data source:</strong> World Bank API |
             <strong>Period:</strong> 2000-2023 |
-            <a href="https://colab.research.google.com/drive/1uNzblqPUEmysdTm3UBp0k3KuNogf3oSS?authuser=0#scrollTo=BLZpW2L-EUDo" target="_blank" style="font-weight: bold;">📊 Google Colab Notebook</a>
+            <a href="https://colab.research.google.com/drive/1uNzblqPUEmysdTm3UBp0k3KuNogf3oSS?authuser=0#scrollTo=BLZpW2L-EUDo" target="_blank" rel="noopener" style="font-weight: bold;">📊 Google Colab Notebook</a>
           </p>
 
           <div class="dashboard-grid">
@@ -198,12 +200,8 @@
           </p>
 
           <div class="charts-row">
-            <div class="chart-wrapper">
-              <div id="vis_bread" class="vega-container"></div>
-            </div>
-            <div class="chart-wrapper">
-              <div id="vis_beer" class="vega-container"></div>
-            </div>
+            <div class="chart-wrapper"><div id="vis_bread" class="vega-container"></div></div>
+            <div class="chart-wrapper"><div id="vis_beer" class="vega-container"></div></div>
           </div>
 
           <div style="text-align: center; margin-top: 15px;">
@@ -213,7 +211,7 @@
           </div>
         </section>
 
-        <!-- TASK 9 - Changed to vertical layout -->
+        <!-- TASK 9 -->
         <section class="task task-center">
           <h2>Task 9: Two interactive charts</h2>
           <p>
@@ -236,6 +234,7 @@
             </p>
           </div>
         </section>
+
         <!-- TASK 10 -->
         <section class="task task-center">
           <h2>Task 10: Advanced Analysis and Machine Learning</h2>
@@ -248,7 +247,7 @@
             <div id="task10a" class="vega-container"></div>
           </div>
         </section>
-        
+
         <!-- TASK 10B -->
         <section class="task task-center">
           <h2>Task 10B: Machine Learning</h2>
