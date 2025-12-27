@@ -15,7 +15,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Embeds -->
+  <!-- Embeds (FIXED PATH) -->
   <script defer src="details.js"></script>
 </head>
 
@@ -123,40 +123,17 @@
             <div id="vis_api" class="vega-container"></div>
           </div>
 
-          <p><strong>API Documentation:</strong></p>
-          <ul class="centered-list">
-            <li><strong>Base URL:</strong> <code>https://api.worldbank.org/v2</code></li>
-            <li><strong>Endpoint:</strong> <code>/country/GBR/indicator/FP.CPI.TOTL.ZG</code></li>
-            <li><strong>Parameters:</strong> <code>?format=json&amp;per_page=200</code></li>
-          </ul>
-
           <h3>Part B: Scraped chart</h3>
           <p>This chart uses emissions data scraped from Wikipedia, cleaned into tidy format.</p>
 
           <div class="chart-wrapper chart-wrapper--center">
             <div id="vis_scrape" class="vega-container"></div>
           </div>
-
-          <p style="text-align: center;">
-            <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" rel="noopener" style="font-weight: bold;">
-              Google Colab notebook (scraper and processing)
-            </a>
-          </p>
         </section>
 
         <!-- TASK 6 -->
         <section class="task">
           <h2>Task 6: Loops. Build a dashboard</h2>
-          <p>
-            UK economic indicators dashboard: 6 time series downloaded via Python loop from World Bank API, embedded via JavaScript loop.
-          </p>
-
-          <p>
-            <strong>Data source:</strong> World Bank API |
-            <strong>Period:</strong> 2000-2023 |
-            <a href="https://colab.research.google.com/drive/1uNzblqPUEmysdTm3UBp0k3KuNogf3oSS?authuser=0#scrollTo=BLZpW2L-EUDo" target="_blank" rel="noopener" style="font-weight: bold;">📊 Google Colab Notebook</a>
-          </p>
-
           <div class="dashboard-grid">
             <div class="dashboard-chart" id="dash1"></div>
             <div class="dashboard-chart" id="dash2"></div>
@@ -170,10 +147,6 @@
         <!-- TASK 7 -->
         <section class="task">
           <h2>Task 7: Maps. Base maps and choropleths</h2>
-          <p>
-            Two maps showing different visualization techniques: a choropleth map of Scotland showing population density,
-            and a coordinates map of Wales showing major cities.
-          </p>
 
           <div class="charts-row">
             <div class="chart-wrapper">
@@ -184,20 +157,11 @@
               <div id="map_wales" class="vega-container map-container"></div>
             </div>
           </div>
-
-          <p style="margin-top: 15px; font-size: 14px; color: #666;">
-            <strong>Data sources:</strong> Population data from 2021 UK Census |
-            <strong>TopoJSON/GeoJSON:</strong> UK-GeoJSON repository by martinjc
-          </p>
         </section>
 
         <!-- TASK 8 -->
         <section class="task">
           <h2>Task 8: Big Data. Extracting a story from millions of prices</h2>
-          <p style="text-align: center;">
-            I processed the LRPD (40M+ rows) by filtering for specific staple items and collapsing thousands of price quotes into monthly averages. This reveals long-term inflation trends for a supermarket staple vs. a service-based luxury.
-          </p>
-
           <div class="charts-row">
             <div class="chart-wrapper"><div id="vis_bread" class="vega-container"></div></div>
             <div class="chart-wrapper"><div id="vis_beer" class="vega-container"></div></div>
@@ -207,17 +171,12 @@
         <!-- TASK 9 -->
         <section class="task task-center">
           <h2>Task 9: Two interactive charts</h2>
-          <p>
-            Interactive visualizations allowing users to explore economic data through dropdowns, sliders, and dynamic filtering.
-          </p>
 
           <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
-            <h3 style="font-size: 14px; margin: 0 0 10px 0;">Economic Indicators Dashboard</h3>
             <div id="interactive1" class="vega-container vega-container--tall"></div>
           </div>
 
           <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
-            <h3 style="font-size: 14px; margin: 0 0 10px 0;">Correlation Explorer</h3>
             <div id="interactive2" class="vega-container vega-container--tall"></div>
           </div>
         </section>
@@ -225,45 +184,13 @@
         <!-- TASK 10 -->
         <section class="task task-center">
           <h2>Task 10: Advanced Analysis and Machine Learning</h2>
-          <p>
-            Part A uses an advanced analytic chart (a histogram of distributions) built from the Task 6 dataset.
-            The chart includes a mean reference line and an interactive decade filter.
-          </p>
-
           <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
             <div id="task10a" class="vega-container vega-container--tall"></div>
           </div>
         </section>
 
-        <!-- TASK 10B -->
-        <section class="task task-center">
-          <h2>Task 10B: Machine Learning</h2>
-
-          <p><strong>Model type:</strong> Supervised learning (Regression): Ridge regression and Random Forest regression.</p>
-
-          <p><strong>Data:</strong> Annual UK macroeconomic indicators (2000–2023) downloaded from the World Bank API.
-            Six indicator series are merged by year; inflation is the target, other indicators are predictors.</p>
-
-          <p><strong>Hypothesis:</strong> UK inflation is predictable from GDP growth, unemployment, and structural indicators,
-            with reasonable out-of-sample performance between 2000 and 2023.</p>
-
-          <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
-            <h3 style="font-size: 14px; margin: 0 0 10px 0;">Predictions (Test Period)</h3>
-            <img src="images/regression.png" alt="Model predictions vs actual inflation over test years" class="task-img task-img--big">
-          </div>
-
-          <div class="chart-wrapper chart-wrapper--center chart-wrapper--center-lg">
-            <h3 style="font-size: 14px; margin: 0 0 10px 0;">Feature Importance</h3>
-            <img src="images/features.png" alt="Feature importance from Ridge regression coefficients" class="task-img task-img--big">
-          </div>
-
-          <p style="text-align:center; font-weight:700;">
-            <a href="https://colab.research.google.com/drive/1ic0NW4OR0TT3jke-ZfRv-mv3RYdDJ1bP?usp=sharing" target="_blank" rel="noopener">Google Colab notebook (Task 10B)</a>
-          </p>
-        </section>
-
         <div class="back-top">
-          <a class="btn" href="#top">Back to top</a>
+          <a class="btn btn--flat" href="#top">Back to top</a>
         </div>
 
       </div>
