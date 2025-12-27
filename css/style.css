@@ -1,53 +1,28 @@
-/* Chart wrappers */
-.chart-wrapper{
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 320px;
-}
+// =============================
+// Vega Embed Helpers / Options
+// =============================
+const embedStandard = { actions: false, renderer: "svg", width: 400, height: 300 };
+const embedTask3    = { actions: false, renderer: "svg", width: 380, height: 280 };
+const embedLarge    = { actions: false, renderer: "svg", width: 900, height: 380 };
+const embedBigger   = { actions: false, renderer: "svg", width: 650, height: 380 };
 
-/* Map wrappers should NOT be flex-centered (fixes rendering/layout) */
-.chart-wrapper--map{
-  display: block;
-  min-height: 520px;
-}
+// -----------------------------
+// Tasks 1–5
+// -----------------------------
+vegaEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedStandard);
+vegaEmbed("#vis2", "graphs/g7_inflation_chart.json", embedStandard);
+vegaEmbed("#vis3", "graphs/nigeria_chart.json", embedStandard);
+vegaEmbed("#vis4", "graphs/ethiopia_chart.json", embedStandard);
 
-/* Center wrapper for Tasks 4, 5, 9, 10 */
-.chart-wrapper--center{
-  max-width: 740px;
-  margin: 20px auto;
-  display: block;
-}
+vegaEmbed("#vis5", "graphs/uk_renewable.json", embedTask3);
+vegaEmbed("#vis6", "graphs/energy_prices.json", embedTask3);
 
-/* Map container for Task 7 */
-.map-container{
-  min-height: 460px;
-  background: #f9f9f9;
-}
+vegaEmbed("#vis7", "graphs/financial_times.json", embedStandard);
+vegaEmbed("#vis8", "graphs/financial_times2.json", embedLarge);
 
-/* =========================================================
-   SAFE OVERRIDES — Task 7 maps + Task 9/10 sizing
-   Append this to the END of style.css
-   ========================================================= */
+vegaEmbed("#vis_api", "graphs/api_chart.json", { actions: false, renderer: "svg", width: 450, height: 300 });
+vegaEmbed("#vis_scrape", "graphs/emissions_tidy.json", { actions: false, renderer: "svg", width: 450, height: 300 });
 
-/* Make Task 9 & 10 centered cards wider */
-.chart-wrapper--center{
-  max-width: 740px;
-}
-
-/* Maps: increase height without changing the rest of the site */
-.map-container{
-  min-height: 420px;
-}
-
-/* Make Task 10B images bigger */
-.task-img{
-  max-height: 420px;
-}
+// =============================
+// Task 6: Dashboard
+// ======================

@@ -82,15 +82,15 @@ renderDashboard();
 vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", { actions: false, renderer: "svg" })
   .catch(err => {
     console.error("Scotland map error:", err);
-    document.querySelector("#map_scotland").innerHTML =
-      `<div style="padding:20px; text-align:center; color:#666;"><p>Scotland map not loading.</p></div>`;
+    const el = document.querySelector("#map_scotland");
+    if (el) el.innerHTML = `<div style="padding:20px; text-align:center; color:#666;"><p>Scotland map not loading.</p></div>`;
   });
 
 vegaEmbed("#map_wales", "graphs/wales_coordinates.json", { actions: false, renderer: "svg" })
   .catch(err => {
     console.error("Wales map error:", err);
-    document.querySelector("#map_wales").innerHTML =
-      `<div style="padding:20px; text-align:center; color:#666;"><p>Wales map not loading.</p></div>`;
+    const el = document.querySelector("#map_wales");
+    if (el) el.innerHTML = `<div style="padding:20px; text-align:center; color:#666;"><p>Wales map not loading.</p></div>`;
   });
 
 // =============================
