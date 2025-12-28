@@ -46,7 +46,6 @@ function detectSpecType(spec) {
 }
 
 function ensurePaddingObject(padding) {
-  // Vega/Vega-Lite allow number or object; we want object
   if (padding == null) return {};
   if (typeof padding === "number") {
     return { top: padding, right: padding, bottom: padding, left: padding };
@@ -56,7 +55,7 @@ function ensurePaddingObject(padding) {
 
 /* ---------- PATCHES ---------- */
 
-/* Task 3: enforce smaller titles (Vega-Lite only; your Task 3 charts are VL) */
+/* Task 3: enforce smaller titles */
 function patchTask3_VegaLite(spec) {
   const out = { ...spec };
   out.padding = ensurePaddingObject(out.padding);
@@ -79,19 +78,17 @@ function patchTask3_VegaLite(spec) {
   return out;
 }
 
-/* ✅ Task 4: fix title/legend spacing for BOTH Vega and Vega-Lite */
+/* Task 4: fix title/legend spacing */
 function patchTask4(spec) {
   const out = { ...spec };
   const type = detectSpecType(out);
 
-  // Shared padding increase (prevents cramped header area)
   out.padding = ensurePaddingObject(out.padding);
   out.padding.top = Math.max(out.padding.top || 0, 40);
   out.padding.right = Math.max(out.padding.right || 0, 14);
   out.padding.left = Math.max(out.padding.left || 0, 10);
   out.padding.bottom = Math.max(out.padding.bottom || 0, 10);
 
-  // Title: slightly smaller + more offset
   if (out.title) {
     if (typeof out.title === "string") {
       out.title = { text: out.title, anchor: "start", fontSize: 16, offset: 16 };
@@ -107,7 +104,6 @@ function patchTask4(spec) {
   }
 
   if (type === "vega-lite") {
-    // Put legend at bottom for maximum robustness (prevents title collision)
     out.config = out.config || {};
     out.config.legend = {
       ...(out.config.legend || {}),
@@ -119,72 +115,36 @@ function patchTask4(spec) {
       titleFontSize: 12,
       labelFontSize: 12
     };
-
-    if (out.encoding) {
-      Object.keys(out.encoding).forEach(k => {
-        const enc = out.encoding[k];
-        if (enc && typeof enc === "object" && enc.legend) {
-          enc.legend = {
-            ...enc.legend,
-            orient: "bottom",
-            direction: "horizontal",
-            columns: 4,
-            offset: 10
-          };
-        }
-      });
-    }
-
     out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
   }
+  return out;
+}
 
-  if (type === "vega") {
-    // Vega legends live in top-level `legends: []`
-    if (Array.isArray(out.legends)) {
-      out.legends = out.legends.map(lg => ({
-        ...lg,
-        orient: "bottom",
-        direction: "horizontal",
-        columns: lg.columns ?? 4,
-        offset: Math.max(lg.offset ?? 0, 10),
-        padding: Math.max(lg.padding ?? 0, 10),
-        titleFontSize: lg.titleFontSize ?? 12,
-        labelFontSize: lg.labelFontSize ?? 12
-      }));
-    }
-
-    // Vega config legend can also exist
-    out.config = out.config || {};
-    out.config.legend = {
-      ...(out.config.legend || {}),
-      orient: "bottom",
-      direction: "horizontal",
-      columns: 4,
-      offset: 10,
-      padding: 10,
-      titleFontSize: 12,
-      labelFontSize: 12
-    };
-
-    // Vega autosize
-    out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
+/* ✅ Task 7: Map Specific Patch (Centering and Scaling) */
+function patchTask7_Maps(spec) {
+  const out = { ...spec };
+  // Force correct projection if missing or default
+  if (out.title && out.title.text === "Scotland") {
+    out.projection = { "type": "mercator", "center": [-4.1, 57.8], "scale": 2800 };
+  } else if (out.title && out.title.text === "Wales") {
+    out.projection = { "type": "mercator", "center": [-3.8, 52.3], "scale": 6500 };
   }
-
   return out;
 }
 
 /* Normalize Vega-Lite: enforce responsive width + stable height */
 function normalizeVegaLite(spec, { height = 320 } = {}) {
   const out = { ...spec };
-  out.width = "container";
+  // Maps should not use width: container if they use fixed scale projections
+  if (!out.projection) {
+    out.width = "container";
+  }
   out.height = height;
   out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
-
   out.config = out.config || {};
   out.config.view = out.config.view || {};
   out.config.view.stroke = "transparent";
   if (!("background" in out)) out.background = "transparent";
-
   return out;
 }
 
@@ -194,30 +154,21 @@ async function safeEmbedFromUrl(
   { height = 320, patchFn = null, forceTitle = null } = {}
 ) {
   const el = document.querySelector(selector);
-  if (!el) {
-    console.warn(`Missing element in HTML: ${selector}`);
-    return false;
-  }
+  if (!el) return false;
 
   try {
     let spec = await getJson(url);
-
-    // Apply patch BEFORE normalization so it affects both Vega and Vega-Lite
-    if (typeof patchFn === "function") {
-      spec = patchFn(spec);
-    }
+    if (typeof patchFn === "function") spec = patchFn(spec);
 
     const type = detectSpecType(spec);
     let finalSpec = spec;
 
     if (type === "vega-lite") {
       finalSpec = normalizeVegaLite(finalSpec, { height });
-
       if (forceTitle) {
         finalSpec.title = { text: forceTitle, anchor: "start", fontSize: 16, offset: 10 };
       }
     } else {
-      // Vega
       finalSpec = { ...finalSpec };
       if (typeof finalSpec.width !== "number") finalSpec.width = 700;
       if (typeof finalSpec.height !== "number") finalSpec.height = height;
@@ -227,12 +178,7 @@ async function safeEmbedFromUrl(
     await window.vegaEmbed(selector, finalSpec, embedOptions);
     return true;
   } catch (err) {
-    console.error(`Embed failed for ${selector} using ${url}`, err);
-    el.innerHTML = `
-      <div style="padding:14px; text-align:center; color:#b91c1c; font-size:13px;">
-        Chart failed to load. Open the browser console for details.
-      </div>
-    `;
+    console.error(`Embed failed for ${selector}`, err);
     return false;
   }
 }
@@ -256,45 +202,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   const H_STD = 320;
   const H_SM = 280;
   const H_T4 = 360;
-  const H_MAP = 460;
+  const H_MAP = 550;
 
   // Task 1
   safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
-  await safeEmbedWithFallbacksFromUrl("#vis2", [
-    "graphs/inflation_chart.json",
-    "graphs/g7_inflation_chart.json"
-  ], { height: H_STD });
+  safeEmbedWithFallbacksFromUrl("#vis2", ["graphs/inflation_chart.json", "graphs/g7_inflation_chart.json"], { height: H_STD });
 
   // Task 2
   safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
   safeEmbedFromUrl("#vis4", "graphs/ethiopia_chart.json", { height: H_STD });
 
-  // Task 3 (Vega-Lite title size)
-  safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", {
-    height: H_STD,
-    patchFn: patchTask3_VegaLite
-  });
-  safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", {
-    height: H_STD,
-    patchFn: patchTask3_VegaLite
-  });
+  // Task 3
+  safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", { height: H_STD, patchFn: patchTask3_VegaLite });
+  safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", { height: H_STD, patchFn: patchTask3_VegaLite });
 
-  // ✅ Task 4 (works whether spec is Vega or Vega-Lite)
+  // Task 4
   safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_T4, patchFn: patchTask4 });
   safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_T4, patchFn: patchTask4 });
 
-  // Task 5 (title for first chart)
-  safeEmbedWithFallbacksFromUrl("#vis_api", [
-    "graphs/api_chart.json",
-    "graphs/api_chart_spec.json"
-  ], { height: H_STD, forceTitle: "UK Inflation (API): World Bank Indicator" });
+  // Task 5
+  safeEmbedWithFallbacksFromUrl("#vis_api", ["graphs/api_chart.json"], { height: H_STD, forceTitle: "UK Inflation (API): World Bank Indicator" });
+  safeEmbedWithFallbacksFromUrl("#vis_scrape", ["graphs/emissions_tidy.json"], { height: H_STD });
 
-  safeEmbedWithFallbacksFromUrl("#vis_scrape", [
-    "graphs/emissions_tidy.json",
-    "graphs/emissions_chart.json"
-  ], { height: H_STD });
-
-  // Task 6 Dashboard unchanged
+  // Task 6 (Dashboards)
   function dashboardSpec(dataUrl, chartTitle) {
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -315,53 +245,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   for (let i = 1; i <= 6; i++) {
     const targetId = `#dash${i}`;
-    const el = document.querySelector(targetId);
-    if (!el) continue;
-
+    if (!document.querySelector(targetId)) continue;
     const dataPath = `graphs/dashboard${i}.json`;
     try {
-      const res = await fetch(dataPath, { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status} for ${dataPath}`);
-      const data = await res.json();
-
-      const chartTitle =
-        Array.isArray(data) && data.length && data[0].indicator
-          ? String(data[0].indicator)
-          : `Dashboard ${i}`;
-
+      const data = await getJson(dataPath);
+      const chartTitle = Array.isArray(data) && data.length && data[0].indicator ? String(data[0].indicator) : `Dashboard ${i}`;
       await window.vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), embedOptions);
-    } catch (err) {
-      console.error(`Dashboard ${i} error:`, err);
-      el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Dashboard ${i} failed.</p>`;
-    }
+    } catch (err) { console.error(err); }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const opt = { "actions": false };
-
-    // Task 7: Maps
-    vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", opt);
-    vegaEmbed("#map_wales", "graphs/wales_coordinates.json", opt);
-});
+  // ✅ Task 7: Maps (Fixed Embed Logic)
+  safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
+  safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
 
   // Task 8
-  safeEmbedWithFallbacksFromUrl("#vis_bread", [
-    "graphs/lrpd_bread.json",
-    "graphs/price_bread.json"
-  ], { height: H_STD });
-
-  safeEmbedWithFallbacksFromUrl("#vis_beer", [
-    "graphs/lrpd_beer.json",
-    "graphs/price_beer.json"
-  ], { height: H_STD });
+  safeEmbedWithFallbacksFromUrl("#vis_bread", ["graphs/lrpd_bread.json"], { height: H_STD });
+  safeEmbedWithFallbacksFromUrl("#vis_beer", ["graphs/lrpd_beer.json"], { height: H_STD });
 
   // Task 9
   safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_SM });
   safeEmbedFromUrl("#interactive2", "graphs/interactive_scatter.json", { height: H_SM });
 
   // Task 10
-  safeEmbedWithFallbacksFromUrl("#task10a", [
-    "graphs/task10_histogram.json",
-    "graphs/task10_histogram_spec.json"
-  ], { height: H_SM });
+  safeEmbedWithFallbacksFromUrl("#task10a", ["graphs/task10_histogram.json"], { height: H_SM });
 });
