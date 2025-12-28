@@ -1,180 +1,259 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Global Greenhouse Gas Emissions Evolution",
-    "subtitle": "Interactive exploration of top emitters from 1970 to 2020",
-    "fontSize": 18,
+    "text": "Top 15 Global Greenhouse Gas Emitters - 2020",
+    "subtitle": "Annual emissions in megatonnes CO₂-equivalent with historical comparison",
+    "fontSize": 20,
     "fontWeight": "bold",
     "anchor": "start",
-    "color": "#2c3e50",
+    "color": "#1a1a2e",
     "subtitleFontSize": 14,
-    "subtitleColor": "#7f8c8d"
+    "subtitleColor": "#16213e",
+    "offset": 20
   },
   "data": {
     "url": "data/emissions_tidy.csv",
     "format": {"type": "csv"}
   },
-  "params": [
-    {
-      "name": "yearSelect",
-      "value": 1970,
-      "bind": {
-        "input": "range",
-        "min": 1970,
-        "max": 2020,
-        "step": 5,
-        "name": "Select Year: "
-      }
-    },
-    {
-      "name": "topN",
-      "value": 10,
-      "bind": {
-        "input": "select",
-        "options": [5, 10, 15, 20],
-        "labels": ["Top 5", "Top 10", "Top 15", "Top 20"],
-        "name": "Number of Countries: "
-      }
-    },
-    {
-      "name": "chartType",
-      "value": "bar",
-      "bind": {
-        "input": "radio",
-        "options": ["bar", "lollipop", "bubble"],
-        "labels": ["Bar Chart", "Lollipop", "Bubble"],
-        "name": "Chart Type: "
-      }
-    }
-  ],
   "transform": [
-    {"filter": "datum.Year == yearSelect"},
+    {"filter": "datum.Year == 2020"},
     {"calculate": "toNumber(datum.Emissions) / 1000", "as": "Emissions_Mt"},
     {
       "window": [{"op": "rank", "as": "rank"}],
       "sort": [{"field": "Emissions_Mt", "order": "descending"}]
     },
-    {"filter": "datum.rank <= topN"},
+    {"filter": "datum.rank <= 15"},
     {
-      "calculate": "datum.rank == 1 ? '🥇' : datum.rank == 2 ? '🥈' : datum.rank == 3 ? '🥉' : ''",
-      "as": "medal"
+      "calculate": "datum.rank == 1 ? '🥇 ' : datum.rank == 2 ? '🥈 ' : datum.rank == 3 ? '🥉 ' : datum.rank + '. '",
+      "as": "rank_emoji"
     },
     {
-      "calculate": "datum.Country + ' ' + datum.medal",
+      "calculate": "datum.rank_emoji + datum.Country",
       "as": "country_label"
     },
     {
-      "calculate": "format(datum.Emissions_Mt, ',.0f') + ' Mt CO₂'",
-      "as": "emissions_label"
+      "calculate": "format(datum.Emissions_Mt, ',.0f')",
+      "as": "emissions_formatted"
+    },
+    {
+      "calculate": "datum.Emissions_Mt > 5000 ? 'Very High' : datum.Emissions_Mt > 1000 ? 'High' : datum.Emissions_Mt > 500 ? 'Medium' : 'Low'",
+      "as": "emission_category"
     }
   ],
-  "width": 700,
-  "height": 450,
+  "width": 800,
+  "height": 550,
   "layer": [
     {
-      "transform": [{"filter": "chartType == 'bar'"}],
-      "layer": [
-        {
-          "mark": {
-            "type": "bar",
-            "cornerRadiusEnd": 4,
-            "opacity": 0.9,
-            "tooltip": true
+      "mark": {
+        "type": "rect",
+        "opacity": 0.03
+      },
+      "encoding": {
+        "x": {"value": 0},
+        "x2": {"value": 800},
+        "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
+        "color": {
+          "condition": {
+            "test": "datum.rank % 2 == 0",
+            "value": "#3498db"
           },
-          "encoding": {
-            "x": {
-              "field": "Emissions_Mt",
-              "type": "quantitative",
-              "title": "Greenhouse Gas Emissions (Mt CO₂-eq)",
-              "axis": {"format": ",.0f", "gridOpacity": 0.3}
-            },
-            "y": {
-              "field": "country_label",
-              "type": "nominal",
-              "sort": "-x",
-              "title": null,
-              "axis": {"labelFontSize": 12, "labelLimit": 200}
-            },
-            "color": {
-              "field": "Emissions_Mt",
-              "type": "quantitative",
-              "scale": {"scheme": "redyellowgreen", "reverse": true},
-              "legend": {"title": "Emissions (Mt)", "orient": "right"}
-            },
-            "tooltip": [
-              {"field": "Country", "type": "nominal"},
-              {"field": "rank", "type": "quantitative", "title": "Rank"},
-              {"field": "Emissions_Mt", "type": "quantitative", "title": "Emissions (Mt)", "format": ",.1f"}
-            ]
-          }
-        },
-        {
-          "mark": {"type": "text", "align": "left", "dx": 5, "fontWeight": "bold"},
-          "encoding": {
-            "x": {"field": "Emissions_Mt", "type": "quantitative"},
-            "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
-            "text": {"field": "emissions_label"}
-          }
+          "value": "transparent"
         }
-      ]
+      }
     },
     {
-      "transform": [{"filter": "chartType == 'lollipop'"}],
-      "layer": [
-        {
-          "mark": {"type": "rule", "strokeWidth": 2, "opacity": 0.7},
-          "encoding": {
-            "x": {"field": "Emissions_Mt", "type": "quantitative"},
-            "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
-            "color": {"field": "Emissions_Mt", "type": "quantitative", "scale": {"scheme": "viridis"}}
-          }
-        },
-        {
-          "mark": {"type": "point", "size": 200, "filled": true},
-          "encoding": {
-            "x": {"field": "Emissions_Mt", "type": "quantitative"},
-            "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
-            "color": {"field": "Emissions_Mt", "type": "quantitative", "scale": {"scheme": "viridis"}},
-            "tooltip": [{"field": "Country", "type": "nominal"}, {"field": "Emissions_Mt", "format": ",.1f"}]
-          }
-        }
-      ]
-    },
-    {
-      "transform": [{"filter": "chartType == 'bubble'"}],
-      "mark": {"type": "circle", "opacity": 0.8, "stroke": "white", "strokeWidth": 2},
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 6,
+        "height": {"band": 0.7},
+        "gradient": "linear",
+        "gradientLength": {"expr": "width"},
+        "opacity": 0.95
+      },
       "encoding": {
         "x": {
-          "field": "rank",
+          "field": "Emissions_Mt",
           "type": "quantitative",
-          "title": "Ranking Position",
-          "scale": {"reverse": true},
-          "axis": {"tickMinStep": 1}
+          "title": "Annual Greenhouse Gas Emissions (Megatonnes CO₂-equivalent)",
+          "axis": {
+            "format": ",.0f",
+            "labelAngle": 0,
+            "gridDash": [2, 2],
+            "gridOpacity": 0.4,
+            "titleFontSize": 14,
+            "titlePadding": 15,
+            "titleColor": "#2c3e50",
+            "labelFontSize": 12
+          },
+          "scale": {"domainMax": 12000}
         },
         "y": {
-          "field": "Emissions_Mt",
-          "type": "quantitative",
-          "title": "Emissions (Mt CO₂-eq)",
-          "scale": {"type": "log"}
-        },
-        "size": {
-          "field": "Emissions_Mt",
-          "type": "quantitative",
-          "scale": {"range": [100, 2000]},
-          "legend": null
+          "field": "country_label",
+          "type": "nominal",
+          "sort": "-x",
+          "title": null,
+          "axis": {
+            "labelFontSize": 13,
+            "labelLimit": 300,
+            "labelColor": "#2c3e50",
+            "labelFontWeight": "bold",
+            "ticks": false,
+            "domain": false
+          }
         },
         "color": {
-          "field": "Country",
-          "type": "nominal",
-          "scale": {"scheme": "tableau20"},
-          "legend": {"title": "Country", "columns": 2}
+          "field": "Emissions_Mt",
+          "type": "quantitative",
+          "scale": {
+            "type": "linear",
+            "range": ["#27ae60", "#f39c12", "#e67e22", "#e74c3c", "#c0392b"],
+            "domain": [0, 2000, 4000, 6000, 10000]
+          },
+          "legend": null
         },
-        "tooltip": [{"field": "Country", "type": "nominal"}, {"field": "rank", "type": "quantitative"}]
+        "tooltip": [
+          {"field": "Country", "type": "nominal", "title": "Country"},
+          {"field": "rank", "type": "quantitative", "title": "Global Rank"},
+          {"field": "Emissions_Mt", "type": "quantitative", "title": "Emissions (Mt CO₂-eq)", "format": ",.1f"},
+          {"field": "emission_category", "type": "nominal", "title": "Emission Level"},
+          {
+            "field": "Emissions_Mt",
+            "type": "quantitative",
+            "title": "% of Top 15 Total",
+            "format": ".1%",
+            "aggregate": "mean",
+            "calculate": "datum.Emissions_Mt / 35000"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 8,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "white"
+      },
+      "encoding": {
+        "x": {"field": "Emissions_Mt", "type": "quantitative"},
+        "y": {"field": "country_label", "type": "nominal", "sort": "-x"},
+        "text": {
+          "field": "emissions_formatted",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {"values": [{"threshold": 2000, "label": "Paris Agreement Target"}]},
+      "mark": {
+        "type": "rule",
+        "strokeDash": [8, 4],
+        "strokeWidth": 2,
+        "color": "#e74c3c",
+        "opacity": 0.7
+      },
+      "encoding": {
+        "x": {"field": "threshold", "type": "quantitative"}
+      }
+    },
+    {
+      "data": {"values": [{"x": 2000, "y": 0, "label": "2°C Target Compatible →"}]},
+      "mark": {
+        "type": "text",
+        "angle": 0,
+        "align": "left",
+        "baseline": "top",
+        "dx": 5,
+        "dy": 5,
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#e74c3c",
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {"op": "sum", "field": "Emissions_Mt", "as": "total_emissions"},
+            {"op": "mean", "field": "Emissions_Mt", "as": "avg_emissions"}
+          ]
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "top",
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#34495e",
+        "dx": -10,
+        "dy": -530
+      },
+      "encoding": {
+        "x": {"value": 790},
+        "text": {
+          "value": {"expr": "'Total: ' + format(datum.total_emissions, ',.0f') + ' Mt | Average: ' + format(datum.avg_emissions, ',.0f') + ' Mt'"}
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"category": "🌍 Exceeds sustainable levels", "color": "#c0392b", "x": 600, "y": 480},
+          {"category": "⚠️ High emissions", "color": "#e67e22", "x": 600, "y": 500},
+          {"category": "✓ Moderate emissions", "color": "#27ae60", "x": 600, "y": 520}
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "width": 15,
+        "height": 12
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "axis": null},
+        "y": {"field": "y", "type": "quantitative", "axis": null},
+        "color": {"field": "color", "type": "nominal", "scale": null}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"category": "🌍 Exceeds sustainable levels", "x": 620, "y": 480},
+          {"category": "⚠️ High emissions", "x": 620, "y": 500},
+          {"category": "✓ Moderate emissions", "x": 620, "y": 520}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 11
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "axis": null},
+        "y": {"field": "y", "type": "quantitative", "axis": null},
+        "text": {"field": "category"}
       }
     }
   ],
   "config": {
-    "view": {"stroke": "transparent"},
-    "axis": {"gridOpacity": 0.2, "titleFontWeight": "bold"}
+    "view": {
+      "stroke": "transparent",
+      "continuousWidth": 800,
+      "continuousHeight": 550
+    },
+    "background": "#ffffff",
+    "axis": {
+      "gridColor": "#ecf0f1",
+      "domainColor": "#bdc3c7"
+    },
+    "font": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
   }
 }
