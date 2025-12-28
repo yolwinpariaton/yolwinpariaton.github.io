@@ -1,5 +1,5 @@
 // =============================
-// details.js (Consistent sizing + Vega/Vega-Lite safe maps)
+// details.js (Task-specific consistent sizing + safe patches)
 // =============================
 
 const BASE_VL_CONFIG = {
@@ -41,26 +41,67 @@ function detectSpecType(spec) {
   const schema = String(spec?.$schema || "").toLowerCase();
   if (schema.includes("vega-lite")) return "vega-lite";
   if (schema.includes("vega")) return "vega";
-  // Fallback: if it has "marks" and no "encoding" it's probably Vega
   if (spec?.marks && !spec?.encoding) return "vega";
   return "vega-lite";
 }
 
+function applyTitle(spec, titleText) {
+  if (!titleText) return spec;
+  const out = { ...spec };
+  out.title = {
+    text: titleText,
+    anchor: "start",
+    fontSize: 14,
+    offset: 10
+  };
+  return out;
+}
+
 /**
- * Normalize Vega-Lite safely, and avoid breaking Vega specs.
+ * Patch Task 4: stop title overlapping legend:
+ * - move legends to bottom
+ * - add a bit of top padding
+ * - give title a clean offset
  */
-function normalizeSpec(spec, { height = 320, widthMode = "container", forMaps = false } = {}) {
-  const type = detectSpecType(spec);
+function patchTask4(spec) {
   const out = { ...spec };
 
-  if (type === "vega-lite") {
-    // Vega-Lite supports container width
-    if (widthMode === "container") out.width = "container";
+  // add padding so title doesn't collide with plot area/legend
+  if (!out.padding) out.padding = { top: 18, left: 5, right: 5, bottom: 8 };
 
-    // Keep charts consistent with Task 1–3
+  // ensure title has enough spacing
+  if (out.title) {
+    if (typeof out.title === "string") {
+      out.title = { text: out.title, anchor: "start", offset: 10 };
+    } else {
+      out.title = { ...out.title, anchor: out.title.anchor || "start", offset: out.title.offset ?? 10 };
+    }
+  }
+
+  // Move legend to bottom (works for most VL charts)
+  out.config = out.config || {};
+  out.config.legend = {
+    ...(out.config.legend || {}),
+    orient: "bottom",
+    direction: "horizontal",
+    titleFontSize: 11,
+    labelFontSize: 11
+  };
+
+  return out;
+}
+
+function normalizeSpec(spec, { height = 320, widthMode = "container", forMaps = false, patchFn = null, titleText = "" } = {}) {
+  const type = detectSpecType(spec);
+  let out = { ...spec };
+
+  if (titleText) out = applyTitle(out, titleText);
+  if (typeof patchFn === "function") out = patchFn(out);
+
+  if (type === "vega-lite") {
+    if (widthMode === "container") out.width = "container";
     if (typeof height === "number") out.height = height;
 
-    // Fit horizontally; for maps, allow fit (both directions) if it helps
     if (!out.autosize) {
       out.autosize = forMaps
         ? { type: "fit", contains: "padding" }
@@ -75,25 +116,16 @@ function normalizeSpec(spec, { height = 320, widthMode = "container", forMaps = 
     return out;
   }
 
-  // Vega spec: width must be numeric (NOT "container")
-  // Do NOT override width unless missing/invalid; do set a safe height if missing.
-  if (typeof out.width !== "number") {
-    out.width = 700; // safe default for maps; will be scaled by CSS anyway
-  }
-  if (typeof out.height !== "number") {
-    out.height = height;
-  }
-
-  // Vega autosize can be "fit" etc; don't force unless missing
-  if (!out.autosize) {
-    out.autosize = forMaps ? "fit" : "pad";
-  }
-
+  // Vega: keep numeric width/height
+  if (typeof out.width !== "number") out.width = 700;
+  if (typeof out.height !== "number") out.height = height;
+  if (!out.autosize) out.autosize = forMaps ? "fit" : "pad";
   if (!("background" in out)) out.background = "transparent";
+
   return out;
 }
 
-async function safeEmbedFromUrl(selector, url, { height = 320, forMaps = false } = {}) {
+async function safeEmbedFromUrl(selector, url, opts = {}) {
   const el = document.querySelector(selector);
   if (!el) {
     console.warn(`Missing element in HTML: ${selector}`);
@@ -102,8 +134,7 @@ async function safeEmbedFromUrl(selector, url, { height = 320, forMaps = false }
 
   try {
     const spec = await getJson(url);
-    const normalized = normalizeSpec(spec, { height, widthMode: "container", forMaps });
-
+    const normalized = normalizeSpec(spec, opts);
     await window.vegaEmbed(selector, normalized, embedOptions);
     return true;
   } catch (err) {
@@ -117,9 +148,9 @@ async function safeEmbedFromUrl(selector, url, { height = 320, forMaps = false }
   }
 }
 
-async function safeEmbedWithFallbacksFromUrl(selector, urls, { height = 320, forMaps = false } = {}) {
+async function safeEmbedWithFallbacksFromUrl(selector, urls, opts = {}) {
   for (const url of urls) {
-    const ok = await safeEmbedFromUrl(selector, url, { height, forMaps });
+    const ok = await safeEmbedFromUrl(selector, url, opts);
     if (ok) return true;
   }
   return false;
@@ -133,10 +164,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Reference sizes (Task 1–3 are “perfect”)
+  // Reference sizes (Task 1–3)
   const H_STD = 320;
+  const H_SM = 280;  // Task 9 & 10 smaller
   const H_MAP = 460;
-  const H_DASH_INNER = 160; // inside a 190px tile
+  const H_DASH_INNER = 160;
 
   // Task 1
   safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
@@ -153,20 +185,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", { height: H_STD });
   safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", { height: H_STD });
 
-  // Task 4 (force same sizing as Tasks 1–3)
-  safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_STD });
-  safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_STD });
+  // Task 4 (fix title/legend overlap + make both same size)
+  safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_STD, patchFn: patchTask4 });
+  safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_STD, patchFn: patchTask4 });
 
-  // Task 5 (force same sizing as Tasks 1–3)
+  // Task 5 (add titles inside charts)
   safeEmbedWithFallbacksFromUrl("#vis_api", [
     "graphs/api_chart.json",
     "graphs/api_chart_spec.json"
-  ], { height: H_STD });
+  ], { height: H_STD, titleText: "UK Inflation (API): World Bank Indicator" });
 
   safeEmbedWithFallbacksFromUrl("#vis_scrape", [
     "graphs/emissions_tidy.json",
     "graphs/emissions_chart.json"
-  ], { height: H_STD });
+  ], { height: H_STD, titleText: "Emissions (Scraped): Wikipedia Data (Tidy Format)" });
 
   // Task 6 Dashboard
   function dashboardSpec(dataUrl, chartTitle) {
@@ -214,7 +246,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, forMaps: true });
   safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, forMaps: true });
 
-  // Task 8 (same sizing)
+  // Task 8
   safeEmbedWithFallbacksFromUrl("#vis_bread", [
     "graphs/lrpd_bread.json",
     "graphs/price_bread.json"
@@ -225,13 +257,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     "graphs/price_beer.json"
   ], { height: H_STD });
 
-  // Task 9 (same sizing)
-  safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_STD });
-  safeEmbedFromUrl("#interactive2", "graphs/interactive_scatter.json", { height: H_STD });
+  // Task 9 (smaller + consistent)
+  safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_SM });
+  safeEmbedFromUrl("#interactive2", "graphs/interactive_scatter.json", { height: H_SM });
 
-  // Task 10 (same sizing)
+  // Task 10 (smaller)
   safeEmbedWithFallbacksFromUrl("#task10a", [
     "graphs/task10_histogram.json",
     "graphs/task10_histogram_spec.json"
-  ], { height: H_STD });
+  ], { height: H_SM });
 });
