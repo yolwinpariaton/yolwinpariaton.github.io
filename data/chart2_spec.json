@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Real Wage Squeeze by Sector",
+    "subtitle": "Real wage index (2020 = 100). Values below 100 indicate loss of purchasing power."
+  },
+  "width": "container",
+  "height": 450,
+  "autosize": { "type": "fit", "contains": "padding" },
+
+  "data": { "url": "chart2_wage_squeeze.json" },
+
+  "params": [
+    {
+      "name": "sectorSelect",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": ["All", "Public Sector", "Private Sector", "Finance", "Retail", "Healthcare"],
+        "name": "Select Sector: "
+      }
+    }
+  ],
+
+  "transform": [
+    { "calculate": "toDate(datum.date)", "as": "date_parsed" },
+    { "filter": "sectorSelect == 'All' || datum.sector == sectorSelect" }
+  ],
+
+  "layer": [
+    {
+      "mark": { "type": "rule", "strokeDash": [6, 4], "strokeWidth": 2, "opacity": 0.6 },
+      "encoding": { "y": { "datum": 100 } }
+    },
+    {
+      "mark": { "type": "line", "strokeWidth": 3, "point": { "size": 60 } },
+      "encoding": {
+        "x": {
+          "field": "date_parsed",
+          "type": "temporal",
+          "title": "Date",
+          "axis": { "format": "%b %Y", "labelAngle": -45 }
+        },
+        "y": {
+          "field": "squeeze_index",
+          "type": "quantitative",
+          "title": "Real Wage Index (2020=100)"
+        },
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "legend": { "title": "Sector" }
+        },
+        "tooltip": [
+          { "field": "sector", "title": "Sector" },
+          { "field": "date_parsed", "type": "temporal", "format": "%B %Y", "title": "Month" },
+          { "field": "squeeze_index", "title": "Real Wage Index", "format": ".1f" },
+          { "field": "inflation", "title": "Inflation (%)", "format": ".1f" },
+          { "field": "nominal_wage", "title": "Nominal Wage (£)", "format": ",.0f" },
+          { "field": "real_wage", "title": "Real Wage (£)", "format": ",.0f" }
+        ]
+      }
+    }
+  ]
+}

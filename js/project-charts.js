@@ -30,8 +30,6 @@ const BASE_VL_CONFIG = {
 };
 
 // Vega-Embed options
-// Key fix: mode:'vega-lite' prevents URL-spec ambiguity.
-// Also allow Vega to size to container when width:'container' is used.
 const EMBED_OPTS = {
   actions: false,
   renderer: "svg",
@@ -82,58 +80,9 @@ function initCharts() {
     autosize: { type: "fit", contains: "padding" }
   };
 
-  // Chart 2: Interactive Wage Squeeze
-  safeEmbed("#chart2", {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {
-      "text": "Real Wage Squeeze by Sector",
-      "subtitle": "Track how different sectors are affected by inflation"
-    },
-    ...RESPONSIVE,
-    "height": 450,
-    "data": { "url": dataUrl("chart2_wage_squeeze.json") },
-    "params": [
-      {
-        "name": "sectorSelect",
-        "value": "All",
-        "bind": {
-          "input": "select",
-          "options": ["All", "Public Sector", "Private Sector", "Finance", "Retail", "Healthcare"],
-          "name": "Select Sector: "
-        }
-      }
-    ],
-    "transform": [
-      { "filter": "sectorSelect == 'All' || datum.sector == sectorSelect" }
-    ],
-    "mark": { "type": "line", "point": true, "strokeWidth": 2 },
-    "encoding": {
-      "x": {
-        "field": "date",
-        "type": "temporal",
-        "title": "Date",
-        "axis": { "format": "%b %Y", "labelAngle": -45 }
-      },
-      "y": {
-        "field": "squeeze_index",
-        "type": "quantitative",
-        "title": "Real Wage Index (2020=100)"
-      },
-      "color": {
-        "field": "sector",
-        "type": "nominal",
-        "scale": { "scheme": "category10" },
-        "legend": { "title": "Sector" }
-      },
-      "tooltip": [
-        { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Date" },
-        { "field": "sector", "title": "Sector" },
-        { "field": "squeeze_index", "title": "Real Wage Index", "format": ".1f" },
-        { "field": "inflation", "title": "Inflation Rate", "format": ".1f" }
-      ]
-    },
-    "config": BASE_VL_CONFIG
-  });
+  // Chart 2: Real Wages vs Inflation (load from spec file)
+  // IMPORTANT: This ensures your data/chart2_spec.json is actually used.
+  safeEmbed("#chart2", dataUrl("chart2_spec.json"));
 
   // Chart 3: Regional Map (load from spec file)
   safeEmbed("#chart3", dataUrl("chart3_spec.json"));
