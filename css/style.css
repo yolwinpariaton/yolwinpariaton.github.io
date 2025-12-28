@@ -270,22 +270,22 @@ a:hover{ text-decoration: underline; }
   display: block;
 }
 
-.vega-embed,
-.vega-embed .vega-vis{
+/* IMPORTANT: Force Vega to occupy full container height (fixes Task 4 frame fill) */
+.vega-container .vega-embed,
+.vega-container .vega-embed .vega-vis{
   width: 100% !important;
   height: 100% !important;
   max-width: 100% !important;
 }
 
-.chart-wrapper .vega-embed svg,
-.chart-wrapper .vega-embed canvas{
+.vega-container .vega-embed svg,
+.vega-container .vega-embed canvas{
   width: 100% !important;
   height: 100% !important;
-  max-width: 100% !important;
-  display: block;
+  display: block !important;
 }
 
-/* FIX: Task 4 image looks cropped in your screenshot -> use contain */
+/* FIX: Task 4 image */
 .task-img{
   width: 100%;
   height: auto;

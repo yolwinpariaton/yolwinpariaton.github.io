@@ -45,24 +45,14 @@ function detectSpecType(spec) {
   return "vega-lite";
 }
 
-/* -------- PATCHES -------- */
-
-/* Task 3: force smaller titles (your screenshot shows specs are large) */
+/* Task 3: enforce smaller titles */
 function patchTask3(spec) {
   const out = { ...spec };
-
-  // Ensure breathing room so title never hits the frame
   out.padding = out.padding || { top: 18, left: 10, right: 10, bottom: 8 };
 
-  // Force title object and size
   if (out.title) {
     if (typeof out.title === "string") {
-      out.title = {
-        text: out.title,
-        anchor: "start",
-        fontSize: 16,
-        offset: 10
-      };
+      out.title = { text: out.title, anchor: "start", fontSize: 16, offset: 10 };
     } else {
       out.title = {
         ...out.title,
@@ -71,30 +61,22 @@ function patchTask3(spec) {
         offset: 10,
         subtitleFontSize: 12
       };
-      // some specs use subtitle as array/string
-      if (out.title.subtitle) {
-        out.title.subtitleFontSize = 12;
-      }
+      if (out.title.subtitle) out.title.subtitleFontSize = 12;
     }
   }
-
   return out;
 }
 
-/* Task 4: title too close to legend + some charts clipped on right.
-   Fix: move legend to bottom, increase top padding, ensure right padding.
-*/
+/* Task 4: title/legend spacing */
 function patchTask4(spec) {
   const out = { ...spec };
 
-  // Extra top padding so title is not cramped
   out.padding = out.padding || {};
   out.padding.top = Math.max(out.padding.top || 0, 26);
   out.padding.left = Math.max(out.padding.left || 0, 10);
   out.padding.right = Math.max(out.padding.right || 0, 12);
   out.padding.bottom = Math.max(out.padding.bottom || 0, 10);
 
-  // Standardize title size
   if (out.title) {
     if (typeof out.title === "string") {
       out.title = { text: out.title, anchor: "start", fontSize: 16, offset: 10 };
@@ -109,7 +91,6 @@ function patchTask4(spec) {
     }
   }
 
-  // Force all legends to bottom to avoid overlap with title
   out.config = out.config || {};
   out.config.legend = {
     ...(out.config.legend || {}),
@@ -121,7 +102,6 @@ function patchTask4(spec) {
     padding: 6
   };
 
-  // If encoding has legend settings, override them too
   if (out.encoding) {
     Object.keys(out.encoding).forEach(k => {
       const enc = out.encoding[k];
@@ -139,7 +119,6 @@ function patchTask4(spec) {
   return out;
 }
 
-/* Normalize Vega-Lite: enforce responsive width, stable height */
 function normalizeVegaLite(spec, { height = 320, patchFn = null } = {}) {
   let out = { ...spec };
 
@@ -147,8 +126,6 @@ function normalizeVegaLite(spec, { height = 320, patchFn = null } = {}) {
 
   out.width = "container";
   out.height = height;
-
-  // Fit horizontally; keep padding
   out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
 
   out.config = out.config || {};
@@ -159,7 +136,7 @@ function normalizeVegaLite(spec, { height = 320, patchFn = null } = {}) {
   return out;
 }
 
-async function safeEmbedFromUrl(selector, url, { height = 320, patchFn = null } = {}) {
+async function safeEmbedFromUrl(selector, url, { height = 320, patchFn = null, forceTitle = null } = {}) {
   const el = document.querySelector(selector);
   if (!el) {
     console.warn(`Missing element in HTML: ${selector}`);
@@ -174,12 +151,22 @@ async function safeEmbedFromUrl(selector, url, { height = 320, patchFn = null } 
 
     if (type === "vega-lite") {
       finalSpec = normalizeVegaLite(spec, { height, patchFn });
+
+      // Optional: force a title (Task 5 request)
+      if (forceTitle) {
+        finalSpec.title = {
+          text: forceTitle,
+          anchor: "start",
+          fontSize: 16,
+          offset: 10
+        };
+      }
     } else {
-      // Vega: keep numeric width/height; don’t force container width for Vega specs
       finalSpec = { ...spec };
       if (typeof finalSpec.width !== "number") finalSpec.width = 700;
       if (typeof finalSpec.height !== "number") finalSpec.height = height;
       if (!("background" in finalSpec)) finalSpec.background = "transparent";
+      // Note: forcing title for Vega specs is not safe generically
     }
 
     await window.vegaEmbed(selector, finalSpec, embedOptions);
@@ -203,7 +190,6 @@ async function safeEmbedWithFallbacksFromUrl(selector, urls, opts = {}) {
   return false;
 }
 
-/* Maps: keep spec intact; only set width container and height */
 async function embedMapFromUrl(selector, url, { height = 460 } = {}) {
   const el = document.querySelector(selector);
   if (!el) {
@@ -253,7 +239,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const H_STD = 320;
   const H_SM = 280;
-  const H_T4 = 360;   // Task 4 consistent size
+  const H_T4 = 360;
   const H_MAP = 460;
 
   // Task 1
@@ -267,19 +253,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
   safeEmbedFromUrl("#vis4", "graphs/ethiopia_chart.json", { height: H_STD });
 
-  // Task 3 (force smaller titles)
+  // Task 3
   safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", { height: H_STD, patchFn: patchTask3 });
   safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", { height: H_STD, patchFn: patchTask3 });
 
-  // Task 4 (fix title/legend spacing + same size)
+  // Task 4
   safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_T4, patchFn: patchTask4 });
   safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_T4, patchFn: patchTask4 });
 
-  // Task 5
+  // Task 5: add title to FIRST graph (API)
   safeEmbedWithFallbacksFromUrl("#vis_api", [
     "graphs/api_chart.json",
     "graphs/api_chart_spec.json"
-  ], { height: H_STD });
+  ], {
+    height: H_STD,
+    forceTitle: "UK Inflation (API): World Bank Indicator"
+  });
 
   safeEmbedWithFallbacksFromUrl("#vis_scrape", [
     "graphs/emissions_tidy.json",
@@ -328,7 +317,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Task 7 Maps
+  // Task 7
   embedMapFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP });
   embedMapFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP });
 
