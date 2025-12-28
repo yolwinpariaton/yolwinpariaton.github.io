@@ -1,5 +1,5 @@
 // =============================
-// details.js (Final refinements: task patches + safe maps)
+// details.js (Robust embeds + layout patches)
 // =============================
 
 const BASE_VL_CONFIG = {
@@ -45,87 +45,111 @@ function detectSpecType(spec) {
   return "vega-lite";
 }
 
-function applyTitle(spec, titleText) {
-  if (!titleText) return spec;
-  const out = { ...spec };
-  out.title = {
-    text: titleText,
-    anchor: "start",
-    fontSize: 14,
-    offset: 10
-  };
-  return out;
-}
+/* -------- PATCHES -------- */
 
-/* Task 3: titles a bit smaller + safer padding */
+/* Task 3: force smaller titles (your screenshot shows specs are large) */
 function patchTask3(spec) {
   const out = { ...spec };
 
-  if (!out.padding) out.padding = { top: 16, left: 6, right: 6, bottom: 6 };
+  // Ensure breathing room so title never hits the frame
+  out.padding = out.padding || { top: 18, left: 10, right: 10, bottom: 8 };
 
+  // Force title object and size
   if (out.title) {
     if (typeof out.title === "string") {
-      out.title = { text: out.title, anchor: "start", fontSize: 14, offset: 10 };
+      out.title = {
+        text: out.title,
+        anchor: "start",
+        fontSize: 16,
+        offset: 10
+      };
     } else {
       out.title = {
         ...out.title,
-        anchor: out.title.anchor || "start",
-        fontSize: out.title.fontSize ?? 14,
-        offset: out.title.offset ?? 10
+        anchor: "start",
+        fontSize: 16,
+        offset: 10,
+        subtitleFontSize: 12
       };
+      // some specs use subtitle as array/string
       if (out.title.subtitle) {
-        out.title.subtitleFontSize = out.title.subtitleFontSize ?? 11;
+        out.title.subtitleFontSize = 12;
       }
     }
   }
+
   return out;
 }
 
-/* Task 4: stop title overlapping legend + reduce compression */
+/* Task 4: title too close to legend + some charts clipped on right.
+   Fix: move legend to bottom, increase top padding, ensure right padding.
+*/
 function patchTask4(spec) {
   const out = { ...spec };
 
-  // more breathing room
-  out.padding = out.padding || { top: 20, left: 8, right: 8, bottom: 10 };
+  // Extra top padding so title is not cramped
+  out.padding = out.padding || {};
+  out.padding.top = Math.max(out.padding.top || 0, 26);
+  out.padding.left = Math.max(out.padding.left || 0, 10);
+  out.padding.right = Math.max(out.padding.right || 0, 12);
+  out.padding.bottom = Math.max(out.padding.bottom || 0, 10);
 
-  // keep title neat
+  // Standardize title size
   if (out.title) {
     if (typeof out.title === "string") {
-      out.title = { text: out.title, anchor: "start", fontSize: 14, offset: 12 };
+      out.title = { text: out.title, anchor: "start", fontSize: 16, offset: 10 };
     } else {
       out.title = {
         ...out.title,
-        anchor: out.title.anchor || "start",
-        fontSize: out.title.fontSize ?? 14,
-        offset: out.title.offset ?? 12
+        anchor: "start",
+        fontSize: 16,
+        offset: 10,
+        subtitleFontSize: out.title.subtitleFontSize ?? 12
       };
     }
   }
 
-  // force legend bottom for consistency
+  // Force all legends to bottom to avoid overlap with title
   out.config = out.config || {};
   out.config.legend = {
     ...(out.config.legend || {}),
     orient: "bottom",
     direction: "horizontal",
-    titleFontSize: 11,
-    labelFontSize: 11,
-    offset: 6
+    titleFontSize: 12,
+    labelFontSize: 12,
+    offset: 10,
+    padding: 6
   };
+
+  // If encoding has legend settings, override them too
+  if (out.encoding) {
+    Object.keys(out.encoding).forEach(k => {
+      const enc = out.encoding[k];
+      if (enc && typeof enc === "object" && enc.legend) {
+        enc.legend = {
+          ...enc.legend,
+          orient: "bottom",
+          direction: "horizontal",
+          offset: 10
+        };
+      }
+    });
+  }
 
   return out;
 }
 
-function normalizeVegaLite(spec, { height = 320, titleText = "", patchFn = null } = {}) {
+/* Normalize Vega-Lite: enforce responsive width, stable height */
+function normalizeVegaLite(spec, { height = 320, patchFn = null } = {}) {
   let out = { ...spec };
 
-  if (titleText) out = applyTitle(out, titleText);
   if (typeof patchFn === "function") out = patchFn(out);
 
   out.width = "container";
   out.height = height;
 
-  if (!out.autosize) out.autosize = { type: "fit-x", contains: "padding" };
+  // Fit horizontally; keep padding
+  out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
 
   out.config = out.config || {};
   out.config.view = out.config.view || {};
@@ -135,7 +159,7 @@ function normalizeVegaLite(spec, { height = 320, titleText = "", patchFn = null 
   return out;
 }
 
-async function safeEmbedFromUrl(selector, url, { height = 320, titleText = "", patchFn = null } = {}) {
+async function safeEmbedFromUrl(selector, url, { height = 320, patchFn = null } = {}) {
   const el = document.querySelector(selector);
   if (!el) {
     console.warn(`Missing element in HTML: ${selector}`);
@@ -146,19 +170,19 @@ async function safeEmbedFromUrl(selector, url, { height = 320, titleText = "", p
     const spec = await getJson(url);
     const type = detectSpecType(spec);
 
-    let normalized = spec;
+    let finalSpec = spec;
 
     if (type === "vega-lite") {
-      normalized = normalizeVegaLite(spec, { height, titleText, patchFn });
+      finalSpec = normalizeVegaLite(spec, { height, patchFn });
     } else {
-      // Vega fallback: keep numeric width/height safe (do not set width:"container")
-      normalized = { ...spec };
-      if (typeof normalized.width !== "number") normalized.width = 700;
-      if (typeof normalized.height !== "number") normalized.height = height;
-      if (!("background" in normalized)) normalized.background = "transparent";
+      // Vega: keep numeric width/height; don’t force container width for Vega specs
+      finalSpec = { ...spec };
+      if (typeof finalSpec.width !== "number") finalSpec.width = 700;
+      if (typeof finalSpec.height !== "number") finalSpec.height = height;
+      if (!("background" in finalSpec)) finalSpec.background = "transparent";
     }
 
-    await window.vegaEmbed(selector, normalized, embedOptions);
+    await window.vegaEmbed(selector, finalSpec, embedOptions);
     return true;
   } catch (err) {
     console.error(`Embed failed for ${selector} using ${url}`, err);
@@ -179,10 +203,7 @@ async function safeEmbedWithFallbacksFromUrl(selector, urls, opts = {}) {
   return false;
 }
 
-/**
- * Maps: do NOT enforce autosize changes that can break projection rendering.
- * Force width:"container" for Vega-Lite maps only, and set a stable height.
- */
+/* Maps: keep spec intact; only set width container and height */
 async function embedMapFromUrl(selector, url, { height = 460 } = {}) {
   const el = document.querySelector(selector);
   if (!el) {
@@ -199,14 +220,11 @@ async function embedMapFromUrl(selector, url, { height = 460 } = {}) {
     if (type === "vega-lite") {
       out.width = "container";
       out.height = height;
-
-      // Keep whatever autosize/projection the spec already has; just ensure transparent + no border
       out.config = out.config || {};
       out.config.view = out.config.view || {};
       out.config.view.stroke = "transparent";
       if (!("background" in out)) out.background = "transparent";
     } else {
-      // Vega: keep numeric width/height
       if (typeof out.width !== "number") out.width = 700;
       if (typeof out.height !== "number") out.height = height;
       if (!("background" in out)) out.background = "transparent";
@@ -235,9 +253,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const H_STD = 320;
   const H_SM = 280;
-  const H_T4 = 360;
+  const H_T4 = 360;   // Task 4 consistent size
   const H_MAP = 460;
-  const H_DASH_INNER = 160;
 
   // Task 1
   safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
@@ -250,24 +267,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
   safeEmbedFromUrl("#vis4", "graphs/ethiopia_chart.json", { height: H_STD });
 
-  // Task 3 (patch titles)
+  // Task 3 (force smaller titles)
   safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", { height: H_STD, patchFn: patchTask3 });
   safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", { height: H_STD, patchFn: patchTask3 });
 
-  // Task 4 (patch title/legend + extra height)
+  // Task 4 (fix title/legend spacing + same size)
   safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_T4, patchFn: patchTask4 });
   safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_T4, patchFn: patchTask4 });
 
-  // Task 5 (add titles inside charts)
+  // Task 5
   safeEmbedWithFallbacksFromUrl("#vis_api", [
     "graphs/api_chart.json",
     "graphs/api_chart_spec.json"
-  ], { height: H_STD, titleText: "UK Inflation (API): World Bank Indicator" });
+  ], { height: H_STD });
 
   safeEmbedWithFallbacksFromUrl("#vis_scrape", [
     "graphs/emissions_tidy.json",
     "graphs/emissions_chart.json"
-  ], { height: H_STD, titleText: "Emissions (Scraped): Wikipedia Data (Tidy Format)" });
+  ], { height: H_STD });
 
   // Task 6 Dashboard
   function dashboardSpec(dataUrl, chartTitle) {
@@ -282,7 +299,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         "y": { "field": "value", "type": "quantitative", "title": null }
       },
       "width": "container",
-      "height": H_DASH_INNER,
+      "height": 160,
       "autosize": { "type": "fit-x", "contains": "padding" },
       "config": { "view": { "stroke": "transparent" }, "background": "transparent" }
     };
@@ -311,7 +328,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Task 7 Maps (dedicated embed)
+  // Task 7 Maps
   embedMapFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP });
   embedMapFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP });
 
