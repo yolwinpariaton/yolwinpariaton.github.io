@@ -45,10 +45,22 @@ function detectSpecType(spec) {
   return "vega-lite";
 }
 
-/* Task 3: enforce smaller titles */
-function patchTask3(spec) {
+function ensurePaddingObject(padding) {
+  // Vega/Vega-Lite allow number or object; we want object
+  if (padding == null) return {};
+  if (typeof padding === "number") {
+    return { top: padding, right: padding, bottom: padding, left: padding };
+  }
+  return { ...padding };
+}
+
+/* ---------- PATCHES ---------- */
+
+/* Task 3: enforce smaller titles (Vega-Lite only; your Task 3 charts are VL) */
+function patchTask3_VegaLite(spec) {
   const out = { ...spec };
-  out.padding = out.padding || { top: 18, left: 10, right: 10, bottom: 8 };
+  out.padding = ensurePaddingObject(out.padding);
+  out.padding.top = Math.max(out.padding.top || 0, 18);
 
   if (out.title) {
     if (typeof out.title === "string") {
@@ -67,80 +79,103 @@ function patchTask3(spec) {
   return out;
 }
 
-/* ✅ Task 4: Fix title/legend spacing + frame “fill” look */
+/* ✅ Task 4: fix title/legend spacing for BOTH Vega and Vega-Lite */
 function patchTask4(spec) {
   const out = { ...spec };
+  const type = detectSpecType(out);
 
-  // Give the title/legend area more vertical room
-  out.padding = out.padding || {};
-  out.padding.top = Math.max(out.padding.top || 0, 38);
-  out.padding.left = Math.max(out.padding.left || 0, 10);
+  // Shared padding increase (prevents cramped header area)
+  out.padding = ensurePaddingObject(out.padding);
+  out.padding.top = Math.max(out.padding.top || 0, 40);
   out.padding.right = Math.max(out.padding.right || 0, 14);
+  out.padding.left = Math.max(out.padding.left || 0, 10);
   out.padding.bottom = Math.max(out.padding.bottom || 0, 10);
 
-  // Title: make it slightly smaller + push it away from the legend
+  // Title: slightly smaller + more offset
   if (out.title) {
     if (typeof out.title === "string") {
-      out.title = {
-        text: out.title,
-        anchor: "start",
-        fontSize: 16,
-        offset: 16
-      };
+      out.title = { text: out.title, anchor: "start", fontSize: 16, offset: 16 };
     } else {
       out.title = {
         ...out.title,
         anchor: "start",
-        fontSize: 16,
-        offset: 16,
+        fontSize: out.title.fontSize ?? 16,
+        offset: Math.max(out.title.offset ?? 0, 16),
         subtitleFontSize: out.title.subtitleFontSize ?? 12
       };
     }
   }
 
-  // Legend: keep at top (FT-style) but add real spacing
-  out.config = out.config || {};
-  out.config.legend = {
-    ...(out.config.legend || {}),
-    orient: "top",
-    direction: "horizontal",
-    titleFontSize: 12,
-    labelFontSize: 12,
-    // offset: distance from plot area; padding: inside legend group
-    offset: 14,
-    padding: 12,
-    // ensures it doesn't squeeze into title space
-    columns: 4
-  };
+  if (type === "vega-lite") {
+    // Put legend at bottom for maximum robustness (prevents title collision)
+    out.config = out.config || {};
+    out.config.legend = {
+      ...(out.config.legend || {}),
+      orient: "bottom",
+      direction: "horizontal",
+      columns: 4,
+      offset: 10,
+      padding: 10,
+      titleFontSize: 12,
+      labelFontSize: 12
+    };
 
-  // If any channel has its own legend settings, normalize it too
-  if (out.encoding) {
-    Object.keys(out.encoding).forEach(k => {
-      const enc = out.encoding[k];
-      if (enc && typeof enc === "object" && enc.legend) {
-        enc.legend = {
-          ...enc.legend,
-          orient: "top",
-          direction: "horizontal",
-          offset: 14,
-          padding: 12,
-          columns: 4
-        };
-      }
-    });
+    if (out.encoding) {
+      Object.keys(out.encoding).forEach(k => {
+        const enc = out.encoding[k];
+        if (enc && typeof enc === "object" && enc.legend) {
+          enc.legend = {
+            ...enc.legend,
+            orient: "bottom",
+            direction: "horizontal",
+            columns: 4,
+            offset: 10
+          };
+        }
+      });
+    }
+
+    out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
   }
 
-  // Make autosize consistent so chart uses the container well
-  out.autosize = { type: "fit-x", contains: "padding" };
+  if (type === "vega") {
+    // Vega legends live in top-level `legends: []`
+    if (Array.isArray(out.legends)) {
+      out.legends = out.legends.map(lg => ({
+        ...lg,
+        orient: "bottom",
+        direction: "horizontal",
+        columns: lg.columns ?? 4,
+        offset: Math.max(lg.offset ?? 0, 10),
+        padding: Math.max(lg.padding ?? 0, 10),
+        titleFontSize: lg.titleFontSize ?? 12,
+        labelFontSize: lg.labelFontSize ?? 12
+      }));
+    }
+
+    // Vega config legend can also exist
+    out.config = out.config || {};
+    out.config.legend = {
+      ...(out.config.legend || {}),
+      orient: "bottom",
+      direction: "horizontal",
+      columns: 4,
+      offset: 10,
+      padding: 10,
+      titleFontSize: 12,
+      labelFontSize: 12
+    };
+
+    // Vega autosize
+    out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
+  }
 
   return out;
 }
 
-function normalizeVegaLite(spec, { height = 320, patchFn = null, forceTitle = null } = {}) {
-  let out = { ...spec };
-
-  if (typeof patchFn === "function") out = patchFn(out);
-
+/* Normalize Vega-Lite: enforce responsive width + stable height */
+function normalizeVegaLite(spec, { height = 320 } = {}) {
+  const out = { ...spec };
   out.width = "container";
   out.height = height;
   out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
@@ -150,14 +185,14 @@ function normalizeVegaLite(spec, { height = 320, patchFn = null, forceTitle = nu
   out.config.view.stroke = "transparent";
   if (!("background" in out)) out.background = "transparent";
 
-  if (forceTitle) {
-    out.title = { text: forceTitle, anchor: "start", fontSize: 16, offset: 10 };
-  }
-
   return out;
 }
 
-async function safeEmbedFromUrl(selector, url, { height = 320, patchFn = null, forceTitle = null } = {}) {
+async function safeEmbedFromUrl(
+  selector,
+  url,
+  { height = 320, patchFn = null, forceTitle = null } = {}
+) {
   const el = document.querySelector(selector);
   if (!el) {
     console.warn(`Missing element in HTML: ${selector}`);
@@ -165,15 +200,25 @@ async function safeEmbedFromUrl(selector, url, { height = 320, patchFn = null, f
   }
 
   try {
-    const spec = await getJson(url);
-    const type = detectSpecType(spec);
+    let spec = await getJson(url);
 
+    // Apply patch BEFORE normalization so it affects both Vega and Vega-Lite
+    if (typeof patchFn === "function") {
+      spec = patchFn(spec);
+    }
+
+    const type = detectSpecType(spec);
     let finalSpec = spec;
 
     if (type === "vega-lite") {
-      finalSpec = normalizeVegaLite(spec, { height, patchFn, forceTitle });
+      finalSpec = normalizeVegaLite(finalSpec, { height });
+
+      if (forceTitle) {
+        finalSpec.title = { text: forceTitle, anchor: "start", fontSize: 16, offset: 10 };
+      }
     } else {
-      finalSpec = { ...spec };
+      // Vega
+      finalSpec = { ...finalSpec };
       if (typeof finalSpec.width !== "number") finalSpec.width = 700;
       if (typeof finalSpec.height !== "number") finalSpec.height = height;
       if (!("background" in finalSpec)) finalSpec.background = "transparent";
@@ -200,10 +245,6 @@ async function safeEmbedWithFallbacksFromUrl(selector, urls, opts = {}) {
   return false;
 }
 
-async function embedMapFromUrl(selector, url, { height = 460 } = {}) {
-  return safeEmbedFromUrl(selector, url, { height });
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     await waitForVegaEmbed();
@@ -228,15 +269,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
   safeEmbedFromUrl("#vis4", "graphs/ethiopia_chart.json", { height: H_STD });
 
-  // Task 3
-  safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", { height: H_STD, patchFn: patchTask3 });
-  safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", { height: H_STD, patchFn: patchTask3 });
+  // Task 3 (Vega-Lite title size)
+  safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", {
+    height: H_STD,
+    patchFn: patchTask3_VegaLite
+  });
+  safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", {
+    height: H_STD,
+    patchFn: patchTask3_VegaLite
+  });
 
-  // ✅ Task 4 (the only graphs you asked to fix)
+  // ✅ Task 4 (works whether spec is Vega or Vega-Lite)
   safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_T4, patchFn: patchTask4 });
   safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_T4, patchFn: patchTask4 });
 
-  // Task 5
+  // Task 5 (title for first chart)
   safeEmbedWithFallbacksFromUrl("#vis_api", [
     "graphs/api_chart.json",
     "graphs/api_chart_spec.json"
@@ -247,7 +294,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     "graphs/emissions_chart.json"
   ], { height: H_STD });
 
-  // Task 6 Dashboard unchanged (your existing logic)
+  // Task 6 Dashboard unchanged
   function dashboardSpec(dataUrl, chartTitle) {
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -289,9 +336,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Task 7
-  embedMapFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP });
-  embedMapFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP });
+  // Task 7 maps
+  safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP });
+  safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP });
 
   // Task 8
   safeEmbedWithFallbacksFromUrl("#vis_bread", [
