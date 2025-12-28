@@ -336,9 +336,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Task 7 maps
-  safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP });
-  safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP });
+  document.addEventListener("DOMContentLoaded", () => {
+    const opt = { "actions": false };
+
+    // Task 7: Maps
+    vegaEmbed("#map_scotland", "graphs/scotland_choropleth.json", opt);
+    vegaEmbed("#map_wales", "graphs/wales_coordinates.json", opt);
+});
 
   // Task 8
   safeEmbedWithFallbacksFromUrl("#vis_bread", [

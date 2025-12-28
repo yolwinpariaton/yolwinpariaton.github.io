@@ -7,8 +7,7 @@
   },
 
   "width": "container",
-  "height": 450,
-  "autosize": { "type": "fit", "contains": "padding" },
+  "height": 420,
 
   "data": {
     "url": "chart2_wage_squeeze.json"
@@ -21,18 +20,26 @@
   "params": [
     {
       "name": "sectorSelect",
-      "value": "Public Sector",
+      "value": "All",
       "bind": {
         "input": "select",
         "options": [
+          "All",
           "Public Sector",
           "Private Sector",
           "Finance",
           "Retail",
           "Healthcare"
         ],
-        "name": "Highlight sector: "
+        "name": "Select sector: "
       }
+    }
+  ],
+
+  "transform": [
+    { "calculate": "toDate(datum.date)", "as": "date_parsed" },
+    {
+      "filter": "sectorSelect == 'All' || datum.sector == sectorSelect"
     }
   ],
 
@@ -40,9 +47,9 @@
     {
       "mark": {
         "type": "rule",
-        "strokeDash": [6, 4],
+        "strokeDash": [5, 5],
         "strokeWidth": 2,
-        "opacity": 0.6
+        "color": "#6b7280"
       },
       "encoding": {
         "y": { "datum": 100 }
@@ -53,57 +60,28 @@
       "mark": {
         "type": "line",
         "strokeWidth": 2,
-        "opacity": 0.25
+        "point": true
       },
       "encoding": {
         "x": {
           "field": "date_parsed",
           "type": "temporal",
-          "title": "",
+          "title": "Date",
           "axis": {
-            "format": "%b %Y",
-            "labelAngle": -45,
-            "grid": false
+            "format": "%Y",
+            "labelAngle": 0
           }
         },
         "y": {
           "field": "squeeze_index",
           "type": "quantitative",
-          "title": "Real Wage Index (2020 = 100)"
+          "title": "Real Wage Index (2020 = 100)",
+          "scale": { "domain": [90, 125] }
         },
         "color": {
           "field": "sector",
           "type": "nominal",
-          "legend": {
-            "title": "Sector",
-            "orient": "top"
-          }
-        }
-      }
-    },
-
-    {
-      "transform": [
-        { "filter": "datum.sector == sectorSelect" }
-      ],
-      "mark": {
-        "type": "line",
-        "strokeWidth": 4,
-        "point": { "size": 70 }
-      },
-      "encoding": {
-        "x": {
-          "field": "date_parsed",
-          "type": "temporal"
-        },
-        "y": {
-          "field": "squeeze_index",
-          "type": "quantitative"
-        },
-        "color": {
-          "field": "sector",
-          "type": "nominal",
-          "legend": null
+          "legend": { "title": "Sector" }
         },
         "tooltip": [
           { "field": "sector", "title": "Sector" },
@@ -122,16 +100,6 @@
             "field": "inflation",
             "title": "Inflation (%)",
             "format": ".1f"
-          },
-          {
-            "field": "nominal_wage",
-            "title": "Nominal Wage (£)",
-            "format": ",.0f"
-          },
-          {
-            "field": "real_wage",
-            "title": "Real Wage (£)",
-            "format": ",.0f"
           }
         ]
       }
