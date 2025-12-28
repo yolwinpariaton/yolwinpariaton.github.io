@@ -2,10 +2,10 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Inflation eased across a range of measures in October",
-    "anchor": "start",
+    "fontSize": 18,
     "font": "Arial, sans-serif",
     "fontWeight": "normal",
-    "fontSize": 18,
+    "anchor": "start",
     "subtitle": "Annual inflation rates %",
     "subtitleFontSize": 13,
     "subtitleColor": "#66605C",
@@ -14,7 +14,7 @@
   "width": 640,
   "height": 330,
   "background": "#FFF1E5",
-  "padding": { "top": 8, "right": 30, "bottom": 70, "left": 35 },
+  "padding": { "top": 8, "right": 30, "bottom": 20, "left": 35 },
 
   "data": {
     "values": [
@@ -152,7 +152,13 @@
 
   "layer": [
     {
-      "mark": { "type": "line", "strokeWidth": 3, "strokeJoin": "round", "strokeCap": "round", "interpolate": "monotone" },
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "strokeJoin": "round",
+        "strokeCap": "round",
+        "interpolate": "monotone"
+      },
       "encoding": {
         "x": {
           "field": "date",
@@ -177,7 +183,13 @@
               { "year": 2023 },
               { "year": 2024 },
               { "year": 2025 }
-            ]
+            ],
+            "title": "Source: ONS",
+            "titleFontSize": 12,
+            "titleColor": "#66605C",
+            "titlePadding": 22,
+            "titleAlign": "left",
+            "titleAnchor": "start"
           }
         },
         "y": {
@@ -249,26 +261,6 @@
         "y": { "field": "y", "type": "quantitative" },
         "text": { "field": "label" },
         "color": { "field": "color", "type": "nominal", "scale": null }
-      }
-    },
-
-    {
-      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 13, "color": "#66605C" },
-      "encoding": {
-        "x": { "value": 0 },
-        "y": { "value": 345 },
-        "text": { "value": "Source: ONS" }
-      }
-    },
-    {
-      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "color": "#66605C" },
-      "encoding": {
-        "x": { "value": 0 },
-        "y": { "value": 365 },
-        "text": { "value": "Colab: bit.ly/ft-inflation-colab" },
-        "href": {
-          "value": "https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz"
-        }
       }
     }
   ],
