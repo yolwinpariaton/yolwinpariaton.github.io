@@ -14,7 +14,7 @@
   "width": 640,
   "height": 330,
   "background": "#FFF1E5",
-  "padding": { "top": 8, "right": 30, "bottom": 45, "left": 35 },
+  "padding": { "top": 8, "right": 30, "bottom": 70, "left": 35 },
 
   "data": {
     "values": [
@@ -253,17 +253,25 @@
     },
 
     {
-      "mark": { "type": "text", "align": "left", "baseline": "bottom", "fontSize": 13, "color": "#66605C" },
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 13, "color": "#66605C" },
       "encoding": {
         "x": { "value": 0 },
-        "y": { "value": 370 },
+        "y": { "value": 345 },
         "text": { "value": "Source: ONS" }
+      }
+    },
+    {
+      "mark": { "type": "text", "align": "left", "baseline": "top", "fontSize": 12, "color": "#66605C" },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": { "value": 365 },
+        "text": { "value": "Colab: bit.ly/ft-inflation-colab" },
+        "href": {
+          "value": "https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz"
+        }
       }
     }
   ],
 
-  "config": {
-    "font": "Arial, sans-serif",
-    "view": { "stroke": "transparent" }
-  }
+  "config": { "font": "Arial, sans-serif", "view": { "stroke": "transparent" } }
 }
