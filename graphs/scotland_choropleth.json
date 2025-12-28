@@ -15,12 +15,11 @@
   "view": {"stroke": null},
   "background": "transparent",
   "data": {
-    "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/data/scotland_lad.geojson",
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sct/lad.geojson",
     "format": {"type": "json", "property": "features"}
   },
   "projection": {
-    "type": "identity",
-    "reflectY": true
+    "type": "albersUk"
   },
   "transform": [
     {

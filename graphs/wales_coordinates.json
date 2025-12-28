@@ -15,21 +15,26 @@
   "view": {"stroke": null},
   "background": "transparent",
   "projection": {
-    "type": "mercator",
-    "center": [-3.8, 52.4],
-    "scale": 7000
+    "type": "albersUk"
   },
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/data/wales_lad.geojson",
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.geojson",
         "format": {"type": "json", "property": "features"}
       },
       "mark": {
         "type": "geoshape",
         "fill": "#e9e9e9",
-        "stroke": "#000",
+        "stroke": "#ffffff",
         "strokeWidth": 0.5
+      },
+      "encoding": {
+        "tooltip": {
+          "field": "properties.LAD13NM",
+          "type": "nominal",
+          "title": "Region"
+        }
       }
     },
     {
