@@ -4,18 +4,17 @@
     "text": "Wales",
     "subtitle": ["Tourist Attractions & Landmarks", "Annual visitor numbers (millions)"],
     "anchor": "start",
-    "color": "black",
     "fontSize": 16,
     "subtitleFontStyle": "italic",
-    "subtitleFontSize": 10,
-    "subtitleColor": "black"
+    "subtitleFontSize": 11
   },
   "width": 400,
   "height": 550,
   "view": {"stroke": null},
-  "background": "transparent",
   "projection": {
-    "type": "albersUk"
+    "type": "mercator",
+    "center": [-3.8, 52.3],
+    "scale": 7000
   },
   "layer": [
     {
@@ -28,13 +27,6 @@
         "fill": "#e9e9e9",
         "stroke": "#ffffff",
         "strokeWidth": 0.5
-      },
-      "encoding": {
-        "tooltip": {
-          "field": "properties.LAD13NM",
-          "type": "nominal",
-          "title": "Region"
-        }
       }
     },
     {

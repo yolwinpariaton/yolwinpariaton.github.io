@@ -4,22 +4,21 @@
     "text": "Scotland",
     "subtitle": ["Population Density (2021 Census)", "People per square km"],
     "anchor": "start",
-    "color": "black",
     "fontSize": 16,
     "subtitleFontStyle": "italic",
-    "subtitleFontSize": 10,
-    "subtitleColor": "black"
+    "subtitleFontSize": 11
   },
   "width": 400,
   "height": 550,
   "view": {"stroke": null},
-  "background": "transparent",
   "data": {
     "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sct/lad.geojson",
     "format": {"type": "json", "property": "features"}
   },
   "projection": {
-    "type": "albersUk"
+    "type": "mercator",
+    "center": [-4.1, 57.8],
+    "scale": 3200
   },
   "transform": [
     {
