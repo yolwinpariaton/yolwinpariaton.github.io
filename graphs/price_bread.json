@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Premium bread price chart with KPI subtitle, baseline indexing, moving average, and hover interaction.",
+  "description": "Bread prices as an indexed lollipop + bubble chart (distinct from the beer chart).",
   "data": {
     "url": "data/price_bread.csv",
     "format": { "type": "csv" }
@@ -26,25 +26,13 @@
     { "calculate": "(datum.endPrice - datum.startPrice)", "as": "deltaAbs" },
     { "calculate": "(datum.deltaAbs / datum.startPrice)", "as": "deltaPct" },
 
-    {
-      "calculate": "(datum.price_num / datum.startPrice) * 100",
-      "as": "index_100"
-    },
+    { "calculate": "(datum.price_num / datum.startPrice) * 100", "as": "index_100" },
 
     {
       "window": [{ "op": "mean", "field": "index_100", "as": "ma3_index" }],
       "frame": [-2, 0],
       "sort": [{ "field": "date", "order": "ascending" }]
-    },
-
-    {
-      "joinaggregate": [
-        { "op": "min", "field": "index_100", "as": "minIndex" },
-        { "op": "max", "field": "index_100", "as": "maxIndex" }
-      ]
-    },
-    { "calculate": "datum.index_100 === datum.minIndex", "as": "isTrough" },
-    { "calculate": "datum.index_100 === datum.maxIndex", "as": "isPeak" }
+    }
   ],
   "title": {
     "text": "Six bread rolls price (white/brown)",
@@ -62,7 +50,7 @@
 
   "layer": [
     {
-      "mark": { "type": "area", "interpolate": "monotone", "opacity": 0.18 },
+      "mark": { "type": "rule", "opacity": 0.8 },
       "encoding": {
         "x": {
           "field": "date",
@@ -75,69 +63,39 @@
             "grid": false
           }
         },
-        "y": {
-          "field": "index_100",
-          "type": "quantitative",
-          "title": null,
-          "axis": {
-            "format": ".0f",
-            "grid": true,
-            "gridOpacity": 0.16,
-            "tickCount": 6
-          }
-        },
-        "color": { "value": "#8C4A2F" }
+        "y": { "value": 100 },
+        "y2": { "field": "index_100", "type": "quantitative" },
+        "color": { "value": "#D9A86C" }
       }
     },
 
     {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.8 },
+      "mark": { "type": "point", "filled": true, "opacity": 0.95 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "index_100", "type": "quantitative" },
-        "color": { "value": "#8C4A2F" }
+        "size": {
+          "field": "index_100",
+          "type": "quantitative",
+          "legend": null,
+          "scale": { "range": [40, 350] }
+        },
+        "color": { "value": "#8C4A2F" },
+        "tooltip": [
+          { "field": "item_name", "type": "nominal", "title": "Item" },
+          { "field": "date", "type": "temporal", "title": "Month", "format": "%b %Y" },
+          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" },
+          { "field": "index_100", "type": "quantitative", "title": "Index (start=100)", "format": ".1f" }
+        ]
       }
     },
 
     {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.2, "strokeDash": [6, 4] },
+      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.2 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "ma3_index", "type": "quantitative" },
-        "color": { "value": "#111111" },
-        "opacity": { "value": 0.70 }
-      }
-    },
-
-    {
-      "transform": [{ "filter": "datum.isPeak" }],
-      "mark": { "type": "point", "filled": true, "size": 110 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "index_100", "type": "quantitative" },
-        "color": { "value": "#2D6A4F" },
-        "tooltip": [
-          { "field": "item_name", "type": "nominal", "title": "Item" },
-          { "field": "date", "type": "temporal", "title": "Peak month", "format": "%b %Y" },
-          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" },
-          { "field": "index_100", "type": "quantitative", "title": "Index", "format": ".1f" }
-        ]
-      }
-    },
-
-    {
-      "transform": [{ "filter": "datum.isTrough" }],
-      "mark": { "type": "point", "filled": true, "size": 110 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "index_100", "type": "quantitative" },
-        "color": { "value": "#B23A48" },
-        "tooltip": [
-          { "field": "item_name", "type": "nominal", "title": "Item" },
-          { "field": "date", "type": "temporal", "title": "Trough month", "format": "%b %Y" },
-          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" },
-          { "field": "index_100", "type": "quantitative", "title": "Index", "format": ".1f" }
-        ]
+        "color": { "value": "#D9A86C" }
       }
     },
 
@@ -154,22 +112,12 @@
           }
         }
       ],
-      "mark": { "type": "point", "filled": true, "size": 70 },
+      "mark": { "type": "point", "filled": true, "size": 85 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "index_100", "type": "quantitative" },
-        "opacity": {
-          "condition": { "param": "hover", "value": 1 },
-          "value": 0
-        },
-        "color": { "value": "#8C4A2F" },
-        "tooltip": [
-          { "field": "item_name", "type": "nominal", "title": "Item" },
-          { "field": "date", "type": "temporal", "title": "Month", "format": "%b %Y" },
-          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" },
-          { "field": "index_100", "type": "quantitative", "title": "Index (start=100)", "format": ".1f" },
-          { "field": "ma3_index", "type": "quantitative", "title": "3m avg (index)", "format": ".1f" }
-        ]
+        "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
+        "color": { "value": "#8C4A2F" }
       }
     },
 
@@ -178,11 +126,25 @@
       "mark": { "type": "rule" },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
-        "color": { "value": "#111111" },
-        "opacity": { "value": 0.22 }
+        "color": { "value": "#B8B8B8" },
+        "opacity": { "value": 0.9 }
       }
     }
   ],
+
+  "encoding": {
+    "y": {
+      "field": "index_100",
+      "type": "quantitative",
+      "title": null,
+      "axis": {
+        "format": ".0f",
+        "grid": true,
+        "gridOpacity": 0.14,
+        "tickCount": 6
+      }
+    }
+  },
 
   "config": {
     "background": "transparent",
