@@ -1,18 +1,103 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": { "text": "UK Inflation: White Bread (Monthly Mean)", "anchor": "start" },
+  "description": "Monthly bread price series with hover interaction and clean presentation.",
   "data": {
     "url": "data/price_bread_monthly.csv",
-    "format": {
-      "type": "csv",
-      "parse": { "dateISO": "date", "price": "number" }
-    }
+    "format": { "type": "csv" }
   },
-  "width": 300,
-  "height": 250,
-  "mark": { "type": "line" },
-  "encoding": {
-    "x": { "field": "dateISO", "type": "temporal", "title": "Year" },
-    "y": { "field": "price", "type": "quantitative", "title": "Price (£)" }
+  "transform": [
+    { "calculate": "toDate(datum.dateISO)", "as": "date" },
+    { "calculate": "toNumber(datum.price)", "as": "price_num" }
+  ],
+  "title": {
+    "text": "Bread prices (monthly)",
+    "subtitle": "Indexed / unit price from monthly observations",
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 12,
+    "offset": 12
+  },
+  "width": "container",
+  "height": 320,
+  "padding": { "top": 8, "right": 18, "bottom": 10, "left": 10 },
+  "layer": [
+    {
+      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.6 },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "format": "%Y",
+            "labelAngle": 0,
+            "tickCount": { "interval": "year", "step": 2 },
+            "grid": false
+          }
+        },
+        "y": {
+          "field": "price_num",
+          "type": "quantitative",
+          "title": null,
+          "axis": {
+            "format": ".2f",
+            "grid": true,
+            "gridOpacity": 0.18,
+            "tickCount": 6
+          }
+        },
+        "color": {
+          "value": "#7A4E2D"
+        }
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "fields": ["date"],
+            "nearest": true,
+            "on": "mousemove",
+            "clear": "mouseout"
+          }
+        }
+      ],
+      "mark": { "type": "point", "filled": true, "size": 65 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "price_num", "type": "quantitative" },
+        "opacity": {
+          "condition": { "param": "hover", "value": 1 },
+          "value": 0
+        },
+        "color": { "value": "#7A4E2D" },
+        "tooltip": [
+          { "field": "date", "type": "temporal", "title": "Month", "format": "%b %Y" },
+          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".3f" }
+        ]
+      }
+    },
+    {
+      "transform": [{ "filter": { "param": "hover" } }],
+      "mark": { "type": "rule" },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "color": { "value": "#111111" },
+        "opacity": { "value": 0.25 }
+      }
+    }
+  ],
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "labelColor": "#2b2b2b",
+      "domainColor": "#d8d8d8",
+      "tickColor": "#d8d8d8"
+    }
   }
 }
