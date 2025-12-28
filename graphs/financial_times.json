@@ -170,7 +170,9 @@
             "labelColor": "#66605C",
             "labelPadding": 10,
             "tickSize": 0,
-            "domain": false,
+            "domain": true,
+            "domainColor": "#E6D9CE",
+            "domainWidth": 1,
             "grid": false,
             "values": [
               { "year": 2015, "month": 11 },
@@ -200,7 +202,9 @@
             "labelFontSize": 12,
             "labelColor": "#66605C",
             "tickSize": 0,
-            "domain": false,
+            "domain": true,
+            "domainColor": "#E6D9CE",
+            "domainWidth": 1,
             "gridColor": "#E6D9CE",
             "gridOpacity": 0.6,
             "title": null,
@@ -232,8 +236,9 @@
         "opacity": { "value": 0.95 }
       }
     },
+
     {
-      "mark": { "type": "rule", "strokeWidth": 1.4, "color": "#66605C" },
+      "mark": { "type": "rule", "strokeWidth": 1, "color": "#E6D9CE" },
       "encoding": { "y": { "datum": 0 } }
     }
   ],

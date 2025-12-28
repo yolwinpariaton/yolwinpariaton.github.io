@@ -170,7 +170,9 @@
             "labelColor": "#66605C",
             "labelPadding": 10,
             "tickSize": 0,
-            "domain": false,
+            "domain": true,
+            "domainColor": "#E6D9CE",
+            "domainWidth": 1,
             "grid": false,
             "values": [
               { "year": 2015, "month": 11 },
@@ -200,7 +202,9 @@
             "labelFontSize": 12,
             "labelColor": "#66605C",
             "tickSize": 0,
-            "domain": false,
+            "domain": true,
+            "domainColor": "#E6D9CE",
+            "domainWidth": 1,
             "gridColor": "#E6D9CE",
             "gridOpacity": 0.6,
             "title": null,
@@ -232,9 +236,15 @@
       }
     },
 
-    { "mark": { "type": "rule", "strokeWidth": 1.4, "color": "#66605C" }, "encoding": { "y": { "datum": 0 } } },
+    {
+      "mark": { "type": "rule", "strokeWidth": 1, "color": "#E6D9CE" },
+      "encoding": { "y": { "datum": 0 } }
+    },
 
-    { "mark": { "type": "rule", "strokeWidth": 1, "strokeDash": [4, 4], "color": "#888", "opacity": 0.7 }, "encoding": { "y": { "datum": 2 } } },
+    {
+      "mark": { "type": "rule", "strokeWidth": 1, "strokeDash": [4, 4], "color": "#888", "opacity": 0.7 },
+      "encoding": { "y": { "datum": 2 } }
+    },
     {
       "mark": { "type": "text", "align": "right", "dx": -6, "dy": -6, "fontSize": 10, "color": "#888", "fontWeight": "bold" },
       "encoding": { "x": { "datum": "Nov 2015" }, "y": { "datum": 2 }, "text": { "value": "2% Target" } }
