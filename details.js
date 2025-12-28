@@ -151,7 +151,7 @@ function normalizeVegaLite(spec, { height = 320 } = {}) {
 async function safeEmbedFromUrl(
   selector,
   url,
-  { height = 320, patchFn = null, forceTitle = null } = {}
+  { height = 320, patchFn = null, forceTitle = null, skipNormalize = false } = {}
 ) {
   const el = document.querySelector(selector);
   if (!el) return false;
@@ -164,7 +164,16 @@ async function safeEmbedFromUrl(
     let finalSpec = spec;
 
     if (type === "vega-lite") {
-      finalSpec = normalizeVegaLite(finalSpec, { height });
+      // IMPORTANT:
+      // For Task 8, some specs (e.g., vconcat/layered dashboards) can break if we force width/height.
+      // skipNormalize=true embeds the spec "as-is".
+      if (!skipNormalize) {
+        finalSpec = normalizeVegaLite(finalSpec, { height });
+      } else {
+        finalSpec = { ...finalSpec };
+        if (!("background" in finalSpec)) finalSpec.background = "transparent";
+      }
+
       if (forceTitle) {
         finalSpec.title = { text: forceTitle, anchor: "start", fontSize: 16, offset: 10 };
       }
@@ -258,9 +267,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
   safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
 
-  // Task 8  ✅ (ONLY MODIFIED SECTION)
-  await safeEmbedFromUrl("#vis_bread", "graphs/lrpd_bread.json", { height: H_STD });
-  await safeEmbedFromUrl("#vis_beer", "graphs/lrpd_beer.json", { height: H_STD });
+  // Task 8 ✅
+  // Key fix: Do NOT force width/height normalization for Task 8 specs.
+  // Many Task 8 charts are vconcat/layered specs and can fail or render blank if we overwrite layout.
+  await safeEmbedFromUrl("#vis_bread", "graphs/lrpd_bread.json", { height: H_STD, skipNormalize: true });
+  await safeEmbedFromUrl("#vis_beer", "graphs/lrpd_beer.json", { height: H_STD, skipNormalize: true });
 
   // Task 9
   safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_SM });
