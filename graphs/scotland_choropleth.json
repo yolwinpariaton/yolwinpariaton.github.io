@@ -1,32 +1,23 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Scotland Population Density by Council Area",
-    "subtitle": "People per square kilometer (2021 Census)",
-    "fontSize": 14,
-    "anchor": "start"
-  },
+  "title": "Scotland Regions",
   "width": 380,
   "height": 400,
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/electoral/spc/spc.json",
-    "format": {"type": "topojson", "feature": "spc"}
+    "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+    "format": {"type": "topojson", "feature": "countries"}
   },
+  "transform": [
+    {"filter": "datum.properties.name == 'United Kingdom'"}
+  ],
   "projection": {
     "type": "albers",
-    "rotate": [0, 0, 0]
+    "center": [-4, 57],
+    "scale": 3000
   },
   "mark": {
     "type": "geoshape",
-    "stroke": "white",
-    "strokeWidth": 0.5
-  },
-  "encoding": {
-    "color": {
-      "value": "#4682b4"
-    },
-    "tooltip": [
-      {"field": "properties.SPC16NM", "title": "Area"}
-    ]
+    "fill": "lightblue",
+    "stroke": "navy"
   }
 }

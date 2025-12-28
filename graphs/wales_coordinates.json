@@ -1,68 +1,23 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Wales Tourist Attractions",
-    "subtitle": "Major destinations with visitor numbers",
-    "fontSize": 14,
-    "anchor": "start"
-  },
+  "title": "Wales Regions",
   "width": 380,
   "height": 400,
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/electoral/wpc/wpc.json",
-    "format": {"type": "topojson", "feature": "wpc"}
+    "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+    "format": {"type": "topojson", "feature": "countries"}
   },
   "transform": [
-    {"filter": "substring(datum.properties.WPC16CD, 0, 1) == 'W'"}
+    {"filter": "datum.properties.name == 'United Kingdom'"}
   ],
   "projection": {
-    "type": "albers"
+    "type": "albers",
+    "center": [-3.5, 52],
+    "scale": 5000
   },
-  "layer": [
-    {
-      "mark": {
-        "type": "geoshape",
-        "fill": "#e8f4f8",
-        "stroke": "#666",
-        "strokeWidth": 0.3
-      }
-    },
-    {
-      "data": {
-        "values": [
-          {"name": "Cardiff", "lat": 51.48, "lon": -3.18, "visitors": 2.1, "type": "City"},
-          {"name": "Snowdonia", "lat": 53.07, "lon": -3.91, "visitors": 4.3, "type": "National Park"},
-          {"name": "Brecon Beacons", "lat": 51.88, "lon": -3.44, "visitors": 3.9, "type": "National Park"},
-          {"name": "Pembrokeshire", "lat": 51.67, "lon": -5.05, "visitors": 4.2, "type": "Coast"},
-          {"name": "Caernarfon", "lat": 53.14, "lon": -4.28, "visitors": 0.7, "type": "Castle"}
-        ]
-      },
-      "mark": {
-        "type": "circle",
-        "opacity": 0.8,
-        "stroke": "white",
-        "strokeWidth": 1.5
-      },
-      "encoding": {
-        "longitude": {"field": "lon", "type": "quantitative"},
-        "latitude": {"field": "lat", "type": "quantitative"},
-        "size": {
-          "field": "visitors",
-          "type": "quantitative",
-          "scale": {"range": [50, 400]},
-          "legend": {"title": "Visitors (M)"}
-        },
-        "color": {
-          "field": "type",
-          "type": "nominal",
-          "scale": {"scheme": "category10"},
-          "legend": {"title": "Type"}
-        },
-        "tooltip": [
-          {"field": "name", "title": "Location"},
-          {"field": "visitors", "title": "Annual Visitors (millions)"}
-        ]
-      }
-    }
-  ]
+  "mark": {
+    "type": "geoshape",
+    "fill": "lightgreen",
+    "stroke": "darkgreen"
+  }
 }
