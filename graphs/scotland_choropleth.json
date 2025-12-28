@@ -1,27 +1,26 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Scotland: Population Density",
-    "subtitle": ["People per square km (2021 Census)", "Darker blues indicate higher urban concentration"],
+    "text": "Scotland",
+    "subtitle": ["Population Density (2021 Census)", "People per square km"],
     "anchor": "start",
-    "color": "#1e293b",
+    "color": "black",
     "fontSize": 16,
     "subtitleFontStyle": "italic",
-    "subtitleFontSize": 11,
-    "subtitleColor": "#64748b"
+    "subtitleFontSize": 10,
+    "subtitleColor": "black"
   },
   "width": 400,
   "height": 550,
   "view": {"stroke": null},
   "background": "transparent",
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sct/lad.json",
-    "format": {"type": "topojson", "feature": "lad"}
+    "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/data/scotland_lad.geojson",
+    "format": {"type": "json", "property": "features"}
   },
   "projection": {
-    "type": "mercator",
-    "center": [-4.1, 57.8],
-    "scale": 3200
+    "type": "identity",
+    "reflectY": true
   },
   "transform": [
     {
@@ -37,26 +36,19 @@
   ],
   "mark": {
     "type": "geoshape",
-    "stroke": "#ffffff",
-    "strokeWidth": 0.3
+    "stroke": "white",
+    "strokeWidth": 0.5
   },
   "encoding": {
     "color": {
       "field": "Density",
       "type": "quantitative",
-      "scale": {
-        "type": "log",
-        "scheme": "teals"
-      },
-      "legend": {
-        "title": "Density",
-        "orient": "bottom-right",
-        "gradientLength": 150
-      }
+      "scale": {"type": "log", "scheme": "teals"},
+      "legend": {"title": null, "orient": "bottom-right"}
     },
     "tooltip": [
-      {"field": "properties.LAD13NM", "type": "nominal", "title": "Council Area"},
-      {"field": "Density", "type": "quantitative", "title": "Density (ppl/km²)", "format": ".1f"}
+      {"field": "properties.LAD13NM", "type": "nominal", "title": "Council"},
+      {"field": "Density", "type": "quantitative", "title": "Density"}
     ]
   }
 }
