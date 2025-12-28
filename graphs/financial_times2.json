@@ -11,11 +11,10 @@
     "subtitleColor": "#66605C",
     "subtitlePadding": 6
   },
-  "width": "container",
-  "height": 300,
-  "autosize": { "type": "fit-x", "contains": "padding" },
+  "width": 460,
+  "height": 250,
   "background": "#FFF1E5",
-  "padding": { "top": 32, "right": 120, "bottom": 10, "left": 25 },
+  "padding": { "top": 10, "right": 35, "bottom": 10, "left": 30 },
   "data": {
     "values": [
       { "date": "Nov 2015", "CPI": 0.1, "Goods": -1.9, "Services": 2.4, "Core": 1.2 },
@@ -161,12 +160,6 @@
         "tickSize": 0,
         "domainWidth": 0,
         "grid": false,
-        "title": "Source: ONS",
-        "titleFontSize": 10,
-        "titleColor": "#66605C",
-        "titlePadding": 26,
-        "titleAlign": "left",
-        "titleAnchor": "start",
         "values": [
           { "year": 2015, "month": 11 },
           { "year": 2017 },
@@ -180,132 +173,106 @@
           { "year": 2025 }
         ]
       }
+    },
+    "y": {
+      "field": "Value",
+      "type": "quantitative",
+      "scale": { "domain": [-2.5, 15], "nice": false },
+      "axis": {
+        "labelFontSize": 11,
+        "labelColor": "#66605C",
+        "tickSize": 0,
+        "domainWidth": 0,
+        "gridColor": "#E6D9CE",
+        "gridOpacity": 0.6,
+        "title": null,
+        "values": [0, 5, 10, 15],
+        "labelPadding": 5
+      }
+    },
+    "color": {
+      "field": "Indicator",
+      "type": "nominal",
+      "scale": {
+        "domain": ["CPI", "Goods", "Services", "CPI excl energy, food, alcohol & tobacco"],
+        "range": ["#0F5499", "#C54A78", "#5EBED6", "#70BA6E"]
+      },
+      "legend": {
+        "orient": "top",
+        "direction": "horizontal",
+        "anchor": "start",
+        "columns": 4,
+        "offset": 18,
+        "labelFont": "Arial",
+        "labelFontSize": 11,
+        "labelColor": "#66605C",
+        "symbolType": "stroke",
+        "symbolStrokeWidth": 3,
+        "symbolSize": 50,
+        "title": null
+      }
+    },
+    "strokeDash": {
+      "condition": {
+        "test": "datum.date > datetime(2024, 10, 31)",
+        "value": [5, 3]
+      },
+      "value": []
     }
   },
   "layer": [
     {
-      "encoding": {
-        "y": {
-          "field": "Value",
-          "type": "quantitative",
-          "scale": { "domain": [-2.5, 15], "nice": false },
-          "axis": {
-            "labelFontSize": 11,
-            "labelColor": "#66605C",
-            "tickSize": 0,
-            "domainWidth": 0,
-            "gridColor": "#E6D9CE",
-            "gridOpacity": 0.6,
-            "title": null,
-            "values": [0, 5, 10, 15],
-            "labelPadding": 5
-          }
-        }
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "strokeJoin": "round",
+        "strokeCap": "round",
+        "interpolate": "monotone",
+        "opacity": 0.9
+      }
+    },
+    { "mark": { "type": "rule", "strokeWidth": 1.5, "color": "#66605C" }, "encoding": { "y": { "datum": 0 } } },
+
+    { "mark": { "type": "rule", "strokeWidth": 1, "strokeDash": [4, 4], "color": "#888", "opacity": 0.7 }, "encoding": { "y": { "datum": 2 } } },
+    {
+      "mark": { "type": "text", "align": "right", "dx": -6, "dy": -6, "fontSize": 9, "color": "#888" },
+      "encoding": { "x": { "datum": "Nov 2015" }, "y": { "datum": 2 }, "text": { "value": "2% Target" } }
+    },
+
+    {
+      "mark": { "type": "point", "size": 60, "filled": true, "color": "#C54A78", "opacity": 1 },
+      "encoding": { "x": { "datum": "Oct 2022" }, "y": { "datum": 14.8 } }
+    },
+    {
+      "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 13, "fontWeight": "bold", "color": "#C54A78" },
+      "encoding": { "x": { "datum": "Oct 2022" }, "y": { "datum": 14.8 }, "text": { "value": "Peak: 14.8%" } }
+    },
+
+    {
+      "data": {
+        "values": [
+          { "date": "Nov 2025", "label": "Services: 4.4%", "y": 4.8, "color": "#5EBED6" },
+          { "date": "Nov 2025", "label": "Core: 3.2%", "y": 3.7, "color": "#70BA6E" },
+          { "date": "Nov 2025", "label": "CPI: 3.2%", "y": 3.2, "color": "#0F5499" },
+          { "date": "Nov 2025", "label": "Goods: 2.1%", "y": 2.1, "color": "#C54A78" }
+        ]
       },
-      "layer": [
-        {
-          "mark": { "type": "area", "line": false, "color": "#FFF1E5", "opacity": 1 },
-          "encoding": { "y": { "datum": 0 }, "y2": { "datum": -2.5 } }
-        },
-        {
-          "mark": { "type": "rect", "color": "#D3D3D3", "opacity": 0.1 },
-          "encoding": {
-            "x": { "datum": "Mar 2020" },
-            "x2": { "datum": "Jul 2021" },
-            "y": { "datum": -2.5 },
-            "y2": { "datum": 15 }
-          }
-        },
-        {
-          "mark": {
-            "type": "text",
-            "align": "center",
-            "baseline": "top",
-            "fontSize": 9,
-            "color": "#888",
-            "angle": 0
-          },
-          "encoding": { "x": { "datum": "Oct 2020" }, "y": { "datum": 14.6 }, "text": { "value": "COVID-19" } }
-        },
-        {
-          "mark": {
-            "type": "line",
-            "strokeWidth": 3,
-            "strokeJoin": "round",
-            "strokeCap": "round",
-            "interpolate": "monotone"
-          },
-          "encoding": {
-            "color": {
-              "field": "Indicator",
-              "type": "nominal",
-              "scale": {
-                "domain": ["CPI", "Goods", "Services", "CPI excl energy, food, alcohol & tobacco"],
-                "range": ["#0F5499", "#C54A78", "#5EBED6", "#70BA6E"]
-              },
-              "legend": {
-                "orient": "top",
-                "direction": "horizontal",
-                "labelFont": "Arial",
-                "labelFontSize": 11,
-                "labelColor": "#66605C",
-                "symbolType": "stroke",
-                "symbolStrokeWidth": 3,
-                "symbolSize": 50,
-                "columns": 4,
-                "columnPadding": 22,
-                "padding": 6,
-                "title": null
-              }
-            },
-            "strokeDash": {
-              "condition": { "test": "datum.date > datetime(2024, 10, 31)", "value": [5, 3] },
-              "value": []
-            },
-            "opacity": { "value": 0.9 },
-            "tooltip": [
-              { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Date" },
-              { "field": "Indicator", "type": "nominal", "title": "Measure" },
-              { "field": "Value", "type": "quantitative", "format": ".1f", "title": "Rate (%)" }
-            ]
-          }
-        },
-        { "mark": { "type": "rule", "strokeWidth": 1.5, "color": "#66605C" }, "encoding": { "y": { "datum": 0 } } },
-        {
-          "mark": { "type": "rule", "strokeWidth": 1, "strokeDash": [4, 4], "color": "#888", "opacity": 0.7 },
-          "encoding": { "y": { "datum": 2 } }
-        },
-        {
-          "mark": { "type": "text", "align": "right", "dx": -5, "dy": -5, "fontSize": 9, "color": "#888" },
-          "encoding": { "x": { "datum": "Nov 2015" }, "y": { "datum": 2 }, "text": { "value": "2% Target" } }
-        },
-        {
-          "mark": { "type": "point", "size": 60, "filled": true, "color": "#C54A78", "opacity": 1 },
-          "encoding": { "x": { "datum": "Oct 2022" }, "y": { "datum": 14.8 } }
-        },
-        {
-          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 12, "fontSize": 13, "fontWeight": "bold", "color": "#C54A78" },
-          "encoding": { "x": { "datum": "Oct 2022" }, "y": { "datum": 14.8 }, "text": { "value": "Peak: 14.8%" } }
-        },
-        {
-          "data": {
-            "values": [
-              { "date": "Nov 2025", "label": "Services: 4.4%", "y": 4.8, "color": "#5EBED6" },
-              { "date": "Nov 2025", "label": "CPI: 3.2%", "y": 3.2, "color": "#0F5499" },
-              { "date": "Nov 2025", "label": "Core: 3.2%", "y": 3.7, "color": "#70BA6E" },
-              { "date": "Nov 2025", "label": "Goods: 2.1%", "y": 2.1, "color": "#C54A78" }
-            ]
-          },
-          "mark": { "type": "text", "align": "left", "dx": 15, "fontSize": 9, "fontWeight": "bold" },
-          "encoding": {
-            "x": { "field": "date", "type": "temporal" },
-            "y": { "field": "y", "type": "quantitative" },
-            "text": { "field": "label" },
-            "color": { "field": "color", "type": "nominal", "scale": null }
-          }
-        }
-      ]
+      "mark": { "type": "text", "align": "left", "dx": 10, "fontSize": 9, "fontWeight": "bold" },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "y", "type": "quantitative" },
+        "text": { "field": "label" },
+        "color": { "field": "color", "type": "nominal", "scale": null }
+      }
+    },
+
+    {
+      "mark": { "type": "text", "align": "left", "baseline": "bottom", "fontSize": 11, "fontWeight": "bold", "color": "#66605C" },
+      "encoding": { "x": { "datum": "Nov 2015" }, "y": { "datum": -2.5 }, "text": { "value": "Source: ONS" } }
     }
   ],
-  "config": { "font": "Arial, sans-serif", "view": { "stroke": "transparent" } }
+  "config": {
+    "font": "Arial, sans-serif",
+    "view": { "stroke": "transparent" }
+  }
 }
