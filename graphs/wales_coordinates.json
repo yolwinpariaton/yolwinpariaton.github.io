@@ -1,77 +1,21 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Wales: Tourist Attractions & Landmarks",
-    "subtitle": "Major destinations with annual visitor numbers (millions)",
-    "fontSize": 14,
-    "anchor": "start"
-  },
+  "title": "Wales Tourist Attractions",
   "width": 380,
   "height": 400,
-  "projection": {
-    "type": "mercator",
-    "center": [-3.5, 52.5],
-    "scale": 5000
+  "data": {
+    "values": [
+      {"name": "Cardiff", "lat": 51.48, "lon": -3.18, "visitors": 2.1},
+      {"name": "Snowdonia", "lat": 53.07, "lon": -3.91, "visitors": 4.3},
+      {"name": "Pembrokeshire", "lat": 51.67, "lon": -5.05, "visitors": 4.2}
+    ]
   },
-  "layer": [
-    {
-      "data": {
-        "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-kingdom/uk-counties.json",
-        "format": {"type": "topojson", "feature": "GBR_adm2"}
-      },
-      "transform": [
-        {"filter": "datum.properties.TYPE_2 == 'Unitary Authority (wales)' || datum.properties.NAME_1 == 'Wales'"}
-      ],
-      "mark": {
-        "type": "geoshape",
-        "fill": "#e8f4f8",
-        "stroke": "#333",
-        "strokeWidth": 0.5
-      }
-    },
-    {
-      "data": {
-        "values": [
-          {"name": "Snowdonia", "lat": 53.0685, "lon": -3.9086, "visitors": 4.27, "type": "National Park"},
-          {"name": "Brecon Beacons", "lat": 51.8799, "lon": -3.4354, "visitors": 3.85, "type": "National Park"},
-          {"name": "Pembrokeshire Coast", "lat": 51.6721, "lon": -5.0527, "visitors": 4.2, "type": "National Park"},
-          {"name": "Cardiff Castle", "lat": 51.4822, "lon": -3.1812, "visitors": 2.1, "type": "Castle"},
-          {"name": "Caernarfon Castle", "lat": 53.1393, "lon": -4.2769, "visitors": 0.68, "type": "Castle"},
-          {"name": "Llandudno", "lat": 53.3239, "lon": -3.8261, "visitors": 1.85, "type": "Resort"},
-          {"name": "Tenby", "lat": 51.6729, "lon": -4.7036, "visitors": 0.95, "type": "Resort"},
-          {"name": "Anglesey", "lat": 53.2500, "lon": -4.3333, "visitors": 1.72, "type": "Island"}
-        ]
-      },
-      "mark": {
-        "type": "circle",
-        "opacity": 0.8,
-        "stroke": "white",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "longitude": {"field": "lon", "type": "quantitative"},
-        "latitude": {"field": "lat", "type": "quantitative"},
-        "size": {
-          "field": "visitors",
-          "type": "quantitative",
-          "scale": {"range": [100, 500]},
-          "title": "Annual Visitors (millions)"
-        },
-        "color": {
-          "field": "type",
-          "type": "nominal",
-          "scale": {
-            "domain": ["National Park", "Castle", "Resort", "Island"],
-            "range": ["#22c55e", "#dc2626", "#0ea5e9", "#a855f7"]
-          },
-          "title": "Type"
-        },
-        "tooltip": [
-          {"field": "name", "title": "Attraction"},
-          {"field": "type", "title": "Type"},
-          {"field": "visitors", "title": "Visitors (millions)", "format": ".2f"}
-        ]
-      }
-    }
-  ]
+  "mark": "circle",
+  "encoding": {
+    "x": {"field": "lon", "type": "quantitative", "scale": {"domain": [-6, -2]}, "title": "Longitude"},
+    "y": {"field": "lat", "type": "quantitative", "scale": {"domain": [51, 54]}, "title": "Latitude"},
+    "size": {"field": "visitors", "type": "quantitative", "scale": {"range": [100, 1000]}},
+    "color": {"value": "steelblue"},
+    "tooltip": [{"field": "name"}, {"field": "visitors"}]
+  }
 }
