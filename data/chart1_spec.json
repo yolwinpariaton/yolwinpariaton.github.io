@@ -4,121 +4,58 @@
     "text": "UK Inflation Decomposition & Key Events",
     "subtitle": "Contribution by component with policy responses"
   },
-  "width": 750,
+  "width": "container",
   "height": 450,
+  "autosize": { "type": "fit", "contains": "padding" },
   "data": {
-    "url": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/data/chart1_inflation_advanced.json"
+    "url": "data/chart1_inflation_advanced.json",
+    "format": { "type": "json", "parse": { "date": "date" } }
   },
   "layer": [
     {
-      "mark": {
-        "type": "area",
-        "opacity": 0.7
-      },
+      "mark": { "type": "area", "opacity": 0.7 },
       "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal",
-          "title": ""
-        },
-        "y": {
-          "field": "food",
-          "type": "quantitative",
-          "stack": "zero"
-        },
-        "color": {
-          "value": "#ff9800"
-        },
+        "x": { "field": "date", "type": "temporal", "title": "" },
+        "y": { "field": "food", "type": "quantitative", "stack": "zero" },
+        "color": { "value": "#ff9800" },
         "tooltip": [
-          {
-            "field": "food",
-            "title": "Food Contribution",
-            "format": ".1f"
-          }
+          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
+          { "field": "food", "title": "Food Contribution", "format": ".1f" }
         ]
       }
     },
     {
-      "mark": {
-        "type": "area",
-        "opacity": 0.7
-      },
+      "mark": { "type": "area", "opacity": 0.7 },
       "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal"
-        },
-        "y": {
-          "field": "energy",
-          "type": "quantitative",
-          "stack": "zero"
-        },
-        "color": {
-          "value": "#f44336"
-        },
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "energy", "type": "quantitative", "stack": "zero" },
+        "color": { "value": "#f44336" },
         "tooltip": [
-          {
-            "field": "energy",
-            "title": "Energy Contribution",
-            "format": ".1f"
-          }
+          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
+          { "field": "energy", "title": "Energy Contribution", "format": ".1f" }
         ]
       }
     },
     {
-      "mark": {
-        "type": "area",
-        "opacity": 0.7
-      },
+      "mark": { "type": "area", "opacity": 0.7 },
       "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal"
-        },
-        "y": {
-          "field": "core",
-          "type": "quantitative",
-          "stack": "zero"
-        },
-        "color": {
-          "value": "#2196f3"
-        },
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "core", "type": "quantitative", "stack": "zero" },
+        "color": { "value": "#2196f3" },
         "tooltip": [
-          {
-            "field": "core",
-            "title": "Core Contribution",
-            "format": ".1f"
-          }
+          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
+          { "field": "core", "title": "Core Contribution", "format": ".1f" }
         ]
       }
     },
     {
-      "mark": {
-        "type": "line",
-        "strokeWidth": 3,
-        "color": "black"
-      },
+      "mark": { "type": "line", "strokeWidth": 3, "color": "black" },
       "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal"
-        },
-        "y": {
-          "field": "headline",
-          "type": "quantitative",
-          "title": "Inflation Rate (%)"
-        },
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "headline", "type": "quantitative", "title": "Inflation Rate (%)" },
         "tooltip": [
-          {
-            "field": "date",
-            "type": "temporal",
-            "format": "%B %Y"
-          },
-          {
-            "field": "headline",
-            "title": "Headline CPI",
-            "format": ".1f"
-          }
+          { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Month" },
+          { "field": "headline", "title": "Headline CPI", "format": ".1f" }
         ]
       }
     }
