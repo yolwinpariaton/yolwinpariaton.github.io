@@ -3,15 +3,15 @@
   "title": {
     "text": "Wales: Tourist Attractions & Landmarks",
     "subtitle": "Major destinations with annual visitor numbers (millions)",
-    "fontSize": 16,
+    "fontSize": 14,
     "anchor": "start"
   },
-  "width": 400,
-  "height": 500,
+  "width": 380,
+  "height": 400,
   "projection": {
     "type": "mercator",
-    "center": [-3.8, 52.4],
-    "scale": 7000
+    "center": [-3.8, 52.3],
+    "scale": 6500
   },
   "layer": [
     {
@@ -21,8 +21,8 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#f8fafc",
-        "stroke": "#cbd5e1",
+        "fill": "#f0f4f8",
+        "stroke": "#94a3b8",
         "strokeWidth": 0.5
       }
     },
@@ -39,27 +39,62 @@
           {"name": "Anglesey", "lat": 53.2500, "lon": -4.3333, "visitors": 1.72, "type": "Island"}
         ]
       },
-      "mark": {"type": "circle", "filled": true, "opacity": 0.8, "stroke": "white", "strokeWidth": 1.5},
+      "mark": {
+        "type": "circle",
+        "filled": true,
+        "opacity": 0.85,
+        "stroke": "white",
+        "strokeWidth": 2
+      },
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude": {"field": "lat", "type": "quantitative"},
         "size": {
           "field": "visitors",
           "type": "quantitative",
-          "scale": {"range": [100, 1000]},
-          "legend": {"title": "Visitors (M)", "orient": "bottom-left"}
+          "scale": {"range": [100, 800]},
+          "title": "Annual Visitors (millions)",
+          "legend": {"orient": "bottom-right"}
         },
         "color": {
           "field": "type",
           "type": "nominal",
-          "scale": {"scheme": "category10"},
-          "legend": {"title": "Type", "orient": "top-right"}
+          "scale": {
+            "domain": ["National Park", "Castle", "Resort", "Island"],
+            "range": ["#22c55e", "#dc2626", "#0ea5e9", "#a855f7"]
+          },
+          "title": "Type",
+          "legend": {"orient": "top-right"}
         },
         "tooltip": [
-          {"field": "name", "type": "nominal", "title": "Place"},
-          {"field": "visitors", "type": "quantitative", "title": "Visitors (M)"}
+          {"field": "name", "title": "Attraction"},
+          {"field": "type", "title": "Type"},
+          {"field": "visitors", "title": "Annual Visitors", "format": ".2f million"}
         ]
       }
+    },
+    {
+      "data": {
+        "values": [
+          {"name": "Snowdonia", "lat": 53.0685, "lon": -3.9086},
+          {"name": "Cardiff", "lat": 51.4822, "lon": -3.1812},
+          {"name": "Pembrokeshire", "lat": 51.6721, "lon": -5.0527}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "dy": -12
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "name"}
+      }
     }
-  ]
+  ],
+  "config": {
+    "view": {"stroke": "transparent"}
+  }
 }
