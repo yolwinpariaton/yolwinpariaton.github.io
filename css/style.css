@@ -12,12 +12,11 @@
   --shadow: 0 10px 30px rgba(2, 6, 23, 0.10);
   --maxw: 1080px;
 
-  /* Reference sizing (Task 1–3) */
-  --chart-h: 320px;      /* standard charts */
-  --chart-h-sm: 280px;   /* smaller charts (Task 9/10) */
-  --chart-h-t4: 360px;   /* Task 4 needs extra room for title + legend */
-  --map-h: 460px;        /* maps */
-  --dash-h: 190px;       /* dashboard tiles */
+  --chart-h: 320px;
+  --chart-h-sm: 280px;
+  --chart-h-t4: 360px;
+  --map-h: 460px;
+  --dash-h: 190px;
 }
 
 * { box-sizing: border-box; }
@@ -40,7 +39,6 @@ a:hover{ text-decoration: underline; }
   padding: 0 18px;
 }
 
-/* Skip link */
 .skip-link{
   position: absolute;
   left: -999px;
@@ -53,14 +51,12 @@ a:hover{ text-decoration: underline; }
 }
 .skip-link:focus{ left: 10px; }
 
-/* Header */
 .site-header{
   background: linear-gradient(180deg, var(--navy), var(--navy-2));
   color: var(--white);
   padding-bottom: 0;
 }
 
-/* NAV */
 .nav{
   display:flex;
   align-items:center;
@@ -102,7 +98,6 @@ a:hover{ text-decoration: underline; }
   background: rgba(255,255,255,0.18);
 }
 
-/* NO-JS toggle checkbox */
 .nav__checkbox{
   position: absolute;
   opacity: 0;
@@ -121,7 +116,6 @@ a:hover{ text-decoration: underline; }
 }
 .nav__toggle:hover{ background: rgba(255,255,255,0.12); }
 
-/* HERO */
 .hero{ padding: 0; }
 
 .hero--bg{
@@ -172,7 +166,6 @@ a:hover{ text-decoration: underline; }
   font-size: clamp(16px, 1.8vw, 20px);
 }
 
-/* Buttons */
 .btn{
   display:inline-block;
   background: var(--white);
@@ -210,26 +203,22 @@ a:hover{ text-decoration: underline; }
   text-decoration: none;
 }
 
-/* White content area after hero */
 .white-space{
   background: #ffffff;
   padding: 70px 0;
   min-height: 70vh;
 }
 
-/* Portfolio spacing */
 .portfolio-content .task{
   margin-bottom: 62px;
 }
 
-/* Small source line under charts/tasks */
 .task-source{
   margin: 10px 0 0;
   font-size: 12px;
   color: var(--muted);
 }
 
-/* Charts layout */
 .charts-row{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -239,7 +228,6 @@ a:hover{ text-decoration: underline; }
   max-width: 100%;
 }
 
-/* Frame */
 .chart-wrapper{
   background: #ffffff;
   border: 1px solid var(--border);
@@ -250,20 +238,8 @@ a:hover{ text-decoration: underline; }
   position: relative;
 }
 
-/* Media wrapper (Task 4 image): no padding so frame matches image */
-.chart-wrapper--media{
-  padding: 0;
-}
-
-/* Wrapper widths */
 .chart-wrapper--center{
   max-width: 760px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.chart-wrapper--wide{
-  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -274,7 +250,6 @@ a:hover{ text-decoration: underline; }
   margin-right: auto;
 }
 
-/* Chart containers */
 .vega-container{
   width: 100%;
   height: var(--chart-h);
@@ -289,14 +264,12 @@ a:hover{ text-decoration: underline; }
   height: var(--chart-h-t4);
 }
 
-/* Maps */
 .map-container{
   width: 100%;
   height: var(--map-h);
   display: block;
 }
 
-/* Force Vega embed to fill the container */
 .vega-embed,
 .vega-embed .vega-vis{
   width: 100% !important;
@@ -312,16 +285,15 @@ a:hover{ text-decoration: underline; }
   display: block;
 }
 
-/* Task images */
+/* FIX: Task 4 image looks cropped in your screenshot -> use contain */
 .task-img{
   width: 100%;
   height: auto;
-  max-height: 280px;
-  object-fit: cover;
+  max-height: 360px;
+  object-fit: contain;
   display: block;
 }
 
-/* Task centering helpers */
 .task-center{
   text-align: center;
 }
@@ -332,7 +304,6 @@ a:hover{ text-decoration: underline; }
   font-weight: 600;
 }
 
-/* Extra spacing between stacked charts (Task 9) */
 .stacked-charts{
   margin-top: 16px;
 }
@@ -340,13 +311,11 @@ a:hover{ text-decoration: underline; }
   margin-top: 22px;
 }
 
-/* Back to top */
 .back-top{
   margin-top: 20px;
   text-align: center;
 }
 
-/* Footer */
 .site-footer{
   background: #071a33;
   color: var(--white);
@@ -374,7 +343,6 @@ a:hover{ text-decoration: underline; }
 
 .site-footer a{ color: var(--white); text-decoration: underline; }
 
-/* Dashboard */
 .dashboard-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -405,7 +373,6 @@ a:hover{ text-decoration: underline; }
   height: 100% !important;
 }
 
-/* Responsive */
 @media (max-width: 860px){
   .nav{ flex-wrap: wrap; }
   .nav__toggle{ display:inline-block; }
