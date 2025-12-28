@@ -9,13 +9,11 @@
   "width": 380,
   "height": 400,
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/scotland/topo_lad.json",
     "format": {"type": "topojson", "feature": "lad"}
   },
   "projection": {
-    "type": "mercator",
-    "center": [-4, 56.5],
-    "scale": 2800
+    "type": "mercator"
   },
   "transform": [
     {
@@ -60,14 +58,19 @@
         "key": "Council",
         "fields": ["Density"]
       }
-    }
+    },
+    {"calculate": "datum.Density == null ? 0 : datum.Density", "as": "DensityClean"}
   ],
   "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
   "encoding": {
     "color": {
-      "field": "Density",
+      "field": "DensityClean",
       "type": "quantitative",
-      "scale": {"type": "log", "scheme": "blues"},
+      "scale": {
+        "type": "log",
+        "scheme": "blues",
+        "domainMin": 1
+      },
       "title": "People/km²",
       "legend": {"format": ",.0f"}
     },
