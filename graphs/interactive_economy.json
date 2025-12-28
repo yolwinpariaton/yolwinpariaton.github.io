@@ -110,7 +110,7 @@
     },
     {
       "name": "showTrend",
-      "value": false,
+      "value": true,
       "bind": {
         "input": "checkbox",
         "name": "Show Trend Line "
