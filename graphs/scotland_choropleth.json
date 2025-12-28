@@ -1,23 +1,102 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Scotland Regions",
+  "title": {
+    "text": "Scotland Population Density by Region",
+    "subtitle": "Simplified choropleth visualization",
+    "fontSize": 14,
+    "anchor": "start"
+  },
   "width": 380,
   "height": 400,
   "data": {
-    "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
-    "format": {"type": "topojson", "feature": "countries"}
+    "values": [
+      {"region": "Edinburgh", "lat": 55.95, "lon": -3.19, "density": 1948, "area": "City"},
+      {"region": "Glasgow", "lat": 55.86, "lon": -4.25, "density": 3521, "area": "City"},
+      {"region": "Aberdeen", "lat": 57.15, "lon": -2.09, "density": 1208, "area": "City"},
+      {"region": "Dundee", "lat": 56.46, "lon": -2.97, "density": 2477, "area": "City"},
+      {"region": "Highland", "lat": 57.5, "lon": -4.5, "density": 9, "area": "Rural"},
+      {"region": "Aberdeenshire", "lat": 57.2, "lon": -2.5, "density": 41, "area": "Rural"},
+      {"region": "Fife", "lat": 56.2, "lon": -3.2, "density": 281, "area": "Mixed"},
+      {"region": "Perth & Kinross", "lat": 56.4, "lon": -3.7, "density": 28, "area": "Rural"},
+      {"region": "Stirling", "lat": 56.12, "lon": -3.94, "density": 40, "area": "Rural"},
+      {"region": "Argyll & Bute", "lat": 56.2, "lon": -5.0, "density": 13, "area": "Rural"},
+      {"region": "South Lanarkshire", "lat": 55.67, "lon": -3.78, "density": 183, "area": "Mixed"},
+      {"region": "North Lanarkshire", "lat": 55.86, "lon": -3.92, "density": 733, "area": "Urban"},
+      {"region": "East Lothian", "lat": 55.94, "lon": -2.77, "density": 152, "area": "Mixed"},
+      {"region": "West Lothian", "lat": 55.91, "lon": -3.51, "density": 419, "area": "Urban"},
+      {"region": "Midlothian", "lat": 55.88, "lon": -3.05, "density": 254, "area": "Mixed"}
+    ]
   },
-  "transform": [
-    {"filter": "datum.properties.name == 'United Kingdom'"}
-  ],
-  "projection": {
-    "type": "albers",
-    "center": [-4, 57],
-    "scale": 3000
-  },
-  "mark": {
-    "type": "geoshape",
-    "fill": "lightblue",
-    "stroke": "navy"
-  }
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "opacity": 0.15,
+        "color": "#e0e0e0"
+      },
+      "encoding": {
+        "x": {"value": 0},
+        "x2": {"value": 380},
+        "y": {"value": 0},
+        "y2": {"value": 400}
+      }
+    },
+    {
+      "mark": {
+        "type": "square",
+        "size": 800,
+        "opacity": 0.7,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "lon",
+          "type": "quantitative",
+          "scale": {"domain": [-6, -1]},
+          "axis": {"title": "Longitude", "grid": false}
+        },
+        "y": {
+          "field": "lat",
+          "type": "quantitative",
+          "scale": {"domain": [55, 58]},
+          "axis": {"title": "Latitude", "grid": false}
+        },
+        "color": {
+          "field": "density",
+          "type": "quantitative",
+          "scale": {
+            "type": "log",
+            "scheme": "blues",
+            "domain": [9, 3521]
+          },
+          "legend": {
+            "title": "People/km²",
+            "format": ",.0f"
+          }
+        },
+        "tooltip": [
+          {"field": "region", "title": "Region"},
+          {"field": "density", "title": "Density (people/km²)", "format": ",.0f"},
+          {"field": "area", "title": "Type"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 9,
+        "dy": -15
+      },
+      "encoding": {
+        "x": {"field": "lon", "type": "quantitative"},
+        "y": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "region"},
+        "opacity": {
+          "condition": {"test": "datum.density > 1000", "value": 1},
+          "value": 0
+        }
+      }
+    }
+  ]
 }

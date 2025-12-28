@@ -1,23 +1,120 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Wales Regions",
+  "title": {
+    "text": "Wales Tourist Attractions & Landmarks",
+    "subtitle": "Major destinations with annual visitor numbers",
+    "fontSize": 14,
+    "anchor": "start"
+  },
   "width": 380,
   "height": 400,
   "data": {
-    "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
-    "format": {"type": "topojson", "feature": "countries"}
+    "values": [
+      {"name": "Cardiff", "lat": 51.48, "lon": -3.18, "visitors": 2.1, "type": "City"},
+      {"name": "Swansea", "lat": 51.62, "lon": -3.94, "visitors": 1.2, "type": "City"},
+      {"name": "Newport", "lat": 51.58, "lon": -3.00, "visitors": 0.8, "type": "City"},
+      {"name": "Snowdonia NP", "lat": 53.07, "lon": -3.91, "visitors": 4.3, "type": "National Park"},
+      {"name": "Brecon Beacons", "lat": 51.88, "lon": -3.44, "visitors": 3.9, "type": "National Park"},
+      {"name": "Pembrokeshire Coast", "lat": 51.67, "lon": -5.05, "visitors": 4.2, "type": "National Park"},
+      {"name": "Caernarfon Castle", "lat": 53.14, "lon": -4.28, "visitors": 0.7, "type": "Castle"},
+      {"name": "Conwy Castle", "lat": 53.28, "lon": -3.83, "visitors": 0.6, "type": "Castle"},
+      {"name": "Cardiff Castle", "lat": 51.48, "lon": -3.18, "visitors": 0.5, "type": "Castle"},
+      {"name": "Llandudno", "lat": 53.32, "lon": -3.83, "visitors": 1.9, "type": "Resort"},
+      {"name": "Tenby", "lat": 51.67, "lon": -4.70, "visitors": 1.0, "type": "Resort"},
+      {"name": "Anglesey", "lat": 53.25, "lon": -4.33, "visitors": 1.7, "type": "Island"},
+      {"name": "Gower Peninsula", "lat": 51.57, "lon": -4.20, "visitors": 2.5, "type": "AONB"}
+    ]
   },
-  "transform": [
-    {"filter": "datum.properties.name == 'United Kingdom'"}
-  ],
-  "projection": {
-    "type": "albers",
-    "center": [-3.5, 52],
-    "scale": 5000
-  },
-  "mark": {
-    "type": "geoshape",
-    "fill": "lightgreen",
-    "stroke": "darkgreen"
-  }
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "opacity": 0.1,
+        "color": "#e8f4f8"
+      },
+      "encoding": {
+        "x": {"value": 0},
+        "x2": {"value": 380},
+        "y": {"value": 0},
+        "y2": {"value": 400}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"name": "Wales Outline", "lat": 52.5, "lon": -3.5}
+        ]
+      },
+      "mark": {
+        "type": "point",
+        "shape": "square",
+        "size": 50000,
+        "opacity": 0.05,
+        "color": "#d4d4d4"
+      },
+      "encoding": {
+        "x": {"field": "lon", "type": "quantitative"},
+        "y": {"field": "lat", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "lon",
+          "type": "quantitative",
+          "scale": {"domain": [-5.5, -2.5]},
+          "axis": {"title": "Longitude", "grid": false}
+        },
+        "y": {
+          "field": "lat",
+          "type": "quantitative",
+          "scale": {"domain": [51.3, 53.5]},
+          "axis": {"title": "Latitude", "grid": false}
+        },
+        "size": {
+          "field": "visitors",
+          "type": "quantitative",
+          "scale": {"range": [50, 500]},
+          "legend": {"title": "Visitors (millions)"}
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["City", "National Park", "Castle", "Resort", "Island", "AONB"],
+            "range": ["#e74c3c", "#27ae60", "#8e44ad", "#3498db", "#f39c12", "#16a085"]
+          },
+          "legend": {"title": "Type"}
+        },
+        "tooltip": [
+          {"field": "name", "title": "Location"},
+          {"field": "type", "title": "Type"},
+          {"field": "visitors", "title": "Annual Visitors (M)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 9,
+        "dy": -12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {"field": "lon", "type": "quantitative"},
+        "y": {"field": "lat", "type": "quantitative"},
+        "text": {"field": "name"},
+        "opacity": {
+          "condition": {"test": "datum.visitors > 2", "value": 1},
+          "value": 0
+        }
+      }
+    }
+  ]
 }
