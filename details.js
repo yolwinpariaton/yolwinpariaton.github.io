@@ -1,5 +1,5 @@
 // =============================
-// details.js (Consistent sizing embeds)
+// details.js (Consistent sizing + Vega/Vega-Lite safe maps)
 // =============================
 
 const BASE_VL_CONFIG = {
@@ -37,32 +37,63 @@ function getJson(url) {
   });
 }
 
+function detectSpecType(spec) {
+  const schema = String(spec?.$schema || "").toLowerCase();
+  if (schema.includes("vega-lite")) return "vega-lite";
+  if (schema.includes("vega")) return "vega";
+  // Fallback: if it has "marks" and no "encoding" it's probably Vega
+  if (spec?.marks && !spec?.encoding) return "vega";
+  return "vega-lite";
+}
+
 /**
- * Apply consistent layout constraints to a Vega/Vega-Lite spec.
- * This is the key to meaningfully standardize chart sizes.
+ * Normalize Vega-Lite safely, and avoid breaking Vega specs.
  */
-function normalizeSpec(spec, { height = 320, forceWidthContainer = true } = {}) {
+function normalizeSpec(spec, { height = 320, widthMode = "container", forMaps = false } = {}) {
+  const type = detectSpecType(spec);
   const out = { ...spec };
 
-  // For Vega-Lite, enforce container width and a consistent height
-  if (forceWidthContainer) out.width = "container";
-  if (typeof height === "number") out.height = height;
+  if (type === "vega-lite") {
+    // Vega-Lite supports container width
+    if (widthMode === "container") out.width = "container";
 
-  // Make charts responsive horizontally
-  out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
+    // Keep charts consistent with Task 1–3
+    if (typeof height === "number") out.height = height;
 
-  // Prevent borders around the view
-  out.config = out.config || {};
-  out.config.view = out.config.view || {};
-  out.config.view.stroke = "transparent";
+    // Fit horizontally; for maps, allow fit (both directions) if it helps
+    if (!out.autosize) {
+      out.autosize = forMaps
+        ? { type: "fit", contains: "padding" }
+        : { type: "fit-x", contains: "padding" };
+    }
 
-  // Ensure transparent background
+    out.config = out.config || {};
+    out.config.view = out.config.view || {};
+    out.config.view.stroke = "transparent";
+    if (!("background" in out)) out.background = "transparent";
+
+    return out;
+  }
+
+  // Vega spec: width must be numeric (NOT "container")
+  // Do NOT override width unless missing/invalid; do set a safe height if missing.
+  if (typeof out.width !== "number") {
+    out.width = 700; // safe default for maps; will be scaled by CSS anyway
+  }
+  if (typeof out.height !== "number") {
+    out.height = height;
+  }
+
+  // Vega autosize can be "fit" etc; don't force unless missing
+  if (!out.autosize) {
+    out.autosize = forMaps ? "fit" : "pad";
+  }
+
   if (!("background" in out)) out.background = "transparent";
-
   return out;
 }
 
-async function safeEmbedFromUrl(selector, url, { height = 320 } = {}) {
+async function safeEmbedFromUrl(selector, url, { height = 320, forMaps = false } = {}) {
   const el = document.querySelector(selector);
   if (!el) {
     console.warn(`Missing element in HTML: ${selector}`);
@@ -71,7 +102,7 @@ async function safeEmbedFromUrl(selector, url, { height = 320 } = {}) {
 
   try {
     const spec = await getJson(url);
-    const normalized = normalizeSpec(spec, { height });
+    const normalized = normalizeSpec(spec, { height, widthMode: "container", forMaps });
 
     await window.vegaEmbed(selector, normalized, embedOptions);
     return true;
@@ -86,9 +117,9 @@ async function safeEmbedFromUrl(selector, url, { height = 320 } = {}) {
   }
 }
 
-async function safeEmbedWithFallbacksFromUrl(selector, urls, { height = 320 } = {}) {
+async function safeEmbedWithFallbacksFromUrl(selector, urls, { height = 320, forMaps = false } = {}) {
   for (const url of urls) {
-    const ok = await safeEmbedFromUrl(selector, url, { height });
+    const ok = await safeEmbedFromUrl(selector, url, { height, forMaps });
     if (ok) return true;
   }
   return false;
@@ -102,10 +133,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Choose consistent heights (match CSS variables conceptually)
+  // Reference sizes (Task 1–3 are “perfect”)
   const H_STD = 320;
-  const H_LG = 360;
-  const H_MAP = 520;
+  const H_MAP = 460;
+  const H_DASH_INNER = 160; // inside a 190px tile
 
   // Task 1
   safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
@@ -122,11 +153,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", { height: H_STD });
   safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", { height: H_STD });
 
-  // Task 4
+  // Task 4 (force same sizing as Tasks 1–3)
   safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_STD });
-  safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_LG });
+  safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_STD });
 
-  // Task 5
+  // Task 5 (force same sizing as Tasks 1–3)
   safeEmbedWithFallbacksFromUrl("#vis_api", [
     "graphs/api_chart.json",
     "graphs/api_chart_spec.json"
@@ -137,22 +168,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     "graphs/emissions_chart.json"
   ], { height: H_STD });
 
-  // Task 6 Dashboard (kept as your original logic, but still robust)
-  const dashboardEmbedOptions = embedOptions;
-
+  // Task 6 Dashboard
   function dashboardSpec(dataUrl, chartTitle) {
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "data": { "url": dataUrl, "format": { "type": "json" } },
       "transform": [{ "calculate": "toDate(datum.date + '-01-01')", "as": "year" }],
-      "title": { "text": chartTitle || "", "fontSize": 12, "anchor": "start", "offset": 6 },
-      "mark": { "type": "line", "point": true },
+      "title": { "text": chartTitle || "", "fontSize": 11, "anchor": "start", "offset": 4 },
+      "mark": { "type": "line", "point": false },
       "encoding": {
         "x": { "field": "year", "type": "temporal", "title": null, "axis": { "format": "%Y", "labelAngle": 0 } },
         "y": { "field": "value", "type": "quantitative", "title": null }
       },
       "width": "container",
-      "height": 170,
+      "height": H_DASH_INNER,
       "autosize": { "type": "fit-x", "contains": "padding" },
       "config": { "view": { "stroke": "transparent" }, "background": "transparent" }
     };
@@ -174,18 +203,18 @@ document.addEventListener("DOMContentLoaded", async () => {
           ? String(data[0].indicator)
           : `Dashboard ${i}`;
 
-      await window.vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), dashboardEmbedOptions);
+      await window.vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), embedOptions);
     } catch (err) {
       console.error(`Dashboard ${i} error:`, err);
       el.innerHTML = `<p style="margin:0; padding:8px; color:#b91c1c; font-size:13px;">Dashboard ${i} failed.</p>`;
     }
   }
 
-  // Task 7 Maps
-  safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP });
-  safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP });
+  // Task 7 Maps (safe for Vega OR Vega-Lite)
+  safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, forMaps: true });
+  safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, forMaps: true });
 
-  // Task 8
+  // Task 8 (same sizing)
   safeEmbedWithFallbacksFromUrl("#vis_bread", [
     "graphs/lrpd_bread.json",
     "graphs/price_bread.json"
@@ -196,13 +225,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     "graphs/price_beer.json"
   ], { height: H_STD });
 
-  // Task 9
-  safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_LG });
-  safeEmbedFromUrl("#interactive2", "graphs/interactive_scatter.json", { height: H_LG });
+  // Task 9 (same sizing)
+  safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_STD });
+  safeEmbedFromUrl("#interactive2", "graphs/interactive_scatter.json", { height: H_STD });
 
-  // Task 10A
+  // Task 10 (same sizing)
   safeEmbedWithFallbacksFromUrl("#task10a", [
     "graphs/task10_histogram.json",
     "graphs/task10_histogram_spec.json"
-  ], { height: H_LG });
+  ], { height: H_STD });
 });
