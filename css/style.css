@@ -137,7 +137,7 @@ a:hover{ text-decoration: underline; }
   background: url("../images/portfolio.jpg") center/cover no-repeat;
 }
 
-/* (Project hero lives in css/project.css as .hero--project; overlay + center are here) */
+/* Overlay + center */
 .hero__overlay{
   position: absolute;
   inset: 0;
@@ -211,7 +211,7 @@ a:hover{ text-decoration: underline; }
   min-height: 70vh;
 }
 
-/* Slightly larger spacing between tasks (as you requested earlier) */
+/* Slightly larger spacing between tasks */
 .portfolio-content .task{
   margin-bottom: 62px;
 }
@@ -226,77 +226,78 @@ a:hover{ text-decoration: underline; }
   max-width: 100%;
 }
 
-/* Chart wrapper: do NOT center as flex; let the chart fill */
+/* Smaller, tighter frames */
 .chart-wrapper{
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
+
+  /* reduced padding makes frames feel less “bulky” */
+  padding: 12px;
+
   box-shadow: var(--shadow);
   overflow: hidden;
   position: relative;
-
-  /* important: remove center-flex behavior to avoid odd Vega sizing */
   display: block;
 
-  /* allow natural height but keep a reasonable minimum */
-  min-height: 320px;
+  /* reduced min height makes frames tighter */
+  min-height: 240px;
 }
 
-/* Utility wrappers (these were used in portfolio.html but not defined) */
+/* Utility wrappers */
 .chart-wrapper--center{
-  max-width: 820px;
+  max-width: 760px;   /* slightly narrower so charts look less huge */
   margin-left: auto;
   margin-right: auto;
 }
 
 .chart-wrapper--wide{
-  max-width: 100%;
+  max-width: 980px;   /* keep improved chart big, but not “full-bleed” */
   margin-left: auto;
   margin-right: auto;
 }
 
 .chart-wrapper--center-lg{
-  max-width: 980px;
+  max-width: 900px;   /* interactive charts: keep contained */
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Map container: prevent squashing */
+/* Map container: still needs height, but smaller than before */
 .map-container{
   width: 100%;
-  min-height: 620px;
-  display: block; /* let Vega handle internal sizing */
+  min-height: 520px;
+  display: block;
 }
 
-/* Chart container: make it a normal block */
+/* Chart container */
 .vega-container{
   width: 100%;
   display: block;
 }
 
-/* Optional height helpers */
+/* Reduced height helpers (these were making things oversized) */
 .vega-container--large{
-  min-height: 400px;
+  min-height: 320px;
 }
 
 .vega-container--tall{
-  min-height: 420px;
+  min-height: 320px;
 }
 
-/* Keep Vega responsive and aligned to the wrapper */
+/* Vega sizing */
 .vega-embed{
   width: 100% !important;
   max-width: 100% !important;
 }
 
-/* Vega-Embed sometimes wraps in a <div class="vega-embed">; make its inner vis fill width */
+/* Let Vega fit inside the wrapper */
 .vega-embed .vega-vis{
   width: 100% !important;
   max-width: 100% !important;
 }
 
-/* Ensure svg/canvas scale down to container */
+/* svg/canvas should scale down */
 .chart-wrapper .vega-embed svg,
 .chart-wrapper .vega-embed canvas{
   width: 100% !important;
@@ -381,13 +382,12 @@ a:hover{ text-decoration: underline; }
   background: white;
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 10px;
+  padding: 8px;          /* smaller */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  min-height: 200px;
+  min-height: 170px;     /* smaller */
   overflow: hidden;
 }
 
-/* Ensure dashboard embeds fill each tile */
 .dashboard-chart .vega-embed,
 .dashboard-chart .vega-embed .vega-vis{
   width: 100% !important;
