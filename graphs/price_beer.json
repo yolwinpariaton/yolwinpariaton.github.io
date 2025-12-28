@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Beer price series with same-color moving average, KPI subtitle using first/last values, and hover interaction.",
+  "description": "Draught bitter price: clean line + soft markers + shared hover + KPI subtitle (no shading).",
   "data": { "url": "data/price_beer.csv", "format": { "type": "csv" } },
 
   "transform": [
@@ -14,7 +14,8 @@
         { "op": "first_value", "field": "price_num", "as": "startPrice" },
         { "op": "last_value", "field": "price_num", "as": "endPrice" }
       ],
-      "sort": [{ "field": "date", "order": "ascending" }]
+      "sort": [{ "field": "date", "order": "ascending" }],
+      "frame": [null, null]
     },
     { "calculate": "(datum.endPrice - datum.startPrice)", "as": "deltaAbs" },
     { "calculate": "(datum.deltaAbs / datum.startPrice)", "as": "deltaPct" },
@@ -23,6 +24,19 @@
       "window": [{ "op": "mean", "field": "price_num", "as": "ma6" }],
       "frame": [-5, 0],
       "sort": [{ "field": "date", "order": "ascending" }]
+    }
+  ],
+
+  "params": [
+    {
+      "name": "hover",
+      "select": {
+        "type": "point",
+        "fields": ["date"],
+        "nearest": true,
+        "on": "mousemove",
+        "clear": "mouseout"
+      }
     }
   ],
 
@@ -55,14 +69,14 @@
           "field": "price_num",
           "type": "quantitative",
           "title": null,
-          "axis": { "format": ".2f", "grid": true, "gridOpacity": 0.12, "tickCount": 6 }
+          "axis": { "format": ".2f", "grid": true, "gridOpacity": 0.10, "tickCount": 6 }
         },
         "color": { "value": "#1F6F8B" }
       }
     },
 
     {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.2, "strokeDash": [6, 4], "opacity": 0.85 },
+      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.0, "strokeDash": [6, 4], "opacity": 0.9 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "ma6", "type": "quantitative" },
@@ -71,12 +85,6 @@
     },
 
     {
-      "params": [
-        {
-          "name": "hover",
-          "select": { "type": "point", "fields": ["date"], "nearest": true, "on": "mousemove", "clear": "mouseout" }
-        }
-      ],
       "mark": { "type": "point", "filled": true, "size": 70 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
@@ -84,10 +92,10 @@
         "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
         "color": { "value": "#1F6F8B" },
         "tooltip": [
-          { "field": "item_name", "type": "nominal", "title": "Item" },
-          { "field": "date", "type": "temporal", "title": "Month", "format": "%b %Y" },
-          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" },
-          { "field": "ma6", "type": "quantitative", "title": "6m avg", "format": ".4f" }
+          { "field": "item_name", "title": "Item" },
+          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
+          { "field": "price_num", "format": ".3f", "title": "Price" },
+          { "field": "ma6", "format": ".3f", "title": "6m avg" }
         ]
       }
     },
@@ -97,7 +105,7 @@
       "mark": { "type": "rule", "strokeWidth": 1 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
-        "color": { "value": "#D6D6D6" }
+        "color": { "value": "#DADADA" }
       }
     }
   ],
