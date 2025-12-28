@@ -1,117 +1,37 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Beer price time series with KPI subtitle and hover interaction (no dark accents).",
-  "data": {
-    "url": "data/price_beer.csv",
-    "format": { "type": "csv" }
-  },
+  "data": { "url": "data/price_beer.csv", "format": { "type": "csv" } },
+
   "transform": [
     { "calculate": "toDate(datum.dateISO)", "as": "date" },
-    { "calculate": "toNumber(datum.price)", "as": "price_num" },
-
-    {
-      "joinaggregate": [
-        { "op": "min", "field": "date", "as": "minDate" },
-        { "op": "max", "field": "date", "as": "maxDate" }
-      ]
-    },
-    {
-      "joinaggregate": [{ "op": "mean", "field": "price_num", "as": "startPrice" }],
-      "groupby": ["minDate"]
-    },
-    {
-      "joinaggregate": [{ "op": "mean", "field": "price_num", "as": "endPrice" }],
-      "groupby": ["maxDate"]
-    },
-    { "calculate": "(datum.endPrice - datum.startPrice)", "as": "deltaAbs" },
-    { "calculate": "(datum.deltaAbs / datum.startPrice)", "as": "deltaPct" },
-
-    {
-      "joinaggregate": [{ "op": "max", "field": "price_num", "as": "maxPrice" }]
-    },
-    { "calculate": "datum.price_num === datum.maxPrice", "as": "isPeak" }
+    { "calculate": "toNumber(datum.price)", "as": "price_num" }
   ],
+
   "title": {
     "text": "Draught bitter price (per pint)",
-    "subtitle": {
-      "expr": "timeFormat(datum.minDate,'%b %Y') + ' → ' + timeFormat(datum.maxDate,'%b %Y') + ' | ' + format(datum.startPrice,'.3f') + ' → ' + format(datum.endPrice,'.3f') + ' (' + (datum.deltaAbs>=0?'+':'') + format(datum.deltaAbs,'.3f') + ', ' + (datum.deltaPct>=0?'+':'') + format(datum.deltaPct*100,'.1f') + '%)'"
-    },
     "anchor": "start",
     "fontSize": 18,
-    "subtitleFontSize": 12,
-    "offset": 12
+    "subtitleFontSize": 12
   },
+
   "width": "container",
-  "height": 360,
-  "padding": { "top": 8, "right": 18, "bottom": 10, "left": 10 },
+  "height": 340,
 
   "layer": [
     {
-      "mark": { "type": "area", "interpolate": "monotone", "opacity": 0.16 },
+      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.8 },
       "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal",
-          "title": null,
-          "axis": {
-            "format": "%Y",
-            "labelAngle": 0,
-            "tickCount": { "interval": "year", "step": 1 },
-            "grid": false
-          }
-        },
-        "y": {
-          "field": "price_num",
-          "type": "quantitative",
-          "title": null,
-          "axis": {
-            "format": ".2f",
-            "grid": true,
-            "gridOpacity": 0.14,
-            "tickCount": 6
-          }
-        },
+        "x": { "field": "date", "type": "temporal", "title": null },
+        "y": { "field": "price_num", "type": "quantitative", "title": null },
         "color": { "value": "#1F6F8B" }
       }
     },
 
     {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.9 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "price_num", "type": "quantitative" },
-        "color": { "value": "#1F6F8B" }
-      }
-    },
-
-    {
-      "transform": [{ "filter": "datum.isPeak" }],
-      "mark": { "type": "point", "filled": true, "size": 110 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "price_num", "type": "quantitative" },
-        "color": { "value": "#E85D75" },
-        "tooltip": [
-          { "field": "item_name", "type": "nominal", "title": "Item" },
-          { "field": "date", "type": "temporal", "title": "Peak month", "format": "%b %Y" },
-          { "field": "price_num", "type": "quantitative", "title": "Peak price", "format": ".4f" }
-        ]
-      }
-    },
-
-    {
-      "params": [
-        {
-          "name": "hover",
-          "select": {
-            "type": "point",
-            "fields": ["date"],
-            "nearest": true,
-            "on": "mousemove",
-            "clear": "mouseout"
-          }
-        }
-      ],
+      "params": [{
+        "name": "hover",
+        "select": { "type": "point", "fields": ["date"], "nearest": true, "on": "mousemove", "clear": "mouseout" }
+      }],
       "mark": { "type": "point", "filled": true, "size": 70 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
@@ -119,33 +39,21 @@
         "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
         "color": { "value": "#1F6F8B" },
         "tooltip": [
-          { "field": "item_name", "type": "nominal", "title": "Item" },
-          { "field": "date", "type": "temporal", "title": "Month", "format": "%b %Y" },
-          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" }
+          { "field": "item_name", "title": "Item" },
+          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
+          { "field": "price_num", "format": ".3f", "title": "Price" }
         ]
       }
     },
 
     {
       "transform": [{ "filter": { "param": "hover" } }],
-      "mark": { "type": "rule" },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "color": { "value": "#B8B8B8" },
-        "opacity": { "value": 0.9 }
-      }
+      "mark": { "type": "rule", "color": "#E0E0E0", "strokeWidth": 1 }
     }
   ],
 
   "config": {
     "background": "transparent",
-    "view": { "stroke": "transparent" },
-    "axis": {
-      "labelFontSize": 12,
-      "titleFontSize": 12,
-      "labelColor": "#2b2b2b",
-      "domainColor": "#d8d8d8",
-      "tickColor": "#d8d8d8"
-    }
+    "view": { "stroke": "transparent" }
   }
 }
