@@ -9,29 +9,24 @@
   "width": 380,
   "height": 400,
   "data": {
-    "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-kingdom/uk-counties.json",
-    "format": {"type": "topojson", "feature": "GBR_adm2"}
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/electoral/spc/spc.json",
+    "format": {"type": "topojson", "feature": "spc"}
   },
-  "transform": [
-    {"filter": "datum.properties.TYPE_2 == 'Council Area'"}
-  ],
   "projection": {
-    "type": "mercator",
-    "center": [-4, 57],
-    "scale": 2000
+    "type": "albers",
+    "rotate": [0, 0, 0]
   },
   "mark": {
     "type": "geoshape",
-    "fill": "lightblue",
     "stroke": "white",
     "strokeWidth": 0.5
   },
   "encoding": {
     "color": {
-      "value": "steelblue"
+      "value": "#4682b4"
     },
     "tooltip": [
-      {"field": "properties.NAME_2", "title": "Council Area"}
+      {"field": "properties.SPC16NM", "title": "Area"}
     ]
   }
 }
