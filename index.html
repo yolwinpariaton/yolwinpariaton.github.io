@@ -30,13 +30,14 @@
       </ul>
     </nav>
 
+    <!-- Home hero (uses London background from css/style.css: .hero--bg) -->
     <section class="hero hero--bg" aria-label="Home intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">Yolwin Pariaton</h1>
         <p class="hero__subtitle">LSE Data Science for Public Policy</p>
 
-        <div class="hero__social">
+        <div class="hero__social" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
           <a class="btn btn--ghost" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener">GitHub</a>
           <a class="btn btn--ghost" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
         </div>
@@ -45,29 +46,59 @@
   </header>
 
   <main id="main">
-    <section class="section section--alt" aria-label="Project preview">
-      <div class="container two-col">
-        <div class="two-col__text">
-          <h2>Project</h2>
-          <p>Examining the UK cost of living crisis through multiple economic indicators, automation, and interactive visualisations.</p>
-          <a class="btn btn--flat" href="project.html">Explore project</a>
-        </div>
-        <div class="two-col__media">
-          <img class="media-img" src="images/living_cost.jpg" alt="Cost of living analysis preview image" />
-        </div>
-      </div>
-    </section>
+    <!-- Match Portfolio format: white content area + container -->
+    <section class="white-space" aria-label="Homepage content">
+      <div class="container">
 
-    <section class="section" aria-label="Portfolio preview">
-      <div class="container two-col">
-        <div class="two-col__media">
-          <img class="media-img" src="images/portfolio.jpg" alt="Portfolio preview image" />
+        <section class="task">
+          <h2>Welcome</h2>
+          <p>
+            This site presents my work for LSE Automated Data Visualisation, including a project on the UK cost of living crisis and
+            a portfolio of weekly tasks using Vega-Lite, dashboards, and automated data workflows.
+          </p>
+        </section>
+
+        <!-- Use existing responsive layout classes from style.css -->
+        <section class="task" aria-label="Project and portfolio links">
+          <div class="charts-row">
+            <!-- Project card -->
+            <div class="chart-wrapper">
+              <h3 style="margin: 4px 0 0; font-size: 18px;">Project</h3>
+              <p style="margin: 0; text-align:center;">
+                Examining the UK cost of living crisis through multiple economic indicators, automation, and interactive visualisations.
+              </p>
+
+              <img
+                class="task-img task-img--big"
+                src="images/living_cost.jpg"
+                alt="Cost of living analysis preview image"
+              />
+
+              <a class="btn btn--flat" href="project.html">Explore project</a>
+            </div>
+
+            <!-- Portfolio card -->
+            <div class="chart-wrapper">
+              <h3 style="margin: 4px 0 0; font-size: 18px;">Portfolio</h3>
+              <p style="margin: 0; text-align:center;">
+                Weekly tasks showing Vega-Lite charts, maps, dashboards, and automated data workflows.
+              </p>
+
+              <img
+                class="task-img task-img--big"
+                src="images/portfolio.jpg"
+                alt="Portfolio preview image"
+              />
+
+              <a class="btn btn--flat" href="portfolio.html">Explore portfolio</a>
+            </div>
+          </div>
+        </section>
+
+        <div class="back-top">
+          <a class="btn btn--flat" href="#top">Back to top</a>
         </div>
-        <div class="two-col__text">
-          <h2>Portfolio</h2>
-          <p>Weekly tasks showing Vega-Lite charts, maps, dashboards, and automated data workflows.</p>
-          <a class="btn btn--flat" href="portfolio.html">Explore portfolio</a>
-        </div>
+
       </div>
     </section>
   </main>
