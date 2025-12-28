@@ -1,5 +1,5 @@
 // =============================
-// details.js (Robust embeds + layout patches)
+// details.js (Robust embeds + Task 8 fix)
 // =============================
 
 const BASE_VL_CONFIG = {
@@ -10,10 +10,27 @@ const BASE_VL_CONFIG = {
 const embedOptions = {
   actions: false,
   renderer: "svg",
+  // Force vega-lite mode when we pass a spec object (prevents type ambiguity)
+  mode: "vega-lite",
   config: BASE_VL_CONFIG
 };
 
-function waitForVegaEmbed(maxTries = 50) {
+// ---- URL handling (IMPORTANT ON GITHUB PAGES) ----
+// Always resolve paths relative to the current HTML page (baseURI).
+// This fixes the most common reason charts "work locally" but not on GitHub Pages:
+// wrong relative paths like "graphs/..." resolving to a different folder.
+function absUrl(relativePath) {
+  return new URL(relativePath, document.baseURI).toString();
+}
+
+// Cache-busting while you iterate (prevents stale JSON on GitHub Pages/CDN)
+const CACHE_BUST = `?v=${Date.now()}`;
+function bust(url) {
+  // Keep existing query string safe
+  return url.includes("?") ? `${url}&_=${Date.now()}` : `${url}${CACHE_BUST}`;
+}
+
+function waitForVegaEmbed(maxTries = 80) {
   return new Promise((resolve, reject) => {
     let tries = 0;
     const timer = setInterval(() => {
@@ -51,6 +68,20 @@ function ensurePaddingObject(padding) {
     return { top: padding, right: padding, bottom: padding, left: padding };
   }
   return { ...padding };
+}
+
+function showEmbedError(el, err, triedUrl) {
+  if (!el) return;
+  el.innerHTML = `
+    <div style="padding:12px; border:1px solid #fecaca; background:#fff1f2; color:#7f1d1d; font-size:13px; border-radius:8px;">
+      <div style="font-weight:700; margin-bottom:6px;">Chart failed to load</div>
+      <div style="margin-bottom:6px;"><strong>Tried:</strong> ${triedUrl}</div>
+      <div><strong>Error:</strong> ${String(err?.message || err)}</div>
+      <div style="margin-top:8px; color:#991b1b;">
+        Open DevTools → Console and Network to see the exact missing file or JSON/spec error.
+      </div>
+    </div>
+  `;
 }
 
 /* ---------- PATCHES ---------- */
@@ -120,14 +151,13 @@ function patchTask4(spec) {
   return out;
 }
 
-/* ✅ Task 7: Map Specific Patch (Centering and Scaling) */
+/* Task 7: Map Specific Patch (Centering and Scaling) */
 function patchTask7_Maps(spec) {
   const out = { ...spec };
-  // Force correct projection if missing or default
   if (out.title && out.title.text === "Scotland") {
-    out.projection = { "type": "mercator", "center": [-4.1, 57.8], "scale": 2800 };
+    out.projection = { type: "mercator", center: [-4.1, 57.8], scale: 2800 };
   } else if (out.title && out.title.text === "Wales") {
-    out.projection = { "type": "mercator", "center": [-3.8, 52.3], "scale": 6500 };
+    out.projection = { type: "mercator", center: [-3.8, 52.3], scale: 6500 };
   }
   return out;
 }
@@ -135,11 +165,15 @@ function patchTask7_Maps(spec) {
 /* Normalize Vega-Lite: enforce responsive width + stable height */
 function normalizeVegaLite(spec, { height = 320 } = {}) {
   const out = { ...spec };
-  // Maps should not use width: container if they use fixed scale projections
-  if (!out.projection) {
+
+  // Do not override width for map projections
+  if (!out.projection && out.width == null) {
     out.width = "container";
   }
-  out.height = height;
+
+  // Only set height if not already defined (some concat specs define their own layout)
+  if (out.height == null) out.height = height;
+
   out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
   out.config = out.config || {};
   out.config.view = out.config.view || {};
@@ -150,23 +184,22 @@ function normalizeVegaLite(spec, { height = 320 } = {}) {
 
 async function safeEmbedFromUrl(
   selector,
-  url,
+  relativeUrl,
   { height = 320, patchFn = null, forceTitle = null, skipNormalize = false } = {}
 ) {
   const el = document.querySelector(selector);
   if (!el) return false;
 
+  const resolved = bust(absUrl(relativeUrl));
+
   try {
-    let spec = await getJson(url);
+    let spec = await getJson(resolved);
     if (typeof patchFn === "function") spec = patchFn(spec);
 
     const type = detectSpecType(spec);
     let finalSpec = spec;
 
     if (type === "vega-lite") {
-      // IMPORTANT:
-      // For Task 8, some specs (e.g., vconcat/layered dashboards) can break if we force width/height.
-      // skipNormalize=true embeds the spec "as-is".
       if (!skipNormalize) {
         finalSpec = normalizeVegaLite(finalSpec, { height });
       } else {
@@ -188,13 +221,14 @@ async function safeEmbedFromUrl(
     return true;
   } catch (err) {
     console.error(`Embed failed for ${selector}`, err);
+    showEmbedError(el, err, resolved);
     return false;
   }
 }
 
 async function safeEmbedWithFallbacksFromUrl(selector, urls, opts = {}) {
-  for (const url of urls) {
-    const ok = await safeEmbedFromUrl(selector, url, opts);
+  for (const u of urls) {
+    const ok = await safeEmbedFromUrl(selector, u, opts);
     if (ok) return true;
   }
   return false;
@@ -215,7 +249,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Task 1
   safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
-  safeEmbedWithFallbacksFromUrl("#vis2", ["graphs/inflation_chart.json", "graphs/g7_inflation_chart.json"], { height: H_STD });
+  safeEmbedWithFallbacksFromUrl(
+    "#vis2",
+    ["graphs/inflation_chart.json", "graphs/g7_inflation_chart.json"],
+    { height: H_STD }
+  );
 
   // Task 2
   safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
@@ -230,48 +268,81 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_T4, patchFn: patchTask4 });
 
   // Task 5
-  safeEmbedWithFallbacksFromUrl("#vis_api", ["graphs/api_chart.json"], { height: H_STD, forceTitle: "UK Inflation (API): World Bank Indicator" });
+  safeEmbedWithFallbacksFromUrl("#vis_api", ["graphs/api_chart.json"], {
+    height: H_STD,
+    forceTitle: "UK Inflation (API): World Bank Indicator"
+  });
   safeEmbedWithFallbacksFromUrl("#vis_scrape", ["graphs/emissions_tidy.json"], { height: H_STD });
 
   // Task 6 (Dashboards)
   function dashboardSpec(dataUrl, chartTitle) {
     return {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "data": { "url": dataUrl, "format": { "type": "json" } },
-      "transform": [{ "calculate": "toDate(datum.date + '-01-01')", "as": "year" }],
-      "title": { "text": chartTitle || "", "fontSize": 11, "anchor": "start", "offset": 4 },
-      "mark": { "type": "line", "point": false },
-      "encoding": {
-        "x": { "field": "year", "type": "temporal", "title": null, "axis": { "format": "%Y", "labelAngle": 0 } },
-        "y": { "field": "value", "type": "quantitative", "title": null }
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      data: { url: dataUrl, format: { type: "json" } },
+      transform: [{ calculate: "toDate(datum.date + '-01-01')", as: "year" }],
+      title: { text: chartTitle || "", fontSize: 11, anchor: "start", offset: 4 },
+      mark: { type: "line", point: false },
+      encoding: {
+        x: { field: "year", type: "temporal", title: null, axis: { format: "%Y", labelAngle: 0 } },
+        y: { field: "value", type: "quantitative", title: null }
       },
-      "width": "container",
-      "height": 160,
-      "autosize": { "type": "fit-x", "contains": "padding" },
-      "config": { "view": { "stroke": "transparent" }, "background": "transparent" }
+      width: "container",
+      height: 160,
+      autosize: { type: "fit-x", contains: "padding" },
+      config: { view: { stroke: "transparent" }, background: "transparent" }
     };
   }
 
   for (let i = 1; i <= 6; i++) {
     const targetId = `#dash${i}`;
     if (!document.querySelector(targetId)) continue;
-    const dataPath = `graphs/dashboard${i}.json`;
+
+    const dataPathRel = `graphs/dashboard${i}.json`;
+    const dataPathAbs = bust(absUrl(dataPathRel));
+
     try {
-      const data = await getJson(dataPath);
-      const chartTitle = Array.isArray(data) && data.length && data[0].indicator ? String(data[0].indicator) : `Dashboard ${i}`;
-      await window.vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), embedOptions);
-    } catch (err) { console.error(err); }
+      const data = await getJson(dataPathAbs);
+      const chartTitle =
+        Array.isArray(data) && data.length && data[0].indicator
+          ? String(data[0].indicator)
+          : `Dashboard ${i}`;
+
+      await window.vegaEmbed(targetId, dashboardSpec(dataPathAbs, chartTitle), embedOptions);
+    } catch (err) {
+      console.error(err);
+      showEmbedError(document.querySelector(targetId), err, dataPathAbs);
+    }
   }
 
-  // ✅ Task 7: Maps (Fixed Embed Logic)
+  // Task 7: Maps
   safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
   safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
 
-  // Task 8 ✅
-  // Key fix: Do NOT force width/height normalization for Task 8 specs.
-  // Many Task 8 charts are vconcat/layered specs and can fail or render blank if we overwrite layout.
-  await safeEmbedFromUrl("#vis_bread", "graphs/lrpd_bread.json", { height: H_STD, skipNormalize: true });
-  await safeEmbedFromUrl("#vis_beer", "graphs/lrpd_beer.json", { height: H_STD, skipNormalize: true });
+  // Task 8 (FIX)
+  // Most common failure here is *path resolution* or *layout overwrites*.
+  // We resolve paths with absUrl(), and we do NOT overwrite vconcat/layer layouts.
+  // Also add fallbacks in case you renamed files or moved folders.
+  await safeEmbedWithFallbacksFromUrl(
+    "#vis_bread",
+    [
+      "graphs/lrpd_bread.json",
+      "./graphs/lrpd_bread.json",
+      "data/lrpd_bread.json",
+      "./data/lrpd_bread.json"
+    ],
+    { height: H_STD, skipNormalize: true }
+  );
+
+  await safeEmbedWithFallbacksFromUrl(
+    "#vis_beer",
+    [
+      "graphs/lrpd_beer.json",
+      "./graphs/lrpd_beer.json",
+      "data/lrpd_beer.json",
+      "./data/lrpd_beer.json"
+    ],
+    { height: H_STD, skipNormalize: true }
+  );
 
   // Task 9
   safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_SM });
