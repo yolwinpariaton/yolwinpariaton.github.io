@@ -7,6 +7,13 @@ const GITHUB_USER = "yolwinpariaton";
 const GITHUB_REPO = "yolwinpariaton.github.io";
 const DATA_PATH = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/`;
 
+// Cache-busting (helps with GitHub raw/CDN caching while you iterate)
+const CACHE_BUST = `?v=${new Date().toISOString().slice(0, 10)}`; // daily version
+
+function dataUrl(file) {
+  return `${DATA_PATH}${file}${CACHE_BUST}`;
+}
+
 // Consistent Vega-Lite configuration (applies across charts)
 const BASE_VL_CONFIG = {
   view: { stroke: "transparent" },
@@ -22,8 +29,15 @@ const BASE_VL_CONFIG = {
   legend: { labelFontSize: 11, titleFontSize: 12 }
 };
 
-// Vega-Embed options (also merge config into loaded specs)
-const EMBED_OPTS = { actions: false, renderer: "svg", config: BASE_VL_CONFIG };
+// Vega-Embed options
+// Key fix: mode:'vega-lite' prevents URL-spec ambiguity.
+// Also allow Vega to size to container when width:'container' is used.
+const EMBED_OPTS = {
+  actions: false,
+  renderer: "svg",
+  mode: "vega-lite",
+  config: BASE_VL_CONFIG
+};
 
 // -----------------------------
 // Safe embed: one failure will not break the rest
@@ -35,20 +49,38 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
     return Promise.resolve();
   }
 
+  // If CDN scripts haven't loaded yet, fail gracefully with a clear message.
+  if (typeof vegaEmbed !== "function") {
+    console.error("vegaEmbed is not available yet. Check script loading order/CDN.");
+    el.innerHTML = `
+      <div style="padding:14px; text-align:center; color:#b91c1c; font-size:13px;">
+        Vega libraries not loaded. Check console and script tags.
+      </div>
+    `;
+    return Promise.resolve();
+  }
+
   return vegaEmbed(selector, specOrUrl, opts).catch(err => {
     console.error(`Embed failed: ${selector}`, err);
     el.innerHTML = `
       <div style="padding:14px; text-align:center; color:#b91c1c; font-size:13px;">
-        Chart failed to load. Check console for details.
+        Chart failed to load.<br/>
+        <span style="color:#7f1d1d; font-size:12px;">${String(err?.message || err)}</span>
       </div>
     `;
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-
+// Prefer window 'load' to ensure deferred CDN scripts are definitely ready
+function initCharts() {
   // Chart 1: Inflation (load from spec file)
-  safeEmbed("#chart1", `${DATA_PATH}chart1_spec.json`);
+  safeEmbed("#chart1", dataUrl("chart1_spec.json"));
+
+  // Shared responsive sizing for inline specs
+  const RESPONSIVE = {
+    width: "container",
+    autosize: { type: "fit", contains: "padding" }
+  };
 
   // Chart 2: Interactive Wage Squeeze
   safeEmbed("#chart2", {
@@ -57,9 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "text": "Real Wage Squeeze by Sector",
       "subtitle": "Track how different sectors are affected by inflation"
     },
-    "width": 750,
+    ...RESPONSIVE,
     "height": 450,
-    "data": { "url": `${DATA_PATH}chart2_wage_squeeze.json` },
+    "data": { "url": dataUrl("chart2_wage_squeeze.json") },
     "params": [
       {
         "name": "sectorSelect",
@@ -104,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Chart 3: Regional Map (load from spec file)
-  safeEmbed("#chart3", `${DATA_PATH}chart3_spec.json`);
+  safeEmbed("#chart3", dataUrl("chart3_spec.json"));
 
   // Chart 4: Energy Bill Impact Calculator
   safeEmbed("#chart4", {
@@ -113,9 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "text": "Energy Bill Impact Calculator",
       "subtitle": "See how different household types are affected"
     },
-    "width": 750,
+    ...RESPONSIVE,
     "height": 450,
-    "data": { "url": `${DATA_PATH}chart4_energy_detailed.json` },
+    "data": { "url": dataUrl("chart4_energy_detailed.json") },
     "params": [
       {
         "name": "householdType",
@@ -184,9 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "text": "Food Category Inflation Heatmap",
       "subtitle": "Monthly inflation rates by food category"
     },
-    "width": 750,
+    ...RESPONSIVE,
     "height": 400,
-    "data": { "url": `${DATA_PATH}chart5_food_heatmap.json` },
+    "data": { "url": dataUrl("chart5_food_heatmap.json") },
     "mark": "rect",
     "encoding": {
       "x": {
@@ -219,9 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "text": "Housing Affordability Crisis by City",
       "subtitle": "Price-to-income and rent-to-income ratios"
     },
-    "width": 750,
+    ...RESPONSIVE,
     "height": 450,
-    "data": { "url": `${DATA_PATH}chart6_housing_crisis.json` },
+    "data": { "url": dataUrl("chart6_housing_crisis.json") },
     "params": [
       {
         "name": "citySelect",
@@ -273,9 +305,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "text": "G20 Countries: Inflation Crisis Comparison",
       "subtitle": "Click on country names in legend to highlight"
     },
-    "width": 750,
+    ...RESPONSIVE,
     "height": 450,
-    "data": { "url": `${DATA_PATH}chart7_g20_comparison.json` },
+    "data": { "url": dataUrl("chart7_g20_comparison.json") },
     "params": [
       {
         "name": "countryHighlight",
@@ -311,9 +343,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "text": "Economic Scenario Explorer 2025–2027",
       "subtitle": "Explore different economic futures"
     },
-    "width": 750,
+    ...RESPONSIVE,
     "height": 450,
-    "data": { "url": `${DATA_PATH}chart8_scenarios_enhanced.json` },
+    "data": { "url": dataUrl("chart8_scenarios_enhanced.json") },
     "params": [
       {
         "name": "scenarioSelect",
@@ -370,4 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   console.log("✅ project-charts.js loaded and embed calls executed.");
-});
+}
+
+// Run when everything (including deferred CDN scripts) is ready
+window.addEventListener("load", initCharts);

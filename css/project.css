@@ -77,6 +77,19 @@
   color: var(--navy);
 }
 
+/* --- Additions to prevent "missing charts" due to layout/overflow --- */
+.chart-wrapper{
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto; /* if chart is wider than container, keep it visible */
+}
+
+.vega-container{
+  width: 100%;
+  min-height: 280px; /* prevents a collapsed container from looking "blank" */
+}
+/* ------------------------------------------------------------------- */
+
 .chart-description{
   margin-top: 15px;
   font-size: 0.9em;
