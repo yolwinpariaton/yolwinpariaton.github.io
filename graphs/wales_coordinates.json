@@ -1,31 +1,34 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Wales",
-    "subtitle": ["Tourist Attractions & Landmarks", "Annual visitor numbers (millions)"],
-    "anchor": "start",
-    "fontSize": 16,
-    "subtitleFontStyle": "italic",
-    "subtitleFontSize": 11
-  },
   "width": 400,
   "height": 550,
   "view": {"stroke": null},
+  "background": null,
+  "title": {
+    "text": "Wales",
+    "anchor": "start",
+    "color": "black",
+    "fontSize": 16,
+    "subtitle": "Tourist Attractions & Landmarks",
+    "subtitleFontStyle": "italic",
+    "subtitleFontSize": 10,
+    "subtitleColor": "black"
+  },
   "projection": {
     "type": "mercator",
     "center": [-3.8, 52.3],
-    "scale": 7000
+    "scale": 7500
   },
   "layer": [
     {
       "data": {
         "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.geojson",
-        "format": {"type": "json", "property": "features"}
+        "format": {"property": "features"}
       },
       "mark": {
         "type": "geoshape",
         "fill": "#e9e9e9",
-        "stroke": "#ffffff",
+        "stroke": "#000",
         "strokeWidth": 0.5
       }
     },

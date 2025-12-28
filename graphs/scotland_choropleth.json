@@ -1,24 +1,27 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Scotland",
-    "subtitle": ["Population Density (2021 Census)", "People per square km"],
-    "anchor": "start",
-    "fontSize": 16,
-    "subtitleFontStyle": "italic",
-    "subtitleFontSize": 11
-  },
-  "width": 400,
-  "height": 550,
-  "view": {"stroke": null},
   "data": {
     "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sct/lad.geojson",
-    "format": {"type": "json", "property": "features"}
+    "format": {"property": "features"}
+  },
+  "view": {"stroke": null},
+  "background": null,
+  "width": 400,
+  "height": 550,
+  "title": {
+    "text": "Scotland",
+    "anchor": "start",
+    "color": "black",
+    "fontSize": 16,
+    "subtitle": "Population Density (2021 Census)",
+    "subtitleFontStyle": "italic",
+    "subtitleFontSize": 10,
+    "subtitleColor": "black"
   },
   "projection": {
     "type": "mercator",
     "center": [-4.1, 57.8],
-    "scale": 3200
+    "scale": 3000
   },
   "transform": [
     {
@@ -34,7 +37,7 @@
   ],
   "mark": {
     "type": "geoshape",
-    "stroke": "white",
+    "stroke": "#000",
     "strokeWidth": 0.5
   },
   "encoding": {
