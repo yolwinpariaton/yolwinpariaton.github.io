@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Beer prices (monthly): trend + 3-month moving average + KPI subtitle + hover interaction.",
+  "description": "Premium beer price time series with KPI subtitle, moving-average overlay, and hover interaction.",
   "data": {
-    "url": "data/price_beer_monthly.csv",
+    "url": "data/price_beer.csv",
     "format": { "type": "csv" }
   },
   "transform": [
@@ -23,25 +23,25 @@
       "joinaggregate": [{ "op": "mean", "field": "price_num", "as": "endPrice" }],
       "groupby": ["maxDate"]
     },
+    { "calculate": "(datum.endPrice - datum.startPrice)", "as": "deltaAbs" },
+    { "calculate": "(datum.deltaAbs / datum.startPrice)", "as": "deltaPct" },
+
     {
-      "calculate": "(datum.endPrice - datum.startPrice)",
-      "as": "deltaAbs"
-    },
-    {
-      "calculate": "(datum.deltaAbs / datum.startPrice)",
-      "as": "deltaPct"
+      "window": [{ "op": "mean", "field": "price_num", "as": "ma3" }],
+      "frame": [-2, 0],
+      "sort": [{ "field": "date", "order": "ascending" }]
     },
 
     {
-      "window": [
-        { "op": "mean", "field": "price_num", "as": "ma3" }
-      ],
-      "frame": [-2, 0],
-      "sort": [{ "field": "date", "order": "ascending" }]
+      "joinaggregate": [{ "op": "max", "field": "price_num", "as": "maxPrice" }]
+    },
+    {
+      "calculate": "datum.price_num === datum.maxPrice",
+      "as": "isPeak"
     }
   ],
   "title": {
-    "text": "Beer price (monthly)",
+    "text": "Draught bitter price (per pint)",
     "subtitle": {
       "expr": "timeFormat(datum.minDate,'%b %Y') + ' → ' + timeFormat(datum.maxDate,'%b %Y') + ' | ' + format(datum.startPrice,'.3f') + ' → ' + format(datum.endPrice,'.3f') + ' (' + (datum.deltaAbs>=0?'+':'') + format(datum.deltaAbs,'.3f') + ', ' + (datum.deltaPct>=0?'+':'') + format(datum.deltaPct*100,'.1f') + '%)'"
     },
@@ -51,7 +51,7 @@
     "offset": 12
   },
   "width": "container",
-  "height": 340,
+  "height": 360,
   "padding": { "top": 8, "right": 18, "bottom": 10, "left": 10 },
 
   "layer": [
@@ -85,7 +85,7 @@
     },
 
     {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.4 },
+      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.8 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "price_num", "type": "quantitative" },
@@ -98,7 +98,23 @@
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "ma3", "type": "quantitative" },
-        "color": { "value": "#0B3C49" }
+        "color": { "value": "#111111" },
+        "opacity": { "value": 0.70 }
+      }
+    },
+
+    {
+      "transform": [{ "filter": "datum.isPeak" }],
+      "mark": { "type": "point", "filled": true, "size": 110 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "price_num", "type": "quantitative" },
+        "color": { "value": "#B23A48" },
+        "tooltip": [
+          { "field": "item_name", "type": "nominal", "title": "Item" },
+          { "field": "date", "type": "temporal", "title": "Peak month", "format": "%b %Y" },
+          { "field": "price_num", "type": "quantitative", "title": "Peak price", "format": ".4f" }
+        ]
       }
     },
 
@@ -119,11 +135,15 @@
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "price_num", "type": "quantitative" },
-        "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
+        "opacity": {
+          "condition": { "param": "hover", "value": 1 },
+          "value": 0
+        },
         "color": { "value": "#1F6F8B" },
         "tooltip": [
+          { "field": "item_name", "type": "nominal", "title": "Item" },
           { "field": "date", "type": "temporal", "title": "Month", "format": "%b %Y" },
-          { "field": "price_num", "type": "quantitative", "title": "Beer price", "format": ".4f" },
+          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" },
           { "field": "ma3", "type": "quantitative", "title": "3m avg", "format": ".4f" }
         ]
       }
