@@ -258,9 +258,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
   safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
 
-  // Task 8
-  safeEmbedWithFallbacksFromUrl("#vis_bread", ["graphs/lrpd_bread.json"], { height: H_STD });
-  safeEmbedWithFallbacksFromUrl("#vis_beer", ["graphs/lrpd_beer.json"], { height: H_STD });
+  // Task 8  ✅ (ONLY MODIFIED SECTION)
+  await safeEmbedFromUrl("#vis_bread", "graphs/lrpd_bread.json", { height: H_STD });
+  await safeEmbedFromUrl("#vis_beer", "graphs/lrpd_beer.json", { height: H_STD });
 
   // Task 9
   safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_SM });
