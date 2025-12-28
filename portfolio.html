@@ -60,6 +60,8 @@
             <div class="chart-wrapper"><div id="vis1" class="vega-container"></div></div>
             <div class="chart-wrapper"><div id="vis2" class="vega-container"></div></div>
           </div>
+
+          <p class="task-source">Source: Richard Davies (chart library) and underlying data sources shown in chart metadata.</p>
         </section>
 
         <!-- TASK 2 -->
@@ -71,6 +73,8 @@
             <div class="chart-wrapper"><div id="vis3" class="vega-container"></div></div>
             <div class="chart-wrapper"><div id="vis4" class="vega-container"></div></div>
           </div>
+
+          <p class="task-source">Source: Economics Observatory Data Hub (as used to construct the visualisations).</p>
         </section>
 
         <!-- TASK 3 -->
@@ -84,6 +88,8 @@
             <div class="chart-wrapper"><div id="vis5" class="vega-container"></div></div>
             <div class="chart-wrapper"><div id="vis6" class="vega-container"></div></div>
           </div>
+
+          <p class="task-source">Source: Underlying sources are shown inside each chart (as provided in the embedded specifications).</p>
         </section>
 
         <!-- TASK 4 -->
@@ -94,19 +100,21 @@
           </p>
 
           <h3>Original Chart</h3>
-          <div class="chart-wrapper chart-wrapper--center">
+          <div class="chart-wrapper chart-wrapper--center chart-wrapper--media">
             <img src="images/financial_times.jpg" alt="Financial Times original chart" class="task-img">
           </div>
 
           <h3>Replicated Version</h3>
           <div class="chart-wrapper chart-wrapper--center">
-            <div id="vis7" class="vega-container"></div>
+            <div id="vis7" class="vega-container vega-container--t4"></div>
           </div>
 
           <h3>Improved Version</h3>
           <div class="chart-wrapper chart-wrapper--center">
-            <div id="vis8" class="vega-container"></div>
+            <div id="vis8" class="vega-container vega-container--t4"></div>
           </div>
+
+          <p class="task-source">Source: Financial Times (original chart); author replication using the same underlying data logic.</p>
         </section>
 
         <!-- TASK 5 -->
@@ -127,6 +135,8 @@
           <div class="chart-wrapper chart-wrapper--center">
             <div id="vis_scrape" class="vega-container"></div>
           </div>
+
+          <p class="task-source">Source: World Bank Indicators API (Part A) and Wikipedia (Part B).</p>
         </section>
 
         <!-- TASK 6 -->
@@ -135,6 +145,10 @@
           <p>
             This dashboard was generated using a loop to automate chart creation from multiple datasets and produce a compact set of time-series views.
             Code notebook: <a href="https://colab.research.google.com/drive/1uNzblqPUEmysdTm3UBp0k3KuNogf3oSS" target="_blank" rel="noopener">Colab</a>
+          </p>
+          <p class="task-source">
+            Source: Economic Data using Loops through World Bank API — 6 different indicators for the UK.
+            Base endpoint: <a href="https://api.worldbank.org/v2/country/GBR/indicator/" target="_blank" rel="noopener">https://api.worldbank.org/v2/country/GBR/indicator/</a>
           </p>
 
           <div class="dashboard-grid">
@@ -150,6 +164,9 @@
         <!-- TASK 7 -->
         <section class="task">
           <h2>Task 7: Maps. Base maps and choropleths</h2>
+          <p>
+            Two map-based visualisations: (1) a choropleth of Scotland population density and (2) a point map of major tourist attractions and landmarks in Wales.
+          </p>
 
           <div class="charts-row">
             <div class="chart-wrapper">
@@ -160,19 +177,25 @@
               <div id="map_wales" class="vega-container map-container"></div>
             </div>
           </div>
+
+          <p class="task-source">
+            Source: UK GeoJSON/TopoJSON boundaries (martinjc/UK-GeoJSON on GitHub) and author data inputs (Scotland density CSV; Wales locations list).
+          </p>
         </section>
 
         <!-- TASK 8 -->
         <section class="task">
           <h2>Task 8: Big Data. Extracting a story from millions of prices</h2>
           <p>
-            Using the LSE Retail Prices Database, I compared product price dynamics over time and extracted a clear narrative from high-frequency, large-scale price observations.
+            Using the LSE Retail Prices Database, I compared product price dynamics over time and extracted a narrative from high-frequency, large-scale price observations.
           </p>
 
           <div class="charts-row">
             <div class="chart-wrapper"><div id="vis_bread" class="vega-container"></div></div>
             <div class="chart-wrapper"><div id="vis_beer" class="vega-container"></div></div>
           </div>
+
+          <p class="task-source">Source: LSE Retail Prices Database (LRPD).</p>
         </section>
 
         <!-- TASK 9 -->
@@ -191,6 +214,8 @@
               <div id="interactive2" class="vega-container vega-container--sm"></div>
             </div>
           </div>
+
+          <p class="task-source">Source: Embedded chart specifications and underlying datasets referenced in the interactive visualisations.</p>
         </section>
 
         <!-- TASK 10 -->
@@ -199,6 +224,8 @@
           <div class="chart-wrapper chart-wrapper--center-lg">
             <div id="task10a" class="vega-container vega-container--sm"></div>
           </div>
+
+          <p class="task-source">Source: Underlying dataset referenced in the embedded machine learning analysis chart specification.</p>
         </section>
 
         <div class="back-top">

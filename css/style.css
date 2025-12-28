@@ -15,6 +15,7 @@
   /* Reference sizing (Task 1–3) */
   --chart-h: 320px;      /* standard charts */
   --chart-h-sm: 280px;   /* smaller charts (Task 9/10) */
+  --chart-h-t4: 360px;   /* Task 4 needs extra room for title + legend */
   --map-h: 460px;        /* maps */
   --dash-h: 190px;       /* dashboard tiles */
 }
@@ -221,6 +222,13 @@ a:hover{ text-decoration: underline; }
   margin-bottom: 62px;
 }
 
+/* Small source line under charts/tasks */
+.task-source{
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 /* Charts layout */
 .charts-row{
   display: grid;
@@ -242,6 +250,11 @@ a:hover{ text-decoration: underline; }
   position: relative;
 }
 
+/* Media wrapper (Task 4 image): no padding so frame matches image */
+.chart-wrapper--media{
+  padding: 0;
+}
+
 /* Wrapper widths */
 .chart-wrapper--center{
   max-width: 760px;
@@ -261,7 +274,7 @@ a:hover{ text-decoration: underline; }
   margin-right: auto;
 }
 
-/* CHART CONTAINERS */
+/* Chart containers */
 .vega-container{
   width: 100%;
   height: var(--chart-h);
@@ -270,6 +283,10 @@ a:hover{ text-decoration: underline; }
 
 .vega-container--sm{
   height: var(--chart-h-sm);
+}
+
+.vega-container--t4{
+  height: var(--chart-h-t4);
 }
 
 /* Maps */
@@ -300,7 +317,7 @@ a:hover{ text-decoration: underline; }
   width: 100%;
   height: auto;
   max-height: 280px;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
