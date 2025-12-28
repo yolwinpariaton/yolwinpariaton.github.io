@@ -11,6 +11,11 @@
   --radius: 14px;
   --shadow: 0 10px 30px rgba(2, 6, 23, 0.10);
   --maxw: 1080px;
+
+  /* Global chart sizing */
+  --chart-h: 320px;     /* standard charts */
+  --chart-h-lg: 360px;  /* larger / interactive charts */
+  --map-h: 520px;       /* maps */
 }
 
 * { box-sizing: border-box; }
@@ -137,7 +142,6 @@ a:hover{ text-decoration: underline; }
   background: url("../images/portfolio.jpg") center/cover no-repeat;
 }
 
-/* Overlay + center */
 .hero__overlay{
   position: absolute;
   inset: 0;
@@ -211,7 +215,7 @@ a:hover{ text-decoration: underline; }
   min-height: 70vh;
 }
 
-/* Slightly larger spacing between tasks */
+/* Portfolio spacing */
 .portfolio-content .task{
   margin-bottom: 62px;
 }
@@ -226,86 +230,76 @@ a:hover{ text-decoration: underline; }
   max-width: 100%;
 }
 
-/* Smaller, tighter frames */
+/* Frame */
 .chart-wrapper{
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-
-  /* reduced padding makes frames feel less “bulky” */
   padding: 12px;
-
   box-shadow: var(--shadow);
   overflow: hidden;
   position: relative;
-  display: block;
-
-  /* reduced min height makes frames tighter */
-  min-height: 240px;
 }
 
-/* Utility wrappers */
+/* Wrapper widths used in HTML */
 .chart-wrapper--center{
-  max-width: 760px;   /* slightly narrower so charts look less huge */
+  max-width: 760px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .chart-wrapper--wide{
-  max-width: 980px;   /* keep improved chart big, but not “full-bleed” */
+  max-width: 980px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .chart-wrapper--center-lg{
-  max-width: 900px;   /* interactive charts: keep contained */
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Map container: still needs height, but smaller than before */
-.map-container{
-  width: 100%;
-  min-height: 520px;
-  display: block;
-}
-
-/* Chart container */
+/* CHART CONTAINERS: fixed, consistent heights */
 .vega-container{
   width: 100%;
+  height: var(--chart-h);
   display: block;
 }
 
-/* Reduced height helpers (these were making things oversized) */
 .vega-container--large{
-  min-height: 320px;
+  height: var(--chart-h-lg);
 }
 
 .vega-container--tall{
-  min-height: 320px;
+  height: var(--chart-h-lg);
 }
 
-/* Vega sizing */
-.vega-embed{
-  width: 100% !important;
-  max-width: 100% !important;
+/* Maps */
+.map-container{
+  width: 100%;
+  height: var(--map-h);
+  display: block;
 }
 
-/* Let Vega fit inside the wrapper */
+/* Force Vega embed to fill the container height/width */
+.vega-embed,
 .vega-embed .vega-vis{
   width: 100% !important;
+  height: 100% !important;
   max-width: 100% !important;
 }
 
-/* svg/canvas should scale down */
+/* Scale SVG/canvas to fit container (prevents the “chart stuck at top + blank space”) */
 .chart-wrapper .vega-embed svg,
 .chart-wrapper .vega-embed canvas{
   width: 100% !important;
-  height: auto !important;
+  height: 100% !important;
   max-width: 100% !important;
+  display: block;
 }
 
-/* Task image sizing */
+/* Task images */
 .task-img{
   width: 100%;
   height: auto;
@@ -370,7 +364,7 @@ a:hover{ text-decoration: underline; }
 
 .site-footer a{ color: var(--white); text-decoration: underline; }
 
-/* Task 6 Dashboard */
+/* Dashboard */
 .dashboard-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -382,9 +376,9 @@ a:hover{ text-decoration: underline; }
   background: white;
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 8px;          /* smaller */
+  padding: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  min-height: 170px;     /* smaller */
+  min-height: 170px;
   overflow: hidden;
 }
 

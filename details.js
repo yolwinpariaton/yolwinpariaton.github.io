@@ -1,5 +1,5 @@
 // =============================
-// details.js (Robust embeds)
+// details.js (Consistent sizing embeds)
 // =============================
 
 const BASE_VL_CONFIG = {
@@ -30,29 +30,65 @@ function waitForVegaEmbed(maxTries = 50) {
   });
 }
 
-function safeEmbed(selector, spec, options = embedOptions) {
+function getJson(url) {
+  return fetch(url, { cache: "no-store" }).then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    return res.json();
+  });
+}
+
+/**
+ * Apply consistent layout constraints to a Vega/Vega-Lite spec.
+ * This is the key to meaningfully standardize chart sizes.
+ */
+function normalizeSpec(spec, { height = 320, forceWidthContainer = true } = {}) {
+  const out = { ...spec };
+
+  // For Vega-Lite, enforce container width and a consistent height
+  if (forceWidthContainer) out.width = "container";
+  if (typeof height === "number") out.height = height;
+
+  // Make charts responsive horizontally
+  out.autosize = out.autosize || { type: "fit-x", contains: "padding" };
+
+  // Prevent borders around the view
+  out.config = out.config || {};
+  out.config.view = out.config.view || {};
+  out.config.view.stroke = "transparent";
+
+  // Ensure transparent background
+  if (!("background" in out)) out.background = "transparent";
+
+  return out;
+}
+
+async function safeEmbedFromUrl(selector, url, { height = 320 } = {}) {
   const el = document.querySelector(selector);
   if (!el) {
     console.warn(`Missing element in HTML: ${selector}`);
-    return Promise.resolve(false);
+    return false;
   }
 
-  return window.vegaEmbed(selector, spec, options)
-    .then(() => true)
-    .catch(err => {
-      console.error(`Embed failed for ${selector} using ${spec}`, err);
-      el.innerHTML = `
-        <div style="padding:14px; text-align:center; color:#b91c1c; font-size:13px;">
-          Chart failed to load. Open the browser console for details.
-        </div>
-      `;
-      return false;
-    });
+  try {
+    const spec = await getJson(url);
+    const normalized = normalizeSpec(spec, { height });
+
+    await window.vegaEmbed(selector, normalized, embedOptions);
+    return true;
+  } catch (err) {
+    console.error(`Embed failed for ${selector} using ${url}`, err);
+    el.innerHTML = `
+      <div style="padding:14px; text-align:center; color:#b91c1c; font-size:13px;">
+        Chart failed to load. Open the browser console for details.
+      </div>
+    `;
+    return false;
+  }
 }
 
-async function safeEmbedWithFallbacks(selector, specs, options = embedOptions) {
-  for (const spec of specs) {
-    const ok = await safeEmbed(selector, spec, options);
+async function safeEmbedWithFallbacksFromUrl(selector, urls, { height = 320 } = {}) {
+  for (const url of urls) {
+    const ok = await safeEmbedFromUrl(selector, url, { height });
     if (ok) return true;
   }
   return false;
@@ -66,37 +102,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  // Choose consistent heights (match CSS variables conceptually)
+  const H_STD = 320;
+  const H_LG = 360;
+  const H_MAP = 520;
+
   // Task 1
-  safeEmbed("#vis1", "graphs/uk_unemployment_chart.json", embedOptions);
-  await safeEmbedWithFallbacks("#vis2", [
+  safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
+  await safeEmbedWithFallbacksFromUrl("#vis2", [
     "graphs/inflation_chart.json",
     "graphs/g7_inflation_chart.json"
-  ], embedOptions);
+  ], { height: H_STD });
 
   // Task 2
-  safeEmbed("#vis3", "graphs/nigeria_chart.json", embedOptions);
-  safeEmbed("#vis4", "graphs/ethiopia_chart.json", embedOptions);
+  safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
+  safeEmbedFromUrl("#vis4", "graphs/ethiopia_chart.json", { height: H_STD });
 
   // Task 3
-  safeEmbed("#vis5", "graphs/uk_renewable.json", embedOptions);
-  safeEmbed("#vis6", "graphs/energy_prices.json", embedOptions);
+  safeEmbedFromUrl("#vis5", "graphs/uk_renewable.json", { height: H_STD });
+  safeEmbedFromUrl("#vis6", "graphs/energy_prices.json", { height: H_STD });
 
   // Task 4
-  safeEmbed("#vis7", "graphs/financial_times.json", embedOptions);
-  safeEmbed("#vis8", "graphs/financial_times2.json", embedOptions);
+  safeEmbedFromUrl("#vis7", "graphs/financial_times.json", { height: H_STD });
+  safeEmbedFromUrl("#vis8", "graphs/financial_times2.json", { height: H_LG });
 
   // Task 5
-  safeEmbedWithFallbacks("#vis_api", [
+  safeEmbedWithFallbacksFromUrl("#vis_api", [
     "graphs/api_chart.json",
     "graphs/api_chart_spec.json"
-  ], embedOptions);
+  ], { height: H_STD });
 
-  safeEmbedWithFallbacks("#vis_scrape", [
+  safeEmbedWithFallbacksFromUrl("#vis_scrape", [
     "graphs/emissions_tidy.json",
     "graphs/emissions_chart.json"
-  ], embedOptions);
+  ], { height: H_STD });
 
-  // Task 6 Dashboard (if your dashboard JSONs exist)
+  // Task 6 Dashboard (kept as your original logic, but still robust)
   const dashboardEmbedOptions = embedOptions;
 
   function dashboardSpec(dataUrl, chartTitle) {
@@ -112,7 +153,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       },
       "width": "container",
       "height": 170,
-      "config": { "view": { "stroke": "transparent" } }
+      "autosize": { "type": "fit-x", "contains": "padding" },
+      "config": { "view": { "stroke": "transparent" }, "background": "transparent" }
     };
   }
 
@@ -140,27 +182,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Task 7 Maps
-  safeEmbed("#map_scotland", "graphs/scotland_choropleth.json", embedOptions);
-  safeEmbed("#map_wales", "graphs/wales_coordinates.json", embedOptions);
+  safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP });
+  safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP });
 
   // Task 8
-  safeEmbedWithFallbacks("#vis_bread", [
+  safeEmbedWithFallbacksFromUrl("#vis_bread", [
     "graphs/lrpd_bread.json",
     "graphs/price_bread.json"
-  ], embedOptions);
+  ], { height: H_STD });
 
-  safeEmbedWithFallbacks("#vis_beer", [
+  safeEmbedWithFallbacksFromUrl("#vis_beer", [
     "graphs/lrpd_beer.json",
     "graphs/price_beer.json"
-  ], embedOptions);
+  ], { height: H_STD });
 
   // Task 9
-  safeEmbed("#interactive1", "graphs/interactive_economy.json", embedOptions);
-  safeEmbed("#interactive2", "graphs/interactive_scatter.json", embedOptions);
+  safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_LG });
+  safeEmbedFromUrl("#interactive2", "graphs/interactive_scatter.json", { height: H_LG });
 
   // Task 10A
-  safeEmbedWithFallbacks("#task10a", [
+  safeEmbedWithFallbacksFromUrl("#task10a", [
     "graphs/task10_histogram.json",
     "graphs/task10_histogram_spec.json"
-  ], embedOptions);
+  ], { height: H_LG });
 });
