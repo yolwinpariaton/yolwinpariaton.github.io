@@ -1,44 +1,116 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bread prices indexed to start=100 shown as lollipop + bubbles, distinct from the beer line chart.",
   "data": { "url": "data/price_bread.csv", "format": { "type": "csv" } },
 
   "transform": [
     { "calculate": "toDate(datum.dateISO)", "as": "date" },
-    { "calculate": "toNumber(datum.price)", "as": "price_num" }
+    { "calculate": "toNumber(datum.price)", "as": "price_num" },
+
+    {
+      "window": [
+        { "op": "first_value", "field": "date", "as": "startDate" },
+        { "op": "last_value", "field": "date", "as": "endDate" },
+        { "op": "first_value", "field": "price_num", "as": "startPrice" },
+        { "op": "last_value", "field": "price_num", "as": "endPrice" }
+      ],
+      "sort": [{ "field": "date", "order": "ascending" }]
+    },
+    { "calculate": "(datum.endPrice - datum.startPrice)", "as": "deltaAbs" },
+    { "calculate": "(datum.deltaAbs / datum.startPrice)", "as": "deltaPct" },
+
+    { "calculate": "(datum.price_num / datum.startPrice) * 100", "as": "index_100" },
+
+    {
+      "window": [{ "op": "mean", "field": "index_100", "as": "ma6_index" }],
+      "frame": [-5, 0],
+      "sort": [{ "field": "date", "order": "ascending" }]
+    }
   ],
 
   "title": {
     "text": "Six bread rolls price (white/brown)",
+    "subtitle": {
+      "expr": "timeFormat(datum.startDate,'%b %Y') + ' → ' + timeFormat(datum.endDate,'%b %Y') + ' | ' + format(datum.startPrice,'.3f') + ' → ' + format(datum.endPrice,'.3f') + ' (' + (datum.deltaAbs>=0?'+':'') + format(datum.deltaAbs,'.3f') + ', ' + (datum.deltaPct>=0?'+':'') + format(datum.deltaPct*100,'.1f') + '%) | Index (start=100)'"
+    },
     "anchor": "start",
     "fontSize": 18,
-    "subtitleFontSize": 12
+    "subtitleFontSize": 12,
+    "offset": 12
   },
 
   "width": "container",
   "height": 340,
+  "padding": { "top": 8, "right": 18, "bottom": 10, "left": 10 },
 
   "layer": [
     {
-      "mark": { "type": "rule", "strokeWidth": 1.5 },
+      "mark": { "type": "rule", "strokeWidth": 1.5, "opacity": 0.9 },
       "encoding": {
-        "x": { "field": "date", "type": "temporal", "title": null },
-        "y": { "value": 0 },
-        "y2": { "field": "price_num", "type": "quantitative" },
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": { "format": "%Y", "labelAngle": 0, "grid": false }
+        },
+        "y": { "value": 100 },
+        "y2": { "field": "index_100", "type": "quantitative" },
         "color": { "value": "#E6C89C" }
       }
     },
 
     {
-      "mark": { "type": "point", "filled": true, "size": 80 },
+      "mark": { "type": "point", "filled": true, "opacity": 0.95 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "price_num", "type": "quantitative" },
+        "y": {
+          "field": "index_100",
+          "type": "quantitative",
+          "title": null,
+          "axis": { "format": ".0f", "grid": true, "gridOpacity": 0.12, "tickCount": 6 }
+        },
+        "size": { "field": "index_100", "type": "quantitative", "legend": null, "scale": { "range": [50, 320] } },
         "color": { "value": "#8C4A2F" },
         "tooltip": [
-          { "field": "item_name", "title": "Item" },
-          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
-          { "field": "price_num", "format": ".3f", "title": "Price" }
+          { "field": "item_name", "type": "nominal", "title": "Item" },
+          { "field": "date", "type": "temporal", "title": "Month", "format": "%b %Y" },
+          { "field": "price_num", "type": "quantitative", "title": "Price", "format": ".4f" },
+          { "field": "index_100", "type": "quantitative", "title": "Index", "format": ".1f" }
         ]
+      }
+    },
+
+    {
+      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.2, "opacity": 0.85 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "ma6_index", "type": "quantitative" },
+        "color": { "value": "#D9A86C" }
+      }
+    },
+
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": { "type": "point", "fields": ["date"], "nearest": true, "on": "mousemove", "clear": "mouseout" }
+        }
+      ],
+      "mark": { "type": "point", "filled": true, "size": 85 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "index_100", "type": "quantitative" },
+        "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
+        "color": { "value": "#8C4A2F" }
+      }
+    },
+
+    {
+      "transform": [{ "filter": { "param": "hover" } }],
+      "mark": { "type": "rule", "strokeWidth": 1 },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "color": { "value": "#D6D6D6" }
       }
     }
   ],
