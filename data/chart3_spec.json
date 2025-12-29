@@ -13,58 +13,85 @@
   "projection": {
     "type": "mercator",
     "center": [-3, 54.7],
-    "scale": 2350,
+    "scale": 2400,
     "translate": [310, 245]
   },
 
   "layer": [
     {
       "data": {
-        "url": "https://vega.github.io/editor/data/world-110m.json",
-        "format": { "type": "topojson", "feature": "countries" }
+        "url": "uk_regions.geojson",
+        "format": { "type": "geojson" }
       },
-      "transform": [{ "filter": "datum.id == 826 || datum.id == 372" }],
+      "transform": [
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": { "url": "chart3_regional_detailed.json" },
+            "key": "region",
+            "fields": [
+              "cost_index",
+              "rent_to_income",
+              "energy_burden",
+              "food_inflation",
+              "population"
+            ]
+          }
+        },
+        { "calculate": "datum.population / 1000000", "as": "population_m" }
+      ],
       "mark": {
         "type": "geoshape",
-        "fill": "#eef2ff",
+        "stroke": "#ffffff",
+        "strokeWidth": 1.1
+      },
+      "encoding": {
+        "color": {
+          "field": "cost_index",
+          "type": "quantitative",
+          "scale": { "scheme": "reds" },
+          "legend": { "title": "Cost Index", "gradientLength": 160 }
+        },
+        "tooltip": [
+          { "field": "properties.NAME", "title": "Region" },
+          { "field": "cost_index", "title": "Cost Index", "format": ".1f" },
+          { "field": "population_m", "title": "Population (millions)", "format": ".2f" },
+          { "field": "rent_to_income", "title": "Rent/Income Ratio (%)", "format": ".0f" },
+          { "field": "energy_burden", "title": "Energy Burden (%)", "format": ".1f" },
+          { "field": "food_inflation", "title": "Food Inflation (%)", "format": ".1f" }
+        ]
+      }
+    },
+
+    {
+      "data": {
+        "url": "uk_regions.geojson",
+        "format": { "type": "geojson" }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "transparent",
         "stroke": "#111827",
         "strokeWidth": 1.0
       }
     },
 
     {
-      "data": {
-        "url": "https://vega.github.io/editor/data/world-110m.json",
-        "format": { "type": "topojson", "feature": "countries" }
-      },
-      "transform": [{ "filter": "datum.id == 372" }],
-      "mark": {
-        "type": "geoshape",
-        "fill": "#f3f4f6",
-        "stroke": "#9ca3af",
-        "strokeWidth": 0.7
-      }
-    },
-
-    {
       "data": { "url": "chart3_regional_detailed.json" },
-      "transform": [
-        { "calculate": "datum.population / 1000000", "as": "population_m" }
-      ],
+      "transform": [{ "calculate": "datum.population / 1000000", "as": "population_m" }],
       "mark": {
         "type": "circle",
-        "opacity": 0.82,
+        "opacity": 0.65,
         "stroke": "#ffffff",
         "strokeWidth": 1.2
       },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
-
         "size": {
           "field": "population_m",
           "type": "quantitative",
-          "scale": { "range": [70, 820] },
+          "scale": { "range": [40, 520] },
           "legend": {
             "title": "Population (millions)",
             "values": [2, 4, 6, 8],
@@ -72,21 +99,10 @@
             "symbolType": "circle"
           }
         },
-
-        "color": {
-          "field": "cost_index",
-          "type": "quantitative",
-          "scale": { "scheme": "reds" },
-          "legend": { "title": "Cost Index" }
-        },
-
+        "color": { "value": "#111827" },
         "tooltip": [
           { "field": "region", "title": "Region" },
-          { "field": "cost_index", "title": "Cost Index", "format": ".1f" },
-          { "field": "population_m", "title": "Population (millions)", "format": ".2f" },
-          { "field": "rent_to_income", "title": "Rent/Income Ratio (%)", "format": ".0f" },
-          { "field": "energy_burden", "title": "Energy Burden (%)", "format": ".1f" },
-          { "field": "food_inflation", "title": "Food Inflation (%)", "format": ".1f" }
+          { "field": "population_m", "title": "Population (millions)", "format": ".2f" }
         ]
       }
     }
@@ -96,12 +112,6 @@
     "background": "transparent",
     "view": { "stroke": "transparent" },
     "title": { "fontSize": 14, "subtitleFontSize": 12, "anchor": "start" },
-    "legend": {
-      "labelFontSize": 11,
-      "titleFontSize": 12,
-      "gradientLength": 160,
-      "symbolSize": 140,
-      "padding": 8
-    }
+    "legend": { "labelFontSize": 11, "titleFontSize": 12, "padding": 8 }
   }
 }
