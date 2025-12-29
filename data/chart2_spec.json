@@ -4,6 +4,7 @@
     "text": "Real Wage Squeeze by Sector",
     "subtitle": "Real wage index (2020 = 100). Values below 100 indicate loss of purchasing power."
   },
+
   "width": "container",
   "height": 420,
   "autosize": { "type": "fit", "contains": "padding" },
@@ -22,15 +23,8 @@
       "value": "All",
       "bind": {
         "input": "select",
-        "options": [
-          "All",
-          "Public Sector",
-          "Private Sector",
-          "Finance",
-          "Retail",
-          "Healthcare"
-        ],
-        "name": "Select Sector: "
+        "options": ["All", "Public Sector", "Private Sector", "Finance", "Retail", "Healthcare"],
+        "name": "Select sector: "
       }
     }
   ],
@@ -41,11 +35,11 @@
 
   "layer": [
     {
-      "mark": { "type": "rule", "strokeDash": [6, 4], "strokeWidth": 2, "opacity": 0.6 },
+      "mark": { "type": "rule", "strokeDash": [5, 5], "strokeWidth": 2, "opacity": 0.6 },
       "encoding": { "y": { "datum": 100 } }
     },
     {
-      "mark": { "type": "line", "strokeWidth": 3, "point": { "size": 60 } },
+      "mark": { "type": "line", "strokeWidth": 2, "point": { "size": 60 } },
       "encoding": {
         "x": {
           "field": "date",
@@ -56,7 +50,8 @@
         "y": {
           "field": "squeeze_index",
           "type": "quantitative",
-          "title": "Real Wage Index (2020=100)"
+          "title": "Real Wage Index (2020 = 100)",
+          "scale": { "domain": [90, 130] }
         },
         "color": {
           "field": "sector",
@@ -68,8 +63,8 @@
           { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Month" },
           { "field": "squeeze_index", "title": "Real Wage Index", "format": ".1f" },
           { "field": "inflation", "title": "Inflation (%)", "format": ".1f" },
-          { "field": "nominal_wage", "title": "Nominal Wage (£)", "format": ",.0f" },
-          { "field": "real_wage", "title": "Real Wage (£)", "format": ",.0f" }
+          { "field": "nominal_wage", "title": "Nominal wage (£)", "format": ",.0f" },
+          { "field": "real_wage", "title": "Real wage (£)", "format": ",.0f" }
         ]
       }
     }

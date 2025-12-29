@@ -3,11 +3,18 @@
   "width": 400,
   "height": 500,
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.geojson",
-    "format": {"property": "features"}
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
+    "format": {
+      "type": "topojson",
+      "feature": "lad"
+    }
   },
   "projection": {
     "type": "mercator"
   },
-  "mark": "geoshape"
+  "mark": {
+    "type": "geoshape",
+    "fill": "lightgray",
+    "stroke": "white"
+  }
 }
