@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Bread: indexed lollipop + bubbles (distinct from beer).",
+  "description": "Bread: indexed lollipop + bubbles (distinct from beer). No shaded areas.",
   "data": { "url": "data/price_bread.csv", "format": { "type": "csv" } },
 
   "transform": [
@@ -30,7 +30,7 @@
 
   "title": {
     "text": "Six bread rolls price (white/brown)",
-    "subtitle": { "text": "Indexed (start=100). Lollipop + bubbles to highlight month-to-month variation." },
+    "subtitle": { "text": "Indexed (start=100). Lollipop + bubbles to highlight variation." },
     "anchor": "start",
     "fontSize": 18,
     "subtitleFontSize": 12,
@@ -66,13 +66,14 @@
           "title": null,
           "axis": { "format": ".0f", "grid": true, "gridOpacity": 0.1, "tickCount": 6 }
         },
-        "size": {
-          "field": "index_100",
-          "type": "quantitative",
-          "legend": null,
-          "scale": { "range": [60, 320] }
-        },
-        "color": { "value": "#8C4A2F" }
+        "size": { "field": "index_100", "type": "quantitative", "legend": null, "scale": { "range": [60, 320] } },
+        "color": { "value": "#8C4A2F" },
+        "tooltip": [
+          { "field": "item_name", "title": "Item" },
+          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
+          { "field": "price_num", "format": ".3f", "title": "Price" },
+          { "field": "index_100", "format": ".1f", "title": "Index" }
+        ]
       }
     },
 
@@ -82,22 +83,6 @@
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "ma6_index", "type": "quantitative" },
         "color": { "value": "#D9A86C" }
-      }
-    },
-
-    {
-      "mark": { "type": "point", "filled": true, "size": 90 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "index_100", "type": "quantitative" },
-        "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
-        "color": { "value": "#8C4A2F" },
-        "tooltip": [
-          { "field": "item_name", "title": "Item" },
-          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
-          { "field": "price_num", "format": ".3f", "title": "Price" },
-          { "field": "index_100", "format": ".1f", "title": "Index" }
-        ]
       }
     },
 

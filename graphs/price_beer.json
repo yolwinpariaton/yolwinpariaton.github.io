@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Draught bitter price: clean line + same-color 6m average + hover (no shading).",
+  "description": "Draught bitter price: clean line + same-color moving average + hover. No shaded areas.",
   "data": { "url": "data/price_beer.csv", "format": { "type": "csv" } },
 
   "transform": [

@@ -123,7 +123,6 @@ function patchTask4(spec) {
 /* ✅ Task 7: Map Specific Patch (Centering and Scaling) */
 function patchTask7_Maps(spec) {
   const out = { ...spec };
-  // Force correct projection if missing or default
   if (out.title && out.title.text === "Scotland") {
     out.projection = { "type": "mercator", "center": [-4.1, 57.8], "scale": 2800 };
   } else if (out.title && out.title.text === "Wales") {
@@ -135,7 +134,6 @@ function patchTask7_Maps(spec) {
 /* Normalize Vega-Lite: enforce responsive width + stable height */
 function normalizeVegaLite(spec, { height = 320 } = {}) {
   const out = { ...spec };
-  // Maps should not use width: container if they use fixed scale projections
   if (!out.projection) {
     out.width = "container";
   }
@@ -206,11 +204,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Task 1
   safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
-  safeEmbedWithFallbacksFromUrl(
-    "#vis2",
-    ["graphs/inflation_chart.json", "graphs/g7_inflation_chart.json"],
-    { height: H_STD }
-  );
+  safeEmbedWithFallbacksFromUrl("#vis2", ["graphs/inflation_chart.json", "graphs/g7_inflation_chart.json"], { height: H_STD });
 
   // Task 2
   safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
@@ -253,23 +247,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const dataPath = `graphs/dashboard${i}.json`;
     try {
       const data = await getJson(dataPath);
-      const chartTitle =
-        Array.isArray(data) && data.length && data[0].indicator
-          ? String(data[0].indicator)
-          : `Dashboard ${i}`;
+      const chartTitle = Array.isArray(data) && data.length && data[0].indicator ? String(data[0].indicator) : `Dashboard ${i}`;
       await window.vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), embedOptions);
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) { console.error(err); }
   }
 
-  // ✅ Task 7: Maps (Fixed Embed Logic)
+  // Task 7
   safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
   safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
 
-  // ✅ Task 8: Big Data (Bread + Beer) — consistent paths and IDs
-  await safeEmbedFromUrl("#vis_bread", "graphs/price_bread.json", { height: H_STD });
-  await safeEmbedFromUrl("#vis_beer", "graphs/price_beer.json", { height: H_STD });
+  // ✅ Task 8 (matches your repo: graphs/price_bread.json and graphs/price_beer.json)
+  safeEmbedFromUrl("#vis_bread", "graphs/price_bread.json", { height: H_STD });
+  safeEmbedFromUrl("#vis_beer", "graphs/price_beer.json", { height: H_STD });
 
   // Task 9
   safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_SM });
