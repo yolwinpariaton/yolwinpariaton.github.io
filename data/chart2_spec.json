@@ -5,10 +5,16 @@
     "subtitle": "Real wage index (2020 = 100). Values below 100 indicate loss of purchasing power."
   },
   "width": "container",
-  "height": 450,
+  "height": 420,
   "autosize": { "type": "fit", "contains": "padding" },
 
-  "data": { "url": "data/chart2_wage_squeeze.json" },
+  "data": {
+    "url": "chart2_wage_squeeze.json",
+    "format": {
+      "type": "json",
+      "parse": { "date": "utc:'%Y-%m-%d'" }
+    }
+  },
 
   "params": [
     {
@@ -16,14 +22,20 @@
       "value": "All",
       "bind": {
         "input": "select",
-        "options": ["All", "Public Sector", "Private Sector", "Finance", "Retail", "Healthcare"],
+        "options": [
+          "All",
+          "Public Sector",
+          "Private Sector",
+          "Finance",
+          "Retail",
+          "Healthcare"
+        ],
         "name": "Select Sector: "
       }
     }
   ],
 
   "transform": [
-    { "calculate": "toDate(datum.date)", "as": "date_parsed" },
     { "filter": "sectorSelect == 'All' || datum.sector == sectorSelect" }
   ],
 
@@ -36,7 +48,7 @@
       "mark": { "type": "line", "strokeWidth": 3, "point": { "size": 60 } },
       "encoding": {
         "x": {
-          "field": "date_parsed",
+          "field": "date",
           "type": "temporal",
           "title": "Date",
           "axis": { "format": "%b %Y", "labelAngle": -45 }
@@ -53,7 +65,7 @@
         },
         "tooltip": [
           { "field": "sector", "title": "Sector" },
-          { "field": "date_parsed", "type": "temporal", "format": "%B %Y", "title": "Month" },
+          { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Month" },
           { "field": "squeeze_index", "title": "Real Wage Index", "format": ".1f" },
           { "field": "inflation", "title": "Inflation (%)", "format": ".1f" },
           { "field": "nominal_wage", "title": "Nominal Wage (£)", "format": ",.0f" },
