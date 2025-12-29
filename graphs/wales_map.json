@@ -2,57 +2,65 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Population by Local Authority in Wales",
-    "fontSize": 18,
-    "font": "Arial"
+    "fontSize": 20,
+    "font": "Arial",
+    "fontWeight": "bold"
   },
-  "width": 500,
-  "height": 600,
+  "width": 550,
+  "height": 650,
   "data": {
-    "values": {
-      "type": "FeatureCollection",
-      "features": [
-        {"type":"Feature","properties":{"LAD13CD":"W06000001","LAD13NM":"Isle of Anglesey","population":70,"local_authority":"Isle of Anglesey"},"geometry":{"type":"Polygon","coordinates":[[[-4.7,53.4],[-4.3,53.4],[-4.1,53.2],[-4.5,53.1],[-4.7,53.4]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000002","LAD13NM":"Gwynedd","population":125,"local_authority":"Gwynedd"},"geometry":{"type":"Polygon","coordinates":[[[-4.6,53.1],[-3.8,53.1],[-3.8,52.7],[-4.4,52.7],[-4.6,53.1]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000003","LAD13NM":"Conwy","population":118,"local_authority":"Conwy"},"geometry":{"type":"Polygon","coordinates":[[[-3.8,53.3],[-3.3,53.3],[-3.3,52.9],[-3.8,52.9],[-3.8,53.3]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000004","LAD13NM":"Denbighshire","population":95,"local_authority":"Denbighshire"},"geometry":{"type":"Polygon","coordinates":[[[-3.5,53.3],[-3.1,53.3],[-3.1,52.9],[-3.5,52.9],[-3.5,53.3]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000005","LAD13NM":"Flintshire","population":156,"local_authority":"Flintshire"},"geometry":{"type":"Polygon","coordinates":[[[-3.3,53.4],[-2.9,53.4],[-2.9,53.0],[-3.3,53.0],[-3.3,53.4]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000006","LAD13NM":"Wrexham","population":136,"local_authority":"Wrexham"},"geometry":{"type":"Polygon","coordinates":[[[-3.1,53.1],[-2.7,53.1],[-2.7,52.8],[-3.1,52.8],[-3.1,53.1]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000008","LAD13NM":"Ceredigion","population":71,"local_authority":"Ceredigion"},"geometry":{"type":"Polygon","coordinates":[[[-4.6,52.5],[-4.0,52.5],[-4.0,52.0],[-4.6,52.0],[-4.6,52.5]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000009","LAD13NM":"Pembrokeshire","population":126,"local_authority":"Pembrokeshire"},"geometry":{"type":"Polygon","coordinates":[[[-5.3,52.0],[-4.6,52.0],[-4.6,51.6],[-5.3,51.6],[-5.3,52.0]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000010","LAD13NM":"Carmarthenshire","population":188,"local_authority":"Carmarthenshire"},"geometry":{"type":"Polygon","coordinates":[[[-4.6,52.2],[-3.8,52.2],[-3.8,51.7],[-4.6,51.7],[-4.6,52.2]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000011","LAD13NM":"Swansea","population":246,"local_authority":"Swansea"},"geometry":{"type":"Polygon","coordinates":[[[-4.2,51.8],[-3.8,51.8],[-3.8,51.5],[-4.2,51.5],[-4.2,51.8]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000012","LAD13NM":"Neath Port Talbot","population":144,"local_authority":"Neath Port Talbot"},"geometry":{"type":"Polygon","coordinates":[[[-4.0,51.8],[-3.5,51.8],[-3.5,51.5],[-4.0,51.5],[-4.0,51.8]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000013","LAD13NM":"Bridgend","population":147,"local_authority":"Bridgend"},"geometry":{"type":"Polygon","coordinates":[[[-3.7,51.6],[-3.4,51.6],[-3.4,51.4],[-3.7,51.4],[-3.7,51.6]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000014","LAD13NM":"Vale of Glamorgan","population":135,"local_authority":"Vale of Glamorgan"},"geometry":{"type":"Polygon","coordinates":[[[-3.5,51.5],[-3.1,51.5],[-3.1,51.3],[-3.5,51.3],[-3.5,51.5]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000015","LAD13NM":"Cardiff","population":362,"local_authority":"Cardiff"},"geometry":{"type":"Polygon","coordinates":[[[-3.3,51.6],[-3.0,51.6],[-3.0,51.4],[-3.3,51.4],[-3.3,51.6]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000016","LAD13NM":"Rhondda Cynon Taf","population":241,"local_authority":"Rhondda Cynon Taf"},"geometry":{"type":"Polygon","coordinates":[[[-3.6,51.7],[-3.3,51.7],[-3.3,51.5],[-3.6,51.5],[-3.6,51.7]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000018","LAD13NM":"Caerphilly","population":176,"local_authority":"Caerphilly"},"geometry":{"type":"Polygon","coordinates":[[[-3.3,51.7],[-3.0,51.7],[-3.0,51.5],[-3.3,51.5],[-3.3,51.7]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000019","LAD13NM":"Blaenau Gwent","population":70,"local_authority":"Blaenau Gwent"},"geometry":{"type":"Polygon","coordinates":[[[-3.2,51.8],[-3.0,51.8],[-3.0,51.6],[-3.2,51.6],[-3.2,51.8]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000020","LAD13NM":"Torfaen","population":94,"local_authority":"Torfaen"},"geometry":{"type":"Polygon","coordinates":[[[-3.1,51.8],[-2.9,51.8],[-2.9,51.6],[-3.1,51.6],[-3.1,51.8]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000021","LAD13NM":"Monmouthshire","population":95,"local_authority":"Monmouthshire"},"geometry":{"type":"Polygon","coordinates":[[[-3.0,51.9],[-2.6,51.9],[-2.6,51.6],[-3.0,51.6],[-3.0,51.9]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000022","LAD13NM":"Newport","population":159,"local_authority":"Newport"},"geometry":{"type":"Polygon","coordinates":[[[-3.1,51.7],[-2.8,51.7],[-2.8,51.5],[-3.1,51.5],[-3.1,51.7]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000023","LAD13NM":"Powys","population":133,"local_authority":"Powys"},"geometry":{"type":"Polygon","coordinates":[[[-3.6,52.8],[-3.0,52.8],[-3.0,52.1],[-3.6,52.1],[-3.6,52.8]]]}},
-        {"type":"Feature","properties":{"LAD13CD":"W06000024","LAD13NM":"Merthyr Tydfil","population":60,"local_authority":"Merthyr Tydfil"},"geometry":{"type":"Polygon","coordinates":[[[-3.5,51.8],[-3.3,51.8],[-3.3,51.7],[-3.5,51.7],[-3.5,51.8]]]}}
-      ]
-    },
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
     "format": {
-      "type": "json",
-      "property": "features"
+      "type": "topojson",
+      "feature": "lad"
     }
   },
+  "transform": [
+    {
+      "lookup": "properties.LAD13CD",
+      "from": {
+        "data": {
+          "values": [
+            {"area_code": "W06000001", "population": 70, "local_authority": "Isle of Anglesey"},
+            {"area_code": "W06000002", "population": 125, "local_authority": "Gwynedd"},
+            {"area_code": "W06000003", "population": 118, "local_authority": "Conwy"},
+            {"area_code": "W06000004", "population": 95, "local_authority": "Denbighshire"},
+            {"area_code": "W06000005", "population": 156, "local_authority": "Flintshire"},
+            {"area_code": "W06000006", "population": 136, "local_authority": "Wrexham"},
+            {"area_code": "W06000008", "population": 71, "local_authority": "Ceredigion"},
+            {"area_code": "W06000009", "population": 126, "local_authority": "Pembrokeshire"},
+            {"area_code": "W06000010", "population": 188, "local_authority": "Carmarthenshire"},
+            {"area_code": "W06000011", "population": 246, "local_authority": "Swansea"},
+            {"area_code": "W06000012", "population": 144, "local_authority": "Neath Port Talbot"},
+            {"area_code": "W06000013", "population": 147, "local_authority": "Bridgend"},
+            {"area_code": "W06000014", "population": 135, "local_authority": "Vale of Glamorgan"},
+            {"area_code": "W06000015", "population": 362, "local_authority": "Cardiff"},
+            {"area_code": "W06000016", "population": 241, "local_authority": "Rhondda Cynon Taf"},
+            {"area_code": "W06000018", "population": 176, "local_authority": "Caerphilly"},
+            {"area_code": "W06000019", "population": 70, "local_authority": "Blaenau Gwent"},
+            {"area_code": "W06000020", "population": 94, "local_authority": "Torfaen"},
+            {"area_code": "W06000021", "population": 95, "local_authority": "Monmouthshire"},
+            {"area_code": "W06000022", "population": 159, "local_authority": "Newport"},
+            {"area_code": "W06000023", "population": 133, "local_authority": "Powys"},
+            {"area_code": "W06000024", "population": 60, "local_authority": "Merthyr Tydfil"}
+          ]
+        },
+        "key": "area_code",
+        "fields": ["population", "local_authority"]
+      }
+    }
+  ],
   "projection": {
-    "type": "mercator",
-    "center": [-3.7, 52.3],
-    "scale": 6000
+    "type": "mercator"
   },
   "mark": {
     "type": "geoshape",
-    "stroke": "#ffffff",
+    "stroke": "white",
     "strokeWidth": 2
   },
   "encoding": {
     "color": {
-      "field": "properties.population",
+      "field": "population",
       "type": "quantitative",
       "scale": {
         "scheme": "blues",
@@ -60,22 +68,28 @@
       },
       "legend": {
         "title": "Population (thousands)",
-        "orient": "right",
+        "orient": "bottom-right",
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "gradientLength": 200,
         "format": ","
       }
     },
     "tooltip": [
       {
-        "field": "properties.local_authority",
+        "field": "local_authority",
         "type": "nominal",
         "title": "Local Authority"
       },
       {
-        "field": "properties.population",
+        "field": "population",
         "type": "quantitative",
         "title": "Population (thousands)",
         "format": ","
       }
     ]
+  },
+  "config": {
+    "view": {"stroke": null}
   }
 }

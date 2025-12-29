@@ -2,39 +2,29 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Tourist Attractions in Scotland",
-    "fontSize": 18,
-    "font": "Arial"
+    "fontSize": 20,
+    "font": "Arial",
+    "fontWeight": "bold"
   },
-  "width": 500,
-  "height": 600,
-  "projection": {
-    "type": "mercator",
-    "center": [-4, 56.5],
-    "scale": 3000
-  },
+  "width": 550,
+  "height": 650,
   "layer": [
     {
       "data": {
-        "values": [
-          {"type": "Sphere"}
-        ]
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/topo_lad.json",
+        "format": {
+          "type": "topojson",
+          "feature": "lad"
+        }
+      },
+      "projection": {
+        "type": "mercator"
       },
       "mark": {
         "type": "geoshape",
         "fill": "#e8f4f8",
-        "stroke": "#aad3df",
-        "strokeWidth": 1
-      }
-    },
-    {
-      "data": {
-        "graticule": true
-      },
-      "mark": {
-        "type": "geoshape",
-        "stroke": "#ddd",
-        "strokeWidth": 0.5,
-        "filled": false
+        "stroke": "#7cb5d0",
+        "strokeWidth": 0.8
       }
     },
     {
@@ -52,11 +42,14 @@
           {"name": "Glenfinnan Viaduct", "latitude": 56.8740, "longitude": -5.4321, "visitors_thousands": 400, "type": "Historic"}
         ]
       },
+      "projection": {
+        "type": "mercator"
+      },
       "mark": {
         "type": "circle",
-        "opacity": 0.85,
-        "stroke": "#333",
-        "strokeWidth": 1.5
+        "opacity": 0.9,
+        "stroke": "white",
+        "strokeWidth": 2
       },
       "encoding": {
         "longitude": {
@@ -71,12 +64,15 @@
           "field": "visitors_thousands",
           "type": "quantitative",
           "scale": {
-            "domain": [0, 2500],
-            "range": [100, 1200]
+            "domain": [100, 2500],
+            "range": [200, 2000]
           },
           "legend": {
             "title": "Annual Visitors (thousands)",
-            "orient": "right"
+            "orient": "bottom-right",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "symbolSize": 150
           }
         },
         "color": {
@@ -88,7 +84,11 @@
           },
           "legend": {
             "title": "Attraction Type",
-            "orient": "right"
+            "orient": "bottom-right",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "symbolSize": 150,
+            "symbolType": "circle"
           }
         },
         "tooltip": [
@@ -98,5 +98,8 @@
         ]
       }
     }
-  ]
+  ],
+  "config": {
+    "view": {"stroke": null}
+  }
 }
