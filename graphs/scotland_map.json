@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Tourist Attractions in Scotland",
+    "fontSize": 18,
+    "font": "Arial",
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 500,
+  "data": {
+    "url": "../data/scotland_attractions.csv"
+  },
+  "projection": {
+    "type": "mercator",
+    "center": [-4, 57],
+    "scale": 2800
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-kingdom/uk-counties.json",
+        "format": {
+          "type": "topojson",
+          "feature": "GBR_adm2"
+        }
+      },
+      "transform": [
+        {
+          "filter": "indexof(['Aberdeenshire', 'Angus', 'Argyll and Bute', 'City of Edinburgh', 'Clackmannanshire', 'Dumfries and Galloway', 'Dundee City', 'East Ayrshire', 'East Dunbartonshire', 'East Lothian', 'East Renfrewshire', 'Falkirk', 'Fife', 'Glasgow City', 'Highland', 'Inverclyde', 'Midlothian', 'Moray', 'North Ayrshire', 'North Lanarkshire', 'Orkney Islands', 'Perth and Kinross', 'Renfrewshire', 'Scottish Borders', 'Shetland Islands', 'South Ayrshire', 'South Lanarkshire', 'Stirling', 'West Dunbartonshire', 'West Lothian', 'Western Isles'], datum.properties.NAME_2) >= 0"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8f4f8",
+        "stroke": "#aad3df",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "#333",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "visitors_thousands",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 2500],
+            "range": [50, 1000]
+          },
+          "legend": {
+            "title": "Annual Visitors (thousands)",
+            "orient": "right"
+          }
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Historic", "Natural", "Museum"],
+            "range": ["#e74c3c", "#27ae60", "#3498db"]
+          },
+          "legend": {
+            "title": "Attraction Type",
+            "orient": "right"
+          }
+        },
+        "tooltip": [
+          {"field": "name", "type": "nominal", "title": "Attraction"},
+          {"field": "type", "type": "nominal", "title": "Type"},
+          {"field": "visitors_thousands", "type": "quantitative", "title": "Annual Visitors (thousands)", "format": ","}
+        ]
+      }
+    }
+  ]
+}
