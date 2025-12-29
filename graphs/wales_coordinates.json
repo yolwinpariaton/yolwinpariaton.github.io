@@ -2,84 +2,12 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 400,
   "height": 500,
-  "title": {
-    "text": "Wales",
-    "anchor": "start",
-    "fontSize": 16,
-    "subtitle": "Tourist Attractions & Landmarks",
-    "subtitleFontStyle": "italic",
-    "subtitleFontSize": 11
+  "data": {
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.geojson",
+    "format": {"property": "features"}
   },
   "projection": {
-    "type": "mercator",
-    "center": [-3.8, 52.3],
-    "scale": 6500
+    "type": "mercator"
   },
-  "layer": [
-    {
-      "data": {
-        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.geojson",
-        "format": {"property": "features"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#ddd",
-        "stroke": "#666",
-        "strokeWidth": 0.5
-      },
-      "encoding": {
-        "tooltip": {
-          "field": "properties.LAD13NM",
-          "type": "nominal",
-          "title": "Region"
-        }
-      }
-    },
-    {
-      "data": {
-        "values": [
-          {"name": "Snowdonia", "lat": 53.0685, "lon": -3.9086, "visitors": 4.27, "type": "National Park"},
-          {"name": "Brecon Beacons", "lat": 51.8799, "lon": -3.4354, "visitors": 3.85, "type": "National Park"},
-          {"name": "Pembrokeshire Coast", "lat": 51.6721, "lon": -5.0527, "visitors": 4.2, "type": "National Park"},
-          {"name": "Cardiff Castle", "lat": 51.4822, "lon": -3.1812, "visitors": 2.1, "type": "Castle"},
-          {"name": "Llandudno", "lat": 53.3239, "lon": -3.8261, "visitors": 1.85, "type": "Resort"}
-        ]
-      },
-      "mark": {
-        "type": "circle",
-        "filled": true,
-        "opacity": 0.85,
-        "stroke": "white",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "longitude": {"field": "lon", "type": "quantitative"},
-        "latitude": {"field": "lat", "type": "quantitative"},
-        "size": {
-          "field": "visitors",
-          "type": "quantitative",
-          "scale": {"range": [200, 1200]},
-          "legend": {
-            "title": "Visitors (M)",
-            "orient": "bottom",
-            "direction": "horizontal"
-          }
-        },
-        "color": {
-          "field": "type",
-          "type": "nominal",
-          "scale": {"scheme": "category10"},
-          "legend": {
-            "title": "Type",
-            "orient": "top-right"
-          }
-        },
-        "tooltip": [
-          {"field": "name", "title": "Place"},
-          {"field": "type", "title": "Type"},
-          {"field": "visitors", "title": "Visitors (M)", "format": ".2f"}
-        ]
-      }
-    }
-  ]
+  "mark": "geoshape"
 }
