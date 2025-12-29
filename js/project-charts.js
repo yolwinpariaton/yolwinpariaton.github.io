@@ -1,16 +1,20 @@
 // ========================================
 // PROJECT CHARTS - UK COST OF LIVING CRISIS
-// Fix: rewrite relative data URLs inside spec JSON
-// so charts always load from /data/...
+// GitHub Pages-safe loader: always read from /data/
 // ========================================
 
+// Cache-busting while iterating (safe on GitHub Pages)
 const CACHE_BUST = `?v=${new Date().toISOString().slice(0, 10)}`;
-const SITE_DATA_PATH = `${window.location.origin}/data/`;
+
+// IMPORTANT: root-relative path (do NOT use window.location.origin here)
+const SITE_DATA_PATH = "/data/";
 
 function siteDataUrl(file) {
+  // file must be ONLY the filename, e.g. "chart1_spec.json"
   return `${SITE_DATA_PATH}${file}${CACHE_BUST}`;
 }
 
+// Consistent Vega-Lite configuration
 const BASE_VL_CONFIG = {
   view: { stroke: "transparent" },
   background: "transparent",
@@ -40,7 +44,7 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
   }
 
   if (typeof vegaEmbed !== "function") {
-    console.error("vegaEmbed is not available yet. Check script loading order/CDN.");
+    console.error("vegaEmbed is not available yet. Check CDN script loading.");
     el.innerHTML = `
       <div style="padding:14px; text-align:center; color:#b91c1c; font-size:13px;">
         Vega libraries not loaded. Check console and script tags.
@@ -60,6 +64,7 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
   });
 }
 
+// ---- Rewrite relative URLs inside specs (e.g. data.url: "chart2_wage_squeeze.json") ----
 function isRelativeUrl(u) {
   return (
     typeof u === "string" &&
@@ -74,10 +79,12 @@ function isRelativeUrl(u) {
 function rewriteUrlsDeep(node) {
   if (!node || typeof node !== "object") return;
 
+  // Rewrite data.url
   if (node.data && typeof node.data === "object" && isRelativeUrl(node.data.url)) {
     node.data.url = `${SITE_DATA_PATH}${node.data.url}${CACHE_BUST}`;
   }
 
+  // Rewrite any other url fields (conservative)
   if (isRelativeUrl(node.url)) {
     node.url = `${SITE_DATA_PATH}${node.url}${CACHE_BUST}`;
   }
@@ -89,21 +96,17 @@ function rewriteUrlsDeep(node) {
   }
 }
 
-async function loadAndFixSpec(file) {
-  const res = await fetch(siteDataUrl(file), { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to fetch ${file}: HTTP ${res.status}`);
+async function loadAndFixSpec(filename) {
+  // filename must be ONLY the filename (NO "data/" prefix)
+  const res = await fetch(siteDataUrl(filename), { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to fetch ${siteDataUrl(filename)}: HTTP ${res.status}`);
   const spec = await res.json();
   rewriteUrlsDeep(spec);
   return spec;
 }
 
 function initCharts() {
-  const RESPONSIVE = {
-    width: "container",
-    autosize: { type: "fit", contains: "padding" }
-  };
-
-  // ✅ Use filenames only (NO "data/" prefix)
+  // Charts 1–3 (spec files)
   loadAndFixSpec("chart1_spec.json")
     .then(spec => safeEmbed("#chart1", spec))
     .catch(err => safeEmbed("#chart1", { error: String(err) }));
@@ -116,7 +119,10 @@ function initCharts() {
     .then(spec => safeEmbed("#chart3", spec))
     .catch(err => safeEmbed("#chart3", { error: String(err) }));
 
-  // ✅ Inline charts: filenames only
+  // Shared responsive sizing for inline specs
+  const RESPONSIVE = { width: "container", autosize: { type: "fit", contains: "padding" } };
+
+  // Charts 4–8 (inline specs pointing directly to data files)
   safeEmbed("#chart4", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": { "text": "Energy Bill Impact Calculator", "subtitle": "See how different household types are affected" },
@@ -137,28 +143,7 @@ function initCharts() {
         "mark": { "type": "area", "opacity": 0.6, "color": "#ff6b6b" },
         "encoding": {
           "x": { "field": "date", "type": "temporal", "title": "Date", "axis": { "format": "%b %y", "labelAngle": -45 } },
-          "y": { "field": "monthly_bill", "type": "quantitative", "title": "Monthly Cost (£)" },
-          "tooltip": [
-            { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Date" },
-            { "field": "monthly_bill", "title": "Bill (£)", "format": ".0f" }
-          ]
-        }
-      },
-      {
-        "transform": [{ "filter": "showSupport" }],
-        "mark": { "type": "area", "opacity": 0.35, "color": "#51cf66" },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "government_support", "type": "quantitative", "title": "Support (£)" },
-          "tooltip": [{ "field": "government_support", "title": "Support (£)", "format": ".0f" }]
-        }
-      },
-      {
-        "mark": { "type": "line", "strokeWidth": 3, "color": "darkblue" },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "net_bill", "type": "quantitative", "title": "Net Bill (£)" },
-          "tooltip": [{ "field": "net_bill", "title": "Net Bill (£)", "format": ".0f" }]
+          "y": { "field": "monthly_bill", "type": "quantitative", "title": "Monthly Cost (£)" }
         }
       }
     ],
@@ -175,18 +160,7 @@ function initCharts() {
     "encoding": {
       "x": { "field": "date", "type": "ordinal", "title": "Month", "axis": { "labelAngle": -90, "labelLimit": 110 } },
       "y": { "field": "category", "type": "nominal", "title": "Food Category" },
-      "color": {
-        "field": "inflation",
-        "type": "quantitative",
-        "scale": { "scheme": "redyellowgreen", "reverse": true, "domain": [-2, 25], "clamp": true },
-        "title": "Inflation %"
-      },
-      "tooltip": [
-        { "field": "category", "title": "Category" },
-        { "field": "date", "title": "Month" },
-        { "field": "inflation", "title": "Inflation", "format": ".1f" },
-        { "field": "affordability_impact", "title": "Impact Level" }
-      ]
+      "color": { "field": "inflation", "type": "quantitative", "title": "Inflation %" }
     },
     "config": BASE_VL_CONFIG
   });
@@ -197,37 +171,10 @@ function initCharts() {
     ...RESPONSIVE,
     "height": 450,
     "data": { "url": siteDataUrl("chart6_housing_crisis.json") },
-    "params": [
-      {
-        "name": "citySelect",
-        "value": "London",
-        "bind": { "input": "select", "options": ["London", "Manchester", "Birmingham", "Edinburgh", "Cardiff", "Leeds", "Bristol", "Newcastle"], "name": "Select City: " }
-      },
-      {
-        "name": "metricType",
-        "value": "both",
-        "bind": { "input": "radio", "options": ["both", "price_to_income", "rent_to_income", "mortgage_to_income"], "labels": ["All", "House Prices", "Rent", "Mortgage"], "name": "Show: " }
-      }
-    ],
-    "transform": [
-      { "filter": "datum.city == citySelect" },
-      { "fold": ["price_to_income", "rent_to_income", "mortgage_to_income"], "as": ["metric", "value"] },
-      { "filter": "metricType == 'both' || datum.metric == metricType" }
-    ],
-    "mark": { "type": "line", "strokeWidth": 3, "point": { "size": 80 } },
+    "mark": "line",
     "encoding": {
       "x": { "field": "year", "type": "ordinal", "title": "Year" },
-      "y": { "field": "value", "type": "quantitative", "title": "Ratio / Percentage" },
-      "color": { "field": "metric", "type": "nominal", "legend": { "title": "Metric" } },
-      "tooltip": [
-        { "field": "city", "title": "City" },
-        { "field": "year", "title": "Year" },
-        { "field": "metric", "title": "Metric" },
-        { "field": "value", "title": "Value", "format": ".2f" },
-        { "field": "house_price", "title": "Avg House Price", "format": "£,.0f" },
-        { "field": "annual_rent", "title": "Annual Rent", "format": "£,.0f" },
-        { "field": "median_income", "title": "Median Income", "format": "£,.0f" }
-      ]
+      "y": { "field": "price_to_income", "type": "quantitative", "title": "Ratio" }
     },
     "config": BASE_VL_CONFIG
   });
@@ -238,19 +185,11 @@ function initCharts() {
     ...RESPONSIVE,
     "height": 450,
     "data": { "url": siteDataUrl("chart7_g20_comparison.json") },
-    "params": [{ "name": "countryHighlight", "select": { "type": "point", "fields": ["country"] }, "bind": "legend" }],
-    "mark": { "type": "line", "strokeWidth": 2, "point": { "size": 20 } },
+    "mark": "line",
     "encoding": {
-      "x": { "field": "date", "type": "temporal", "title": "Date", "axis": { "format": "%b %Y", "labelAngle": -45 } },
-      "y": { "field": "inflation", "type": "quantitative", "title": "Inflation Rate (%)" },
-      "color": { "field": "country", "type": "nominal", "scale": { "scheme": "tableau10" } },
-      "opacity": { "condition": { "param": "countryHighlight", "value": 1 }, "value": 0.2 },
-      "size": { "condition": { "param": "countryHighlight", "value": 3 }, "value": 1 },
-      "tooltip": [
-        { "field": "country", "title": "Country" },
-        { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Date" },
-        { "field": "inflation", "title": "Inflation", "format": ".1f" }
-      ]
+      "x": { "field": "date", "type": "temporal", "axis": { "format": "%b %Y", "labelAngle": -45 } },
+      "y": { "field": "inflation", "type": "quantitative" },
+      "color": { "field": "country", "type": "nominal" }
     },
     "config": BASE_VL_CONFIG
   });
@@ -261,26 +200,11 @@ function initCharts() {
     ...RESPONSIVE,
     "height": 450,
     "data": { "url": siteDataUrl("chart8_scenarios_enhanced.json") },
-    "params": [
-      { "name": "scenarioSelect", "value": "Soft Landing", "bind": { "input": "select", "options": ["Soft Landing", "Stagflation", "Recession", "Second Wave Crisis"], "name": "Select Scenario: " } },
-      { "name": "showConfidence", "value": false, "bind": { "input": "checkbox", "name": "Show Confidence Bands " } }
-    ],
-    "transform": [{ "filter": "datum.scenario == scenarioSelect" }],
-    "layer": [
-      {
-        "transform": [{ "filter": "showConfidence" }],
-        "mark": { "type": "area", "opacity": 0.2, "color": "gray" },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal", "title": "Date" },
-          "y": { "field": "recession_probability", "type": "quantitative", "title": "Recession Risk (%)" },
-          "y2": { "value": 0 }
-        }
-      },
-      { "mark": { "type": "line", "strokeWidth": 3, "color": "#ff7f0e" }, "encoding": { "x": { "field": "date", "type": "temporal", "axis": { "format": "%b %Y", "labelAngle": -45 } }, "y": { "field": "inflation", "type": "quantitative", "title": "Inflation (%)" } } },
-      { "mark": { "type": "line", "strokeWidth": 3, "color": "#2ca02c" }, "encoding": { "x": { "field": "date", "type": "temporal" }, "y": { "field": "wage_growth", "type": "quantitative", "title": "Wage Growth (%)" } } },
-      { "mark": { "type": "line", "strokeWidth": 2, "strokeDash": [5, 5], "color": "#d62728" }, "encoding": { "x": { "field": "date", "type": "temporal" }, "y": { "field": "real_wage_growth", "type": "quantitative", "title": "Real Wage Growth (%)" } } }
-    ],
-    "resolve": { "scale": { "y": "independent" } },
+    "mark": "line",
+    "encoding": {
+      "x": { "field": "date", "type": "temporal", "axis": { "format": "%b %Y", "labelAngle": -45 } },
+      "y": { "field": "inflation", "type": "quantitative" }
+    },
     "config": BASE_VL_CONFIG
   });
 
