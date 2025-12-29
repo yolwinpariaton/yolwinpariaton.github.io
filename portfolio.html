@@ -168,21 +168,29 @@
         <section class="task">
           <h2>Task 7: Maps. Base maps and choropleths</h2>
           <p>
-            Two map-based visualisations: (1) a choropleth of Scotland population density and (2) a point map of major tourist attractions and landmarks in Wales.
+            Two interactive map visualisations: Scotland displays a scatter/coordinates map of major tourist attractions with annual visitor numbers, while Wales shows a choropleth map of population distribution by local authority.
           </p>
 
           <div class="charts-row">
             <div class="chart-wrapper">
-              <div id="map_scotland" class="vega-container map-container"></div>
+              <h3 style="text-align: center; margin-bottom: 15px; color: #2d3748;">Scotland: Tourist Attractions</h3>
+              <iframe src="graphs/scotland_map.html" 
+                      style="width: 100%; height: 600px; border: 2px solid #e2e8f0; border-radius: 8px;" 
+                      title="Scotland Tourist Attractions Map">
+              </iframe>
             </div>
 
             <div class="chart-wrapper">
-              <div id="map_wales" class="vega-container map-container"></div>
+              <h3 style="text-align: center; margin-bottom: 15px; color: #2d3748;">Wales: Population Distribution</h3>
+              <iframe src="graphs/wales_map.html" 
+                      style="width: 100%; height: 600px; border: 2px solid #e2e8f0; border-radius: 8px;" 
+                      title="Wales Population Choropleth Map">
+              </iframe>
             </div>
           </div>
 
           <p class="task-source">
-            Source: UK GeoJSON/TopoJSON boundaries (martinjc/UK-GeoJSON on GitHub) and author data inputs (Scotland density CSV; Wales locations list).
+            Source: Scotland tourist attractions data (author compilation) and Wales population by local authority (ONS estimates). GeoJSON boundaries from martinjc/UK-GeoJSON repository. Interactive maps created using Plotly with OpenStreetMap tiles.
           </p>
         </section>
 
