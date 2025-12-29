@@ -1,14 +1,14 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 450,
-  "height": 550,
+  "width": 400,
+  "height": 500,
   "title": {
     "text": "Wales",
     "anchor": "start",
-    "fontSize": 18,
+    "fontSize": 16,
     "subtitle": "Tourist Attractions & Landmarks",
     "subtitleFontStyle": "italic",
-    "subtitleFontSize": 12
+    "subtitleFontSize": 11
   },
   "projection": {
     "type": "mercator",
@@ -23,8 +23,8 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#e0e0e0",
-        "stroke": "#333",
+        "fill": "#ddd",
+        "stroke": "#666",
         "strokeWidth": 0.5
       },
       "encoding": {
@@ -61,7 +61,8 @@
           "scale": {"range": [200, 1200]},
           "legend": {
             "title": "Visitors (M)",
-            "orient": "bottom"
+            "orient": "bottom",
+            "direction": "horizontal"
           }
         },
         "color": {

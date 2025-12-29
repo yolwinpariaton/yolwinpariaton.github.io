@@ -1,14 +1,14 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 450,
-  "height": 550,
+  "width": 400,
+  "height": 500,
   "title": {
     "text": "Scotland",
     "anchor": "start",
-    "fontSize": 18,
+    "fontSize": 16,
     "subtitle": "Population Density (2021 Census)",
     "subtitleFontStyle": "italic",
-    "subtitleFontSize": 12
+    "subtitleFontSize": 11
   },
   "projection": {
     "type": "mercator",
@@ -33,7 +33,7 @@
   ],
   "mark": {
     "type": "geoshape",
-    "stroke": "#333",
+    "stroke": "#666",
     "strokeWidth": 0.5
   },
   "encoding": {
@@ -43,7 +43,8 @@
       "scale": {"type": "log", "scheme": "teals"},
       "legend": {
         "title": "Density (per km²)",
-        "orient": "bottom"
+        "orient": "bottom",
+        "direction": "horizontal"
       }
     },
     "tooltip": [
