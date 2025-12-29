@@ -22,64 +22,187 @@
     }
   ],
   "title": {
-    "text": "Six bread rolls price (white/brown)",
-    "subtitle": "Indexed (first observation = 100)",
+    "text": "Six Bread Rolls Price Evolution",
+    "subtitle": "Indexed price (first observation = 100) | White/Brown bread rolls",
     "anchor": "start",
-    "fontSize": 18,
-    "subtitleFontSize": 12
+    "fontSize": 20,
+    "subtitleFontSize": 13,
+    "color": "#2c3e50",
+    "subtitleColor": "#7f8c8d",
+    "offset": 20
   },
   "width": "container",
-  "height": 340,
-  "mark": {
-    "type": "line",
-    "point": true,
-    "tooltip": true
-  },
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "title": null,
-      "axis": {
-        "format": "%Y",
-        "labelAngle": 0
-      }
-    },
-    "y": {
-      "field": "index",
-      "type": "quantitative",
-      "title": "Price Index",
-      "scale": {
-        "zero": false
-      }
-    },
-    "color": {
-      "value": "#8C4A2F"
-    },
-    "tooltip": [
-      {
-        "field": "date",
-        "type": "temporal",
-        "format": "%b %Y",
-        "title": "Date"
+  "height": 360,
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.2,
+        "line": false
       },
-      {
-        "field": "price",
-        "type": "quantitative",
-        "format": ".3f",
-        "title": "Price"
-      },
-      {
-        "field": "index",
-        "type": "quantitative",
-        "format": ".1f",
-        "title": "Index"
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "index",
+          "type": "quantitative"
+        },
+        "y2": {
+          "datum": 100
+        },
+        "color": {
+          "value": "#D4A574"
+        }
       }
-    ]
-  },
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "format": "%b %Y",
+            "labelAngle": -45,
+            "labelFontSize": 11,
+            "labelColor": "#5a6c7d",
+            "gridOpacity": 0.3,
+            "domainColor": "#bdc3c7"
+          }
+        },
+        "y": {
+          "field": "index",
+          "type": "quantitative",
+          "title": "Price Index",
+          "scale": {
+            "zero": false
+          },
+          "axis": {
+            "labelFontSize": 11,
+            "labelColor": "#5a6c7d",
+            "titleFontSize": 13,
+            "titleColor": "#34495e",
+            "gridOpacity": 0.3,
+            "domainColor": "#bdc3c7"
+          }
+        },
+        "color": {
+          "value": "#8B6914"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 80
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "index",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "#CD853F"
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover",
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "format": "%B %Y",
+            "title": "Month"
+          },
+          {
+            "field": "price",
+            "type": "quantitative",
+            "format": "£.3f",
+            "title": "Actual Price"
+          },
+          {
+            "field": "index",
+            "type": "quantitative",
+            "format": ".2f",
+            "title": "Price Index"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [6, 4],
+        "strokeWidth": 2,
+        "opacity": 0.6
+      },
+      "encoding": {
+        "y": {
+          "datum": 100
+        },
+        "color": {
+          "value": "#7f8c8d"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -5,
+        "dy": -5,
+        "fontSize": 11,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "x": {
+          "aggregate": "max",
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "datum": 100
+        },
+        "text": {
+          "value": "Base = 100"
+        },
+        "color": {
+          "value": "#7f8c8d"
+        }
+      }
+    }
+  ],
+  "params": [
+    {
+      "name": "hover",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "nearest": true,
+        "fields": ["date"]
+      }
+    }
+  ],
   "config": {
     "view": {
       "stroke": "transparent"
-    }
+    },
+    "background": "#fafafa"
   }
 }

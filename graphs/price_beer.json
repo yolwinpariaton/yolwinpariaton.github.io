@@ -8,67 +8,238 @@
     {
       "calculate": "toDate(datum.dateISO)",
       "as": "date"
+    },
+    {
+      "window": [
+        {
+          "op": "mean",
+          "field": "price",
+          "as": "moving_avg"
+        }
+      ],
+      "frame": [-2, 2],
+      "sort": [{"field": "date"}]
     }
   ],
   "title": {
-    "text": "Draught bitter price (per pint)",
-    "subtitle": "Monthly price observations 1988-1990",
+    "text": "Draught Bitter Price Trends",
+    "subtitle": "Monthly price per pint (£) | 1988-1990 with 5-month moving average",
     "anchor": "start",
-    "fontSize": 18,
-    "subtitleFontSize": 12
+    "fontSize": 20,
+    "subtitleFontSize": 13,
+    "color": "#2c3e50",
+    "subtitleColor": "#7f8c8d",
+    "offset": 20
   },
   "width": "container",
-  "height": 340,
-  "mark": {
-    "type": "line",
-    "point": true,
-    "tooltip": true,
-    "strokeWidth": 2
-  },
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "title": null,
-      "axis": {
-        "format": "%Y",
-        "labelAngle": 0
-      }
-    },
-    "y": {
-      "field": "price",
-      "type": "quantitative",
-      "title": "Price (£)",
-      "scale": {
-        "zero": false
-      }
-    },
-    "color": {
-      "value": "#1F6F8B"
-    },
-    "tooltip": [
-      {
-        "field": "date",
-        "type": "temporal",
-        "format": "%b %Y",
-        "title": "Date"
+  "height": 360,
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.15,
+        "line": false
       },
-      {
-        "field": "price",
-        "type": "quantitative",
-        "format": ".3f",
-        "title": "Price"
-      },
-      {
-        "field": "item_name",
-        "type": "nominal",
-        "title": "Item"
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative",
+          "scale": {
+            "zero": false
+          }
+        },
+        "y2": {
+          "aggregate": "min",
+          "field": "price"
+        },
+        "color": {
+          "value": "#3498db"
+        }
       }
-    ]
-  },
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "format": "%b %Y",
+            "labelAngle": -45,
+            "labelFontSize": 11,
+            "labelColor": "#5a6c7d",
+            "gridOpacity": 0.3,
+            "domainColor": "#bdc3c7"
+          }
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative",
+          "title": "Price (£)",
+          "scale": {
+            "zero": false
+          },
+          "axis": {
+            "labelFontSize": 11,
+            "labelColor": "#5a6c7d",
+            "titleFontSize": 13,
+            "titleColor": "#34495e",
+            "gridOpacity": 0.3,
+            "domainColor": "#bdc3c7",
+            "format": "£.2f"
+          }
+        },
+        "color": {
+          "value": "#2980b9"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2,
+        "strokeDash": [8, 4],
+        "opacity": 0.7
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "moving_avg",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "#e74c3c"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 100
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "#3498db"
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover",
+            "value": 1
+          },
+          "value": 0.3
+        },
+        "size": {
+          "condition": {
+            "param": "hover",
+            "value": 200
+          },
+          "value": 60
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "format": "%B %Y",
+            "title": "Month"
+          },
+          {
+            "field": "price",
+            "type": "quantitative",
+            "format": "£.3f",
+            "title": "Price per Pint"
+          },
+          {
+            "field": "moving_avg",
+            "type": "quantitative",
+            "format": "£.3f",
+            "title": "5-month Average"
+          },
+          {
+            "field": "item_name",
+            "type": "nominal",
+            "title": "Product"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "max",
+              "field": "price",
+              "as": "max_price"
+            }
+          ]
+        },
+        {
+          "calculate": "'Peak: £' + format(datum.max_price, '.3f')",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "dy": -8,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#c0392b"
+      },
+      "encoding": {
+        "x": {
+          "aggregate": "argmax",
+          "field": "price",
+          "type": "temporal"
+        },
+        "y": {
+          "aggregate": "max",
+          "field": "price",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ],
+  "params": [
+    {
+      "name": "hover",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "nearest": true,
+        "fields": ["date"]
+      }
+    }
+  ],
   "config": {
     "view": {
       "stroke": "transparent"
-    }
+    },
+    "background": "#fafafa"
   }
 }

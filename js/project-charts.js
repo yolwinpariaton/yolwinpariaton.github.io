@@ -4,18 +4,13 @@
 // so charts always load from /data/...
 // ========================================
 
-// Cache-busting (optional; helps while iterating)
-const CACHE_BUST = `?v=${new Date().toISOString().slice(0, 10)}`; // daily
-
-// Always prefer serving data/specs from the same GitHub Pages domain.
-// This avoids CORS complexity and fixes relative paths cleanly.
+const CACHE_BUST = `?v=${new Date().toISOString().slice(0, 10)}`;
 const SITE_DATA_PATH = `${window.location.origin}/data/`;
 
 function siteDataUrl(file) {
   return `${SITE_DATA_PATH}${file}${CACHE_BUST}`;
 }
 
-// Consistent Vega-Lite configuration (applies across charts)
 const BASE_VL_CONFIG = {
   view: { stroke: "transparent" },
   background: "transparent",
@@ -30,7 +25,6 @@ const BASE_VL_CONFIG = {
   legend: { labelFontSize: 11, titleFontSize: 12 }
 };
 
-// Vega-Embed options
 const EMBED_OPTS = {
   actions: false,
   renderer: "svg",
@@ -38,9 +32,6 @@ const EMBED_OPTS = {
   config: BASE_VL_CONFIG
 };
 
-// -----------------------------
-// Safe embed: one failure will not break the rest
-// -----------------------------
 function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
   const el = document.querySelector(selector);
   if (!el) {
@@ -69,12 +60,6 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
   });
 }
 
-// -----------------------------
-// Fix relative URLs inside a Vega/Vega-Lite spec
-// - If spec has data.url like "chart1_inflation_advanced.json"
-//   rewrite to "https://<your-site>/data/chart1_inflation_advanced.json"
-// - Leaves absolute URLs unchanged (http(s), /..., data:..., etc.)
-// -----------------------------
 function isRelativeUrl(u) {
   return (
     typeof u === "string" &&
@@ -89,27 +74,18 @@ function isRelativeUrl(u) {
 function rewriteUrlsDeep(node) {
   if (!node || typeof node !== "object") return;
 
-  // If we find a { data: { url: "..." } } rewrite it
   if (node.data && typeof node.data === "object" && isRelativeUrl(node.data.url)) {
     node.data.url = `${SITE_DATA_PATH}${node.data.url}${CACHE_BUST}`;
   }
 
-  // Some specs may use lookup/data sources elsewhere; rewrite any plain "url" keys cautiously
-  // but only when they look like file names (relative) and the parent key suggests data.
   if (isRelativeUrl(node.url)) {
-    // Rewrite only if this object looks like a data source or a URL-bearing config
-    // (This is conservative but still fixes most common spec layouts.)
     node.url = `${SITE_DATA_PATH}${node.url}${CACHE_BUST}`;
   }
 
-  // Recurse through children
   for (const k of Object.keys(node)) {
     const v = node[k];
-    if (Array.isArray(v)) {
-      v.forEach(rewriteUrlsDeep);
-    } else if (v && typeof v === "object") {
-      rewriteUrlsDeep(v);
-    }
+    if (Array.isArray(v)) v.forEach(rewriteUrlsDeep);
+    else if (v && typeof v === "object") rewriteUrlsDeep(v);
   }
 }
 
@@ -122,64 +98,45 @@ async function loadAndFixSpec(file) {
 }
 
 function initCharts() {
-  // Shared responsive sizing for inline specs
   const RESPONSIVE = {
     width: "container",
     autosize: { type: "fit", contains: "padding" }
   };
 
-  // Charts 1–3: load spec JSON from /data and rewrite any relative data URLs
-  loadAndFixSpec("data/chart1_spec.json")
+  // ✅ Use filenames only (NO "data/" prefix)
+  loadAndFixSpec("chart1_spec.json")
     .then(spec => safeEmbed("#chart1", spec))
-    .catch(err => safeEmbed("#chart1", { "error": String(err) }));
+    .catch(err => safeEmbed("#chart1", { error: String(err) }));
 
-  loadAndFixSpec("data/chart2_spec.json")
+  loadAndFixSpec("chart2_spec.json")
     .then(spec => safeEmbed("#chart2", spec))
-    .catch(err => safeEmbed("#chart2", { "error": String(err) }));
+    .catch(err => safeEmbed("#chart2", { error: String(err) }));
 
-  loadAndFixSpec("data/chart3_spec.json")
+  loadAndFixSpec("chart3_spec.json")
     .then(spec => safeEmbed("#chart3", spec))
-    .catch(err => safeEmbed("#chart3", { "error": String(err) }));
+    .catch(err => safeEmbed("#chart3", { error: String(err) }));
 
-  // Chart 4: Energy Bill Impact Calculator
+  // ✅ Inline charts: filenames only
   safeEmbed("#chart4", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {
-      "text": "Energy Bill Impact Calculator",
-      "subtitle": "See how different household types are affected"
-    },
+    "title": { "text": "Energy Bill Impact Calculator", "subtitle": "See how different household types are affected" },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("data/chart4_energy_detailed.json") },
+    "data": { "url": siteDataUrl("chart4_energy_detailed.json") },
     "params": [
       {
         "name": "householdType",
         "value": "Medium House",
-        "bind": {
-          "input": "radio",
-          "options": ["Small Flat", "Medium House", "Large House", "Student Accommodation"],
-          "name": "Household Type: "
-        }
+        "bind": { "input": "radio", "options": ["Small Flat", "Medium House", "Large House", "Student Accommodation"], "name": "Household Type: " }
       },
-      {
-        "name": "showSupport",
-        "value": true,
-        "bind": { "input": "checkbox", "name": "Show Government Support " }
-      }
+      { "name": "showSupport", "value": true, "bind": { "input": "checkbox", "name": "Show Government Support " } }
     ],
-    "transform": [
-      { "filter": "datum.household_type == householdType" }
-    ],
+    "transform": [{ "filter": "datum.household_type == householdType" }],
     "layer": [
       {
         "mark": { "type": "area", "opacity": 0.6, "color": "#ff6b6b" },
         "encoding": {
-          "x": {
-            "field": "date",
-            "type": "temporal",
-            "title": "Date",
-            "axis": { "format": "%b %y", "labelAngle": -45 }
-          },
+          "x": { "field": "date", "type": "temporal", "title": "Date", "axis": { "format": "%b %y", "labelAngle": -45 } },
           "y": { "field": "monthly_bill", "type": "quantitative", "title": "Monthly Cost (£)" },
           "tooltip": [
             { "field": "date", "type": "temporal", "format": "%B %Y", "title": "Date" },
@@ -193,9 +150,7 @@ function initCharts() {
         "encoding": {
           "x": { "field": "date", "type": "temporal" },
           "y": { "field": "government_support", "type": "quantitative", "title": "Support (£)" },
-          "tooltip": [
-            { "field": "government_support", "title": "Support (£)", "format": ".0f" }
-          ]
+          "tooltip": [{ "field": "government_support", "title": "Support (£)", "format": ".0f" }]
         }
       },
       {
@@ -203,33 +158,22 @@ function initCharts() {
         "encoding": {
           "x": { "field": "date", "type": "temporal" },
           "y": { "field": "net_bill", "type": "quantitative", "title": "Net Bill (£)" },
-          "tooltip": [
-            { "field": "net_bill", "title": "Net Bill (£)", "format": ".0f" }
-          ]
+          "tooltip": [{ "field": "net_bill", "title": "Net Bill (£)", "format": ".0f" }]
         }
       }
     ],
     "config": BASE_VL_CONFIG
   });
 
-  // Chart 5: Food Price Heatmap
   safeEmbed("#chart5", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {
-      "text": "Food Category Inflation Heatmap",
-      "subtitle": "Monthly inflation rates by food category"
-    },
+    "title": { "text": "Food Category Inflation Heatmap", "subtitle": "Monthly inflation rates by food category" },
     ...RESPONSIVE,
     "height": 400,
-    "data": { "url": siteDataUrl("data/chart5_food_heatmap.json") },
+    "data": { "url": siteDataUrl("chart5_food_heatmap.json") },
     "mark": "rect",
     "encoding": {
-      "x": {
-        "field": "date",
-        "type": "ordinal",
-        "title": "Month",
-        "axis": { "labelAngle": -90, "labelLimit": 110 }
-      },
+      "x": { "field": "date", "type": "ordinal", "title": "Month", "axis": { "labelAngle": -90, "labelLimit": 110 } },
       "y": { "field": "category", "type": "nominal", "title": "Food Category" },
       "color": {
         "field": "inflation",
@@ -247,35 +191,22 @@ function initCharts() {
     "config": BASE_VL_CONFIG
   });
 
-  // Chart 6: Housing Affordability
   safeEmbed("#chart6", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {
-      "text": "Housing Affordability Crisis by City",
-      "subtitle": "Price-to-income and rent-to-income ratios"
-    },
+    "title": { "text": "Housing Affordability Crisis by City", "subtitle": "Price-to-income and rent-to-income ratios" },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("data/chart6_housing_crisis.json") },
+    "data": { "url": siteDataUrl("chart6_housing_crisis.json") },
     "params": [
       {
         "name": "citySelect",
         "value": "London",
-        "bind": {
-          "input": "select",
-          "options": ["London", "Manchester", "Birmingham", "Edinburgh", "Cardiff", "Leeds", "Bristol", "Newcastle"],
-          "name": "Select City: "
-        }
+        "bind": { "input": "select", "options": ["London", "Manchester", "Birmingham", "Edinburgh", "Cardiff", "Leeds", "Bristol", "Newcastle"], "name": "Select City: " }
       },
       {
         "name": "metricType",
         "value": "both",
-        "bind": {
-          "input": "radio",
-          "options": ["both", "price_to_income", "rent_to_income", "mortgage_to_income"],
-          "labels": ["All", "House Prices", "Rent", "Mortgage"],
-          "name": "Show: "
-        }
+        "bind": { "input": "radio", "options": ["both", "price_to_income", "rent_to_income", "mortgage_to_income"], "labels": ["All", "House Prices", "Rent", "Mortgage"], "name": "Show: " }
       }
     ],
     "transform": [
@@ -301,31 +232,16 @@ function initCharts() {
     "config": BASE_VL_CONFIG
   });
 
-  // Chart 7: International Comparison
   safeEmbed("#chart7", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {
-      "text": "G20 Countries: Inflation Crisis Comparison",
-      "subtitle": "Click on country names in legend to highlight"
-    },
+    "title": { "text": "G20 Countries: Inflation Crisis Comparison", "subtitle": "Click on country names in legend to highlight" },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("data/chart7_g20_comparison.json") },
-    "params": [
-      {
-        "name": "countryHighlight",
-        "select": { "type": "point", "fields": ["country"] },
-        "bind": "legend"
-      }
-    ],
+    "data": { "url": siteDataUrl("chart7_g20_comparison.json") },
+    "params": [{ "name": "countryHighlight", "select": { "type": "point", "fields": ["country"] }, "bind": "legend" }],
     "mark": { "type": "line", "strokeWidth": 2, "point": { "size": 20 } },
     "encoding": {
-      "x": {
-        "field": "date",
-        "type": "temporal",
-        "title": "Date",
-        "axis": { "format": "%b %Y", "labelAngle": -45 }
-      },
+      "x": { "field": "date", "type": "temporal", "title": "Date", "axis": { "format": "%b %Y", "labelAngle": -45 } },
       "y": { "field": "inflation", "type": "quantitative", "title": "Inflation Rate (%)" },
       "color": { "field": "country", "type": "nominal", "scale": { "scheme": "tableau10" } },
       "opacity": { "condition": { "param": "countryHighlight", "value": 1 }, "value": 0.2 },
@@ -339,35 +255,17 @@ function initCharts() {
     "config": BASE_VL_CONFIG
   });
 
-  // Chart 8: Scenario Explorer
   safeEmbed("#chart8", {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {
-      "text": "Economic Scenario Explorer 2025–2027",
-      "subtitle": "Explore different economic futures"
-    },
+    "title": { "text": "Economic Scenario Explorer 2025–2027", "subtitle": "Explore different economic futures" },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("data/chart8_scenarios_enhanced.json") },
+    "data": { "url": siteDataUrl("chart8_scenarios_enhanced.json") },
     "params": [
-      {
-        "name": "scenarioSelect",
-        "value": "Soft Landing",
-        "bind": {
-          "input": "select",
-          "options": ["Soft Landing", "Stagflation", "Recession", "Second Wave Crisis"],
-          "name": "Select Scenario: "
-        }
-      },
-      {
-        "name": "showConfidence",
-        "value": false,
-        "bind": { "input": "checkbox", "name": "Show Confidence Bands " }
-      }
+      { "name": "scenarioSelect", "value": "Soft Landing", "bind": { "input": "select", "options": ["Soft Landing", "Stagflation", "Recession", "Second Wave Crisis"], "name": "Select Scenario: " } },
+      { "name": "showConfidence", "value": false, "bind": { "input": "checkbox", "name": "Show Confidence Bands " } }
     ],
-    "transform": [
-      { "filter": "datum.scenario == scenarioSelect" }
-    ],
+    "transform": [{ "filter": "datum.scenario == scenarioSelect" }],
     "layer": [
       {
         "transform": [{ "filter": "showConfidence" }],
@@ -378,27 +276,9 @@ function initCharts() {
           "y2": { "value": 0 }
         }
       },
-      {
-        "mark": { "type": "line", "strokeWidth": 3, "color": "#ff7f0e" },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal", "axis": { "format": "%b %Y", "labelAngle": -45 } },
-          "y": { "field": "inflation", "type": "quantitative", "title": "Inflation (%)" }
-        }
-      },
-      {
-        "mark": { "type": "line", "strokeWidth": 3, "color": "#2ca02c" },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "wage_growth", "type": "quantitative", "title": "Wage Growth (%)" }
-        }
-      },
-      {
-        "mark": { "type": "line", "strokeWidth": 2, "strokeDash": [5, 5], "color": "#d62728" },
-        "encoding": {
-          "x": { "field": "date", "type": "temporal" },
-          "y": { "field": "real_wage_growth", "type": "quantitative", "title": "Real Wage Growth (%)" }
-        }
-      }
+      { "mark": { "type": "line", "strokeWidth": 3, "color": "#ff7f0e" }, "encoding": { "x": { "field": "date", "type": "temporal", "axis": { "format": "%b %Y", "labelAngle": -45 } }, "y": { "field": "inflation", "type": "quantitative", "title": "Inflation (%)" } } },
+      { "mark": { "type": "line", "strokeWidth": 3, "color": "#2ca02c" }, "encoding": { "x": { "field": "date", "type": "temporal" }, "y": { "field": "wage_growth", "type": "quantitative", "title": "Wage Growth (%)" } } },
+      { "mark": { "type": "line", "strokeWidth": 2, "strokeDash": [5, 5], "color": "#d62728" }, "encoding": { "x": { "field": "date", "type": "temporal" }, "y": { "field": "real_wage_growth", "type": "quantitative", "title": "Real Wage Growth (%)" } } }
     ],
     "resolve": { "scale": { "y": "independent" } },
     "config": BASE_VL_CONFIG
@@ -407,5 +287,4 @@ function initCharts() {
   console.log("✅ project-charts.js loaded and embed calls executed.");
 }
 
-// Run when everything (including deferred CDN scripts) is ready
 window.addEventListener("load", initCharts);
