@@ -178,7 +178,7 @@ async function safeEmbedWithFallbacksFromUrl(selector, urls, opts = {}) {
   return false;
 }
 
-// Special function for maps - minimal interference
+// Special function for maps - preserve all settings
 async function embedMap(selector, url) {
   const el = document.querySelector(selector);
   if (!el) return false;
@@ -186,13 +186,14 @@ async function embedMap(selector, url) {
   try {
     let spec = await getJson(url);
     
-    // Only ensure transparent background, don't modify anything else
-    spec.config = spec.config || {};
-    spec.config.view = spec.config.view || {};
-    spec.config.view.stroke = "transparent";
-    if (spec.background === null) spec.background = "transparent";
+    // Don't modify the spec at all - use it as-is
+    // Just ensure we have the right embed options for maps
+    const mapOptions = {
+      actions: false,
+      renderer: "svg"
+    };
     
-    await window.vegaEmbed(selector, spec, embedOptions);
+    await window.vegaEmbed(selector, spec, mapOptions);
     return true;
   } catch (err) {
     console.error(`Map embed failed for ${selector}`, err);
