@@ -1,23 +1,24 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 400,
+  "width": "container",
   "height": 550,
+  "autosize": {"type": "fit", "contains": "padding"},
   "view": {"stroke": null},
   "background": null,
   "title": {
     "text": "Wales",
     "anchor": "start",
-    "color": "black",
-    "fontSize": 16,
+    "color": "#2c3e50",
+    "fontSize": 18,
     "subtitle": "Tourist Attractions & Landmarks",
     "subtitleFontStyle": "italic",
-    "subtitleFontSize": 10,
-    "subtitleColor": "black"
+    "subtitleFontSize": 12,
+    "subtitleColor": "#7f8c8d"
   },
   "projection": {
     "type": "mercator",
     "center": [-3.8, 52.3],
-    "scale": 7500
+    "scale": 6500
   },
   "layer": [
     {
@@ -28,7 +29,7 @@
       "mark": {
         "type": "geoshape",
         "fill": "#e9e9e9",
-        "stroke": "#000",
+        "stroke": "#333",
         "strokeWidth": 0.5
       },
       "encoding": {
@@ -49,27 +50,44 @@
           {"name": "Llandudno", "lat": 53.3239, "lon": -3.8261, "visitors": 1.85, "type": "Resort"}
         ]
       },
-      "mark": {"type": "circle", "filled": true, "opacity": 0.8, "stroke": "white", "strokeWidth": 1},
+      "mark": {
+        "type": "circle",
+        "filled": true,
+        "opacity": 0.85,
+        "stroke": "white",
+        "strokeWidth": 1.5
+      },
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude": {"field": "lat", "type": "quantitative"},
         "size": {
           "field": "visitors",
           "type": "quantitative",
-          "scale": {"range": [100, 1000]},
-          "legend": {"title": "Visitors (M)", "orient": "bottom-right"}
+          "scale": {"range": [200, 1200]},
+          "legend": {
+            "title": "Visitors (M)",
+            "orient": "bottom-right",
+            "direction": "horizontal"
+          }
         },
         "color": {
           "field": "type",
           "type": "nominal",
           "scale": {"scheme": "category10"},
-          "legend": {"title": "Type", "orient": "top-right"}
+          "legend": {
+            "title": "Type",
+            "orient": "top-right"
+          }
         },
         "tooltip": [
           {"field": "name", "title": "Place"},
-          {"field": "visitors", "title": "Visitors (M)"}
+          {"field": "type", "title": "Type"},
+          {"field": "visitors", "title": "Visitors (M)", "format": ".2f"}
         ]
       }
     }
-  ]
+  ],
+  "config": {
+    "view": {"stroke": "transparent"}
+  }
 }
