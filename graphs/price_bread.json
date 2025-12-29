@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Six bread rolls: indexed lollipop + bubbles (distinct from beer).",
+  "description": "Bread: indexed lollipop + bubbles (distinct from beer).",
   "data": { "url": "data/price_bread.csv", "format": { "type": "csv" } },
 
   "transform": [
@@ -8,18 +8,10 @@
     { "calculate": "toNumber(datum.price)", "as": "price_num" },
 
     {
-      "window": [
-        { "op": "first_value", "field": "date", "as": "startDate" },
-        { "op": "last_value", "field": "date", "as": "endDate" },
-        { "op": "first_value", "field": "price_num", "as": "startPrice" },
-        { "op": "last_value", "field": "price_num", "as": "endPrice" }
-      ],
+      "window": [{ "op": "first_value", "field": "price_num", "as": "startPrice" }],
       "sort": [{ "field": "date", "order": "ascending" }],
       "frame": [null, null]
     },
-    { "calculate": "(datum.endPrice - datum.startPrice)", "as": "deltaAbs" },
-    { "calculate": "(datum.deltaAbs / datum.startPrice)", "as": "deltaPct" },
-
     { "calculate": "(datum.price_num / datum.startPrice) * 100", "as": "index_100" },
 
     {
@@ -32,21 +24,13 @@
   "params": [
     {
       "name": "hover",
-      "select": {
-        "type": "point",
-        "fields": ["date"],
-        "nearest": true,
-        "on": "mousemove",
-        "clear": "mouseout"
-      }
+      "select": { "type": "point", "fields": ["date"], "nearest": true, "on": "mousemove", "clear": "mouseout" }
     }
   ],
 
   "title": {
     "text": "Six bread rolls price (white/brown)",
-    "subtitle": {
-      "expr": "timeFormat(datum.startDate,'%b %Y') + ' → ' + timeFormat(datum.endDate,'%b %Y') + ' | ' + format(datum.startPrice,'.3f') + ' → ' + format(datum.endPrice,'.3f') + ' (' + (datum.deltaAbs>=0?'+':'') + format(datum.deltaAbs,'.3f') + ', ' + (datum.deltaPct>=0?'+':'') + format(datum.deltaPct*100,'.1f') + '%) | Index (start=100)'"
-    },
+    "subtitle": { "text": "Indexed (start=100). Lollipop + bubbles to highlight month-to-month variation." },
     "anchor": "start",
     "fontSize": 18,
     "subtitleFontSize": 12,
@@ -55,7 +39,6 @@
 
   "width": "container",
   "height": 340,
-  "padding": { "top": 8, "right": 18, "bottom": 10, "left": 10 },
 
   "layer": [
     {
@@ -81,17 +64,15 @@
           "field": "index_100",
           "type": "quantitative",
           "title": null,
-          "axis": { "format": ".0f", "grid": true, "gridOpacity": 0.10, "tickCount": 6 }
+          "axis": { "format": ".0f", "grid": true, "gridOpacity": 0.1, "tickCount": 6 }
         },
-        "size": { "field": "index_100", "type": "quantitative", "legend": null, "scale": { "range": [50, 320] } },
-        "color": { "value": "#8C4A2F" },
-        "tooltip": [
-          { "field": "item_name", "title": "Item" },
-          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
-          { "field": "price_num", "format": ".3f", "title": "Price" },
-          { "field": "index_100", "format": ".1f", "title": "Index" },
-          { "field": "ma6_index", "format": ".1f", "title": "6m avg (index)" }
-        ]
+        "size": {
+          "field": "index_100",
+          "type": "quantitative",
+          "legend": null,
+          "scale": { "range": [60, 320] }
+        },
+        "color": { "value": "#8C4A2F" }
       }
     },
 
@@ -105,12 +86,18 @@
     },
 
     {
-      "mark": { "type": "point", "filled": true, "size": 85 },
+      "mark": { "type": "point", "filled": true, "size": 90 },
       "encoding": {
         "x": { "field": "date", "type": "temporal" },
         "y": { "field": "index_100", "type": "quantitative" },
         "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
-        "color": { "value": "#8C4A2F" }
+        "color": { "value": "#8C4A2F" },
+        "tooltip": [
+          { "field": "item_name", "title": "Item" },
+          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
+          { "field": "price_num", "format": ".3f", "title": "Price" },
+          { "field": "index_100", "format": ".1f", "title": "Index" }
+        ]
       }
     },
 

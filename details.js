@@ -206,7 +206,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Task 1
   safeEmbedFromUrl("#vis1", "graphs/uk_unemployment_chart.json", { height: H_STD });
-  safeEmbedWithFallbacksFromUrl("#vis2", ["graphs/inflation_chart.json", "graphs/g7_inflation_chart.json"], { height: H_STD });
+  safeEmbedWithFallbacksFromUrl(
+    "#vis2",
+    ["graphs/inflation_chart.json", "graphs/g7_inflation_chart.json"],
+    { height: H_STD }
+  );
 
   // Task 2
   safeEmbedFromUrl("#vis3", "graphs/nigeria_chart.json", { height: H_STD });
@@ -249,16 +253,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const dataPath = `graphs/dashboard${i}.json`;
     try {
       const data = await getJson(dataPath);
-      const chartTitle = Array.isArray(data) && data.length && data[0].indicator ? String(data[0].indicator) : `Dashboard ${i}`;
+      const chartTitle =
+        Array.isArray(data) && data.length && data[0].indicator
+          ? String(data[0].indicator)
+          : `Dashboard ${i}`;
       await window.vegaEmbed(targetId, dashboardSpec(dataPath, chartTitle), embedOptions);
-    } catch (err) { console.error(err); }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   // ✅ Task 7: Maps (Fixed Embed Logic)
   safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
   safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
 
-  // Task 8 ✅ (ONLY MODIFIED SECTION: filenames)
+  // ✅ Task 8: Big Data (Bread + Beer) — consistent paths and IDs
   await safeEmbedFromUrl("#vis_bread", "graphs/price_bread.json", { height: H_STD });
   await safeEmbedFromUrl("#vis_beer", "graphs/price_beer.json", { height: H_STD });
 
