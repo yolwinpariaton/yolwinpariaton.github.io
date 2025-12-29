@@ -120,17 +120,6 @@ function patchTask4(spec) {
   return out;
 }
 
-/* Task 7: Map Specific Patch (Centering and Scaling) */
-function patchTask7_Maps(spec) {
-  const out = { ...spec };
-  if (out.title && out.title.text === "Scotland") {
-    out.projection = { "type": "mercator", "center": [-4.1, 57.8], "scale": 2800 };
-  } else if (out.title && out.title.text === "Wales") {
-    out.projection = { "type": "mercator", "center": [-3.8, 52.3], "scale": 6500 };
-  }
-  return out;
-}
-
 /* Normalize Vega-Lite: enforce responsive width + stable height */
 function normalizeVegaLite(spec, { height = 320 } = {}) {
   const out = { ...spec };
@@ -187,6 +176,28 @@ async function safeEmbedWithFallbacksFromUrl(selector, urls, opts = {}) {
     if (ok) return true;
   }
   return false;
+}
+
+// Special function for maps - minimal interference
+async function embedMap(selector, url) {
+  const el = document.querySelector(selector);
+  if (!el) return false;
+
+  try {
+    let spec = await getJson(url);
+    
+    // Only ensure transparent background, don't modify anything else
+    spec.config = spec.config || {};
+    spec.config.view = spec.config.view || {};
+    spec.config.view.stroke = "transparent";
+    if (spec.background === null) spec.background = "transparent";
+    
+    await window.vegaEmbed(selector, spec, embedOptions);
+    return true;
+  } catch (err) {
+    console.error(`Map embed failed for ${selector}`, err);
+    return false;
+  }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -252,9 +263,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (err) { console.error(err); }
   }
 
-  // Task 7
-  safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
-  safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
+  // Task 7 - FIXED: Use embedMap instead of safeEmbedFromUrl
+  embedMap("#map_scotland", "graphs/scotland_choropleth.json");
+  embedMap("#map_wales", "graphs/wales_coordinates.json");
 
   // Task 8 - Uses height 340 to match JSON specs
   safeEmbedFromUrl("#vis_bread", "graphs/price_bread.json", { height: 340 });

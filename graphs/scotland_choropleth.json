@@ -1,28 +1,23 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sct/lad.geojson",
-    "format": {"property": "features"}
-  },
-  "view": {"stroke": null},
-  "background": null,
-  "width": "container",
+  "width": 450,
   "height": 550,
-  "autosize": {"type": "fit", "contains": "padding"},
   "title": {
     "text": "Scotland",
     "anchor": "start",
-    "color": "#2c3e50",
     "fontSize": 18,
     "subtitle": "Population Density (2021 Census)",
     "subtitleFontStyle": "italic",
-    "subtitleFontSize": 12,
-    "subtitleColor": "#7f8c8d"
+    "subtitleFontSize": 12
   },
   "projection": {
     "type": "mercator",
     "center": [-4.1, 57.8],
     "scale": 2800
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sct/lad.geojson",
+    "format": {"property": "features"}
   },
   "transform": [
     {
@@ -48,17 +43,12 @@
       "scale": {"type": "log", "scheme": "teals"},
       "legend": {
         "title": "Density (per km²)",
-        "orient": "bottom-right",
-        "direction": "horizontal",
-        "gradientLength": 200
+        "orient": "bottom"
       }
     },
     "tooltip": [
       {"field": "properties.LAD13NM", "type": "nominal", "title": "Council"},
-      {"field": "Density", "type": "quantitative", "title": "Density (per km²)", "format": ".1f"}
+      {"field": "Density", "type": "quantitative", "title": "Density", "format": ".1f"}
     ]
-  },
-  "config": {
-    "view": {"stroke": "transparent"}
   }
 }
