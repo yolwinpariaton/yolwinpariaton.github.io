@@ -1,108 +1,74 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Draught bitter price: clean line + same-color moving average + hover. No shaded areas.",
-  "data": { "url": "data/price_beer.csv", "format": { "type": "csv" } },
-
+  "description": "Draught bitter price over time",
+  "data": {
+    "url": "data/price_beer.csv"
+  },
   "transform": [
-    { "calculate": "toDate(datum.dateISO)", "as": "date" },
-    { "calculate": "toNumber(datum.price)", "as": "price_num" },
-
     {
-      "window": [
-        { "op": "first_value", "field": "date", "as": "startDate" },
-        { "op": "last_value", "field": "date", "as": "endDate" },
-        { "op": "first_value", "field": "price_num", "as": "startPrice" },
-        { "op": "last_value", "field": "price_num", "as": "endPrice" }
-      ],
-      "sort": [{ "field": "date", "order": "ascending" }],
-      "frame": [null, null]
-    },
-    { "calculate": "(datum.endPrice - datum.startPrice)", "as": "deltaAbs" },
-    { "calculate": "(datum.deltaAbs / datum.startPrice)", "as": "deltaPct" },
-
-    {
-      "window": [{ "op": "mean", "field": "price_num", "as": "ma6" }],
-      "frame": [-5, 0],
-      "sort": [{ "field": "date", "order": "ascending" }]
+      "calculate": "toDate(datum.dateISO)",
+      "as": "date"
     }
   ],
-
-  "params": [
-    {
-      "name": "hover",
-      "select": { "type": "point", "fields": ["date"], "nearest": true, "on": "mousemove", "clear": "mouseout" }
-    }
-  ],
-
   "title": {
     "text": "Draught bitter price (per pint)",
-    "subtitle": "Feb 1988 → Mar 1990 | Price change and trend analysis",
+    "subtitle": "Monthly price observations 1988-1990",
     "anchor": "start",
     "fontSize": 18,
-    "subtitleFontSize": 12,
-    "offset": 12
+    "subtitleFontSize": 12
   },
-
   "width": "container",
   "height": 340,
-
-  "layer": [
-    {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.8 },
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal",
-          "title": null,
-          "axis": { "format": "%Y", "labelAngle": 0, "grid": false }
-        },
-        "y": {
-          "field": "price_num",
-          "type": "quantitative",
-          "title": null,
-          "axis": { "format": ".2f", "grid": true, "gridOpacity": 0.1, "tickCount": 6 }
-        },
-        "color": { "value": "#1F6F8B" }
+  "mark": {
+    "type": "line",
+    "point": true,
+    "tooltip": true,
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": null,
+      "axis": {
+        "format": "%Y",
+        "labelAngle": 0
       }
     },
-
-    {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.0, "strokeDash": [6, 4], "opacity": 0.9 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "ma6", "type": "quantitative" },
-        "color": { "value": "#1F6F8B" }
+    "y": {
+      "field": "price",
+      "type": "quantitative",
+      "title": "Price (£)",
+      "scale": {
+        "zero": false
       }
     },
-
-    {
-      "mark": { "type": "point", "filled": true, "size": 70 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "price_num", "type": "quantitative" },
-        "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
-        "color": { "value": "#1F6F8B" },
-        "tooltip": [
-          { "field": "item_name", "title": "Item" },
-          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
-          { "field": "price_num", "format": ".3f", "title": "Price" },
-          { "field": "ma6", "format": ".3f", "title": "6m avg" }
-        ]
-      }
+    "color": {
+      "value": "#1F6F8B"
     },
-
-    {
-      "transform": [{ "filter": { "param": "hover" } }],
-      "mark": { "type": "rule", "strokeWidth": 1 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "color": { "value": "#DADADA" }
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal",
+        "format": "%b %Y",
+        "title": "Date"
+      },
+      {
+        "field": "price",
+        "type": "quantitative",
+        "format": ".3f",
+        "title": "Price"
+      },
+      {
+        "field": "item_name",
+        "type": "nominal",
+        "title": "Item"
       }
-    }
-  ],
-
+    ]
+  },
   "config": {
-    "background": "transparent",
-    "view": { "stroke": "transparent" }
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }
