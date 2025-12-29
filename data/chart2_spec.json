@@ -8,7 +8,7 @@
   "height": 450,
   "autosize": { "type": "fit", "contains": "padding" },
 
-  "data": { "url": "chart2_wage_squeeze.json" },
+  "data": { "url": "graphs/chart2_wage_squeeze.json" },
 
   "params": [
     {

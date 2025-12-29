@@ -30,7 +30,7 @@
 
   "title": {
     "text": "Six bread rolls price (white/brown)",
-    "subtitle": { "text": "Indexed (start=100). Lollipop + bubbles to highlight variation." },
+    "subtitle": "Indexed (start=100). Lollipop + bubbles to highlight variation.",
     "anchor": "start",
     "fontSize": 18,
     "subtitleFontSize": 12,

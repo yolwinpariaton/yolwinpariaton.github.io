@@ -120,7 +120,7 @@ function patchTask4(spec) {
   return out;
 }
 
-/* ✅ Task 7: Map Specific Patch (Centering and Scaling) */
+/* Task 7: Map Specific Patch (Centering and Scaling) */
 function patchTask7_Maps(spec) {
   const out = { ...spec };
   if (out.title && out.title.text === "Scotland") {
@@ -256,9 +256,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   safeEmbedFromUrl("#map_scotland", "graphs/scotland_choropleth.json", { height: H_MAP, patchFn: patchTask7_Maps });
   safeEmbedFromUrl("#map_wales", "graphs/wales_coordinates.json", { height: H_MAP, patchFn: patchTask7_Maps });
 
-  // ✅ Task 8 (matches your repo: graphs/price_bread.json and graphs/price_beer.json)
-  safeEmbedFromUrl("#vis_bread", "graphs/price_bread.json", { height: H_STD });
-  safeEmbedFromUrl("#vis_beer", "graphs/price_beer.json", { height: H_STD });
+  // Task 8 - Uses height 340 to match JSON specs
+  safeEmbedFromUrl("#vis_bread", "graphs/price_bread.json", { height: 340 });
+  safeEmbedFromUrl("#vis_beer", "graphs/price_beer.json", { height: 340 });
 
   // Task 9
   safeEmbedFromUrl("#interactive1", "graphs/interactive_economy.json", { height: H_SM });

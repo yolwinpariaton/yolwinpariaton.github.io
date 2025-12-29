@@ -36,9 +36,7 @@
 
   "title": {
     "text": "Draught bitter price (per pint)",
-    "subtitle": {
-      "expr": "timeFormat(datum.startDate,'%b %Y') + ' → ' + timeFormat(datum.endDate,'%b %Y') + ' | ' + format(datum.startPrice,'.3f') + ' → ' + format(datum.endPrice,'.3f') + ' (' + (datum.deltaAbs>=0?'+':'') + format(datum.deltaAbs,'.3f') + ', ' + (datum.deltaPct>=0?'+':'') + format(datum.deltaPct*100,'.1f') + '%)'"
-    },
+    "subtitle": "Feb 1988 → Mar 1990 | Price change and trend analysis",
     "anchor": "start",
     "fontSize": 18,
     "subtitleFontSize": 12,
