@@ -4,14 +4,16 @@
     "text": "Regional Cost Variations Across UK",
     "subtitle": "Cost of living index and affordability by region"
   },
+
   "width": "container",
   "autosize": { "type": "fit", "contains": "padding" },
-  "height": 550,
+  "height": 420,
+  "padding": { "top": 6, "left": 10, "right": 10, "bottom": 6 },
 
   "projection": {
     "type": "mercator",
-    "center": [-2, 54.5],
-    "scale": 2300
+    "center": [-3, 54.7],
+    "scale": 1700
   },
 
   "layer": [
@@ -20,11 +22,12 @@
         "url": "https://vega.github.io/editor/data/world-110m.json",
         "format": { "type": "topojson", "feature": "countries" }
       },
+      "transform": [{ "filter": "datum.id == 826 || datum.id == 372" }],
       "mark": {
         "type": "geoshape",
-        "fill": "#f3f4f6",
-        "stroke": "#d1d5db",
-        "strokeWidth": 0.6
+        "fill": "#eef2ff",
+        "stroke": "#1f2937",
+        "strokeWidth": 0.9
       }
     },
 
@@ -33,21 +36,24 @@
         "url": "https://vega.github.io/editor/data/world-110m.json",
         "format": { "type": "topojson", "feature": "countries" }
       },
-      "transform": [{ "filter": "datum.id == 826" }],
+      "transform": [{ "filter": "datum.id == 372" }],
       "mark": {
         "type": "geoshape",
-        "fill": "#eef2ff",
-        "stroke": "#111827",
-        "strokeWidth": 1.2
+        "fill": "#f3f4f6",
+        "stroke": "#9ca3af",
+        "strokeWidth": 0.6
       }
     },
 
     {
       "data": { "url": "chart3_regional_detailed.json" },
-      "transform": [
-        { "calculate": "datum.population / 1000000", "as": "population_m" }
-      ],
-      "mark": { "type": "circle", "opacity": 0.85, "stroke": "#111827", "strokeWidth": 0.4 },
+      "transform": [{ "calculate": "datum.population / 1000000", "as": "population_m" }],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.78,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
@@ -55,14 +61,19 @@
         "size": {
           "field": "population_m",
           "type": "quantitative",
-          "scale": { "range": [120, 2200] },
-          "legend": { "title": "Population (millions)" }
+          "scale": { "range": [60, 950] },
+          "legend": {
+            "title": "Population (millions)",
+            "format": ".0f",
+            "symbolType": "circle",
+            "values": [2, 4, 6, 8]
+          }
         },
 
         "color": {
           "field": "cost_index",
           "type": "quantitative",
-          "scale": { "scheme": "reds" },
+          "scale": { "scheme": "reds", "domainMid": 110 },
           "legend": { "title": "Cost Index" }
         },
 
@@ -79,6 +90,9 @@
   ],
 
   "config": {
-    "view": { "stroke": "transparent" }
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "title": { "fontSize": 14, "subtitleFontSize": 12, "anchor": "start" },
+    "legend": { "labelFontSize": 11, "titleFontSize": 12 }
   }
 }
