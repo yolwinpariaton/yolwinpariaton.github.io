@@ -1,103 +1,85 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Bread: indexed lollipop + bubbles (distinct from beer). No shaded areas.",
-  "data": { "url": "data/price_bread.csv", "format": { "type": "csv" } },
-
+  "description": "Bread rolls price indexed to base 100",
+  "data": {
+    "url": "data/price_bread.csv"
+  },
   "transform": [
-    { "calculate": "toDate(datum.dateISO)", "as": "date" },
-    { "calculate": "toNumber(datum.price)", "as": "price_num" },
-
     {
-      "window": [{ "op": "first_value", "field": "price_num", "as": "startPrice" }],
-      "sort": [{ "field": "date", "order": "ascending" }],
-      "frame": [null, null]
+      "calculate": "toDate(datum.dateISO)",
+      "as": "date"
     },
-    { "calculate": "(datum.price_num / datum.startPrice) * 100", "as": "index_100" },
-
     {
-      "window": [{ "op": "mean", "field": "index_100", "as": "ma6_index" }],
-      "frame": [-5, 0],
-      "sort": [{ "field": "date", "order": "ascending" }]
+      "joinaggregate": [{
+        "op": "min",
+        "field": "price",
+        "as": "minPrice"
+      }]
+    },
+    {
+      "calculate": "(datum.price / datum.minPrice) * 100",
+      "as": "index"
     }
   ],
-
-  "params": [
-    {
-      "name": "hover",
-      "select": { "type": "point", "fields": ["date"], "nearest": true, "on": "mousemove", "clear": "mouseout" }
-    }
-  ],
-
   "title": {
     "text": "Six bread rolls price (white/brown)",
-    "subtitle": "Indexed (start=100). Lollipop + bubbles to highlight variation.",
+    "subtitle": "Indexed (first observation = 100)",
     "anchor": "start",
     "fontSize": 18,
-    "subtitleFontSize": 12,
-    "offset": 12
+    "subtitleFontSize": 12
   },
-
   "width": "container",
   "height": 340,
-
-  "layer": [
-    {
-      "mark": { "type": "rule", "strokeWidth": 1.4, "opacity": 0.9 },
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal",
-          "title": null,
-          "axis": { "format": "%Y", "labelAngle": 0, "grid": false }
-        },
-        "y": { "value": 100 },
-        "y2": { "field": "index_100", "type": "quantitative" },
-        "color": { "value": "#E8CFA8" }
+  "mark": {
+    "type": "line",
+    "point": true,
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": null,
+      "axis": {
+        "format": "%Y",
+        "labelAngle": 0
       }
     },
-
-    {
-      "mark": { "type": "point", "filled": true, "opacity": 0.95 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": {
-          "field": "index_100",
-          "type": "quantitative",
-          "title": null,
-          "axis": { "format": ".0f", "grid": true, "gridOpacity": 0.1, "tickCount": 6 }
-        },
-        "size": { "field": "index_100", "type": "quantitative", "legend": null, "scale": { "range": [60, 320] } },
-        "color": { "value": "#8C4A2F" },
-        "tooltip": [
-          { "field": "item_name", "title": "Item" },
-          { "field": "date", "type": "temporal", "format": "%b %Y", "title": "Month" },
-          { "field": "price_num", "format": ".3f", "title": "Price" },
-          { "field": "index_100", "format": ".1f", "title": "Index" }
-        ]
+    "y": {
+      "field": "index",
+      "type": "quantitative",
+      "title": "Price Index",
+      "scale": {
+        "zero": false
       }
     },
-
-    {
-      "mark": { "type": "line", "interpolate": "monotone", "strokeWidth": 2.1, "opacity": 0.85 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "ma6_index", "type": "quantitative" },
-        "color": { "value": "#D9A86C" }
-      }
+    "color": {
+      "value": "#8C4A2F"
     },
-
-    {
-      "transform": [{ "filter": { "param": "hover" } }],
-      "mark": { "type": "rule", "strokeWidth": 1 },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "color": { "value": "#DADADA" }
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal",
+        "format": "%b %Y",
+        "title": "Date"
+      },
+      {
+        "field": "price",
+        "type": "quantitative",
+        "format": ".3f",
+        "title": "Price"
+      },
+      {
+        "field": "index",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "Index"
       }
-    }
-  ],
-
+    ]
+  },
   "config": {
-    "background": "transparent",
-    "view": { "stroke": "transparent" }
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }
