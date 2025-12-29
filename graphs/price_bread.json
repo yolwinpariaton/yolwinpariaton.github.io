@@ -23,13 +23,10 @@
   ],
   "title": {
     "text": "Six Bread Rolls Price Evolution",
-    "subtitle": "Indexed price (first observation = 100) | White/Brown bread rolls",
+    "subtitle": "Indexed price (first observation = 100)",
     "anchor": "start",
-    "fontSize": 20,
-    "subtitleFontSize": 13,
-    "color": "#2c3e50",
-    "subtitleColor": "#7f8c8d",
-    "offset": 20
+    "fontSize": 18,
+    "subtitleFontSize": 12
   },
   "width": "container",
   "height": 360,
@@ -61,7 +58,11 @@
       "mark": {
         "type": "line",
         "strokeWidth": 3,
-        "interpolate": "monotone"
+        "point": {
+          "filled": true,
+          "size": 60
+        },
+        "tooltip": true
       },
       "encoding": {
         "x": {
@@ -70,11 +71,7 @@
           "title": null,
           "axis": {
             "format": "%b %Y",
-            "labelAngle": -45,
-            "labelFontSize": 11,
-            "labelColor": "#5a6c7d",
-            "gridOpacity": 0.3,
-            "domainColor": "#bdc3c7"
+            "labelAngle": -45
           }
         },
         "y": {
@@ -83,45 +80,10 @@
           "title": "Price Index",
           "scale": {
             "zero": false
-          },
-          "axis": {
-            "labelFontSize": 11,
-            "labelColor": "#5a6c7d",
-            "titleFontSize": 13,
-            "titleColor": "#34495e",
-            "gridOpacity": 0.3,
-            "domainColor": "#bdc3c7"
           }
         },
         "color": {
           "value": "#8B6914"
-        }
-      }
-    },
-    {
-      "mark": {
-        "type": "point",
-        "filled": true,
-        "size": 80
-      },
-      "encoding": {
-        "x": {
-          "field": "date",
-          "type": "temporal"
-        },
-        "y": {
-          "field": "index",
-          "type": "quantitative"
-        },
-        "color": {
-          "value": "#CD853F"
-        },
-        "opacity": {
-          "condition": {
-            "param": "hover",
-            "value": 1
-          },
-          "value": 0
         },
         "tooltip": [
           {
@@ -133,8 +95,8 @@
           {
             "field": "price",
             "type": "quantitative",
-            "format": "£.3f",
-            "title": "Actual Price"
+            "format": ".3f",
+            "title": "Price (£)"
           },
           {
             "field": "index",
@@ -148,9 +110,8 @@
     {
       "mark": {
         "type": "rule",
-        "strokeDash": [6, 4],
-        "strokeWidth": 2,
-        "opacity": 0.6
+        "strokeDash": [4, 4],
+        "strokeWidth": 1.5
       },
       "encoding": {
         "y": {
@@ -159,50 +120,12 @@
         "color": {
           "value": "#7f8c8d"
         }
-      }
-    },
-    {
-      "mark": {
-        "type": "text",
-        "align": "right",
-        "dx": -5,
-        "dy": -5,
-        "fontSize": 11,
-        "fontStyle": "italic"
-      },
-      "encoding": {
-        "x": {
-          "aggregate": "max",
-          "field": "date",
-          "type": "temporal"
-        },
-        "y": {
-          "datum": 100
-        },
-        "text": {
-          "value": "Base = 100"
-        },
-        "color": {
-          "value": "#7f8c8d"
-        }
-      }
-    }
-  ],
-  "params": [
-    {
-      "name": "hover",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "nearest": true,
-        "fields": ["date"]
       }
     }
   ],
   "config": {
     "view": {
       "stroke": "transparent"
-    },
-    "background": "#fafafa"
+    }
   }
 }
