@@ -1,17 +1,18 @@
 // ========================================
 // PROJECT CHARTS - UK COST OF LIVING CRISIS
-// Consistency + robustness improvements
+// Fix: rewrite relative data URLs inside spec JSON
+// so charts always load from /data/...
 // ========================================
 
-const GITHUB_USER = "yolwinpariaton";
-const GITHUB_REPO = "yolwinpariaton.github.io";
-const DATA_PATH = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/`;
+// Cache-busting (optional; helps while iterating)
+const CACHE_BUST = `?v=${new Date().toISOString().slice(0, 10)}`; // daily
 
-// Cache-busting (helps with GitHub raw/CDN caching while you iterate)
-const CACHE_BUST = `?v=${new Date().toISOString().slice(0, 10)}`; // daily version
+// Always prefer serving data/specs from the same GitHub Pages domain.
+// This avoids CORS complexity and fixes relative paths cleanly.
+const SITE_DATA_PATH = `${window.location.origin}/data/`;
 
-function dataUrl(file) {
-  return `${DATA_PATH}${file}${CACHE_BUST}`;
+function siteDataUrl(file) {
+  return `${SITE_DATA_PATH}${file}${CACHE_BUST}`;
 }
 
 // Consistent Vega-Lite configuration (applies across charts)
@@ -47,7 +48,6 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
     return Promise.resolve();
   }
 
-  // If CDN scripts haven't loaded yet, fail gracefully with a clear message.
   if (typeof vegaEmbed !== "function") {
     console.error("vegaEmbed is not available yet. Check script loading order/CDN.");
     el.innerHTML = `
@@ -69,23 +69,77 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
   });
 }
 
-// Prefer window 'load' to ensure deferred CDN scripts are definitely ready
-function initCharts() {
-  // Chart 1: Inflation (load from spec file)
-  safeEmbed("#chart1", dataUrl("chart1_spec.json"));
+// -----------------------------
+// Fix relative URLs inside a Vega/Vega-Lite spec
+// - If spec has data.url like "chart1_inflation_advanced.json"
+//   rewrite to "https://<your-site>/data/chart1_inflation_advanced.json"
+// - Leaves absolute URLs unchanged (http(s), /..., data:..., etc.)
+// -----------------------------
+function isRelativeUrl(u) {
+  return (
+    typeof u === "string" &&
+    u.length > 0 &&
+    !u.startsWith("http://") &&
+    !u.startsWith("https://") &&
+    !u.startsWith("/") &&
+    !u.startsWith("data:")
+  );
+}
 
+function rewriteUrlsDeep(node) {
+  if (!node || typeof node !== "object") return;
+
+  // If we find a { data: { url: "..." } } rewrite it
+  if (node.data && typeof node.data === "object" && isRelativeUrl(node.data.url)) {
+    node.data.url = `${SITE_DATA_PATH}${node.data.url}${CACHE_BUST}`;
+  }
+
+  // Some specs may use lookup/data sources elsewhere; rewrite any plain "url" keys cautiously
+  // but only when they look like file names (relative) and the parent key suggests data.
+  if (isRelativeUrl(node.url)) {
+    // Rewrite only if this object looks like a data source or a URL-bearing config
+    // (This is conservative but still fixes most common spec layouts.)
+    node.url = `${SITE_DATA_PATH}${node.url}${CACHE_BUST}`;
+  }
+
+  // Recurse through children
+  for (const k of Object.keys(node)) {
+    const v = node[k];
+    if (Array.isArray(v)) {
+      v.forEach(rewriteUrlsDeep);
+    } else if (v && typeof v === "object") {
+      rewriteUrlsDeep(v);
+    }
+  }
+}
+
+async function loadAndFixSpec(file) {
+  const res = await fetch(siteDataUrl(file), { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to fetch ${file}: HTTP ${res.status}`);
+  const spec = await res.json();
+  rewriteUrlsDeep(spec);
+  return spec;
+}
+
+function initCharts() {
   // Shared responsive sizing for inline specs
   const RESPONSIVE = {
     width: "container",
     autosize: { type: "fit", contains: "padding" }
   };
 
-  // Chart 2: Real Wages vs Inflation (load from spec file)
-  // IMPORTANT: This ensures your data/chart2_spec.json is actually used.
-  safeEmbed("#chart2", dataUrl("chart2_spec.json"));
+  // Charts 1–3: load spec JSON from /data and rewrite any relative data URLs
+  loadAndFixSpec("chart1_spec.json")
+    .then(spec => safeEmbed("#chart1", spec))
+    .catch(err => safeEmbed("#chart1", { "error": String(err) }));
 
-  // Chart 3: Regional Map (load from spec file)
-  safeEmbed("#chart3", dataUrl("chart3_spec.json"));
+  loadAndFixSpec("chart2_spec.json")
+    .then(spec => safeEmbed("#chart2", spec))
+    .catch(err => safeEmbed("#chart2", { "error": String(err) }));
+
+  loadAndFixSpec("chart3_spec.json")
+    .then(spec => safeEmbed("#chart3", spec))
+    .catch(err => safeEmbed("#chart3", { "error": String(err) }));
 
   // Chart 4: Energy Bill Impact Calculator
   safeEmbed("#chart4", {
@@ -96,7 +150,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": dataUrl("chart4_energy_detailed.json") },
+    "data": { "url": siteDataUrl("chart4_energy_detailed.json") },
     "params": [
       {
         "name": "householdType",
@@ -167,7 +221,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 400,
-    "data": { "url": dataUrl("chart5_food_heatmap.json") },
+    "data": { "url": siteDataUrl("chart5_food_heatmap.json") },
     "mark": "rect",
     "encoding": {
       "x": {
@@ -202,7 +256,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": dataUrl("chart6_housing_crisis.json") },
+    "data": { "url": siteDataUrl("chart6_housing_crisis.json") },
     "params": [
       {
         "name": "citySelect",
@@ -256,7 +310,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": dataUrl("chart7_g20_comparison.json") },
+    "data": { "url": siteDataUrl("chart7_g20_comparison.json") },
     "params": [
       {
         "name": "countryHighlight",
@@ -294,7 +348,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": dataUrl("chart8_scenarios_enhanced.json") },
+    "data": { "url": siteDataUrl("chart8_scenarios_enhanced.json") },
     "params": [
       {
         "name": "scenarioSelect",
