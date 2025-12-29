@@ -278,26 +278,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Task 10
   safeEmbedWithFallbacksFromUrl("#task10a", ["graphs/task10_histogram.json"], { height: H_SM });
 });
-
-// Task 7: Load Scotland and Wales maps
-document.addEventListener('DOMContentLoaded', function() {
-  // Load Scotland map
-  vegaEmbed('#scotland_map', 'graphs/scotland_map.json', {
-    actions: {
-      export: true,
-      source: false,
-      compiled: false,
-      editor: false
-    }
-  }).catch(console.error);
-  
-  // Load Wales map
-  vegaEmbed('#wales_map', 'graphs/wales_map.json', {
-    actions: {
-      export: true,
-      source: false,
-      compiled: false,
-      editor: false
-    }
-  }).catch(console.error);
-});
