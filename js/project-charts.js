@@ -79,7 +79,9 @@ function isRelativeDataUrl(u) {
     !u.startsWith("http://") &&
     !u.startsWith("https://") &&
     !u.startsWith("/") &&
-    !u.startsWith("data:")
+    !u.startsWith("data:") &&
+    // also treat "./file.json" and "../file.json" as relative
+    true
   );
 }
 
@@ -88,7 +90,10 @@ function rewriteDataUrlsDeep(node) {
 
   // rewrite { data: { url: "..." } }
   if (node.data && typeof node.data === "object" && isRelativeDataUrl(node.data.url)) {
-    node.data.url = siteDataUrl(node.data.url);
+    // normalize leading "./"
+    const raw = String(node.data.url);
+    const normalized = raw.startsWith("./") ? raw.slice(2) : raw;
+    node.data.url = siteDataUrl(normalized);
   }
 
   // recurse

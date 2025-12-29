@@ -1,112 +1,55 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "UK Cost of Living Crisis: Regional Impact Analysis",
-    "subtitle": "Bubble size = population, Color = cost index"
+    "text": "Regional Cost Variations Across UK",
+    "subtitle": "Cost of living index and affordability by region"
   },
-  "width": 750,
+  "width": "container",
+  "autosize": { "type": "fit", "contains": "padding" },
   "height": 550,
-  "projection": {
-    "type": "mercator",
-    "center": [
-      -2,
-      54
-    ],
-    "scale": 2500
-  },
+  "projection": { "type": "mercator" },
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/uk/lad.json",
-        "format": {
-          "type": "topojson",
-          "feature": "lad"
-        }
+        "url": "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson",
+        "format": { "type": "geojson" }
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#f0f0f0",
-        "stroke": "#999",
+        "fill": "#f3f4f6",
+        "stroke": "#d1d5db",
         "strokeWidth": 0.5
       }
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/data/chart3_regional_detailed.json"
+        "url": "chart3_regional_detailed.json"
       },
-      "mark": {
-        "type": "circle",
-        "opacity": 0.85,
-        "stroke": "white",
-        "strokeWidth": 2
-      },
+      "mark": { "type": "circle", "opacity": 0.8 },
       "encoding": {
-        "longitude": {
-          "field": "lon",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "lat",
-          "type": "quantitative"
-        },
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude": { "field": "lat", "type": "quantitative" },
         "size": {
           "field": "population",
           "type": "quantitative",
-          "scale": {
-            "range": [
-              200,
-              3000
-            ]
-          },
-          "title": "Population",
-          "legend": {
-            "format": ",.0f"
-          }
+          "scale": { "range": [100, 2000] },
+          "legend": { "title": "Population (millions)" }
         },
         "color": {
           "field": "cost_index",
           "type": "quantitative",
-          "scale": {
-            "scheme": "redyellowblue",
-            "reverse": true,
-            "domain": [
-              85,
-              145
-            ]
-          },
-          "title": "Cost Index"
+          "scale": { "scheme": "reds" },
+          "legend": { "title": "Cost Index" }
         },
         "tooltip": [
-          {
-            "field": "region",
-            "title": "Region"
-          },
-          {
-            "field": "cost_index",
-            "title": "Cost Index"
-          },
-          {
-            "field": "median_income",
-            "title": "Median Income",
-            "format": "\u00a3,.0f"
-          },
-          {
-            "field": "rent_to_income",
-            "title": "Rent/Income Ratio",
-            "format": ".0f%"
-          },
-          {
-            "field": "energy_burden",
-            "title": "Energy Burden",
-            "format": ".1f%"
-          },
-          {
-            "field": "population",
-            "title": "Population",
-            "format": ",.0f"
-          }
+          { "field": "region", "title": "Region" },
+          { "field": "cost_index", "title": "Cost Index", "format": ".1f" },
+          { "field": "rent_to_income", "title": "Rent/Income Ratio (%)", "format": ".0f" },
+          { "field": "energy_burden", "title": "Energy Burden (%)", "format": ".1f" },
+          { "field": "food_inflation", "title": "Food Inflation (%)", "format": ".1f" }
         ]
       }
     }
-  ]
+  ],
+  "config": { "view": { "stroke": "transparent" } }
 }
