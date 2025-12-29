@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Task 7: Load Scotland and Wales maps
 document.addEventListener('DOMContentLoaded', function() {
   // Load Scotland map
-  vegaEmbed('#scotland-map', 'graphs/scotland_map.json', {
+  vegaEmbed('#scotland_map', 'graphs/scotland_map.json', {
     actions: {
       export: true,
       source: false,
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }).catch(console.error);
   
   // Load Wales map
-  vegaEmbed('#wales-map', 'graphs/wales_map.json', {
+  vegaEmbed('#wales_map', 'graphs/wales_map.json', {
     actions: {
       export: true,
       source: false,
