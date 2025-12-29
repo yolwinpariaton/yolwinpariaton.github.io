@@ -129,7 +129,7 @@ function initCharts() {
   };
 
   // Charts 1–3: load spec JSON from /data and rewrite any relative data URLs
-  loadAndFixSpec("chart1_spec.json")
+  loadAndFixSpec("data/chart1_spec.json")
     .then(spec => safeEmbed("#chart1", spec))
     .catch(err => safeEmbed("#chart1", { "error": String(err) }));
 
@@ -137,7 +137,7 @@ function initCharts() {
     .then(spec => safeEmbed("#chart2", spec))
     .catch(err => safeEmbed("#chart2", { "error": String(err) }));
 
-  loadAndFixSpec("chart3_spec.json")
+  loadAndFixSpec("data/chart3_spec.json")
     .then(spec => safeEmbed("#chart3", spec))
     .catch(err => safeEmbed("#chart3", { "error": String(err) }));
 
@@ -150,7 +150,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("chart4_energy_detailed.json") },
+    "data": { "url": siteDataUrl("data/chart4_energy_detailed.json") },
     "params": [
       {
         "name": "householdType",
@@ -221,7 +221,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 400,
-    "data": { "url": siteDataUrl("chart5_food_heatmap.json") },
+    "data": { "url": siteDataUrl("data/chart5_food_heatmap.json") },
     "mark": "rect",
     "encoding": {
       "x": {
@@ -256,7 +256,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("chart6_housing_crisis.json") },
+    "data": { "url": siteDataUrl("data/chart6_housing_crisis.json") },
     "params": [
       {
         "name": "citySelect",
@@ -310,7 +310,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("chart7_g20_comparison.json") },
+    "data": { "url": siteDataUrl("data/chart7_g20_comparison.json") },
     "params": [
       {
         "name": "countryHighlight",
@@ -348,7 +348,7 @@ function initCharts() {
     },
     ...RESPONSIVE,
     "height": 450,
-    "data": { "url": siteDataUrl("chart8_scenarios_enhanced.json") },
+    "data": { "url": siteDataUrl("data/chart8_scenarios_enhanced.json") },
     "params": [
       {
         "name": "scenarioSelect",
