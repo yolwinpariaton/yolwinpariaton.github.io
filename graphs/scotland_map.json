@@ -3,57 +3,60 @@
   "title": {
     "text": "Tourist Attractions in Scotland",
     "fontSize": 18,
-    "font": "Arial",
-    "anchor": "start"
+    "font": "Arial"
   },
-  "width": 600,
-  "height": 500,
-  "data": {
-    "values": [
-      {"name": "Edinburgh Castle", "latitude": 55.9486, "longitude": -3.1999, "visitors_thousands": 2200, "type": "Historic"},
-      {"name": "Loch Ness", "latitude": 57.3229, "longitude": -4.4244, "visitors_thousands": 500, "type": "Natural"},
-      {"name": "Stirling Castle", "latitude": 56.1164, "longitude": -3.9486, "visitors_thousands": 650, "type": "Historic"},
-      {"name": "Glasgow Science Centre", "latitude": 55.8593, "longitude": -4.2943, "visitors_thousands": 450, "type": "Museum"},
-      {"name": "Isle of Skye", "latitude": 57.2736, "longitude": -6.2155, "visitors_thousands": 800, "type": "Natural"},
-      {"name": "St Andrews", "latitude": 56.3398, "longitude": -2.7967, "visitors_thousands": 300, "type": "Historic"},
-      {"name": "Ben Nevis", "latitude": 56.7969, "longitude": -5.0036, "visitors_thousands": 150, "type": "Natural"},
-      {"name": "Kelvingrove Museum", "latitude": 55.8689, "longitude": -4.2752, "visitors_thousands": 1500, "type": "Museum"},
-      {"name": "Rosslyn Chapel", "latitude": 55.8551, "longitude": -3.1594, "visitors_thousands": 180, "type": "Historic"},
-      {"name": "Glenfinnan Viaduct", "latitude": 56.8740, "longitude": -5.4321, "visitors_thousands": 400, "type": "Historic"}
-    ]
-  },
+  "width": 500,
+  "height": 600,
   "projection": {
     "type": "mercator",
-    "center": [-4, 57],
-    "scale": 2800
+    "center": [-4, 56.5],
+    "scale": 3000
   },
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-kingdom/uk-counties.json",
-        "format": {
-          "type": "topojson",
-          "feature": "GBR_adm2"
-        }
+        "values": [
+          {"type": "Sphere"}
+        ]
       },
-      "transform": [
-        {
-          "filter": "indexof(['Aberdeenshire', 'Angus', 'Argyll and Bute', 'City of Edinburgh', 'Clackmannanshire', 'Dumfries and Galloway', 'Dundee City', 'East Ayrshire', 'East Dunbartonshire', 'East Lothian', 'East Renfrewshire', 'Falkirk', 'Fife', 'Glasgow City', 'Highland', 'Inverclyde', 'Midlothian', 'Moray', 'North Ayrshire', 'North Lanarkshire', 'Orkney Islands', 'Perth and Kinross', 'Renfrewshire', 'Scottish Borders', 'Shetland Islands', 'South Ayrshire', 'South Lanarkshire', 'Stirling', 'West Dunbartonshire', 'West Lothian', 'Western Isles'], datum.properties.NAME_2) >= 0"
-        }
-      ],
       "mark": {
         "type": "geoshape",
         "fill": "#e8f4f8",
         "stroke": "#aad3df",
-        "strokeWidth": 0.5
+        "strokeWidth": 1
       }
     },
     {
+      "data": {
+        "graticule": true
+      },
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#ddd",
+        "strokeWidth": 0.5,
+        "filled": false
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"name": "Edinburgh Castle", "latitude": 55.9486, "longitude": -3.1999, "visitors_thousands": 2200, "type": "Historic"},
+          {"name": "Loch Ness", "latitude": 57.3229, "longitude": -4.4244, "visitors_thousands": 500, "type": "Natural"},
+          {"name": "Stirling Castle", "latitude": 56.1164, "longitude": -3.9486, "visitors_thousands": 650, "type": "Historic"},
+          {"name": "Glasgow Science Centre", "latitude": 55.8593, "longitude": -4.2943, "visitors_thousands": 450, "type": "Museum"},
+          {"name": "Isle of Skye", "latitude": 57.2736, "longitude": -6.2155, "visitors_thousands": 800, "type": "Natural"},
+          {"name": "St Andrews", "latitude": 56.3398, "longitude": -2.7967, "visitors_thousands": 300, "type": "Historic"},
+          {"name": "Ben Nevis", "latitude": 56.7969, "longitude": -5.0036, "visitors_thousands": 150, "type": "Natural"},
+          {"name": "Kelvingrove Museum", "latitude": 55.8689, "longitude": -4.2752, "visitors_thousands": 1500, "type": "Museum"},
+          {"name": "Rosslyn Chapel", "latitude": 55.8551, "longitude": -3.1594, "visitors_thousands": 180, "type": "Historic"},
+          {"name": "Glenfinnan Viaduct", "latitude": 56.8740, "longitude": -5.4321, "visitors_thousands": 400, "type": "Historic"}
+        ]
+      },
       "mark": {
         "type": "circle",
-        "opacity": 0.8,
+        "opacity": 0.85,
         "stroke": "#333",
-        "strokeWidth": 1
+        "strokeWidth": 1.5
       },
       "encoding": {
         "longitude": {
@@ -69,7 +72,7 @@
           "type": "quantitative",
           "scale": {
             "domain": [0, 2500],
-            "range": [50, 1000]
+            "range": [100, 1200]
           },
           "legend": {
             "title": "Annual Visitors (thousands)",
