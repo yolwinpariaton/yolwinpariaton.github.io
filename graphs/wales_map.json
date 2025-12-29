@@ -6,8 +6,8 @@
     "font": "Arial",
     "fontWeight": "bold"
   },
-  "width": 550,
-  "height": 650,
+  "width": "container",
+  "height": 600,
   "data": {
     "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
     "format": {
@@ -51,7 +51,8 @@
     }
   ],
   "projection": {
-    "type": "mercator"
+    "type": "mercator",
+    "fit": true
   },
   "mark": {
     "type": "geoshape",
@@ -69,10 +70,11 @@
       "legend": {
         "title": "Population (thousands)",
         "orient": "bottom-right",
-        "titleFontSize": 12,
-        "labelFontSize": 11,
+        "titleFontSize": 13,
+        "labelFontSize": 12,
         "gradientLength": 200,
-        "format": ","
+        "format": ",",
+        "offset": 10
       }
     },
     "tooltip": [
@@ -89,7 +91,12 @@
       }
     ]
   },
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
   "config": {
-    "view": {"stroke": null}
+    "view": {"stroke": null},
+    "padding": {"top": 20, "bottom": 100, "left": 10, "right": 10}
   }
 }

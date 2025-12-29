@@ -6,8 +6,8 @@
     "font": "Arial",
     "fontWeight": "bold"
   },
-  "width": 550,
-  "height": 650,
+  "width": "container",
+  "height": 600,
   "layer": [
     {
       "data": {
@@ -18,13 +18,14 @@
         }
       },
       "projection": {
-        "type": "mercator"
+        "type": "mercator",
+        "fit": true
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#e8f4f8",
-        "stroke": "#7cb5d0",
-        "strokeWidth": 0.8
+        "fill": "#e0f2f7",
+        "stroke": "#66b3cc",
+        "strokeWidth": 1
       }
     },
     {
@@ -43,7 +44,8 @@
         ]
       },
       "projection": {
-        "type": "mercator"
+        "type": "mercator",
+        "fit": true
       },
       "mark": {
         "type": "circle",
@@ -70,9 +72,10 @@
           "legend": {
             "title": "Annual Visitors (thousands)",
             "orient": "bottom-right",
-            "titleFontSize": 12,
-            "labelFontSize": 11,
-            "symbolSize": 150
+            "titleFontSize": 13,
+            "labelFontSize": 12,
+            "symbolSize": 180,
+            "offset": 10
           }
         },
         "color": {
@@ -85,10 +88,11 @@
           "legend": {
             "title": "Attraction Type",
             "orient": "bottom-right",
-            "titleFontSize": 12,
-            "labelFontSize": 11,
-            "symbolSize": 150,
-            "symbolType": "circle"
+            "titleFontSize": 13,
+            "labelFontSize": 12,
+            "symbolSize": 180,
+            "symbolType": "circle",
+            "offset": 10
           }
         },
         "tooltip": [
@@ -99,7 +103,12 @@
       }
     }
   ],
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
   "config": {
-    "view": {"stroke": null}
+    "view": {"stroke": null},
+    "padding": {"top": 20, "bottom": 100, "left": 10, "right": 10}
   }
 }

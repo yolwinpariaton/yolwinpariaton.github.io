@@ -263,9 +263,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (err) { console.error(err); }
   }
 
-  // Task 7 - FIXED: Use embedMap instead of safeEmbedFromUrl
-  embedMap("#map_scotland", "graphs/scotland_choropleth.json");
-  embedMap("#map_wales", "graphs/wales_coordinates.json");
+  // Task 7 - Maps with correct IDs and filenames
+  embedMap("#scotland-map", "graphs/scotland_map.json");
+  embedMap("#wales-map", "graphs/wales_map.json");
 
   // Task 8 - Uses height 340 to match JSON specs
   safeEmbedFromUrl("#vis_bread", "graphs/price_bread.json", { height: 340 });
