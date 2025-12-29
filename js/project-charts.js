@@ -133,7 +133,7 @@ function initCharts() {
     .then(spec => safeEmbed("#chart1", spec))
     .catch(err => safeEmbed("#chart1", { "error": String(err) }));
 
-  loadAndFixSpec("chart2_spec.json")
+  loadAndFixSpec("data/chart2_spec.json")
     .then(spec => safeEmbed("#chart2", spec))
     .catch(err => safeEmbed("#chart2", { "error": String(err) }));
 
