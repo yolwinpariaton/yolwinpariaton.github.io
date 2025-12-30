@@ -2,7 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 400,
   "height": 500,
-  "title": "Tourist Attractions in Scotland",
   "layer": [
     {
       "data": {
@@ -53,7 +52,7 @@
             "direction": "horizontal",
             "titleFontSize": 11,
             "labelFontSize": 10,
-            "titleAlign": "center",
+            "titleAnchor": "middle",
             "offset": 20
           }
         },
