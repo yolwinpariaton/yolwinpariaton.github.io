@@ -28,19 +28,16 @@
     });
   }
 
-  // 1) Prices vs pay (indexed) — clean version (no legend, no in-chart note, correct x-axis title)
+  // 1) Prices vs pay (indexed) — stable, clean, correct x-axis title, no legend, no in-chart note
   const vis1 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-
     "title": {
       "text": "Prices vs pay (indexed to 2019 = 100)",
       "subtitle": "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
     },
-
     "data": { "url": "data/vis1_prices_vs_pay.json" },
     "width": "container",
     "height": 360,
-
     "transform": [
       { "calculate": "toDate(datum.date)", "as": "d" },
       { "calculate": "toNumber(datum.value)", "as": "v" },
@@ -49,9 +46,7 @@
       { "calculate": "datum['Real earnings']", "as": "earnings" },
       { "calculate": "datum.prices - datum.earnings", "as": "gap" }
     ],
-
     "layer": [
-      // Baseline at 100
       {
         "mark": { "type": "rule" },
         "encoding": {
@@ -60,8 +55,6 @@
           "opacity": { "value": 0.35 }
         }
       },
-
-      // Gap shading (between earnings and prices)
       {
         "mark": { "type": "area", "opacity": 0.18 },
         "encoding": {
@@ -81,8 +74,6 @@
           "y2": { "field": "prices" }
         }
       },
-
-      // Prices line (tooltip carried here; no legend)
       {
         "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
         "encoding": {
@@ -97,8 +88,6 @@
           ]
         }
       },
-
-      // Earnings line
       {
         "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
         "encoding": {
@@ -108,7 +97,6 @@
         }
       }
     ],
-
     "config": {
       "legend": { "disable": true },
       "axis": { "labelFontSize": 12, "titleFontSize": 12 },
@@ -117,144 +105,23 @@
     }
   };
 
-  // 2) Food vs headline — polished (hover rule + hover points + end labels + cleaner axes)
+  // 2) Food vs headline
   const vis2 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-
-    "title": {
-      "text": "Food inflation vs headline inflation",
-      "subtitle": "UK annual rate (y/y). Hover to compare months precisely."
-    },
-
+    "title": { "text": "Food inflation vs headline (annual rate)" },
     "data": { "url": "data/vis2_food_vs_headline.json" },
-
     "width": "container",
-    "height": 360,
-
-    "transform": [
-      { "calculate": "toDate(datum.date)", "as": "d" },
-      { "calculate": "toNumber(datum.value)", "as": "v" }
-    ],
-
-    "params": [
-      {
-        "name": "hover",
-        "select": {
-          "type": "point",
-          "fields": ["d"],
-          "nearest": true,
-          "on": "mousemove",
-          "clear": "mouseout"
-        }
-      }
-    ],
-
+    "height": 320,
+    "mark": { "type": "line", "point": true },
     "encoding": {
-      "x": {
-        "field": "d",
-        "type": "temporal",
-        "title": "Date",
-        "axis": {
-          "format": "%b %Y",
-          "labelAngle": 0,
-          "tickCount": 8,
-          "grid": false
-        }
-      }
-    },
-
-    "layer": [
-      // Zero baseline
-      {
-        "mark": { "type": "rule" },
-        "encoding": {
-          "y": { "datum": 0 },
-          "color": { "value": "#666" },
-          "opacity": { "value": 0.25 }
-        }
-      },
-
-      // Main lines
-      {
-        "mark": { "type": "line", "strokeWidth": 3 },
-        "encoding": {
-          "y": {
-            "field": "v",
-            "type": "quantitative",
-            "title": "Annual inflation rate (%)",
-            "axis": { "tickCount": 7, "grid": true },
-            "scale": { "nice": true }
-          },
-          "color": {
-            "field": "series",
-            "type": "nominal",
-            "title": "",
-            "legend": {
-              "orient": "top",
-              "direction": "horizontal",
-              "symbolSize": 140,
-              "labelFontSize": 12
-            }
-          },
-          "opacity": {
-            "condition": { "param": "hover", "value": 1 },
-            "value": 0.85
-          },
-          "tooltip": [
-            { "field": "d", "type": "temporal", "title": "Month", "format": "%B %Y" },
-            { "field": "series", "type": "nominal", "title": "Series" },
-            { "field": "v", "type": "quantitative", "title": "Rate (y/y)", "format": ".1f" }
-          ]
-        }
-      },
-
-      // Hover points (only show on hover)
-      {
-        "transform": [{ "filter": { "param": "hover" } }],
-        "mark": { "type": "point", "filled": true, "size": 85 },
-        "encoding": {
-          "y": { "field": "v", "type": "quantitative" },
-          "color": { "field": "series", "type": "nominal", "legend": null }
-        }
-      },
-
-      // Vertical hover rule
-      {
-        "transform": [{ "filter": { "param": "hover" } }],
-        "mark": { "type": "rule", "color": "#444", "opacity": 0.25 },
-        "encoding": { "x": { "field": "d", "type": "temporal" } }
-      },
-
-      // End-of-line labels (latest value per series)
-      {
-        "transform": [
-          {
-            "window": [{ "op": "rank", "as": "r" }],
-            "sort": [{ "field": "d", "order": "descending" }],
-            "groupby": ["series"]
-          },
-          { "filter": "datum.r === 1" }
-        ],
-        "mark": { "type": "text", "align": "left", "dx": 8, "fontSize": 12 },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal" },
-          "y": { "field": "v", "type": "quantitative" },
-          "text": { "field": "series" },
-          "color": { "field": "series", "type": "nominal", "legend": null }
-        }
-      }
-    ],
-
-    "config": {
-      "view": { "stroke": null },
-      "axis": {
-        "labelFontSize": 12,
-        "titleFontSize": 12,
-        "gridColor": "#e6e6e6",
-        "domainColor": "#999",
-        "tickColor": "#999"
-      },
-      "title": { "fontSize": 17, "subtitleFontSize": 12, "subtitleColor": "#555" }
+      "x": { "field": "date", "type": "temporal", "title": "Date" },
+      "y": { "field": "value", "type": "quantitative", "title": "Percent" },
+      "color": { "field": "series", "type": "nominal", "title": "" },
+      "tooltip": [
+        { "field": "date", "type": "temporal" },
+        { "field": "series", "type": "nominal" },
+        { "field": "value", "type": "quantitative", "format": ".1f" }
+      ]
     }
   };
 
@@ -448,6 +315,7 @@
     }
   };
 
+  // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
   safeEmbed("#vis3", vis3);
