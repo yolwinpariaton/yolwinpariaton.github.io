@@ -1,102 +1,248 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Project | UK Cost of Living Crisis</title>
 
-  <!-- TODO: Replace/merge this HEAD section with the one from your index.html to match site-wide styling -->
+  <title>Project | UK Cost of Living Crisis</title>
+  <meta name="description" content="Project on the UK cost of living crisis: automated open data pipeline and eight interactive visualisations." />
+  <meta name="author" content="Yolwin Pariaton" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Vega stack (needed to render Vega-Lite charts in a static site) -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
+  <!-- Page-specific styles: keep minimal and aligned with your existing CSS -->
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; line-height: 1.5; }
-    main { max-width: 980px; margin: 0 auto; padding: 24px 16px 56px; }
-    .chart-card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 12px 6px; margin: 16px 0; }
-    .chart-title { font-weight: 600; margin: 0 0 6px; }
-    .meta { color: #4b5563; font-size: 0.95rem; }
-    footer { border-top: 1px solid #e5e7eb; padding: 18px 16px; }
+    /* Hero background override for project page (uses your existing hero layout classes) */
+    .hero--project {
+      background-image: url('images/living_cost.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+
+    /* Chart blocks: consistent spacing and accessible structure */
+    .project-block {
+      margin: 24px 0;
+    }
+
+    .chart-holder {
+      margin-top: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .chart-caption {
+      margin: 10px 0 0;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Ensure embedded charts don’t overflow on small screens */
+    .vega-embed {
+      width: 100%;
+      max-width: 100%;
+    }
   </style>
 </head>
 
 <body>
-  <!-- TODO: Paste your index.html HEADER here (same nav, branding, etc.) -->
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <main>
-    <h1>UK Cost of Living Crisis: Indicators Dashboard</h1>
-    <p class="meta">
-      Eight interactive visuals built from openly accessible UK official statistics. Data and code are designed for replication via a single Colab notebook.
-    </p>
+  <!-- Header replicated from index.html -->
+  <header class="site-header" id="top">
+    <nav class="nav" aria-label="Primary">
+      <div class="nav__brand">
+        <a class="nav__home" href="index.html">Yolwin Pariaton</a>
+      </div>
 
-    <section>
-<h2>Aims</h2>
-<p>
-The UK cost of living crisis is often discussed as a single phenomenon, but it is experienced through distinct channels:
-consumer prices, housing costs, energy bills, and transport. This project tracks those channels with a small, replicable
-set of indicators and asks: how have price pressures evolved, and to what extent has purchasing power (real wages) kept pace?
-</p>
+      <input class="nav__checkbox" type="checkbox" id="navToggleProject" />
+      <label class="nav__toggle" for="navToggleProject" aria-label="Toggle navigation">☰</label>
 
-<h2>Data</h2>
-<p>
-All data are open-access and sourced from official producers:
-(1) headline inflation (CPIH, series L55O) and (2) food inflation (CPI, series D7G8) from ONS Consumer Price Inflation time series (MM23);
-(3) owner occupiers’ housing costs (OOH) inflation from the ONS CPIH component (series L5P7, MM23);
-(4) real earnings from ONS Average Weekly Earnings time series (real terms total pay, series A3WX, EMP);
-(5) the Ofgem default tariff energy price cap levels (XLSX);
-(6) weekly road fuel pump prices from the Department for Energy Security and Net Zero (CSV);
-(7–8) private rent and house price inflation series from the ONS “Private rent and house prices, UK” bulletin chart downloads (CSV).
-</p>
-<p>
-The pipeline uses direct download links (CSV/XLSX) or, where necessary, structured extraction (e.g. HTML tables). Re-running the notebook refreshes the datasets and regenerates the files used by the website.
-</p>
+      <ul class="nav__menu">
+        <li><a class="nav__link" href="index.html">Home</a></li>
+        <li><a class="nav__link" href="project.html" aria-current="page">Project</a></li>
+        <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
+      </ul>
+    </nav>
 
-<h2>Tools &amp; Methods</h2>
-<p>
-The workflow is implemented in Python (pandas, numpy, requests). Each source is downloaded, cleaned into a tidy format, and saved twice:
-CSV for transparency and reuse, and JSON (records) for web visualisation. Real earnings are indexed to 2019=100 to make the time path interpretable.
-Visualisations are built with Vega-Lite (via vega-embed) and read the local JSON files in <code>/data</code>, keeping the GitHub Pages site static while still interactive (tooltips, responsive width).
-</p>
+    <!-- Project hero with living_cost.jpg background -->
+    <section class="hero hero--project" aria-label="Project intro">
+      <div class="hero__overlay"></div>
+      <div class="hero__center">
+        <h1 class="hero__title">UK Cost of Living Crisis</h1>
+        <p class="hero__subtitle">Automated open data pipeline and eight interactive indicators</p>
 
-<h2>Conclusions</h2>
-<p>
-The indicators show that “cost of living” is multi-dimensional: food and housing-related costs can remain salient even when headline inflation falls.
-Energy bills move in discrete steps around cap resets, while fuel prices are more volatile week-to-week. Comparing these costs with real earnings helps
-distinguish inflation relief from genuine living-standards recovery. Regional rent inflation varies materially across England, reinforcing that the crisis is not uniform across places.
-</p>
-<p>
-Extensions could add distributional analysis (e.g. by income decile), link rent pressures to housing supply measures, or incorporate policy variables (benefit uprating, energy support) to evaluate mitigation.
-</p>
-</section>
+        <div class="hero__social" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+          <a class="btn btn--ghost" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn--ghost" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </header>
 
-    <hr />
+  <main id="main">
+    <section class="white-space" aria-label="Project content">
+      <div class="container">
 
-    <section>
-      <h2>Visualisations (8)</h2>
+        <!-- Written analysis (<= 800 words) -->
+        <section class="task" aria-label="Project write-up">
+          <h2>Aims</h2>
+          <p>
+            The UK cost of living crisis is often discussed as a single phenomenon, but it is experienced through distinct channels:
+            consumer prices, housing costs, energy bills, and transport. This project tracks those channels with a small, replicable
+            set of indicators and asks: how have price pressures evolved, and to what extent has purchasing power (real wages) kept pace?
+          </p>
 
-      <div class="chart-card"><div id="vis1"></div></div>
-      <div class="chart-card"><div id="vis2"></div></div>
-      <div class="chart-card"><div id="vis3"></div></div>
-      <div class="chart-card"><div id="vis4"></div></div>
-      <div class="chart-card"><div id="vis5"></div></div>
-      <div class="chart-card"><div id="vis6"></div></div>
-      <div class="chart-card"><div id="vis7"></div></div>
-      <div class="chart-card"><div id="vis8"></div></div>
+          <h2>Data</h2>
+          <p>
+            All data are open-access and sourced from official producers: headline inflation (CPIH) and food inflation from ONS Consumer
+            Price Inflation time series; owner occupiers’ housing costs (OOH) inflation from the ONS CPIH component; real earnings from
+            ONS Average Weekly Earnings (real terms total pay); the Ofgem default tariff energy price cap levels; weekly road fuel pump prices
+            from the Department for Energy Security and Net Zero; and rent/house price inflation series from the ONS “Private rent and house prices, UK”
+            bulletin chart downloads. The pipeline downloads CSV/XLSX sources (and uses structured extraction only when needed), then regenerates the site-ready
+            CSV and JSON files under <code>/data</code>.
+          </p>
+
+          <h2>Tools &amp; Methods</h2>
+          <p>
+            The workflow is implemented in Python (pandas, numpy, requests). Each dataset is cleaned into a tidy format and saved twice:
+            CSV for transparency and reuse, and JSON (records) for web visualisation. Real earnings are indexed to 2019=100 for interpretability.
+            Visualisations use Vega-Lite (via vega-embed) and read local JSON files in <code>/data</code>, so the GitHub Pages site remains static
+            but interactive (tooltips and responsive width).
+          </p>
+
+          <h2>Conclusions</h2>
+          <p>
+            The indicators show that “cost of living” is multi-dimensional: food and housing-related costs can remain salient even when headline inflation falls.
+            Energy bills move in discrete steps around cap resets, while fuel prices are more volatile week-to-week. Comparing these costs with real earnings helps
+            distinguish inflation relief from genuine living-standards recovery. Regional rent inflation varies materially across England, reinforcing that the crisis is not uniform.
+            Extensions could add distributional analysis (e.g. by income decile) and policy variables (benefit uprating, energy support) to evaluate mitigation.
+          </p>
+        </section>
+
+        <!-- 8 blocks: analysis + chart (interleaved) -->
+        <section class="task" aria-label="Charts and interpretation">
+          <h2>Visualisations (8)</h2>
+
+          <div class="project-block">
+            <h3>1) Headline inflation (CPIH)</h3>
+            <p>
+              CPIH is the broadest commonly cited measure of consumer inflation. Tracking the annual rate provides the headline context for the crisis:
+              when CPIH accelerated, households faced pervasive price increases across goods and services.
+            </p>
+            <div class="chart-holder" id="vis1" aria-label="Chart 1: CPIH annual inflation"></div>
+            <p class="chart-caption">Source: ONS Consumer Price Inflation time series (CPIH annual rate). File: <code>data/chart1_cpih_annual_rate.json</code>.</p>
+          </div>
+
+          <div class="project-block">
+            <h3>2) Food inflation (CPI food)</h3>
+            <p>
+              Food is highly salient for living standards, especially for lower-income households. This chart isolates food inflation to show whether
+              essentials were disproportionately driving cost pressures.
+            </p>
+            <div class="chart-holder" id="vis2" aria-label="Chart 2: Food inflation"></div>
+            <p class="chart-caption">Source: ONS CPI food annual rate. File: <code>data/chart2_food_inflation.json</code>.</p>
+          </div>
+
+          <div class="project-block">
+            <h3>3) Owner occupiers’ housing costs (OOH)</h3>
+            <p>
+              Housing costs matter both for renters and owner occupiers. The OOH component in CPIH provides an additional lens on housing-related inflation
+              pressures facing households.
+            </p>
+            <div class="chart-holder" id="vis3" aria-label="Chart 3: OOH inflation"></div>
+            <p class="chart-caption">Source: ONS CPIH OOH component annual rate. File: <code>data/chart3_ooh_inflation.json</code>.</p>
+          </div>
+
+          <div class="project-block">
+            <h3>4) Real wages (indexed, 2019 = 100)</h3>
+            <p>
+              Cost pressures become a “crisis” when incomes do not keep pace. Indexing real earnings to 2019=100 makes it easy to see whether
+              households have recovered purchasing power relative to the pre-crisis baseline.
+            </p>
+            <div class="chart-holder" id="vis4" aria-label="Chart 4: Real wages index"></div>
+            <p class="chart-caption">Source: ONS Average Weekly Earnings (real terms total pay). File: <code>data/chart4_real_wages_index.json</code>.</p>
+          </div>
+
+          <div class="project-block">
+            <h3>5) Energy price cap (typical annual bill)</h3>
+            <p>
+              Energy costs were a defining feature of the crisis. The Ofgem price cap illustrates discrete step-changes at cap resets and helps explain
+              sharp shifts in household bills over time.
+            </p>
+            <div class="chart-holder" id="vis5" aria-label="Chart 5: Energy price cap"></div>
+            <p class="chart-caption">Source: Ofgem default tariff cap level. File: <code>data/chart5_energy_price_cap.json</code>.</p>
+          </div>
+
+          <div class="project-block">
+            <h3>6) Road fuel prices (weekly)</h3>
+            <p>
+              Transport costs affect commuting and goods distribution. Weekly fuel prices show higher-frequency volatility that can amplify household uncertainty,
+              even when inflation aggregates smooth over short-term swings.
+            </p>
+            <div class="chart-holder" id="vis6" aria-label="Chart 6: Road fuel prices"></div>
+            <p class="chart-caption">Source: DESNZ weekly road fuel prices. File: <code>data/chart6_road_fuel_prices.json</code>.</p>
+          </div>
+
+          <div class="project-block">
+            <h3>7) Regional rent inflation (latest month)</h3>
+            <p>
+              The crisis is uneven across places. This bar chart highlights variation in rent inflation across English regions, indicating different pressures in local
+              housing markets.
+            </p>
+            <div class="chart-holder" id="vis7" aria-label="Chart 7: Rent inflation by region"></div>
+            <p class="chart-caption">Source: ONS private rent bulletin chart download. File: <code>data/chart7_rent_inflation_regions.json</code>.</p>
+          </div>
+
+          <div class="project-block">
+            <h3>8) Rent inflation vs house price inflation</h3>
+            <p>
+              Comparing rent and house price inflation helps distinguish pressures faced by renters versus dynamics in asset markets. Divergence between the two
+              can suggest distributional consequences across tenure types.
+            </p>
+            <div class="chart-holder" id="vis8" aria-label="Chart 8: Rent vs house price inflation"></div>
+            <p class="chart-caption">Source: ONS private rent &amp; house prices bulletin chart download. File: <code>data/chart8_rent_vs_house_inflation.json</code>.</p>
+          </div>
+
+        </section>
+
+        <div class="back-top">
+          <a class="btn btn--flat" href="#top">Back to top</a>
+        </div>
+
+      </div>
     </section>
   </main>
 
-  <!-- TODO: Paste your index.html FOOTER here -->
+  <!-- Footer replicated from index.html -->
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container footer__grid footer__grid--centered">
+      <div>
+        <h3 class="footer__title">Contact</h3>
+        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+      </div>
 
-  <script>
-    const opts = { actions: false };
-    vegaEmbed('#vis1', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "CPIH annual inflation rate (UK)"}, "data": {"url": "data/chart1_cpih_annual_rate.json"}, "width": "container", "height": 300, "mark": {"type": "line", "point": true}, "encoding": {"x": {"field": "date", "type": "temporal", "title": "Date"}, "y": {"field": "value", "type": "quantitative", "title": "Percent"}, "tooltip": [{"field": "date", "type": "temporal"}, {"field": "value", "type": "quantitative"}]}}, opts);
-    vegaEmbed('#vis2', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "Food inflation (CPI) annual rate (UK)"}, "data": {"url": "data/chart2_food_inflation.json"}, "width": "container", "height": 300, "mark": {"type": "line", "point": true}, "encoding": {"x": {"field": "date", "type": "temporal", "title": "Date"}, "y": {"field": "value", "type": "quantitative", "title": "Percent"}, "tooltip": [{"field": "date", "type": "temporal"}, {"field": "value", "type": "quantitative"}]}}, opts);
-    vegaEmbed('#vis3', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "Owner occupiers\u2019 housing costs (OOH) inflation (CPIH component)"}, "data": {"url": "data/chart3_ooh_inflation.json"}, "width": "container", "height": 300, "mark": {"type": "line", "point": true}, "encoding": {"x": {"field": "date", "type": "temporal", "title": "Date"}, "y": {"field": "value", "type": "quantitative", "title": "Percent"}, "tooltip": [{"field": "date", "type": "temporal"}, {"field": "value", "type": "quantitative"}]}}, opts);
-    vegaEmbed('#vis4', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "Real wages (AWE total pay, real terms) indexed to 2019=100"}, "data": {"url": "data/chart4_real_wages_index.json"}, "width": "container", "height": 300, "mark": {"type": "line", "point": false}, "encoding": {"x": {"field": "date", "type": "temporal", "title": "Date"}, "y": {"field": "value", "type": "quantitative", "title": "Index (2019=100)"}, "tooltip": [{"field": "date", "type": "temporal"}, {"field": "value", "type": "quantitative"}]}}, opts);
-    vegaEmbed('#vis5', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "Energy price cap (typical annual dual-fuel bill, Great Britain)"}, "data": {"url": "data/chart5_energy_price_cap.json"}, "width": "container", "height": 260, "mark": {"type": "line", "point": true}, "encoding": {"x": {"field": "period", "type": "ordinal", "title": "Cap period"}, "y": {"field": "typical_annual_bill_gbp", "type": "quantitative", "title": "GBP per year"}, "tooltip": [{"field": "period"}, {"field": "typical_annual_bill_gbp", "type": "quantitative"}]}}, opts);
-    vegaEmbed('#vis6', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "Weekly road fuel pump prices (UK)"}, "data": {"url": "data/chart6_road_fuel_prices.json"}, "width": "container", "height": 300, "transform": [{"fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel", "pence_per_litre"]}], "mark": {"type": "line"}, "encoding": {"x": {"field": "date", "type": "temporal", "title": "Date"}, "y": {"field": "pence_per_litre", "type": "quantitative", "title": "Pence per litre"}, "color": {"field": "fuel", "type": "nominal", "title": "Fuel type"}, "tooltip": [{"field": "date", "type": "temporal"}, {"field": "fuel"}, {"field": "pence_per_litre", "type": "quantitative"}]}}, opts);
-    vegaEmbed('#vis7', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "Rent inflation by English region (latest month)"}, "data": {"url": "data/chart7_rent_inflation_regions.json"}, "width": "container", "height": 320, "mark": {"type": "bar"}, "encoding": {"y": {"field": "region", "type": "nominal", "sort": "-x", "title": ""}, "x": {"field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Annual rent inflation (%)"}, "tooltip": [{"field": "region"}, {"field": "rent_inflation_yoy_pct", "type": "quantitative"}]}}, opts);
-    vegaEmbed('#vis8', {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "title": {"text": "Rent vs house price inflation (UK)"}, "data": {"url": "data/chart8_rent_vs_house_inflation.json"}, "width": "container", "height": 300, "transform": [{"fold": ["rent_inflation_yoy_pct", "house_price_inflation_yoy_pct"], "as": ["series", "percent"]}], "mark": {"type": "line"}, "encoding": {"x": {"field": "date", "type": "temporal", "title": "Date"}, "y": {"field": "percent", "type": "quantitative", "title": "Annual inflation (%)"}, "color": {"field": "series", "type": "nominal", "title": ""}, "tooltip": [{"field": "date", "type": "temporal"}, {"field": "series"}, {"field": "percent", "type": "quantitative"}]}}, opts);
-  </script>
+      <div>
+        <h3 class="footer__title">Links</h3>
+        <p><a href="https://github.com/yolwinpariaton" target="_blank" rel="noopener">GitHub</a></p>
+        <p><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></p>
+      </div>
+
+      <div>
+        <h3 class="footer__title">About</h3>
+        <p>Built for the LSE Automated Data Visualisation Course.</p>
+        <p>© 2025 Yolwin Pariaton</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Load chart embedding code -->
+  <script src="js/project-charts.js"></script>
 </body>
 </html>
