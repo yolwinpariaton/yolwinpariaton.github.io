@@ -20,13 +20,23 @@
     "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
 
   function safeEmbed(selector, spec) {
-    const el = document.querySelector(selector);
-    if (!el) return;
-    vegaEmbed(selector, spec, opts).catch((err) => {
-      console.error("Vega embed error for", selector, err);
-      el.innerHTML = "<p>Chart failed to load. Check console and JSON paths.</p>";
-    });
-  }
+  const el = document.querySelector(selector);
+  if (!el) return;
+  vegaEmbed(selector, spec, opts).catch((err) => {
+    console.error("Vega embed error for", selector, err);
+
+    const msg =
+      (err && err.message) ? err.message :
+      (typeof err === "string" ? err : JSON.stringify(err));
+
+    el.innerHTML =
+      "<p><strong>Chart failed to load.</strong></p>" +
+      "<p style='font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap;'>" +
+      msg +
+      "</p>";
+  });
+}
+
 
   // 1) Prices vs pay (indexed) — improved + gap shading + robust field names
   const vis1 = {
