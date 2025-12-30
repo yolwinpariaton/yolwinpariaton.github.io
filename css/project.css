@@ -1,4 +1,6 @@
-/* Project-specific styles */
+/* css/project.css
+   Project-specific styles
+*/
 
 /* Landing-style hero with background image (like portfolio) */
 .hero--project{
@@ -77,41 +79,55 @@
   color: var(--navy);
 }
 
-/* Wrapper should not hide anything below the chart */
+/* =========================================================
+   Chart layout
+   - chart-wrapper: overall block (NO card styling here)
+   - chart-frame: ONLY the visualization gets the “card”
+   - source/note: outside the chart frame
+   ========================================================= */
+
 .chart-wrapper{
   width: 100%;
   max-width: 100%;
-  overflow-x: auto;
+  overflow: visible;              /* do not clip legends/titles */
+  margin: 18px 0 26px;
+}
+
+/* The “chart card” (applies ONLY to the visualization) */
+.chart-frame{
+  background: #fff;
+  border: 2px solid rgba(31, 55, 102, 0.18); /* subtle blue border */
+  border-radius: 18px;
+  padding: 18px 18px 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  overflow-x: auto;              /* allow horizontal scroll if needed */
   overflow-y: visible;
 }
 
-/* Chart container must reserve space and never overlap following text */
+/* Vega container should reserve space and not overlap text below */
 .vega-container{
   width: 100%;
   min-height: 280px;
   display: block;
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 0;
 }
 
+/* Meta text outside the visualization frame */
 .chart-source{
-  margin: 6px 0 0;
-  position: relative;
-  z-index: 2;
+  margin: 10px 0 0;
+  color: var(--text);
 }
 
 .chart-note{
   margin: 6px 0 0;
-  position: relative;
-  z-index: 2;
+  color: #555;
+  font-style: italic;
+  font-weight: 400;
 }
 
-/* ===== Vega-Embed hardening ===== */
+/* ===== Vega-Embed hardening (prevents “renders but invisible”) ===== */
 .vega-embed{
   width: 100%;
-  position: relative;
-  z-index: 0;
+  max-width: 100%;
 }
 
 .vega-embed,
@@ -123,11 +139,9 @@
 
 .vega-embed canvas,
 .vega-embed svg{
-  display: block;
-  position: relative;
-  z-index: 0;
+  display: block; /* avoid inline gaps/overflow quirks */
 }
-/* =============================== */
+/* ================================================================ */
 
 .chart-description{
   margin-top: 15px;
