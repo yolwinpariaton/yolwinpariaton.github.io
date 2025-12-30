@@ -4,39 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Project | UK Cost of Living Crisis</title>
-  <meta name="description" content="Project on the UK cost of living crisis: automated open data pipeline and eight interactive visualisations." />
+  <title>Project | Yolwin Pariaton</title>
+  <meta name="description" content="Project page: UK cost of living crisis. Eight interactive charts built with automated open data workflows." />
   <meta name="author" content="Yolwin Pariaton" />
 
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Vega stack -->
+  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <style>
-    .hero--project {
-      background-image: url('images/living_cost.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      position: relative;
+    /* Footnote styling for chart notes (not bold) */
+    .chart-note{
+      margin: 6px 0 0;
+      color: #555;
+      font-size: 0.95rem;
+      font-style: italic;
     }
-    .project-intro p { max-width: 75ch; }
-    .project-block { margin: 26px 0; }
-    .project-block h3 { margin-bottom: 6px; }
-    .chart-holder { margin-top: 12px; border-radius: 14px; overflow: hidden; }
-    .chart-caption { margin: 10px 0 0; font-size: 0.95rem; opacity: 0.9; }
-    .callout {
-      border-left: 4px solid rgba(0,0,0,0.15);
-      padding: 10px 14px;
-      margin: 12px 0;
-      background: rgba(0,0,0,0.03);
-      border-radius: 10px;
-    }
-    .callout strong { display:block; margin-bottom:4px; }
-    .vega-embed { width: 100%; max-width: 100%; }
   </style>
 </head>
 
@@ -59,16 +45,12 @@
       </ul>
     </nav>
 
-    <section class="hero hero--project" aria-label="Project intro">
+    <!-- Project hero (use living_cost.jpg as background) -->
+    <section class="hero hero--living" aria-label="Project intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
         <h1 class="hero__title">UK Cost of Living Crisis</h1>
-        <p class="hero__subtitle">Where did the pressure come from, who faced it, and has it eased?</p>
-
-        <div class="hero__social" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-          <a class="btn btn--ghost" href="https://github.com/yolwinpariaton" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn btn--ghost" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
+        <p class="hero__subtitle">Automated data pipeline and interactive visualisations</p>
       </div>
     </section>
   </header>
@@ -77,120 +59,131 @@
     <section class="white-space" aria-label="Project content">
       <div class="container">
 
-        <section class="task project-intro" aria-label="Project write-up">
+        <!-- Intro / write-up (keep within 800 words overall as you already planned) -->
+        <section class="task">
           <h2>Aims</h2>
           <p>
-            This project examines the UK cost of living crisis as a set of linked pressures rather than a single statistic.
-            The central question is: <strong>how did prices, bills, and housing costs evolve relative to real pay, and how uneven were housing pressures across places?</strong>
-            I operationalise the crisis via eight indicators covering consumer inflation, food prices, energy bills, fuel, housing costs, and real earnings.
+            This project investigates how the UK cost of living crisis unfolded through the interaction of inflation,
+            wages, energy costs, transport fuel, and housing pressures. The core question is whether living costs rose
+            faster than household resources, and how these pressures varied over time and geography.
           </p>
-
-          <div class="callout" role="note" aria-label="Key idea">
-            <strong>Key idea</strong>
-            Inflation falling back does not automatically mean the crisis has ended: price levels remain higher, energy bills may reset in steps, and housing markets are regional.
-          </div>
 
           <h2>Data</h2>
           <p>
-            All datasets are open access and documented in the accompanying notebook. Core sources include:
-            ONS Consumer Price Inflation time series (CPIH and CPI components), ONS Average Weekly Earnings (real terms),
-            ONS “Private rent and house prices, UK” chart downloads (regional and country rent inflation; rent vs house price inflation),
-            Ofgem default tariff price cap levels, and DESNZ weekly road fuel prices.
-            The notebook downloads raw CSV/XLSX, cleans them into tidy formats, saves cleaned CSVs, and writes JSON (records) for the site.
+            Data are sourced from open UK statistics (ONS) and public administrative releases. The workflow is designed
+            to be replicable: the repository stores cleaned CSV and JSON outputs in <code>/data</code>, generated by a
+            single notebook pipeline.
           </p>
 
           <h2>Tools &amp; Methods</h2>
           <p>
-            The pipeline is implemented in Python (requests, pandas, numpy). For replication, each dataset has a dedicated acquisition cell, a transparent cleaning step,
-            and a final “export” step that writes to <code>/data</code>.
-            Visualisations are implemented with Vega-Lite (Vega-Embed) for a static GitHub Pages site but with interactive features (tooltips, hover highlighting, and dropdown selection).
-            Maps use a stable TopoJSON boundary file (ONS UK TopoJSON) and are joined to the data by official codes.
+            Data processing is performed in Python (Google Colab) with automated downloads and cleaning steps. Visualisations
+            are produced using Vega-Lite and embedded as interactive charts, driven by JSON files committed to the repository.
           </p>
 
           <h2>Conclusions</h2>
           <p>
-            The evidence indicates a multi-channel crisis. Headline inflation provides the macro context, but food inflation and energy bills are key “felt” pressures.
-            Real pay dynamics clarify whether households are regaining purchasing power. Finally, housing costs are spatial: rent inflation differs substantially across regions,
-            implying uneven local affordability pressures. Further extensions could integrate distributional exposure (by income decile) and policy offsets (benefit uprating, energy support).
+            Across indicators, the evidence is consistent with a squeeze on purchasing power during the inflation surge, with
+            energy and housing costs acting as key accelerants. The patterns highlight the importance of both macro shocks and
+            place-based exposure to price pressures.
           </p>
         </section>
 
-        <section class="task" aria-label="Charts and interpretation">
-          <h2>Evidence and visualisations (8)</h2>
-
-          <div class="project-block">
-            <h3>1) Prices vs pay: CPIH and real earnings (indexed)</h3>
-            <p>
-              A core test of “cost of living” is whether pay keeps up with prices. This chart indexes CPIH and real earnings to a common baseline to show the relative path.
-            </p>
-            <div class="chart-holder" id="vis1"></div>
-            <p class="chart-caption">Data: ONS CPIH and ONS AWE real pay. File(s): <code>data/vis1_prices_vs_pay.json</code>.</p>
+        <!-- 1 -->
+        <section class="task">
+          <h2>1) Prices vs pay: CPIH and real earnings (indexed)</h2>
+          <p>
+            A core test of “cost of living” is whether pay keeps up with prices. This chart indexes CPIH and real earnings to a common baseline to show the relative path.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis1"></div>
+            <p class="chart-source">Data: ONS CPIH and ONS AWE real pay. File(s): data/vis1_prices_vs_pay.json.</p>
+            <p class="chart-note">Note: The y-axis is zoomed (98–114) rather than starting at zero to make differences between prices and pay visible.</p>
           </div>
+        </section>
 
-          <div class="project-block">
-            <h3>2) Food inflation vs headline inflation</h3>
-            <p>
-              Food is a necessity and tends to be regressive in budget share. Comparing food inflation to headline CPIH helps isolate whether essentials were driving pressure.
-            </p>
-            <div class="chart-holder" id="vis2"></div>
-            <p class="chart-caption">Data: ONS CPI food component and CPIH. File(s): <code>data/vis2_food_vs_headline.json</code>.</p>
+        <!-- 2 -->
+        <section class="task">
+          <h2>2) Food inflation vs headline inflation</h2>
+          <p>
+            Food is a high-salience component of household budgets. This chart compares food inflation with headline inflation over time.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis2"></div>
+            <p class="chart-source">File(s): data/vis2_food_vs_headline.json.</p>
           </div>
+        </section>
 
-          <div class="project-block">
-            <h3>3) Energy bills: Ofgem price cap step changes</h3>
-            <p>
-              Energy costs changed in discrete jumps around cap resets. The step pattern matters: households experience sudden bill increases rather than smooth inflation.
-            </p>
-            <div class="chart-holder" id="vis3"></div>
-            <p class="chart-caption">Data: Ofgem default tariff cap. File(s): <code>data/vis3_energy_cap.json</code>.</p>
+        <!-- 3 -->
+        <section class="task">
+          <h2>3) Energy price cap (typical annual bill)</h2>
+          <p>
+            Energy bills were a major driver of the crisis. The energy price cap indicates typical annual costs faced by households.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis3"></div>
+            <p class="chart-source">File(s): data/vis3_energy_cap.json.</p>
           </div>
+        </section>
 
-          <div class="project-block">
-            <h3>4) Transport: weekly road fuel prices</h3>
-            <p>
-              Fuel prices are volatile and influence both commuting costs and goods distribution. Weekly data highlights short-term variation that monthly CPI may smooth out.
-            </p>
-            <div class="chart-holder" id="vis4"></div>
-            <p class="chart-caption">Data: DESNZ weekly pump prices. File(s): <code>data/vis4_fuel_weekly.json</code>.</p>
+        <!-- 4 -->
+        <section class="task">
+          <h2>4) Weekly fuel prices</h2>
+          <p>
+            Transport costs rose sharply during the post-pandemic recovery and global energy shock. Weekly fuel prices show the timing of these peaks.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis4"></div>
+            <p class="chart-source">File(s): data/vis4_fuel_weekly.json.</p>
           </div>
+        </section>
 
-          <div class="project-block">
-            <h3>5) Housing pressure: rents vs house prices (annual inflation)</h3>
-            <p>
-              Housing is both a cost (rent) and an asset market (house prices). Divergence between rent inflation and house price inflation can signal distributional impacts across tenure.
-            </p>
-            <div class="chart-holder" id="vis5"></div>
-            <p class="chart-caption">Data: ONS private rent and house prices bulletin downloads. File(s): <code>data/vis5_rent_vs_house.json</code>.</p>
+        <!-- 5 -->
+        <section class="task">
+          <h2>5) Rent vs house price inflation</h2>
+          <p>
+            Housing costs are persistent and unevenly distributed. This chart compares rent inflation with house price inflation.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis5"></div>
+            <p class="chart-source">File(s): data/vis5_rent_vs_house.json.</p>
           </div>
+        </section>
 
-          <div class="project-block">
-            <h3>6) Map: rent inflation across English regions (latest)</h3>
-            <p>
-              The crisis is spatial. This choropleth maps the latest regional rent inflation, revealing where affordability pressures are intensifying most rapidly.
-              Hover to see exact values.
-            </p>
-            <div class="chart-holder" id="vis6"></div>
-            <p class="chart-caption">Data: ONS regional rent inflation. Boundaries: ONS UK TopoJSON regions layer. File(s): <code>data/vis6_rent_map_regions.json</code>.</p>
+        <!-- 6 -->
+        <section class="task">
+          <h2>6) Map: Rent inflation across English regions</h2>
+          <p>
+            The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis6"></div>
+            <p class="chart-source">File(s): data/vis6_rent_map_regions.json.</p>
           </div>
+        </section>
 
-          <div class="project-block">
-            <h3>7) Interactive trend: choose a region and track rent inflation over time</h3>
-            <p>
-              Cross-sections can be misleading if regions moved differently over the cycle. Use the dropdown to select a region and compare it to the England average.
-            </p>
-            <div class="chart-holder" id="vis7"></div>
-            <p class="chart-caption">Data: ONS regional rent inflation time series. File(s): <code>data/vis7_rent_trend_regions.json</code>.</p>
+        <!-- 7 -->
+        <section class="task">
+          <h2>7) Rent inflation over time (interactive)</h2>
+          <p>
+            Use the selector to examine how rent inflation evolved across regions compared with England overall.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis7"></div>
+            <p class="chart-source">File(s): data/vis7_rent_trend_regions.json.</p>
           </div>
+        </section>
 
-          <div class="project-block">
-            <h3>8) Map: rent inflation across UK countries (latest available)</h3>
-            <p>
-              Devolution matters for housing and support policies. This map compares rent inflation in England, Wales, Scotland and Northern Ireland (latest available month for each).
-            </p>
-            <div class="chart-holder" id="vis8"></div>
-            <p class="chart-caption">Data: ONS UK country rent inflation. Boundaries: ONS UK TopoJSON countries layer. File(s): <code>data/vis8_rent_map_countries.json</code>.</p>
+        <!-- 8 -->
+        <section class="task">
+          <h2>8) Map: Rent inflation across UK countries</h2>
+          <p>
+            This map compares rent inflation across the four nations of the UK.
+          </p>
+          <div class="chart-wrapper">
+            <div id="vis8"></div>
+            <p class="chart-source">File(s): data/vis8_rent_map_countries.json.</p>
           </div>
-
         </section>
 
         <div class="back-top">
@@ -222,7 +215,7 @@
     </div>
   </footer>
 
-  <script src="js/project-charts.js?v=2025-01"></script>
-
+  <!-- Load your chart specs -->
+  <script src="js/project-charts.js?v=2025-02"></script>
 </body>
 </html>
