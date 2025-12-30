@@ -1,65 +1,62 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 700,
   "title": {
     "text": "Population by Local Authority in Wales",
     "fontSize": 20,
-    "font": "Arial",
-    "fontWeight": "bold"
+    "anchor": "middle",
+    "offset": 10
   },
-  "width": "container",
-  "height": 600,
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
-    "format": {
-      "type": "topojson",
-      "feature": "lad"
-    }
-  },
-  "transform": [
-    {
-      "lookup": "properties.LAD13CD",
-      "from": {
-        "data": {
-          "values": [
-            {"area_code": "W06000001", "population": 70, "local_authority": "Isle of Anglesey"},
-            {"area_code": "W06000002", "population": 125, "local_authority": "Gwynedd"},
-            {"area_code": "W06000003", "population": 118, "local_authority": "Conwy"},
-            {"area_code": "W06000004", "population": 95, "local_authority": "Denbighshire"},
-            {"area_code": "W06000005", "population": 156, "local_authority": "Flintshire"},
-            {"area_code": "W06000006", "population": 136, "local_authority": "Wrexham"},
-            {"area_code": "W06000008", "population": 71, "local_authority": "Ceredigion"},
-            {"area_code": "W06000009", "population": 126, "local_authority": "Pembrokeshire"},
-            {"area_code": "W06000010", "population": 188, "local_authority": "Carmarthenshire"},
-            {"area_code": "W06000011", "population": 246, "local_authority": "Swansea"},
-            {"area_code": "W06000012", "population": 144, "local_authority": "Neath Port Talbot"},
-            {"area_code": "W06000013", "population": 147, "local_authority": "Bridgend"},
-            {"area_code": "W06000014", "population": 135, "local_authority": "Vale of Glamorgan"},
-            {"area_code": "W06000015", "population": 362, "local_authority": "Cardiff"},
-            {"area_code": "W06000016", "population": 241, "local_authority": "Rhondda Cynon Taf"},
-            {"area_code": "W06000018", "population": 176, "local_authority": "Caerphilly"},
-            {"area_code": "W06000019", "population": 70, "local_authority": "Blaenau Gwent"},
-            {"area_code": "W06000020", "population": 94, "local_authority": "Torfaen"},
-            {"area_code": "W06000021", "population": 95, "local_authority": "Monmouthshire"},
-            {"area_code": "W06000022", "population": 159, "local_authority": "Newport"},
-            {"area_code": "W06000023", "population": 133, "local_authority": "Powys"},
-            {"area_code": "W06000024", "population": 60, "local_authority": "Merthyr Tydfil"}
-          ]
-        },
-        "key": "area_code",
-        "fields": ["population", "local_authority"]
-      }
-    }
-  ],
-  "projection": {
-    "type": "mercator",
-    "fit": true
+    "values": [
+      {"local_authority": "Cardiff", "population": 362},
+      {"local_authority": "Swansea", "population": 246},
+      {"local_authority": "Rhondda Cynon Taf", "population": 241},
+      {"local_authority": "Carmarthenshire", "population": 188},
+      {"local_authority": "Caerphilly", "population": 176},
+      {"local_authority": "Newport", "population": 159},
+      {"local_authority": "Flintshire", "population": 156},
+      {"local_authority": "Bridgend", "population": 147},
+      {"local_authority": "Neath Port Talbot", "population": 144},
+      {"local_authority": "Wrexham", "population": 136},
+      {"local_authority": "Vale of Glamorgan", "population": 135},
+      {"local_authority": "Powys", "population": 133},
+      {"local_authority": "Pembrokeshire", "population": 126},
+      {"local_authority": "Gwynedd", "population": 125},
+      {"local_authority": "Conwy", "population": 118},
+      {"local_authority": "Denbighshire", "population": 95},
+      {"local_authority": "Monmouthshire", "population": 95},
+      {"local_authority": "Torfaen", "population": 94},
+      {"local_authority": "Ceredigion", "population": 71},
+      {"local_authority": "Isle of Anglesey", "population": 70},
+      {"local_authority": "Blaenau Gwent", "population": 70},
+      {"local_authority": "Merthyr Tydfil", "population": 60}
+    ]
   },
   "mark": {
-    "type": "geoshape",
-    "stroke": "white",
-    "strokeWidth": 2
+    "type": "bar",
+    "cornerRadiusEnd": 4
   },
   "encoding": {
+    "y": {
+      "field": "local_authority",
+      "type": "nominal",
+      "sort": "-x",
+      "axis": {
+        "title": null,
+        "labelFontSize": 12
+      }
+    },
+    "x": {
+      "field": "population",
+      "type": "quantitative",
+      "axis": {
+        "title": "Population (thousands)",
+        "titleFontSize": 14,
+        "labelFontSize": 12
+      }
+    },
     "color": {
       "field": "population",
       "type": "quantitative",
@@ -69,34 +66,15 @@
       },
       "legend": {
         "title": "Population (thousands)",
-        "orient": "bottom-right",
-        "titleFontSize": 13,
-        "labelFontSize": 12,
-        "gradientLength": 200,
-        "format": ",",
-        "offset": 10
+        "orient": "bottom",
+        "titleFontSize": 14,
+        "labelFontSize": 13,
+        "gradientLength": 300
       }
     },
     "tooltip": [
-      {
-        "field": "local_authority",
-        "type": "nominal",
-        "title": "Local Authority"
-      },
-      {
-        "field": "population",
-        "type": "quantitative",
-        "title": "Population (thousands)",
-        "format": ","
-      }
+      {"field": "local_authority", "type": "nominal", "title": "Local Authority"},
+      {"field": "population", "type": "quantitative", "title": "Population (thousands)", "format": ","}
     ]
-  },
-  "autosize": {
-    "type": "fit-x",
-    "contains": "padding"
-  },
-  "config": {
-    "view": {"stroke": null},
-    "padding": {"top": 20, "bottom": 100, "left": 10, "right": 10}
   }
 }
