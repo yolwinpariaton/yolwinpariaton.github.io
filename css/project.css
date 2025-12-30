@@ -64,24 +64,34 @@
   margin-bottom: 15px;
 }
 
-/* Outer wrapper (NO card styling here) */
+/* ------------------------------------------------------------------ */
+/* IMPORTANT: override any card styling coming from css/style.css that
+   is being applied to .chart-wrapper (this is why Source/Note appear
+   "inside the frame" in your screenshot).                              */
 .chart-wrapper{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
   width: 100%;
   max-width: 100%;
   overflow: visible;
 }
+/* ------------------------------------------------------------------ */
 
-/* The rounded “card” frame should contain ONLY the chart */
+/* The chart "card" must contain ONLY the visualization */
 .chart-frame{
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
   padding: 18px 18px 14px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-  overflow: hidden; /* stops canvas from spilling outside */
+  overflow: hidden; /* keeps clean rounded edges */
 }
 
-/* Vega container must fill the frame and not create extra margins */
+/* Vega container fills the card */
 .vega-container{
   width: 100%;
   min-height: 280px;
@@ -89,7 +99,7 @@
   margin: 0;
 }
 
-/* Source/Note are OUTSIDE the frame */
+/* Source/Note are outside the chart-frame */
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
