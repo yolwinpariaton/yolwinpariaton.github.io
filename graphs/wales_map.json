@@ -9,49 +9,76 @@
   },
   "width": 350,
   "height": 550,
-  "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
-    "format": {"type": "json", "property": "features"}
-  },
-  "transform": [
+  "layer": [
     {
-      "lookup": "properties.LAD13CD",
-      "from": {
-        "data": {
-          "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/wales_business.csv"
+      "data": {
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
+        "format": {"type": "json", "property": "features"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.LAD21CD",
+          "from": {
+            "data": {
+              "values": [
+                {"geo_id": "W06000001", "value": 2230, "name": "Isle of Anglesey"},
+                {"geo_id": "W06000002", "value": 4445, "name": "Gwynedd"},
+                {"geo_id": "W06000003", "value": 4190, "name": "Conwy"},
+                {"geo_id": "W06000004", "value": 3285, "name": "Denbighshire"},
+                {"geo_id": "W06000005", "value": 5360, "name": "Flintshire"},
+                {"geo_id": "W06000006", "value": 3990, "name": "Wrexham"},
+                {"geo_id": "W06000023", "value": 5830, "name": "Powys"},
+                {"geo_id": "W06000008", "value": 2900, "name": "Ceredigion"},
+                {"geo_id": "W06000009", "value": 4835, "name": "Pembrokeshire"},
+                {"geo_id": "W06000010", "value": 6315, "name": "Carmarthenshire"},
+                {"geo_id": "W06000011", "value": 7325, "name": "Swansea"},
+                {"geo_id": "W06000012", "value": 3220, "name": "Neath Port Talbot"},
+                {"geo_id": "W06000013", "value": 4045, "name": "Bridgend"},
+                {"geo_id": "W06000014", "value": 4715, "name": "Vale of Glamorgan"},
+                {"geo_id": "W06000015", "value": 13010, "name": "Cardiff"},
+                {"geo_id": "W06000016", "value": 6080, "name": "Rhondda Cynon Taf"},
+                {"geo_id": "W06000024", "value": 1360, "name": "Merthyr Tydfil"},
+                {"geo_id": "W06000018", "value": 4385, "name": "Caerphilly"},
+                {"geo_id": "W06000019", "value": 1435, "name": "Blaenau Gwent"},
+                {"geo_id": "W06000020", "value": 2760, "name": "Torfaen"},
+                {"geo_id": "W06000021", "value": 4080, "name": "Monmouthshire"},
+                {"geo_id": "W06000022", "value": 4625, "name": "Newport"}
+              ]
+            },
+            "key": "geo_id",
+            "fields": ["value", "name"]
+          }
+        }
+      ],
+      "projection": {"type": "mercator"},
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "color": {
+          "field": "value",
+          "type": "quantitative",
+          "scale": {
+            "scheme": "viridis",
+            "domain": [1000, 13500]
+          },
+          "legend": {
+            "title": "Active Enterprises",
+            "format": ",",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 200
+          }
         },
-        "key": "geo_id",
-        "fields": ["Data values", "Area"]
+        "tooltip": [
+          {"field": "name", "title": "Local Authority"},
+          {"field": "value", "title": "Active Enterprises", "format": ","}
+        ]
       }
     }
   ],
-  "projection": {"type": "mercator"},
-  "mark": {
-    "type": "geoshape",
-    "stroke": "white",
-    "strokeWidth": 1
-  },
-  "encoding": {
-    "color": {
-      "field": "Data values",
-      "type": "quantitative",
-      "scale": {
-        "scheme": "viridis",
-        "domain": [1000, 13500]
-      },
-      "legend": {
-        "title": "Active Enterprises",
-        "format": ",",
-        "orient": "bottom",
-        "direction": "horizontal",
-        "gradientLength": 200
-      }
-    },
-    "tooltip": [
-      {"field": "Area", "title": "Local Authority"},
-      {"field": "Data values", "title": "Active Enterprises", "format": ","}
-    ]
-  },
   "config": {
     "view": {"stroke": "transparent"},
     "background": "transparent"

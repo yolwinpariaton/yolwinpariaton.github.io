@@ -53,8 +53,8 @@
           "field": "region",
           "type": "nominal",
           "scale": {
-            "domain": ["Speyside", "Highlands", "Islay", "Lowlands", "Isle of Skye", "Orkney"],
-            "range": ["#d4af37", "#c17817", "#8b6914", "#6b5510", "#957029", "#b8860b"]
+            "domain": ["Highlands", "Islay", "Isle of Skye", "Lowlands", "Orkney", "Speyside"],
+            "range": ["#c17817", "#8b6914", "#957029", "#6b5510", "#b8860b", "#d4af37"]
           },
           "legend": {
             "title": "Whisky Region",
