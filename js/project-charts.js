@@ -35,7 +35,6 @@
   }
 
   async function verifyFetch(url, selector) {
-    // Opening via file:// will block fetch of JSON in most browsers
     if (window.location.protocol === "file:") {
       setError(
         selector,
@@ -48,13 +47,17 @@
     try {
       const r = await fetch(url, { cache: "no-store" });
       if (!r.ok) {
-        setError(selector, "Missing data file", `${url} returned HTTP ${r.status}. Confirm it exists in /data on GitHub Pages.`);
+        setError(
+          selector,
+          "Missing data file",
+          `${url} returned HTTP ${r.status}. Confirm it exists in /data on GitHub Pages.`
+        );
         return false;
       }
       return true;
     } catch (e) {
       console.error("Fetch failed:", url, e);
-      setError(selector, "Cannot fetch data", `Fetch failed for ${url}. Check DevTools Console for details.`);
+      setError(selector, "Cannot fetch data", `Fetch failed for ${url}. Check DevTools Console.`);
       return false;
     }
   }
@@ -63,7 +66,6 @@
     const el = document.querySelector(selector);
     if (!el) return;
 
-    // If libraries failed to load, show it explicitly
     if (typeof vegaEmbed !== "function") {
       setError(
         selector,
@@ -73,9 +75,7 @@
       return;
     }
 
-    // Clear any placeholder
     el.innerHTML = "";
-
     vegaEmbed(selector, spec, opts).catch((err) => {
       console.error("Vega embed error for", selector, err);
       setError(
@@ -87,7 +87,6 @@
   }
 
   async function run() {
-    // Pre-flight check: verify the critical JSON files exist (prevents silent blanks)
     const checks = await Promise.all([
       verifyFetch("data/vis1_prices_vs_pay.json", "#vis1"),
       verifyFetch("data/vis2_food_vs_headline.json", "#vis2"),
@@ -100,25 +99,41 @@
     ]);
     if (checks.some((ok) => !ok)) return;
 
-    // 1) Prices vs pay (indexed)
+    // =========================
+    // 1) Prices vs pay (IMPROVED)
+    // =========================
     const vis1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
       "title": {
         "text": "Prices vs pay (indexed to 2019 = 100)",
-        "subtitle": "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
+        "subtitle": [
+          "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings.",
+          "Source: ONS CPIH and ONS AWE (real pay).",
+          "Note: y-axis is zoomed (98–114) rather than starting at zero to make the gap visible."
+        ]
       },
+
       "data": { "url": "data/vis1_prices_vs_pay.json" },
       "width": "container",
       "height": 360,
+
+      // Give the x-axis title room (fixes your missing “Date” label)
+      "padding": { "left": 6, "right": 22, "top": 10, "bottom": 42 },
+      "autosize": { "type": "fit", "contains": "padding" },
+
       "transform": [
         { "calculate": "toDate(datum.date)", "as": "d" },
         { "calculate": "toNumber(datum.value)", "as": "v" },
         { "pivot": "series", "value": "v", "groupby": ["d"] },
+
         { "calculate": "datum['CPIH (prices)']", "as": "prices" },
         { "calculate": "datum['Real earnings']", "as": "earnings" },
         { "calculate": "datum.prices - datum.earnings", "as": "gap" }
       ],
+
       "layer": [
+        // Baseline at 100
         {
           "mark": { "type": "rule" },
           "encoding": {
@@ -127,10 +142,17 @@
             "opacity": { "value": 0.35 }
           }
         },
+
+        // Gap shading between earnings and prices
         {
-          "mark": { "type": "area", "opacity": 0.18 },
+          "mark": { "type": "area", "opacity": 0.16 },
           "encoding": {
-            "x": { "field": "d", "type": "temporal", "title": "Date", "axis": { "format": "%Y", "tickCount": 7 } },
+            "x": {
+              "field": "d",
+              "type": "temporal",
+              "title": "Date",
+              "axis": { "format": "%Y", "tickCount": 7, "titlePadding": 18 }
+            },
             "y": {
               "field": "earnings",
               "type": "quantitative",
@@ -141,33 +163,92 @@
             "y2": { "field": "prices" }
           }
         },
+
+        // Lines + points (folded so we can label cleanly)
         {
-          "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
-          "encoding": {
-            "x": { "field": "d", "type": "temporal", "title": "Date" },
-            "y": { "field": "prices", "type": "quantitative" },
-            "color": { "value": "#1f77b4" },
-            "tooltip": [
-              { "field": "d", "type": "temporal", "title": "Date" },
-              { "field": "prices", "type": "quantitative", "title": "CPIH (prices)", "format": ".1f" },
-              { "field": "earnings", "type": "quantitative", "title": "Real earnings", "format": ".1f" },
-              { "field": "gap", "type": "quantitative", "title": "Gap (prices − pay)", "format": ".1f" }
-            ]
-          }
+          "transform": [
+            { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
+            {
+              "calculate": "datum.line_key === 'prices' ? 'CPIH (prices)' : 'Real earnings'",
+              "as": "line_label"
+            }
+          ],
+          "layer": [
+            {
+              "mark": { "type": "line", "strokeWidth": 2.8, "opacity": 0.85 },
+              "encoding": {
+                "x": {
+                  "field": "d",
+                  "type": "temporal",
+                  "title": "Date",
+                  "axis": { "format": "%Y", "tickCount": 7, "titlePadding": 18 }
+                },
+                "y": { "field": "yval", "type": "quantitative" },
+                "color": {
+                  "field": "line_label",
+                  "type": "nominal",
+                  "scale": { "domain": ["CPIH (prices)", "Real earnings"], "range": ["#1f77b4", "#ff7f0e"] },
+                  "legend": null
+                },
+                "tooltip": [
+                  { "field": "d", "type": "temporal", "title": "Date" },
+                  { "field": "line_label", "type": "nominal", "title": "Series" },
+                  { "field": "yval", "type": "quantitative", "title": "Index", "format": ".1f" }
+                ]
+              }
+            },
+            {
+              "mark": { "type": "point", "filled": true, "size": 40, "opacity": 0.9 },
+              "encoding": {
+                "x": { "field": "d", "type": "temporal" },
+                "y": { "field": "yval", "type": "quantitative" },
+                "color": {
+                  "field": "line_label",
+                  "type": "nominal",
+                  "scale": { "domain": ["CPIH (prices)", "Real earnings"], "range": ["#1f77b4", "#ff7f0e"] },
+                  "legend": null
+                }
+              }
+            }
+          ]
         },
+
+        // Direct labels at the end of each line (coloured)
         {
-          "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
+          "transform": [
+            { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
+            {
+              "calculate": "datum.line_key === 'prices' ? 'CPIH (prices)' : 'Real earnings'",
+              "as": "line_label"
+            },
+            { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }], "groupby": ["line_label"] },
+            { "filter": "datum.r === 1" }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "dx": 8,
+            "fontSize": 12,
+            "fontWeight": "bold"
+          },
           "encoding": {
-            "x": { "field": "d", "type": "temporal", "title": "Date" },
-            "y": { "field": "earnings", "type": "quantitative" },
-            "color": { "value": "#ff7f0e" }
+            "x": { "field": "d", "type": "temporal" },
+            "y": { "field": "yval", "type": "quantitative" },
+            "text": { "field": "line_label" },
+            "color": {
+              "field": "line_label",
+              "type": "nominal",
+              "scale": { "domain": ["CPIH (prices)", "Real earnings"], "range": ["#1f77b4", "#ff7f0e"] },
+              "legend": null
+            }
           }
         }
       ],
+
       "config": {
-        "legend": { "disable": true },
         "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-        "title": { "fontSize": 17, "subtitleFontSize": 12 },
+        "title": { "fontSize": 18, "subtitleFontSize": 12 },
         "view": { "stroke": null }
       }
     };
@@ -365,6 +446,5 @@
     safeEmbed("#vis8", vis8);
   }
 
-  // IMPORTANT: use window.load (layout widths computed) to avoid container-width=0 rendering
   window.addEventListener("load", run);
 })();
