@@ -1,16 +1,17 @@
 // ========================================
 // PROJECT CHARTS - UK COST OF LIVING CRISIS
 // Robust embedding + safe rewriting of relative data URLs in specs
+// Optimized caching: cache-bust only on localhost (development)
 // ========================================
 
-// Cache-busting (optional; helps while iterating)
-const CACHE_BUST = `?v=${new Date().toISOString().slice(0, 10)}`; // daily
+// Cache-busting ONLY for development (keeps production fast)
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(window.location.hostname);
+const CACHE_BUST = IS_LOCAL ? `?v=${Date.now()}` : "";
 
 // All data/specs are served from the same GitHub Pages site:
 const SITE_DATA_PATH = `${window.location.origin}/data/`;
 
 function siteDataUrl(file) {
-  // IMPORTANT: pass only filenames like "chart2_spec.json"
   return `${SITE_DATA_PATH}${file}${CACHE_BUST}`;
 }
 
@@ -107,7 +108,8 @@ function rewriteDataUrlsDeep(node) {
 }
 
 async function loadSpecAndFix(file) {
-  const res = await fetch(siteDataUrl(file), { cache: "no-store" });
+  // Allow browser/CDN caching in production for speed
+  const res = await fetch(siteDataUrl(file));
   if (!res.ok) throw new Error(`Failed to fetch ${file}: HTTP ${res.status}`);
   const spec = await res.json();
   rewriteDataUrlsDeep(spec);
@@ -119,7 +121,7 @@ function initCharts() {
   loadSpecAndFix("chart1_spec.json").then(spec => safeEmbed("#chart1", spec, EMBED_OPTS));
   loadSpecAndFix("chart2_spec.json").then(spec => safeEmbed("#chart2", spec, EMBED_OPTS));
 
-  // Chart 3 is now a VEGA spec (more reliable map pipeline with projection fit)
+  // Chart 3 is Vega spec (map)
   loadSpecAndFix("chart3_spec.json").then(spec =>
     safeEmbed("#chart3", spec, { actions: false, renderer: "svg", mode: "vega" })
   );

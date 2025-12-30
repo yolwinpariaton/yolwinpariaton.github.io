@@ -24,7 +24,7 @@
     {
       "name": "regions",
       "url": "uk_regions.geojson",
-      "format": { "type": "json", "property": "features" }
+      "format": { "type": "geojson" }
     },
     {
       "name": "econ",
@@ -143,7 +143,9 @@
     {
       "type": "shape",
       "from": { "data": "regions_joined" },
-      "transform": [{ "type": "geoshape", "projection": "ukproj" }],
+      "transform": [
+        { "type": "geoshape", "projection": "ukproj", "field": "geometry" }
+      ],
       "encode": {
         "enter": {
           "stroke": { "value": "#ffffff" },
@@ -152,14 +154,14 @@
         "update": {
           "fill": [
             {
-              "test": "isValid(datum.cost_index)",
+              "test": "isValid(datum.cost_index) && datum.cost_index != null",
               "scale": "colorScale",
               "field": "cost_index"
             },
             { "value": "#eef2ff" }
           ],
           "tooltip": {
-            "signal": "{'Region': datum.region || datum.boundary_name, 'Code': datum.code, 'Cost index': datum.cost_index, 'Population (m)': datum.population_m, 'Rent/Income (%)': datum.rent_to_income, 'Energy burden (%)': datum.energy_burden, 'Food inflation (%)': datum.food_inflation}"
+            "signal": "{'Region': datum.region || datum.boundary_name, 'Code': datum.code, 'Boundary name': datum.boundary_name, 'Cost index': datum.cost_index, 'Population (m)': datum.population_m, 'Rent/Income (%)': datum.rent_to_income, 'Energy burden (%)': datum.energy_burden, 'Food inflation (%)': datum.food_inflation}"
           }
         }
       }
@@ -168,7 +170,9 @@
     {
       "type": "shape",
       "from": { "data": "regions" },
-      "transform": [{ "type": "geoshape", "projection": "ukproj" }],
+      "transform": [
+        { "type": "geoshape", "projection": "ukproj", "field": "geometry" }
+      ],
       "encode": {
         "enter": {
           "fill": { "value": "transparent" },
@@ -193,7 +197,7 @@
           "y": { "field": "y" },
           "size": { "scale": "sizeScale", "field": "population" },
           "tooltip": {
-            "signal": "{'Region': datum.region, 'Population': datum.population}"
+            "signal": "{'Region': datum.region, 'Code': datum.code, 'Cost index': datum.cost_index, 'Population': datum.population}"
           }
         }
       }
