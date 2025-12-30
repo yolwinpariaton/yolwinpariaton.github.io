@@ -19,7 +19,7 @@
   "layer": [
     {
       "data": {
-        "url": "https://cdn.jsdelivr.net/gh/martinjc/UK-GeoJSON@master/json/eurostat/ew/nuts1.json",
+        "url": "uk_regions.geojson",
         "format": { "type": "geojson" }
       },
       "transform": [
@@ -67,7 +67,7 @@
 
     {
       "data": {
-        "url": "https://cdn.jsdelivr.net/gh/martinjc/UK-GeoJSON@master/json/eurostat/ew/nuts1.json",
+        "url": "uk_regions.geojson",
         "format": { "type": "geojson" }
       },
       "mark": {
