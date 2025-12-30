@@ -7,8 +7,8 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 350,
-  "height": 550,
+  "width": 300,
+  "height": 450,
   "layer": [
     {
       "data": {
@@ -44,9 +44,9 @@
           "legend": {
             "title": "Annual Visitors",
             "format": ",",
-            "orient": "bottom-right",
+            "orient": "right",
             "direction": "vertical",
-            "offset": 5
+            "offset": 10
           }
         },
         "color": {

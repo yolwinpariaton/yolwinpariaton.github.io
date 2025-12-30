@@ -7,8 +7,8 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 350,
-  "height": 550,
+  "width": 300,
+  "height": 450,
   "layer": [
     {
       "data": {
@@ -38,7 +38,7 @@
           "field": "Data values",
           "type": "quantitative",
           "scale": {
-            "scheme": "viridis",
+            "scheme": "blues",
             "domain": [1000, 13500]
           },
           "legend": {
@@ -46,7 +46,7 @@
             "format": ",",
             "orient": "bottom",
             "direction": "horizontal",
-            "gradientLength": 250
+            "gradientLength": 200
           }
         },
         "tooltip": [
