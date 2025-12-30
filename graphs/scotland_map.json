@@ -54,7 +54,7 @@
             "title": "Annual Visitors",
             "format": ".0s",
             "orient": "none",
-            "legendX": 212,
+            "legendX": 238,
             "legendY": 150,
             "labelFontSize": 10,
             "titleFontSize": 12
