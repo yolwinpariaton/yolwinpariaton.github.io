@@ -7,8 +7,8 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 250,
-  "height": 420,
+  "width": 300,
+  "height": 450,
   "layer": [
     {
       "data": {
@@ -17,8 +17,8 @@
       },
       "projection": {
         "type": "mercator",
-        "center": [-3.5, 52.3],
-        "scale": 4800
+        "center": [-3.8, 52.35],
+        "scale": 5200
       },
       "transform": [
         {
@@ -52,7 +52,8 @@
             "direction": "horizontal",
             "gradientLength": 200,
             "labelFontSize": 11,
-            "titleFontSize": 12
+            "titleFontSize": 12,
+            "offset": 20
           }
         },
         "tooltip": [

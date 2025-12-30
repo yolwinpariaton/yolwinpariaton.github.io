@@ -7,8 +7,8 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 250,
-  "height": 420,
+  "width": 300,
+  "height": 450,
   "layer": [
     {
       "data": {
@@ -40,12 +40,12 @@
         "size": {
           "field": "annual_visitors",
           "type": "quantitative",
-          "scale": {"range": [150, 1800]},
+          "scale": {"range": [100, 1500]},
           "legend": {
             "title": "Annual Visitors",
             "format": ",",
             "orient": "right",
-            "offset": 40,
+            "offset": 60,
             "direction": "vertical",
             "symbolType": "circle",
             "symbolFillColor": "#8b6914",
@@ -67,7 +67,8 @@
             "symbolType": "circle",
             "columns": 3,
             "labelFontSize": 10,
-            "titleFontSize": 12
+            "titleFontSize": 12,
+            "offset": 20
           }
         },
         "tooltip": [
