@@ -45,6 +45,7 @@
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude": {"field": "lat", "type": "quantitative"},
+
         "size": {
           "field": "annual_visitors",
           "type": "quantitative",
@@ -52,12 +53,13 @@
           "legend": {
             "title": "Annual Visitors",
             "format": ".0s",
-            "orient": "bottom",
-            "direction": "horizontal",
-            "labelFontSize": 11,
-            "offset": 10
+            "orient": "none",
+            "legendX": 20,
+            "legendY": 140,
+            "labelFontSize": 10
           }
         },
+
         "color": {
           "field": "region",
           "type": "nominal",
@@ -73,6 +75,7 @@
             "offset": 15
           }
         },
+
         "tooltip": [
           {"field": "distillery", "title": "Distillery"},
           {"field": "region", "title": "Region"},
@@ -81,6 +84,7 @@
       }
     }
   ],
+
   "config": {
     "view": {"stroke": "transparent"},
     "background": "transparent"
