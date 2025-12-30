@@ -14,8 +14,10 @@
     "format": {"type": "topojson", "feature": "object_name"}
   },
   "projection": {
-    "type": "identity",
-    "reflectY": true
+    "type": "albers",
+    "center": [-3.7, 52.3],
+    "rotate": [0, 0, 0],
+    "scale": 7800
   },
   "transform": [
     {

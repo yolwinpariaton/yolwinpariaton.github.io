@@ -45,7 +45,7 @@
             "title": "Annual Visitors",
             "format": ".0s",
             "orient": "right",
-            "offset": 30,
+            "offset": 60,
             "symbolFillColor": "#6c757d",
             "labelFontSize": 11
           }
@@ -55,7 +55,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Highlands", "Islay", "Isle of Skye", "Lowlands", "Orkney", "Speyside"],
-            "range": ["#440154", "#414487", "#2a788e", "#22a884", "#7ad151", "#fde725"]
+            "range": ["#440154", "#3b528b", "#21908d", "#5dc963", "#fde725", "#d55e00"]
           },
           "legend": {
             "title": "Whisky Region",
