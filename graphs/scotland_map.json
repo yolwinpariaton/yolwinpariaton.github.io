@@ -54,8 +54,8 @@
             "title": "Annual Visitors",
             "format": ".0s",
             "orient": "none",
-            "legendX": 238,
-            "legendY": 150,
+            "legendX": 250,
+            "legendY": 145,
             "labelFontSize": 10,
             "titleFontSize": 12
           }
@@ -72,7 +72,7 @@
             "title": "Whisky Region",
             "orient": "none",
             "legendX": 12,
-            "legendY": 410,
+            "legendY": 415,
             "columns": 3,
             "labelFontSize": 10,
             "titleFontSize": 12
