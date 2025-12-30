@@ -1,7 +1,7 @@
 /* js/project-charts.js
    Eight interactive Vega-Lite charts for the UK cost of living project.
 
-   Expected JSON files in /data (records):
+   Data files in /data:
    - vis1_prices_vs_pay.json
    - vis2_food_vs_headline.json
    - vis3_energy_cap.json
@@ -15,81 +15,89 @@
 (function () {
   const opts = { actions: false, renderer: "canvas" };
 
-  // Stable TopoJSON from ONSdigital/uk-topojson (contains layers: uk, ctry, rgn, ...)
   const UK_TOPO_URL =
     "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
 
-  function setError(selector, title, details) {
+  function setBox(selector, html) {
     const el = document.querySelector(selector);
     if (!el) return;
-    el.innerHTML =
-      `<div style="padding:10px;border:1px solid #ddd;border-radius:10px;">
-        <p style="margin:0 0 6px;"><strong>${title}</strong></p>
-        <p style="margin:0;color:#555;">${details}</p>
-      </div>`;
+    el.innerHTML = html;
+  }
+
+  function setError(selector, title, detail) {
+    setBox(
+      selector,
+      `<div style="padding:12px;border:1px solid #e2e2e2;border-radius:10px;background:#fff;">
+         <p style="margin:0 0 6px;"><strong>${title}</strong></p>
+         <p style="margin:0;color:#555;">${detail}</p>
+       </div>`
+    );
+  }
+
+  async function verifyFetch(url, selector) {
+    // Opening via file:// will block fetch of JSON in most browsers
+    if (window.location.protocol === "file:") {
+      setError(
+        selector,
+        "Charts cannot load via file://",
+        "Open this page via GitHub Pages (https://...) or a local server (VS Code Live Server). Browsers block loading data/*.json from file://."
+      );
+      return false;
+    }
+
+    try {
+      const r = await fetch(url, { cache: "no-store" });
+      if (!r.ok) {
+        setError(selector, "Missing data file", `${url} returned HTTP ${r.status}. Confirm it exists in /data on GitHub Pages.`);
+        return false;
+      }
+      return true;
+    } catch (e) {
+      console.error("Fetch failed:", url, e);
+      setError(selector, "Cannot fetch data", `Fetch failed for ${url}. Check DevTools Console for details.`);
+      return false;
+    }
   }
 
   function safeEmbed(selector, spec) {
     const el = document.querySelector(selector);
     if (!el) return;
 
+    // If libraries failed to load, show it explicitly
     if (typeof vegaEmbed !== "function") {
       setError(
         selector,
         "Vega libraries not loaded",
-        "Check that vega, vega-lite, and vega-embed script tags load successfully (open DevTools Console)."
+        "vegaEmbed is not available. Confirm the three CDN scripts load successfully (no 404s in Network tab)."
       );
       return;
     }
+
+    // Clear any placeholder
+    el.innerHTML = "";
 
     vegaEmbed(selector, spec, opts).catch((err) => {
       console.error("Vega embed error for", selector, err);
       setError(
         selector,
         "Chart failed to render",
-        "Open DevTools Console for details. Most common cause is a missing/incorrect JSON path."
+        "Open DevTools Console. Most common causes: JSON path mismatch, invalid spec, or a data field name mismatch."
       );
     });
   }
 
-  async function checkFile(url, selector) {
-    // If opened by double-click (file://), browsers block fetch for local JSON
-    if (window.location.protocol === "file:") {
-      setError(
-        selector,
-        "Charts cannot load via file://",
-        "Open using GitHub Pages (https://...) or a local server (e.g., VS Code Live Server). Browsers block loading data/*.json from file://."
-      );
-      return false;
-    }
-
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) {
-        setError(selector, "Data file not found", `${url} returned HTTP ${res.status}. Check the file exists in /data and is pushed.`);
-        return false;
-      }
-      return true;
-    } catch (e) {
-      console.error("Fetch error for", url, e);
-      setError(selector, "Cannot fetch data file", `Failed to fetch ${url}. Check DevTools Console.`);
-      return false;
-    }
-  }
-
   async function run() {
-    // --- File checks (match your folder exactly) ---
+    // Pre-flight check: verify the critical JSON files exist (prevents silent blanks)
     const checks = await Promise.all([
-      checkFile("data/vis1_prices_vs_pay.json", "#vis1"),
-      checkFile("data/vis2_food_vs_headline.json", "#vis2"),
-      checkFile("data/vis3_energy_cap.json", "#vis3"),
-      checkFile("data/vis4_fuel_weekly.json", "#vis4"),
-      checkFile("data/vis5_rent_vs_house.json", "#vis5"),
-      checkFile("data/vis6_rent_map_regions.json", "#vis6"),
-      checkFile("data/vis7_rent_trend_regions.json", "#vis7"),
-      checkFile("data/vis8_rent_map_countries.json", "#vis8")
+      verifyFetch("data/vis1_prices_vs_pay.json", "#vis1"),
+      verifyFetch("data/vis2_food_vs_headline.json", "#vis2"),
+      verifyFetch("data/vis3_energy_cap.json", "#vis3"),
+      verifyFetch("data/vis4_fuel_weekly.json", "#vis4"),
+      verifyFetch("data/vis5_rent_vs_house.json", "#vis5"),
+      verifyFetch("data/vis6_rent_map_regions.json", "#vis6"),
+      verifyFetch("data/vis7_rent_trend_regions.json", "#vis7"),
+      verifyFetch("data/vis8_rent_map_countries.json", "#vis8")
     ]);
-
     if (checks.some((ok) => !ok)) return;
 
     // 1) Prices vs pay (indexed)
@@ -122,12 +130,7 @@
         {
           "mark": { "type": "area", "opacity": 0.18 },
           "encoding": {
-            "x": {
-              "field": "d",
-              "type": "temporal",
-              "title": "Date",
-              "axis": { "format": "%Y", "tickCount": 7 }
-            },
+            "x": { "field": "d", "type": "temporal", "title": "Date", "axis": { "format": "%Y", "tickCount": 7 } },
             "y": {
               "field": "earnings",
               "type": "quantitative",
@@ -248,16 +251,13 @@
       }
     };
 
-    // 6) Map: rent by region
+    // 6) Map: regions
     const vis6 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Rent inflation across regions (latest)" },
       "width": "container",
       "height": 420,
-      "data": {
-        "url": UK_TOPO_URL,
-        "format": { "type": "topojson", "feature": "rgn" }
-      },
+      "data": { "url": UK_TOPO_URL, "format": { "type": "topojson", "feature": "rgn" } },
       "transform": [
         {
           "lookup": "properties.areacd",
@@ -271,12 +271,7 @@
       "projection": { "type": "mercator" },
       "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.6 },
       "encoding": {
-        "color": {
-          "field": "rent_inflation_yoy_pct",
-          "type": "quantitative",
-          "title": "% y/y",
-          "legend": { "orient": "bottom" }
-        },
+        "color": { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "% y/y", "legend": { "orient": "bottom" } },
         "tooltip": [
           { "field": "areanm", "type": "nominal", "title": "Area" },
           { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "% y/y", "format": ".1f" }
@@ -284,7 +279,7 @@
       }
     };
 
-    // 7) Trend: rent regions (your file name is vis7_rent_trend_regions.json)
+    // 7) Trend regions
     const vis7 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Rent inflation over time (select a region)" },
@@ -299,25 +294,14 @@
             "input": "select",
             "name": "Region: ",
             "options": [
-              "North East",
-              "North West",
-              "Yorkshire and The Humber",
-              "East Midlands",
-              "West Midlands",
-              "East of England",
-              "London",
-              "South East",
-              "South West"
+              "North East","North West","Yorkshire and The Humber","East Midlands",
+              "West Midlands","East of England","London","South East","South West"
             ]
           }
         }
       ],
       "transform": [
-        {
-          "calculate":
-            "datum.areanm === Region ? 'Selected region' : (datum.areanm === 'England' ? 'England' : 'Other')",
-          "as": "group"
-        }
+        { "calculate": "datum.areanm === Region ? 'Selected region' : (datum.areanm === 'England' ? 'England' : 'Other')", "as": "group" }
       ],
       "mark": { "type": "line" },
       "encoding": {
@@ -343,16 +327,13 @@
       }
     };
 
-    // 8) Map: rent countries (your file name is vis8_rent_map_countries.json)
+    // 8) Map: countries
     const vis8 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Rent inflation across UK countries (latest available)" },
       "width": "container",
       "height": 420,
-      "data": {
-        "url": UK_TOPO_URL,
-        "format": { "type": "topojson", "feature": "ctry" }
-      },
+      "data": { "url": UK_TOPO_URL, "format": { "type": "topojson", "feature": "ctry" } },
       "transform": [
         {
           "lookup": "properties.areacd",
@@ -366,12 +347,7 @@
       "projection": { "type": "mercator" },
       "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.8 },
       "encoding": {
-        "color": {
-          "field": "rent_inflation_yoy_pct",
-          "type": "quantitative",
-          "title": "% y/y",
-          "legend": { "orient": "bottom" }
-        },
+        "color": { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "% y/y", "legend": { "orient": "bottom" } },
         "tooltip": [
           { "field": "areanm", "type": "nominal", "title": "Country" },
           { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "% y/y", "format": ".1f" }
@@ -379,7 +355,6 @@
       }
     };
 
-    // Embed
     safeEmbed("#vis1", vis1);
     safeEmbed("#vis2", vis2);
     safeEmbed("#vis3", vis3);
@@ -390,5 +365,6 @@
     safeEmbed("#vis8", vis8);
   }
 
-  document.addEventListener("DOMContentLoaded", run);
+  // IMPORTANT: use window.load (layout widths computed) to avoid container-width=0 rendering
+  window.addEventListener("load", run);
 })();

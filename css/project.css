@@ -136,3 +136,21 @@
   color: var(--text);
   font-weight: 600;
 }
+
+/* ===== Vega-Embed hardening (prevents “renders but invisible”) ===== */
+.vega-embed,
+.vega-embed > div,
+.vega-embed canvas,
+.vega-embed svg{
+  max-width: 100%;
+}
+
+.vega-embed{
+  width: 100%;
+}
+
+.vega-embed canvas,
+.vega-embed svg{
+  display: block; /* avoid inline gaps/overflow quirks */
+}
+/* ================================================================ */

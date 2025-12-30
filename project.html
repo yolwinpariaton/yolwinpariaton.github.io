@@ -9,48 +9,15 @@
   <meta name="author" content="Yolwin Pariaton" />
 
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/project.css" />
 
-  <!-- Vega libraries (defer preserves order and ensures DOM exists) -->
+  <!-- Vega libraries (defer preserves order; executes after HTML parse) -->
   <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <!-- Your charts script -->
   <script defer src="js/project-charts.js?v=2025-03-01"></script>
-
-  <style>
-    .hero--project {
-      position: relative;
-      background-image: url("images/living_cost.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      min-height: 360px;
-    }
-
-    .hero--project .hero__overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      pointer-events: none;
-    }
-
-    .hero--project .hero__center {
-      position: relative;
-      z-index: 1;
-    }
-
-    .chart-note{
-      margin: 6px 0 0;
-      color: #555;
-      font-size: 0.95rem;
-      font-style: italic;
-      font-weight: 400;
-    }
-
-    /* Helps avoid “invisible chart” caused by zero-height containers in some CSS setups */
-    .chart-wrapper > div[id^="vis"] { min-height: 260px; }
-  </style>
 </head>
 
 <body>
@@ -96,96 +63,100 @@
           <h2>Data</h2>
           <p>
             Data are sourced from open UK statistics (ONS) and public administrative releases. The workflow is replicable: cleaned CSV and JSON
-            outputs are stored in <code>/data</code>. Visualisations use the JSON outputs directly, and can be updated by re-running the notebook
-            pipeline that refreshes the files.
+            outputs are stored in <code>/data</code>. Visualisations use the JSON outputs directly.
           </p>
 
           <h2>Tools &amp; Methods</h2>
           <p>
-            Data processing is performed in Python (Google Colab) with automated downloads and cleaning steps. Visualisations are produced using
-            Vega-Lite and embedded as interactive charts driven by repository-hosted JSON. The approach prioritises clarity, automation, and
-            re-runnability.
+            Data processing is performed in Python with automated downloads and cleaning steps. Visualisations are produced using Vega-Lite and embedded as interactive charts.
           </p>
 
           <h2>Conclusions</h2>
           <p>
             The indicators show a consistent purchasing-power squeeze during the inflation surge, with energy and housing contributing strongly to
-            pressure on household budgets. Geographic variation in rent inflation also suggests uneven exposure across the UK, motivating further
-            place-based analysis.
+            pressure on household budgets.
           </p>
         </section>
 
+        <!-- 1 -->
         <section class="task">
           <h2>1) Prices vs pay: CPIH and real earnings (indexed)</h2>
           <p>
             A core test of “cost of living” is whether pay keeps up with prices. This chart indexes CPIH and real earnings to a common baseline to show the relative path.
           </p>
           <div class="chart-wrapper">
-            <div id="vis1"></div>
+            <div id="vis1" class="vega-container"></div>
             <p class="chart-source">Data: ONS CPIH and ONS AWE real pay. File(s): data/vis1_prices_vs_pay.json.</p>
             <p class="chart-note">Note: The y-axis is zoomed (98–114) rather than starting at zero to make differences between prices and pay visible.</p>
           </div>
         </section>
 
+        <!-- 2 -->
         <section class="task">
           <h2>2) Food inflation vs headline inflation</h2>
           <p>Food is a high-salience component of household budgets. This chart compares food inflation with headline inflation over time.</p>
           <div class="chart-wrapper">
-            <div id="vis2"></div>
+            <div id="vis2" class="vega-container"></div>
             <p class="chart-source">File(s): data/vis2_food_vs_headline.json.</p>
           </div>
         </section>
 
+        <!-- 3 -->
         <section class="task">
           <h2>3) Energy price cap (typical annual bill)</h2>
           <p>Energy bills were a major driver of the crisis. The energy price cap indicates typical annual costs faced by households.</p>
           <div class="chart-wrapper">
-            <div id="vis3"></div>
+            <div id="vis3" class="vega-container"></div>
             <p class="chart-source">File(s): data/vis3_energy_cap.json.</p>
           </div>
         </section>
 
+        <!-- 4 -->
         <section class="task">
           <h2>4) Weekly fuel prices</h2>
           <p>Transport costs rose sharply during the post-pandemic recovery and global energy shock. Weekly fuel prices show the timing of these peaks.</p>
           <div class="chart-wrapper">
-            <div id="vis4"></div>
+            <div id="vis4" class="vega-container"></div>
             <p class="chart-source">File(s): data/vis4_fuel_weekly.json.</p>
           </div>
         </section>
 
+        <!-- 5 -->
         <section class="task">
           <h2>5) Rent vs house price inflation</h2>
           <p>Housing costs are persistent and unevenly distributed. This chart compares rent inflation with house price inflation.</p>
           <div class="chart-wrapper">
-            <div id="vis5"></div>
+            <div id="vis5" class="vega-container"></div>
             <p class="chart-source">File(s): data/vis5_rent_vs_house.json.</p>
           </div>
         </section>
 
+        <!-- 6 -->
         <section class="task">
           <h2>6) Map: Rent inflation across English regions</h2>
           <p>The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.</p>
           <div class="chart-wrapper">
-            <div id="vis6"></div>
+            <div id="vis6" class="vega-container"></div>
             <p class="chart-source">File(s): data/vis6_rent_map_regions.json.</p>
           </div>
         </section>
 
+        <!-- 7 -->
         <section class="task">
           <h2>7) Rent inflation over time (interactive)</h2>
           <p>Use the selector to examine how rent inflation evolved across regions compared with England overall.</p>
           <div class="chart-wrapper">
-            <div id="vis7"></div>
+            <div id="vis7" class="vega-container"></div>
             <p class="chart-source">File(s): data/vis7_rent_trend_regions.json.</p>
           </div>
         </section>
 
+        <!-- 8 -->
         <section class="task">
           <h2>8) Map: Rent inflation across UK countries</h2>
           <p>This map compares rent inflation across the four nations of the UK.</p>
           <div class="chart-wrapper">
-            <div id="vis8"></div>
+            <div id="vis8" class="vega-container"></div>
             <p class="chart-source">File(s): data/vis8_rent_map_countries.json.</p>
           </div>
         </section>
