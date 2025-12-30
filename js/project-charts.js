@@ -28,20 +28,21 @@
     });
   }
 
-  // =========================
-  // 1) Prices vs pay (indexed)
-  // =========================
+  // ======================================
+  // 1) Prices vs pay (indexed) — size reduced
+  // ======================================
   const vis1 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "title": {
       "text": "Prices vs pay (indexed to 2019 = 100)",
-      "subtitle": "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
+      "subtitle":
+        "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
     },
 
     "data": { "url": "data/vis1_prices_vs_pay.json" },
     "width": "container",
-    "height": 420,
+    "height": 300, // reduced (was taller)
 
     "transform": [
       { "calculate": "toDate(datum.date)", "as": "d" },
@@ -55,17 +56,17 @@
     "layer": [
       // Baseline at 100 (dotted, subtle)
       {
-        "mark": { "type": "rule", "strokeDash": [6, 6] },
+        "mark": { "type": "rule", "strokeDash": [4, 6] },
         "encoding": {
           "y": { "datum": 100 },
           "color": { "value": "#6b778d" },
-          "opacity": { "value": 0.9 }
+          "opacity": { "value": 0.7 }
         }
       },
 
-      // Gap shading
+      // Gap shading (between earnings and prices)
       {
-        "mark": { "type": "area", "opacity": 0.14 },
+        "mark": { "type": "area", "opacity": 0.18 },
         "encoding": {
           "x": {
             "field": "d",
@@ -78,7 +79,7 @@
             "type": "quantitative",
             "title": "Index (2019 = 100)",
             "scale": { "zero": false, "domain": [98, 114] },
-            "axis": { "tickCount": 7, "grid": true }
+            "axis": { "tickCount": 6, "grid": true }
           },
           "y2": { "field": "prices" }
         }
@@ -86,7 +87,7 @@
 
       // Prices line
       {
-        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 45 } },
+        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
         "encoding": {
           "x": { "field": "d", "type": "temporal", "title": "Date" },
           "y": { "field": "prices", "type": "quantitative" },
@@ -102,7 +103,7 @@
 
       // Earnings line
       {
-        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 45 } },
+        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
         "encoding": {
           "x": { "field": "d", "type": "temporal", "title": "Date" },
           "y": { "field": "earnings", "type": "quantitative" },
@@ -112,26 +113,22 @@
     ],
 
     "config": {
-      "legend": { "orient": "top", "direction": "horizontal", "title": null, "padding": 10 },
+      "legend": { "disable": true },
       "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-      "title": { "fontSize": 26, "subtitleFontSize": 15 },
+      "title": { "fontSize": 22, "subtitleFontSize": 14 },
       "view": { "stroke": null }
     }
   };
 
   // ======================================
-  // 2) Food inflation vs headline (improved)
+  // 2) Food inflation vs headline — size reduced
   // ======================================
-  // Keeps your same data file + fields. Adds:
-  // - safe parsing of date/value (prevents silent failures)
-  // - raw monthly series (lighter)
-  // - smoothed 5-month moving average (bold) for readability
   const vis2 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": { "text": "Food inflation vs headline (annual rate)" },
     "data": { "url": "data/vis2_food_vs_headline.json" },
     "width": "container",
-    "height": 420,
+    "height": 300, // reduced (was taller)
 
     "transform": [
       { "calculate": "toDate(datum.date)", "as": "d" },
@@ -151,7 +148,12 @@
 
       // Raw monthly (lighter, with points)
       {
-        "mark": { "type": "line", "strokeWidth": 2, "opacity": 0.35, "point": { "filled": true, "size": 30, "opacity": 0.35 } },
+        "mark": {
+          "type": "line",
+          "strokeWidth": 2,
+          "opacity": 0.35,
+          "point": { "filled": true, "size": 30, "opacity": 0.35 }
+        },
         "encoding": {
           "x": { "field": "d", "type": "temporal", "title": "Date" },
           "y": { "field": "v", "type": "quantitative", "title": "Percent" },
@@ -197,7 +199,7 @@
 
     "config": {
       "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-      "title": { "fontSize": 26, "subtitleFontSize": 15 },
+      "title": { "fontSize": 22, "subtitleFontSize": 14 },
       "view": { "stroke": null }
     }
   };
@@ -208,7 +210,7 @@
     "title": { "text": "Energy price cap (typical annual bill)" },
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 420,
+    "height": 280,
     "mark": { "type": "line", "interpolate": "step-after", "point": true },
     "encoding": {
       "x": { "field": "period_date", "type": "temporal", "title": "Cap period" },
@@ -226,7 +228,7 @@
     "title": { "text": "Weekly fuel prices (pence per litre)" },
     "data": { "url": "data/vis4_fuel_weekly.json" },
     "width": "container",
-    "height": 420,
+    "height": 320,
     "transform": [{ "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel", "ppl"] }],
     "mark": { "type": "line" },
     "encoding": {
@@ -247,7 +249,7 @@
     "title": { "text": "Rent vs house price inflation (annual rate)" },
     "data": { "url": "data/vis5_rent_vs_house.json" },
     "width": "container",
-    "height": 420,
+    "height": 320,
     "mark": { "type": "line" },
     "encoding": {
       "x": { "field": "date", "type": "temporal", "title": "Date" },
@@ -266,7 +268,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": { "text": "Rent inflation across regions (latest)" },
     "width": "container",
-    "height": 520,
+    "height": 420,
     "data": {
       "url": UK_TOPO_URL,
       "format": { "type": "topojson", "feature": "rgn" }
@@ -303,7 +305,7 @@
     "title": { "text": "Rent inflation over time (select a region)" },
     "data": { "url": "data/vis7_rent_trend_regions.json" },
     "width": "container",
-    "height": 420,
+    "height": 320,
     "params": [
       {
         "name": "Region",
@@ -361,7 +363,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": { "text": "Rent inflation across UK countries (latest available)" },
     "width": "container",
-    "height": 520,
+    "height": 420,
     "data": {
       "url": UK_TOPO_URL,
       "format": { "type": "topojson", "feature": "ctry" }
