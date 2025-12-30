@@ -1,80 +1,42 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
-  "height": 700,
-  "title": {
-    "text": "Population by Local Authority in Wales",
-    "fontSize": 20,
-    "anchor": "middle",
-    "offset": 10
-  },
+  "width": 500,
+  "height": 600,
+  "title": "Population by Local Authority in Wales",
   "data": {
     "values": [
-      {"local_authority": "Cardiff", "population": 362},
-      {"local_authority": "Swansea", "population": 246},
-      {"local_authority": "Rhondda Cynon Taf", "population": 241},
-      {"local_authority": "Carmarthenshire", "population": 188},
-      {"local_authority": "Caerphilly", "population": 176},
-      {"local_authority": "Newport", "population": 159},
-      {"local_authority": "Flintshire", "population": 156},
-      {"local_authority": "Bridgend", "population": 147},
-      {"local_authority": "Neath Port Talbot", "population": 144},
-      {"local_authority": "Wrexham", "population": 136},
-      {"local_authority": "Vale of Glamorgan", "population": 135},
-      {"local_authority": "Powys", "population": 133},
-      {"local_authority": "Pembrokeshire", "population": 126},
-      {"local_authority": "Gwynedd", "population": 125},
-      {"local_authority": "Conwy", "population": 118},
-      {"local_authority": "Denbighshire", "population": 95},
-      {"local_authority": "Monmouthshire", "population": 95},
-      {"local_authority": "Torfaen", "population": 94},
-      {"local_authority": "Ceredigion", "population": 71},
-      {"local_authority": "Isle of Anglesey", "population": 70},
-      {"local_authority": "Blaenau Gwent", "population": 70},
-      {"local_authority": "Merthyr Tydfil", "population": 60}
+      {"area": "Cardiff", "pop": 362},
+      {"area": "Swansea", "pop": 246},
+      {"area": "Rhondda Cynon Taf", "pop": 241},
+      {"area": "Carmarthenshire", "pop": 188},
+      {"area": "Caerphilly", "pop": 176},
+      {"area": "Newport", "pop": 159},
+      {"area": "Flintshire", "pop": 156},
+      {"area": "Bridgend", "pop": 147},
+      {"area": "Neath Port Talbot", "pop": 144},
+      {"area": "Wrexham", "pop": 136},
+      {"area": "Vale of Glamorgan", "pop": 135},
+      {"area": "Powys", "pop": 133},
+      {"area": "Pembrokeshire", "pop": 126},
+      {"area": "Gwynedd", "pop": 125},
+      {"area": "Conwy", "pop": 118},
+      {"area": "Denbighshire", "pop": 95},
+      {"area": "Monmouthshire", "pop": 95},
+      {"area": "Torfaen", "pop": 94},
+      {"area": "Ceredigion", "pop": 71},
+      {"area": "Isle of Anglesey", "pop": 70},
+      {"area": "Blaenau Gwent", "pop": 70},
+      {"area": "Merthyr Tydfil", "pop": 60}
     ]
   },
-  "mark": {
-    "type": "bar",
-    "cornerRadiusEnd": 4
-  },
+  "mark": "bar",
   "encoding": {
-    "y": {
-      "field": "local_authority",
-      "type": "nominal",
-      "sort": "-x",
-      "axis": {
-        "title": null,
-        "labelFontSize": 12
-      }
-    },
-    "x": {
-      "field": "population",
-      "type": "quantitative",
-      "axis": {
-        "title": "Population (thousands)",
-        "titleFontSize": 14,
-        "labelFontSize": 12
-      }
-    },
-    "color": {
-      "field": "population",
-      "type": "quantitative",
-      "scale": {
-        "scheme": "blues",
-        "domain": [60, 370]
-      },
-      "legend": {
-        "title": "Population (thousands)",
-        "orient": "bottom",
-        "titleFontSize": 14,
-        "labelFontSize": 13,
-        "gradientLength": 300
-      }
-    },
+    "y": {"field": "area", "type": "nominal", "sort": "-x", "title": null},
+    "x": {"field": "pop", "type": "quantitative", "title": "Population (thousands)"},
+    "color": {"field": "pop", "type": "quantitative", "scale": {"scheme": "blues"}},
     "tooltip": [
-      {"field": "local_authority", "type": "nominal", "title": "Local Authority"},
-      {"field": "population", "type": "quantitative", "title": "Population (thousands)", "format": ","}
+      {"field": "area", "title": "Local Authority"},
+      {"field": "pop", "title": "Population (thousands)"}
     ]
   }
 }

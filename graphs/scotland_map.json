@@ -1,86 +1,32 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
-  "height": 700,
-  "title": {
-    "text": "Tourist Attractions in Scotland",
-    "fontSize": 20,
-    "anchor": "middle",
-    "offset": 10
-  },
+  "width": 500,
+  "height": 600,
+  "title": "Tourist Attractions in Scotland",
   "data": {
     "values": [
-      {"name": "Edinburgh Castle", "latitude": 55.9486, "longitude": -3.1999, "visitors_thousands": 2200, "type": "Historic"},
-      {"name": "Loch Ness", "latitude": 57.3229, "longitude": -4.4244, "visitors_thousands": 500, "type": "Natural"},
-      {"name": "Stirling Castle", "latitude": 56.1164, "longitude": -3.9486, "visitors_thousands": 650, "type": "Historic"},
-      {"name": "Glasgow Science Centre", "latitude": 55.8593, "longitude": -4.2943, "visitors_thousands": 450, "type": "Museum"},
-      {"name": "Isle of Skye", "latitude": 57.2736, "longitude": -6.2155, "visitors_thousands": 800, "type": "Natural"},
-      {"name": "St Andrews", "latitude": 56.3398, "longitude": -2.7967, "visitors_thousands": 300, "type": "Historic"},
-      {"name": "Ben Nevis", "latitude": 56.7969, "longitude": -5.0036, "visitors_thousands": 150, "type": "Natural"},
-      {"name": "Kelvingrove Museum", "latitude": 55.8689, "longitude": -4.2752, "visitors_thousands": 1500, "type": "Museum"},
-      {"name": "Rosslyn Chapel", "latitude": 55.8551, "longitude": -3.1594, "visitors_thousands": 180, "type": "Historic"},
-      {"name": "Glenfinnan Viaduct", "latitude": 56.8740, "longitude": -5.4321, "visitors_thousands": 400, "type": "Historic"}
+      {"name": "Edinburgh Castle", "lat": 55.9486, "lon": -3.1999, "visitors": 2200, "type": "Historic"},
+      {"name": "Loch Ness", "lat": 57.3229, "lon": -4.4244, "visitors": 500, "type": "Natural"},
+      {"name": "Stirling Castle", "lat": 56.1164, "lon": -3.9486, "visitors": 650, "type": "Historic"},
+      {"name": "Glasgow Science Centre", "lat": 55.8593, "lon": -4.2943, "visitors": 450, "type": "Museum"},
+      {"name": "Isle of Skye", "lat": 57.2736, "lon": -6.2155, "visitors": 800, "type": "Natural"},
+      {"name": "St Andrews", "lat": 56.3398, "lon": -2.7967, "visitors": 300, "type": "Historic"},
+      {"name": "Ben Nevis", "lat": 56.7969, "lon": -5.0036, "visitors": 150, "type": "Natural"},
+      {"name": "Kelvingrove Museum", "lat": 55.8689, "lon": -4.2752, "visitors": 1500, "type": "Museum"},
+      {"name": "Rosslyn Chapel", "lat": 55.8551, "lon": -3.1594, "visitors": 180, "type": "Historic"},
+      {"name": "Glenfinnan Viaduct", "lat": 56.8740, "lon": -5.4321, "visitors": 400, "type": "Historic"}
     ]
   },
-  "mark": {
-    "type": "circle",
-    "opacity": 0.9,
-    "stroke": "white",
-    "strokeWidth": 2.5
-  },
+  "mark": "circle",
   "encoding": {
-    "longitude": {
-      "field": "longitude",
-      "type": "quantitative",
-      "scale": {"domain": [-8, -1.5]}
-    },
-    "latitude": {
-      "field": "latitude",
-      "type": "quantitative",
-      "scale": {"domain": [54.5, 61]}
-    },
-    "size": {
-      "field": "visitors_thousands",
-      "type": "quantitative",
-      "scale": {
-        "domain": [100, 2500],
-        "range": [300, 2500]
-      },
-      "legend": {
-        "title": "Annual Visitors (thousands)",
-        "orient": "right",
-        "titleFontSize": 14,
-        "labelFontSize": 13,
-        "symbolSize": 200
-      }
-    },
-    "color": {
-      "field": "type",
-      "type": "nominal",
-      "scale": {
-        "domain": ["Historic", "Natural", "Museum"],
-        "range": ["#e74c3c", "#27ae60", "#3498db"]
-      },
-      "legend": {
-        "title": "Attraction Type",
-        "orient": "right",
-        "titleFontSize": 14,
-        "labelFontSize": 13,
-        "symbolSize": 200,
-        "symbolType": "circle"
-      }
-    },
+    "x": {"field": "lon", "type": "quantitative", "title": "Longitude"},
+    "y": {"field": "lat", "type": "quantitative", "title": "Latitude"},
+    "size": {"field": "visitors", "type": "quantitative", "title": "Visitors (thousands)"},
+    "color": {"field": "type", "type": "nominal", "title": "Type"},
     "tooltip": [
-      {"field": "name", "type": "nominal", "title": "Attraction"},
-      {"field": "type", "type": "nominal", "title": "Type"},
-      {"field": "visitors_thousands", "type": "quantitative", "title": "Annual Visitors (thousands)", "format": ","}
+      {"field": "name", "title": "Attraction"},
+      {"field": "type", "title": "Type"},
+      {"field": "visitors", "title": "Visitors (thousands)"}
     ]
-  },
-  "config": {
-    "view": {
-      "stroke": "#b8d4e0",
-      "strokeWidth": 2,
-      "fill": "#e8f4f8"
-    }
   }
 }
