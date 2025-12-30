@@ -81,12 +81,16 @@
 .chart-wrapper{
   width: 100%;
   max-width: 100%;
-  overflow-x: auto; /* if chart is wider than container, keep it visible */
+  overflow-x: auto;
 }
 
+/* Ensure the chart occupies layout space and doesn't overlap text below */
 .vega-container{
   width: 100%;
-  min-height: 280px; /* prevents a collapsed container from looking "blank" */
+  min-height: 280px;
+  margin-bottom: 14px;     /* critical: gives breathing room before Source/Note */
+  position: relative;      /* establishes stacking context */
+  z-index: 0;
 }
 /* ------------------------------------------------------------------- */
 
@@ -137,7 +141,13 @@
   font-weight: 600;
 }
 
-/* ===== Vega-Embed hardening (prevents “renders but invisible”) ===== */
+/* ===== Vega-Embed hardening (prevents “renders but invisible” + overlap) ===== */
+.vega-embed{
+  width: 100%;
+  position: relative;  /* prevents absolute-position overlap weirdness */
+  z-index: 0;
+}
+
 .vega-embed,
 .vega-embed > div,
 .vega-embed canvas,
@@ -145,12 +155,17 @@
   max-width: 100%;
 }
 
-.vega-embed{
-  width: 100%;
-}
-
 .vega-embed canvas,
 .vega-embed svg{
-  display: block; /* avoid inline gaps/overflow quirks */
+  display: block;
+  position: relative;
+  z-index: 0;
+}
+
+/* Make sure text below charts stays above if any stacking occurs */
+.chart-source,
+.chart-note{
+  position: relative;
+  z-index: 1;
 }
 /* ================================================================ */

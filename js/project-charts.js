@@ -114,8 +114,8 @@
       "width": "container",
       "height": 360,
 
-      // Leave room for x-axis label and keep labels inside plot
-      "padding": { "left": 6, "right": 6, "top": 10, "bottom": 42 },
+      // Extra right padding keeps end-labels INSIDE the plot
+      "padding": { "left": 6, "right": 70, "top": 10, "bottom": 42 },
       "autosize": { "type": "fit", "contains": "padding" },
 
       "transform": [
@@ -137,7 +137,7 @@
           }
         },
 
-        // Gap shading (slightly visible, not too strong)
+        // Gap shading
         {
           "mark": { "type": "area", "opacity": 0.14 },
           "encoding": {
@@ -158,7 +158,7 @@
           }
         },
 
-        // Lines/points (consistent size, more solid)
+        // Lines + points (SAME strokeWidth, SAME point size, high opacity)
         {
           "transform": [
             { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
@@ -169,7 +169,7 @@
           ],
           "layer": [
             {
-              "mark": { "type": "line", "strokeWidth": 2.8, "opacity": 0.95 },
+              "mark": { "type": "line", "strokeWidth": 2.8, "opacity": 0.97 },
               "encoding": {
                 "x": {
                   "field": "d",
@@ -195,7 +195,7 @@
               }
             },
             {
-              "mark": { "type": "point", "filled": true, "size": 38, "opacity": 0.95 },
+              "mark": { "type": "point", "filled": true, "size": 38, "opacity": 0.97 },
               "encoding": {
                 "x": { "field": "d", "type": "temporal" },
                 "y": { "field": "yval", "type": "quantitative" },
@@ -213,41 +213,33 @@
           ]
         },
 
-        // Inside-the-plot labels (placed near the end but inside bounds)
+        // Label layer 1: CPIH (prices) label INSIDE plot, offset up a bit
         {
           "transform": [
-            { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
-            {
-              "calculate": "datum.line_key === 'prices' ? 'CPIH (prices)' : 'Real earnings'",
-              "as": "line_label"
-            },
-            // take the most recent point for each line
-            { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }], "groupby": ["line_label"] },
-            { "filter": "datum.r === 1" },
-            // shift labels slightly left so they stay inside plot
-            { "calculate": "datum.d", "as": "label_date" }
+            { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }] },
+            { "filter": "datum.r === 1" }
           ],
-          "mark": {
-            "type": "text",
-            "align": "right",
-            "baseline": "middle",
-            "dx": -10,
-            "fontSize": 12,
-            "fontWeight": "bold"
-          },
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 10, "dy": -10, "fontSize": 12, "fontWeight": "bold", "opacity": 0.95 },
           "encoding": {
-            "x": { "field": "label_date", "type": "temporal" },
-            "y": { "field": "yval", "type": "quantitative" },
-            "text": { "field": "line_label" },
-            "color": {
-              "field": "line_label",
-              "type": "nominal",
-              "scale": {
-                "domain": ["CPIH (prices)", "Real earnings"],
-                "range": ["#1f77b4", "#ff7f0e"]
-              },
-              "legend": null
-            }
+            "x": { "field": "d", "type": "temporal" },
+            "y": { "field": "prices", "type": "quantitative" },
+            "text": { "value": "CPIH (prices)" },
+            "color": { "value": "#1f77b4" }
+          }
+        },
+
+        // Label layer 2: Real earnings label INSIDE plot, offset down a bit (prevents overlap)
+        {
+          "transform": [
+            { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }] },
+            { "filter": "datum.r === 1" }
+          ],
+          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 10, "dy": 12, "fontSize": 12, "fontWeight": "bold", "opacity": 0.95 },
+          "encoding": {
+            "x": { "field": "d", "type": "temporal" },
+            "y": { "field": "earnings", "type": "quantitative" },
+            "text": { "value": "Real earnings" },
+            "color": { "value": "#ff7f0e" }
           }
         }
       ],
