@@ -1,216 +1,171 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+/* Project-specific styles */
 
-  <title>Project | Yolwin Pariaton</title>
-  <meta name="description" content="Project page: UK cost of living crisis. Eight interactive charts built with automated open data workflows." />
-  <meta name="author" content="Yolwin Pariaton" />
+/* Landing-style hero with background image (like portfolio) */
+.hero--project{
+  position: relative;
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  background: url("../images/living_cost.jpg") center/cover no-repeat;
+}
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/project.css" />
+.project-container{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
 
-  <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+.project-intro{
+  margin: 40px 0;
+}
 
-  <script defer src="js/project-charts.js?v=2025-03-01"></script>
-</head>
+.key-metrics{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
 
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
+.metric{
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
 
-  <header class="site-header" id="top">
-    <nav class="nav" aria-label="Primary">
-      <div class="nav__brand">
-        <a class="nav__home" href="index.html">Yolwin Pariaton</a>
-      </div>
+.metric-value{
+  display: block;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: var(--accent);
+}
 
-      <input class="nav__checkbox" type="checkbox" id="navToggleProject" />
-      <label class="nav__toggle" for="navToggleProject" aria-label="Toggle navigation">☰</label>
+.metric-label{
+  display: block;
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: var(--muted);
+}
 
-      <ul class="nav__menu">
-        <li><a class="nav__link" href="index.html">Home</a></li>
-        <li><a class="nav__link" href="project.html" aria-current="page">Project</a></li>
-        <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
-      </ul>
-    </nav>
+.project-section{
+  margin: 50px 0;
+}
 
-    <section class="hero hero--project" aria-label="Project intro">
-      <div class="hero__overlay"></div>
-      <div class="hero__center">
-        <h1 class="hero__title">UK Cost of Living Crisis</h1>
-        <p class="hero__subtitle">Automated data pipeline and interactive visualisations</p>
-      </div>
-    </section>
-  </header>
+.project-section h2{
+  color: var(--navy);
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
 
-  <main id="main">
-    <section class="white-space" aria-label="Project content">
-      <div class="container">
+.project-section p{
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
 
-        <section class="task">
-          <h2>Aims</h2>
-          <p>
-            This project examines whether household resources kept pace with rising living costs in the UK, focusing on the inflation surge
-            and the distribution of pressure across energy, food, transport, and housing. The aim is to connect a clear empirical question
-            (“did pay keep up with prices?”) to transparent data sources and reproducible outputs.
-          </p>
+.chart-section{
+  margin: 40px 0;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
-          <h2>Data</h2>
-          <p>
-            Data are sourced from open UK statistics (ONS) and public administrative releases. The workflow is replicable: cleaned CSV and JSON
-            outputs are stored in <code>/data</code>. Visualisations use the JSON outputs directly.
-          </p>
+.chart-section h3{
+  margin-bottom: 20px;
+  color: var(--navy);
+}
 
-          <h2>Tools &amp; Methods</h2>
-          <p>
-            Data processing is performed in Python with automated downloads and cleaning steps. Visualisations are produced using Vega-Lite and embedded as interactive charts.
-          </p>
+/* Chart wrapper: do NOT scroll; charts should fit the card */
+.chart-wrapper{
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
 
-          <h2>Conclusions</h2>
-          <p>
-            The indicators show a consistent purchasing-power squeeze during the inflation surge, with energy and housing contributing strongly to
-            pressure on household budgets.
-          </p>
-        </section>
+/* Vega container: prevents canvas from spilling outside the rounded card */
+.vega-container{
+  width: 100%;
+  min-height: 280px;
+  display: block;
+  margin-bottom: 14px;
+  overflow: hidden; /* IMPORTANT: keeps chart inside the card/frame */
+}
 
-        <!-- 1 -->
-        <section class="task">
-          <h2>1) Prices vs pay: CPIH and real earnings (indexed)</h2>
-          <p>
-            A core test of “cost of living” is whether pay keeps up with prices. This chart indexes CPIH and real earnings to a common baseline to show the relative path.
-          </p>
+/* Source/notes are outside the plotting area (HTML text) */
+.chart-source{
+  margin: 6px 0 0;
+  color: #333;
+}
 
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis1" class="vega-container"></div>
-            </div>
+.chart-note{
+  margin: 6px 0 0;
+  color: #555;
+  font-style: italic;
+}
 
-            <p class="chart-source">Source: ONS CPIH and ONS AWE real pay. File(s): data/vis1_prices_vs_pay.json.</p>
-            <p class="chart-note">Note: The y-axis is zoomed (98–114) rather than starting at zero to make differences between prices and pay visible.</p>
-          </div>
-        </section>
+/* ===== Vega-Embed hardening ===== */
+.vega-embed{
+  width: 100%;
+}
 
-        <!-- 2 -->
-        <section class="task">
-          <h2>2) Food inflation vs headline inflation</h2>
-          <p>Food is a high-salience component of household budgets. This chart compares food inflation with headline inflation over time.</p>
+.vega-embed,
+.vega-embed > div,
+.vega-embed canvas,
+.vega-embed svg{
+  max-width: 100%;
+}
 
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis2" class="vega-container"></div>
-            </div>
-            <p class="chart-source">Source: ONS CPI food component and CPIH. File(s): data/vis2_food_vs_headline.json.</p>
-          </div>
-        </section>
+.vega-embed canvas,
+.vega-embed svg{
+  display: block;
+}
+/* =============================== */
 
-        <!-- 3 -->
-        <section class="task">
-          <h2>3) Energy price cap (typical annual bill)</h2>
-          <p>Energy bills were a major driver of the crisis. The energy price cap indicates typical annual costs faced by households.</p>
+.chart-description{
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: var(--muted);
+  font-style: italic;
+}
 
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis3" class="vega-container"></div>
-            </div>
-            <p class="chart-source">Source: Ofgem price cap releases. File(s): data/vis3_energy_cap.json.</p>
-          </div>
-        </section>
+.project-links{
+  margin: 50px 0;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
 
-        <!-- 4 -->
-        <section class="task">
-          <h2>4) Weekly fuel prices</h2>
-          <p>Transport costs rose sharply during the post-pandemic recovery and global energy shock. Weekly fuel prices show the timing of these peaks.</p>
+.link-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
 
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis4" class="vega-container"></div>
-            </div>
-            <p class="chart-source">Source: UK fuel price statistics. File(s): data/vis4_fuel_weekly.json.</p>
-          </div>
-        </section>
+.resource-link{
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-        <!-- 5 -->
-        <section class="task">
-          <h2>5) Rent vs house price inflation</h2>
-          <p>Housing costs are persistent and unevenly distributed. This chart compares rent inflation with house price inflation.</p>
+.resource-link:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
 
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis5" class="vega-container"></div>
-            </div>
-            <p class="chart-source">Source: ONS housing indicators. File(s): data/vis5_rent_vs_house.json.</p>
-          </div>
-        </section>
+.link-icon{
+  font-size: 1.5em;
+  margin-right: 10px;
+}
 
-        <!-- 6 -->
-        <section class="task">
-          <h2>6) Map: Rent inflation across English regions</h2>
-          <p>The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.</p>
-
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis6" class="vega-container"></div>
-            </div>
-            <p class="chart-source">Source: ONS rent inflation (regional). File(s): data/vis6_rent_map_regions.json.</p>
-          </div>
-        </section>
-
-        <!-- 7 -->
-        <section class="task">
-          <h2>7) Rent inflation over time (interactive)</h2>
-          <p>Use the selector to examine how rent inflation evolved across regions compared with England overall.</p>
-
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis7" class="vega-container"></div>
-            </div>
-            <p class="chart-source">Source: ONS rent inflation (regional time series). File(s): data/vis7_rent_trend_regions.json.</p>
-          </div>
-        </section>
-
-        <!-- 8 -->
-        <section class="task">
-          <h2>8) Map: Rent inflation across UK countries</h2>
-          <p>This map compares rent inflation across the four nations of the UK.</p>
-
-          <div class="chart-wrapper">
-            <div class="chart-frame">
-              <div id="vis8" class="vega-container"></div>
-            </div>
-            <p class="chart-source">Source: ONS rent inflation (countries). File(s): data/vis8_rent_map_countries.json.</p>
-          </div>
-        </section>
-
-        <div class="back-top">
-          <a class="btn btn--flat" href="#top">Back to top</a>
-        </div>
-
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer" aria-label="Footer">
-    <div class="container footer__grid footer__grid--centered">
-      <div>
-        <h3 class="footer__title">Contact</h3>
-        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
-      </div>
-
-      <div>
-        <h3 class="footer__title">Links</h3>
-        <p><a href="https://github.com/yolwinpariaton" target="_blank" rel="noopener">GitHub</a></p>
-        <p><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></p>
-      </div>
-
-      <div>
-        <h3 class="footer__title">About</h3>
-        <p>Built for the LSE Automated Data Visualisation Course.</p>
-        <p>© 2025 Yolwin Pariaton</p>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+.link-text{
+  color: var(--text);
+  font-weight: 600;
+}
