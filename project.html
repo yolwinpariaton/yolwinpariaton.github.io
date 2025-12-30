@@ -11,12 +11,10 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/project.css" />
 
-  <!-- Vega libraries (defer preserves order; executes after HTML parse) -->
   <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Your charts script -->
   <script defer src="js/project-charts.js?v=2025-03-01"></script>
 </head>
 
@@ -86,13 +84,14 @@
           </p>
 
           <div class="chart-wrapper">
+            <!-- chart frame ONLY -->
             <div class="chart-frame">
               <div id="vis1" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">Data: ONS CPIH and ONS AWE real pay. File(s): data/vis1_prices_vs_pay.json.</p>
-              <p class="chart-note">Note: The y-axis is zoomed (98–114) rather than starting at zero to make differences between prices and pay visible.</p>
-            </div>
+
+            <!-- meta OUTSIDE frame -->
+            <p class="chart-source">Data: ONS CPIH and ONS AWE real pay. File(s): data/vis1_prices_vs_pay.json.</p>
+            <p class="chart-note">Note: The y-axis is zoomed (98–114) rather than starting at zero to make differences between prices and pay visible.</p>
           </div>
         </section>
 
@@ -105,9 +104,7 @@
             <div class="chart-frame">
               <div id="vis2" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">File(s): data/vis2_food_vs_headline.json.</p>
-            </div>
+            <p class="chart-source">File(s): data/vis2_food_vs_headline.json.</p>
           </div>
         </section>
 
@@ -120,9 +117,7 @@
             <div class="chart-frame">
               <div id="vis3" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">File(s): data/vis3_energy_cap.json.</p>
-            </div>
+            <p class="chart-source">File(s): data/vis3_energy_cap.json.</p>
           </div>
         </section>
 
@@ -135,9 +130,7 @@
             <div class="chart-frame">
               <div id="vis4" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">File(s): data/vis4_fuel_weekly.json.</p>
-            </div>
+            <p class="chart-source">File(s): data/vis4_fuel_weekly.json.</p>
           </div>
         </section>
 
@@ -150,9 +143,7 @@
             <div class="chart-frame">
               <div id="vis5" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">File(s): data/vis5_rent_vs_house.json.</p>
-            </div>
+            <p class="chart-source">File(s): data/vis5_rent_vs_house.json.</p>
           </div>
         </section>
 
@@ -165,9 +156,7 @@
             <div class="chart-frame">
               <div id="vis6" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">File(s): data/vis6_rent_map_regions.json.</p>
-            </div>
+            <p class="chart-source">File(s): data/vis6_rent_map_regions.json.</p>
           </div>
         </section>
 
@@ -180,9 +169,7 @@
             <div class="chart-frame">
               <div id="vis7" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">File(s): data/vis7_rent_trend_regions.json.</p>
-            </div>
+            <p class="chart-source">File(s): data/vis7_rent_trend_regions.json.</p>
           </div>
         </section>
 
@@ -195,9 +182,7 @@
             <div class="chart-frame">
               <div id="vis8" class="vega-container"></div>
             </div>
-            <div class="chart-meta">
-              <p class="chart-source">File(s): data/vis8_rent_map_countries.json.</p>
-            </div>
+            <p class="chart-source">File(s): data/vis8_rent_map_countries.json.</p>
           </div>
         </section>
 

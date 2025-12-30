@@ -100,10 +100,10 @@
     if (checks.some((ok) => !ok)) return;
 
     // =========================
-    // 1) Prices vs pay (FINAL FIX)
-    // - Remove all end-of-line labels (no text marks)
-    // - Use a top legend (below subtitle)
-    // - Add dotted baseline at 100 (subtle, not black)
+    // 1) Prices vs pay
+    // - Legend centered under subtitle
+    // - No source/note in chart (those belong in HTML outside the frame)
+    // - Dotted baseline at 100 (subtle)
     // =========================
     const vis1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -117,8 +117,8 @@
       "width": "container",
       "height": 360,
 
-      // Keep enough bottom padding for x-axis title, but no extra right padding
-      "padding": { "left": 6, "right": 6, "top": 8, "bottom": 46 },
+      // Extra bottom padding so x-axis title “Date” never gets cut
+      "padding": { "left": 6, "right": 6, "top": 8, "bottom": 48 },
       "autosize": { "type": "fit", "contains": "padding" },
 
       "transform": [
@@ -136,7 +136,7 @@
           "mark": {
             "type": "rule",
             "strokeDash": [4, 4],
-            "strokeWidth": 1.5,
+            "strokeWidth": 1.6,
             "opacity": 0.75
           },
           "encoding": {
@@ -166,7 +166,7 @@
           }
         },
 
-        // Lines + points with legend (NO text labels anywhere)
+        // Lines + points with centered legend
         {
           "transform": [
             { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
@@ -197,10 +197,12 @@
                     "title": null,
                     "orient": "top",
                     "direction": "horizontal",
+                    "anchor": "middle",
                     "labelFontSize": 12,
                     "symbolType": "stroke",
                     "symbolStrokeWidth": 4,
-                    "symbolSize": 180
+                    "symbolSize": 180,
+                    "offset": 6
                   }
                 },
                 "tooltip": [
