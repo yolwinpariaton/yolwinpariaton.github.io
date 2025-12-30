@@ -52,10 +52,10 @@
           "legend": {
             "title": "Annual Visitors",
             "format": ".0s",
-            "orient": "right",
-            "offset": 60,
-            "symbolFillColor": "#6c757d",
-            "labelFontSize": 11
+            "orient": "bottom",
+            "direction": "horizontal",
+            "labelFontSize": 11,
+            "offset": 10
           }
         },
         "color": {
