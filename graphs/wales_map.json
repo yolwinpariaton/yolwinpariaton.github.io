@@ -7,20 +7,24 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
+
   "width": 300,
   "height": 450,
   "padding": {"top": 10, "right": 10, "bottom": 10, "left": 10},
+  "autosize": {"type": "pad", "contains": "padding"},
 
   "data": {
     "url": "https://raw.githubusercontent.com/jhellingsdata/RADataHub/refs/heads/main/MappingWorkshop/geo_data/LAD_WLS_2025_05.topojson",
     "format": {"type": "topojson", "feature": "object_name"}
   },
+
   "projection": {
     "type": "mercator",
     "center": [-4.45, 52.3],
     "scale": 5300,
     "translate": [150, 215]
   },
+
   "transform": [
     {
       "lookup": "properties.LAD25CD",
@@ -33,12 +37,14 @@
       }
     }
   ],
+
   "mark": {
     "type": "geoshape",
     "stroke": "white",
     "strokeWidth": 0.8,
     "clip": false
   },
+
   "encoding": {
     "color": {
       "field": "Data values",
@@ -61,6 +67,7 @@
       {"field": "Data values", "title": "Enterprises", "format": ","}
     ]
   },
+
   "config": {
     "view": {"stroke": "transparent"},
     "background": "transparent"
