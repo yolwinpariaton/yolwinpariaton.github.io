@@ -2,13 +2,12 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Regional cost of living choropleth across the UK (NUTS1-style regions)",
 
-  "autosize": { "type": "fit", "contains": "padding" },
-
+  "autosize": { "type": "fit-x", "contains": "padding" },
   "signals": [
-    { "name": "width", "update": "containerSize()[0]" },
-    { "name": "height", "update": "containerSize()[1]" }
+    { "name": "width", "update": "containerSize()[0]" }
   ],
 
+  "height": 520,
   "padding": { "top": 10, "left": 10, "right": 10, "bottom": 10 },
   "background": "transparent",
 
@@ -24,7 +23,7 @@
     {
       "name": "regions",
       "url": "uk_regions.geojson",
-      "format": { "type": "geojson" }
+      "format": { "type": "json", "property": "features" }
     },
     {
       "name": "econ",
