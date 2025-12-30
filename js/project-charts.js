@@ -13,50 +13,84 @@
 */
 
 (function () {
-  // Ensure Vega libraries are present
-  function libsReady() {
-    return typeof vegaEmbed === "function";
-  }
-
-  // Build an absolute URL reliably (works whether you're on / or /docs/ etc.)
-  function absUrl(relativePath) {
-    return new URL(relativePath, document.baseURI).toString();
-  }
-
-  // Centralised data path builder
-  function dataUrl(filename) {
-    return absUrl(`data/${filename}`);
-  }
+  const opts = { actions: false, renderer: "canvas" };
 
   // Stable TopoJSON from ONSdigital/uk-topojson (contains layers: uk, ctry, rgn, ...)
-  const UK_TOPO_URL = "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
+  const UK_TOPO_URL =
+    "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
 
-  const opts = { actions: false, renderer: "canvas" };
+  function setError(el, title, details) {
+    if (!el) return;
+    el.innerHTML =
+      `<div style="padding:10px;border:1px solid #ddd;border-radius:10px;">
+        <p style="margin:0 0 6px;"><strong>${title}</strong></p>
+        <p style="margin:0;color:#555;">${details}</p>
+      </div>`;
+  }
 
   function safeEmbed(selector, spec, debugName) {
     const el = document.querySelector(selector);
     if (!el) return;
 
-    if (!libsReady()) {
-      el.innerHTML =
-        "<p>Chart libraries not loaded. Check Vega/Vega-Lite/Vega-Embed script tags.</p>";
+цый
+
+    // Library presence checks
+    if (typeof vegaEmbed !== "function") {
+      setError(
+        el,
+        "Chart libraries not loaded",
+        "Vega/Vega-Lite/Vega-Embed did not load. Check your <script> tags in the HTML head."
+      );
       return;
     }
 
     vegaEmbed(selector, spec, opts).catch((err) => {
       console.error("Vega embed error for", selector, err);
-      const hint =
-        (debugName ? `<p><strong>Chart:</strong> ${debugName}</p>` : "") +
-        `<p><strong>Page:</strong> ${document.baseURI}</p>`;
-      el.innerHTML =
-        `<div style="padding:10px;border:1px solid #ddd;border-radius:8px;">
-           <p><strong>Chart failed to load.</strong> Open DevTools Console for details.</p>
-           ${hint}
-         </div>`;
+      setError(
+        el,
+        "Chart failed to render",
+        `Open DevTools Console. Chart: ${debugName || selector}. Page: ${document.baseURI}`
+      );
     });
   }
 
-  function run() {
+  async function checkJsonAvailable(url, selector, name) {
+    const el = document.querySelector(selector);
+    if (!el) return false;
+
+    // If user opened via file://, fetch will usually fail. Make this explicit.
+    if (window.location.protocol === "file:") {
+      setError(
+        el,
+        "Charts cannot load from file://",
+        "Open this site through GitHub Pages or a local server (e.g., VS Code Live Server). Browsers block loading data/*.json from file://."
+      );
+      return false;
+    }
+
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) {
+        setError(
+          el,
+          "Data file not found",
+          `Could not load ${name}: ${url} (HTTP ${res.status}). Check that the file is in /data and pushed to GitHub.`
+        );
+        return false;
+      }
+      return true;
+    } catch (e) {
+      console.error("Fetch error for", url, e);
+      setError(
+        el,
+        "Could not fetch data",
+        `Failed to fetch ${name}: ${url}. Check console for details.`
+      );
+      return false;
+    }
+  }
+
+  async function run() {
     // 1) Prices vs pay (indexed) — stable, clean, correct x-axis title, no legend
     const vis1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -64,7 +98,7 @@
         "text": "Prices vs pay (indexed to 2019 = 100)",
         "subtitle": "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
       },
-      "data": { "url": dataUrl("vis1_prices_vs_pay.json") },
+      "data": { "url": "data/vis1_prices_vs_pay.json" },
       "width": "container",
       "height": 360,
       "transform": [
@@ -134,11 +168,11 @@
       }
     };
 
-    // 2) Food vs headline (your current version; if you want the polished one, tell me and I’ll swap it in)
+    // 2) Food vs headline
     const vis2 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Food inflation vs headline (annual rate)" },
-      "data": { "url": dataUrl("vis2_food_vs_headline.json") },
+      "data": { "url": "data/vis2_food_vs_headline.json" },
       "width": "container",
       "height": 320,
       "mark": { "type": "line", "point": true },
@@ -158,7 +192,7 @@
     const vis3 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Energy price cap (typical annual bill)" },
-      "data": { "url": dataUrl("vis3_energy_cap.json") },
+      "data": { "url": "data/vis3_energy_cap.json" },
       "width": "container",
       "height": 280,
       "mark": { "type": "line", "interpolate": "step-after", "point": true },
@@ -176,7 +210,7 @@
     const vis4 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Weekly fuel prices (pence per litre)" },
-      "data": { "url": dataUrl("vis4_fuel_weekly.json") },
+      "data": { "url": "data/vis4_fuel_weekly.json" },
       "width": "container",
       "height": 320,
       "transform": [{ "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel", "ppl"] }],
@@ -197,7 +231,7 @@
     const vis5 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Rent vs house price inflation (annual rate)" },
-      "data": { "url": dataUrl("vis5_rent_vs_house.json") },
+      "data": { "url": "data/vis5_rent_vs_house.json" },
       "width": "container",
       "height": 320,
       "mark": { "type": "line" },
@@ -227,7 +261,7 @@
         {
           "lookup": "properties.areacd",
           "from": {
-            "data": { "url": dataUrl("vis6_rent_map_regions.json") },
+            "data": { "url": "data/vis6_rent_map_regions.json" },
             "key": "areacd",
             "fields": ["areanm", "rent_inflation_yoy_pct"]
           }
@@ -253,7 +287,7 @@
     const vis7 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": { "text": "Rent inflation over time (select a region)" },
-      "data": { "url": dataUrl("vis7_rent_trend_regions.json") },
+      "data": { "url": "data/vis7_rent_trend_regions.json" },
       "width": "container",
       "height": 320,
       "params": [
@@ -322,7 +356,7 @@
         {
           "lookup": "properties.areacd",
           "from": {
-            "data": { "url": dataUrl("vis8_rent_map_countries.json") },
+            "data": { "url": "data/vis8_rent_map_countries.json" },
             "key": "areacd",
             "fields": ["areanm", "rent_inflation_yoy_pct"]
           }
@@ -344,6 +378,19 @@
       }
     };
 
+    // Pre-check local JSON availability (gives clear errors if 404 or file://)
+    const ok1 = await checkJsonAvailable("data/vis1_prices_vs_pay.json", "#vis1", "data/vis1_prices_vs_pay.json");
+    const ok2 = await checkJsonAvailable("data/vis2_food_vs_headline.json", "#vis2", "data/vis2_food_vs_headline.json");
+    const ok3 = await checkJsonAvailable("data/vis3_energy_cap.json", "#vis3", "data/vis3_energy_cap.json");
+    const ok4 = await checkJsonAvailable("data/vis4_fuel_weekly.json", "#vis4", "data/vis4_fuel_weekly.json");
+    const ok5 = await checkJsonAvailable("data/vis5_rent_vs_house.json", "#vis5", "data/vis5_rent_vs_house.json");
+    const ok6 = await checkJsonAvailable("data/vis6_rent_map_regions.json", "#vis6", "data/vis6_rent_map_regions.json");
+    const ok7 = await checkJsonAvailable("data/vis7_rent_trend_regions.json", "#vis7", "data/vis7_rent_trend_regions.json");
+    const ok8 = await checkJsonAvailable("data/vis8_rent_map_countries.json", "#vis8", "data/vis8_rent_map_countries.json");
+
+    // If any local file failed, do not attempt embedding (avoids confusing multiple errors)
+    if (!(ok1 && ok2 && ok3 && ok4 && ok5 && ok6 && ok7 && ok8)) return;
+
     // Embed all eight charts
     safeEmbed("#vis1", vis1, "vis1");
     safeEmbed("#vis2", vis2, "vis2");
@@ -355,6 +402,5 @@
     safeEmbed("#vis8", vis8, "vis8");
   }
 
-  // Run only after DOM is ready (extra safety even with defer)
   document.addEventListener("DOMContentLoaded", run);
 })();

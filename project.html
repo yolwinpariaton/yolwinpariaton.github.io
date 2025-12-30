@@ -10,16 +10,15 @@
 
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Load Vega libraries with defer so they execute after HTML is parsed (order is preserved). -->
+  <!-- Vega libraries (defer keeps order and ensures DOM is parsed before execution) -->
   <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Project charts script (defer ensures containers exist before execution). -->
+  <!-- Your chart script -->
   <script defer src="js/project-charts.js?v=2025-03-01"></script>
 
   <style>
-    /* Ensure the project hero uses living_cost.jpg */
     .hero--project {
       position: relative;
       background-image: url("images/living_cost.jpg");
@@ -29,7 +28,6 @@
       min-height: 360px;
     }
 
-    /* Fix "black shade" issue: make overlay lighter (and only over hero) */
     .hero--project .hero__overlay {
       position: absolute;
       inset: 0;
@@ -42,7 +40,6 @@
       z-index: 1;
     }
 
-    /* Footnote styling (not bold) */
     .chart-note{
       margin: 6px 0 0;
       color: #555;
@@ -50,9 +47,6 @@
       font-style: italic;
       font-weight: 400;
     }
-
-    /* Optional: make sure chart wrappers have room */
-    .chart-wrapper { width: 100%; }
   </style>
 </head>
 
@@ -70,8 +64,8 @@
 
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
-        <li><a class="nav__link" href="project.html">Project</a></li>
-        <li><a class="nav__link" href="portfolio.html" aria-current="page">Portfolio</a></li>
+        <li><a class="nav__link" href="project.html" aria-current="page">Project</a></li>
+        <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
       </ul>
     </nav>
 
