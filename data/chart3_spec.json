@@ -76,7 +76,7 @@
           "value": "#eef2ff"
         },
         "tooltip": [
-          { "field": "region", "title": "Region (data)" },
+          { "field": "region", "title": "Region" },
           { "field": "join_code", "title": "Boundary code" },
           { "field": "join_name", "title": "Boundary name" },
           { "field": "cost_index", "title": "Cost Index", "format": ".1f" },
@@ -114,8 +114,7 @@
         "color": { "value": "#111827" },
         "tooltip": [
           { "field": "region", "title": "Region" },
-          { "field": "code", "title": "Code" },
-          { "field": "population_m", "title": "Population (millions)", "format": ".2f" }
+          { "field": "code", "title": "Code" }
         ]
       }
     }
@@ -123,8 +122,6 @@
 
   "config": {
     "background": "transparent",
-    "view": { "stroke": "transparent" },
-    "title": { "fontSize": 14, "subtitleFontSize": 12, "anchor": "start" },
-    "legend": { "labelFontSize": 11, "titleFontSize": 12, "padding": 8 }
+    "view": { "stroke": "transparent" }
   }
 }
