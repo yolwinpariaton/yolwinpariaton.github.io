@@ -44,9 +44,9 @@
           "legend": {
             "title": "Annual Visitors",
             "format": ",",
-            "symbolFillColor": "#8b6914",
-            "orient": "bottom",
-            "direction": "horizontal"
+            "orient": "bottom-right",
+            "direction": "vertical",
+            "offset": 5
           }
         },
         "color": {
@@ -58,9 +58,9 @@
           },
           "legend": {
             "title": "Whisky Region",
-            "orient": "bottom",
-            "direction": "horizontal",
-            "symbolType": "circle"
+            "orient": "bottom-left",
+            "direction": "vertical",
+            "offset": 5
           }
         },
         "tooltip": [

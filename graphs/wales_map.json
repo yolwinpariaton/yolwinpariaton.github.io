@@ -12,45 +12,22 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
-        "format": {"type": "json", "property": "features"}
+        "url": "https://raw.githubusercontent.com/jhellingsdata/RADataHub/refs/heads/main/MappingWorkshop/geo_data/LAD_WLS_2025_05.topojson",
+        "format": {"type": "topojson", "feature": "object_name"}
       },
+      "projection": {"type": "mercator"},
       "transform": [
         {
-          "lookup": "properties.LAD21CD",
+          "lookup": "properties.LAD25CD",
           "from": {
             "data": {
-              "values": [
-                {"geo_id": "W06000001", "value": 2230, "name": "Isle of Anglesey"},
-                {"geo_id": "W06000002", "value": 4445, "name": "Gwynedd"},
-                {"geo_id": "W06000003", "value": 4190, "name": "Conwy"},
-                {"geo_id": "W06000004", "value": 3285, "name": "Denbighshire"},
-                {"geo_id": "W06000005", "value": 5360, "name": "Flintshire"},
-                {"geo_id": "W06000006", "value": 3990, "name": "Wrexham"},
-                {"geo_id": "W06000023", "value": 5830, "name": "Powys"},
-                {"geo_id": "W06000008", "value": 2900, "name": "Ceredigion"},
-                {"geo_id": "W06000009", "value": 4835, "name": "Pembrokeshire"},
-                {"geo_id": "W06000010", "value": 6315, "name": "Carmarthenshire"},
-                {"geo_id": "W06000011", "value": 7325, "name": "Swansea"},
-                {"geo_id": "W06000012", "value": 3220, "name": "Neath Port Talbot"},
-                {"geo_id": "W06000013", "value": 4045, "name": "Bridgend"},
-                {"geo_id": "W06000014", "value": 4715, "name": "Vale of Glamorgan"},
-                {"geo_id": "W06000015", "value": 13010, "name": "Cardiff"},
-                {"geo_id": "W06000016", "value": 6080, "name": "Rhondda Cynon Taf"},
-                {"geo_id": "W06000024", "value": 1360, "name": "Merthyr Tydfil"},
-                {"geo_id": "W06000018", "value": 4385, "name": "Caerphilly"},
-                {"geo_id": "W06000019", "value": 1435, "name": "Blaenau Gwent"},
-                {"geo_id": "W06000020", "value": 2760, "name": "Torfaen"},
-                {"geo_id": "W06000021", "value": 4080, "name": "Monmouthshire"},
-                {"geo_id": "W06000022", "value": 4625, "name": "Newport"}
-              ]
+              "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/wales_business.csv"
             },
             "key": "geo_id",
-            "fields": ["value", "name"]
+            "fields": ["Data values", "Area"]
           }
         }
       ],
-      "projection": {"type": "mercator"},
       "mark": {
         "type": "geoshape",
         "stroke": "white",
@@ -58,7 +35,7 @@
       },
       "encoding": {
         "color": {
-          "field": "value",
+          "field": "Data values",
           "type": "quantitative",
           "scale": {
             "scheme": "viridis",
@@ -69,12 +46,12 @@
             "format": ",",
             "orient": "bottom",
             "direction": "horizontal",
-            "gradientLength": 200
+            "gradientLength": 250
           }
         },
         "tooltip": [
-          {"field": "name", "title": "Local Authority"},
-          {"field": "value", "title": "Active Enterprises", "format": ","}
+          {"field": "Area", "title": "Local Authority"},
+          {"field": "Data values", "title": "Active Enterprises", "format": ","}
         ]
       }
     }
