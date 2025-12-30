@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 500,
-  "height": 600,
+  "width": 400,
+  "height": 500,
   "title": {
     "text": "Tourist Attractions in Scotland",
     "fontSize": 16
@@ -17,9 +17,9 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#e0f2f7",
-        "stroke": "white",
-        "strokeWidth": 1
+        "fill": "#dce8f0",
+        "stroke": "#8dabc4",
+        "strokeWidth": 0.5
       }
     },
     {
@@ -39,9 +39,9 @@
       },
       "mark": {
         "type": "circle",
-        "opacity": 0.9,
-        "stroke": "white",
-        "strokeWidth": 2
+        "opacity": 0.85,
+        "stroke": "#333",
+        "strokeWidth": 1.5
       },
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
@@ -49,8 +49,11 @@
         "size": {
           "field": "visitors",
           "type": "quantitative",
-          "scale": {"range": [100, 2000]},
-          "legend": {"title": "Annual Visitors (thousands)"}
+          "scale": {"range": [150, 1500]},
+          "legend": {
+            "title": "Annual Visitors (thousands)",
+            "orient": "bottom-right"
+          }
         },
         "color": {
           "field": "type",
@@ -59,12 +62,15 @@
             "domain": ["Historic", "Natural", "Museum"],
             "range": ["#e74c3c", "#27ae60", "#3498db"]
           },
-          "legend": {"title": "Type"}
+          "legend": {
+            "title": "Attraction Type",
+            "orient": "bottom-right"
+          }
         },
         "tooltip": [
           {"field": "name", "title": "Attraction"},
           {"field": "type", "title": "Type"},
-          {"field": "visitors", "title": "Visitors (thousands)"}
+          {"field": "visitors", "title": "Visitors (thousands)", "format": ","}
         ]
       }
     }
