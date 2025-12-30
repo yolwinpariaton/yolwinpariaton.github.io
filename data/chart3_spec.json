@@ -42,7 +42,15 @@
               "food_inflation",
               "population"
             ]
-          }
+          },
+          "as": [
+            "region_code",
+            "cost_index_code",
+            "rent_to_income_code",
+            "energy_burden_code",
+            "food_inflation_code",
+            "population_code"
+          ]
         },
 
         {
@@ -58,7 +66,40 @@
               "food_inflation",
               "population"
             ]
-          }
+          },
+          "as": [
+            "region_name",
+            "cost_index_name",
+            "rent_to_income_name",
+            "energy_burden_name",
+            "food_inflation_name",
+            "population_name"
+          ]
+        },
+
+        {
+          "calculate": "datum.region_code || datum.region_name || datum.join_name",
+          "as": "region"
+        },
+        {
+          "calculate": "datum.cost_index_code != null ? datum.cost_index_code : datum.cost_index_name",
+          "as": "cost_index"
+        },
+        {
+          "calculate": "datum.rent_to_income_code != null ? datum.rent_to_income_code : datum.rent_to_income_name",
+          "as": "rent_to_income"
+        },
+        {
+          "calculate": "datum.energy_burden_code != null ? datum.energy_burden_code : datum.energy_burden_name",
+          "as": "energy_burden"
+        },
+        {
+          "calculate": "datum.food_inflation_code != null ? datum.food_inflation_code : datum.food_inflation_name",
+          "as": "food_inflation"
+        },
+        {
+          "calculate": "datum.population_code != null ? datum.population_code : datum.population_name",
+          "as": "population"
         },
 
         { "calculate": "datum.population / 1000000", "as": "population_m" }
@@ -67,7 +108,7 @@
       "encoding": {
         "color": {
           "condition": {
-            "test": "isValid(datum.cost_index)",
+            "test": "isValid(datum.cost_index) && datum.cost_index != null",
             "field": "cost_index",
             "type": "quantitative",
             "scale": { "scheme": "reds" },
