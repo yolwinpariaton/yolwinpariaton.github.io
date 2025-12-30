@@ -18,8 +18,8 @@
       "projection": {"type": "mercator"},
       "mark": {
         "type": "geoshape",
-        "fill": "#f0f7f9",
-        "stroke": "#5a8ca8",
+        "fill": "#f8f9fa",
+        "stroke": "#adb5bd",
         "strokeWidth": 0.5
       }
     },
@@ -31,7 +31,7 @@
       "mark": {
         "type": "circle",
         "opacity": 0.8,
-        "stroke": "#333",
+        "stroke": "white",
         "strokeWidth": 1
       },
       "encoding": {
@@ -40,13 +40,13 @@
         "size": {
           "field": "annual_visitors",
           "type": "quantitative",
-          "scale": {"range": [100, 1500]},
+          "scale": {"range": [100, 1600]},
           "legend": {
             "title": "Annual Visitors",
             "format": ".0s",
             "orient": "right",
-            "offset": 40,
-            "symbolFillColor": "grey",
+            "offset": 30,
+            "symbolFillColor": "#6c757d",
             "labelFontSize": 11
           }
         },
@@ -55,14 +55,14 @@
           "type": "nominal",
           "scale": {
             "domain": ["Highlands", "Islay", "Isle of Skye", "Lowlands", "Orkney", "Speyside"],
-            "range": ["#e69f00", "#56b4e9", "#009e73", "#f0e442", "#0072b2", "#d55e00"]
+            "range": ["#440154", "#414487", "#2a788e", "#22a884", "#7ad151", "#fde725"]
           },
           "legend": {
             "title": "Whisky Region",
             "orient": "bottom",
             "columns": 3,
             "labelFontSize": 10,
-            "offset": 10
+            "offset": 15
           }
         },
         "tooltip": [
