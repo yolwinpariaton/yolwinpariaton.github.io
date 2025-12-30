@@ -16,7 +16,8 @@
   const opts = { actions: false, renderer: "canvas" };
 
   // Stable TopoJSON from ONSdigital/uk-topojson (contains layers: uk, ctry, rgn, ...)
-  const UK_TOPO_URL = "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
+  const UK_TOPO_URL =
+    "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
 
   function safeEmbed(selector, spec) {
     const el = document.querySelector(selector);
@@ -27,42 +28,184 @@
     });
   }
 
-  // 1) Prices vs pay (indexed)
+  // 1) Prices vs pay (indexed) — improved + gap shading + clean axes
   const vis1 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Prices vs pay (indexed)"},
-    "data": {"url":"data/vis1_prices_vs_pay.json"},
-    "width":"container",
-    "height":320,
-    "mark": {"type":"line","point":false},
-    "encoding": {
-      "x": {"field":"date","type":"temporal","title":"Date"},
-      "y": {"field":"value","type":"quantitative","title":"Index (baseline=100)"},
-      "color": {"field":"series","type":"nominal","title":""},
-      "tooltip": [
-        {"field":"date","type":"temporal"},
-        {"field":"series","type":"nominal"},
-        {"field":"value","type":"quantitative","format":".1f"}
-      ]
+    "title": {
+      "text": "Prices vs pay (indexed to 2019=100)",
+      "subtitle":
+        "Shaded area shows the gap: when prices run ahead of real earnings, purchasing power falls."
+    },
+    "data": { "url": "data/vis1_prices_vs_pay.json" },
+    "width": "container",
+    "height": 340,
+
+    "transform": [
+      { "calculate": "toDate(datum.date)", "as": "d" },
+      { "calculate": "toNumber(datum.value)", "as": "v" },
+
+      // Pivot so we can compute the gap and plot two clean lines + shaded area.
+      { "pivot": "series", "value": "v", "groupby": ["d"] },
+      { "calculate": "datum['CPIH (prices)'] - datum['Real earnings']", "as": "gap" }
+    ],
+
+    "params": [
+      {
+        "name": "hover",
+        "select": {
+          "type": "point",
+          "fields": ["d"],
+          "nearest": true,
+          "on": "mousemove",
+          "clear": "mouseout"
+        }
+      }
+    ],
+
+    "layer": [
+      // Baseline at 100
+      {
+        "mark": { "type": "rule" },
+        "encoding": {
+          "y": { "datum": 100 },
+          "color": { "value": "#777" },
+          "opacity": { "value": 0.35 }
+        }
+      },
+
+      // Gap shading (area between earnings and prices)
+      {
+        "mark": { "type": "area", "opacity": 0.18 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": {
+            "field": "Real earnings",
+            "type": "quantitative",
+            "scale": { "zero": false, "domain": [98, 114] }
+          },
+          "y2": { "field": "CPIH (prices)" }
+        }
+      },
+
+      // CPIH line
+      {
+        "mark": { "type": "line", "strokeWidth": 2.8 },
+        "encoding": {
+          "x": {
+            "field": "d",
+            "type": "temporal",
+            "title": "",
+            "axis": { "format": "%Y", "tickCount": 7, "labelPadding": 8 }
+          },
+          "y": {
+            "field": "CPIH (prices)",
+            "type": "quantitative",
+            "title": "Index (2019=100)",
+            "scale": { "zero": false, "domain": [98, 114] },
+            "axis": { "tickCount": 7, "grid": true }
+          },
+          "color": { "value": "#1f77b4" },
+          "opacity": {
+            "condition": { "param": "hover", "value": 1 },
+            "value": 0.9
+          }
+        }
+      },
+
+      // Real earnings line
+      {
+        "mark": { "type": "line", "strokeWidth": 2.8 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": {
+            "field": "Real earnings",
+            "type": "quantitative",
+            "scale": { "zero": false, "domain": [98, 114] }
+          },
+          "color": { "value": "#ff7f0e" },
+          "opacity": {
+            "condition": { "param": "hover", "value": 1 },
+            "value": 0.9
+          }
+        }
+      },
+
+      // Hover crosshair
+      {
+        "transform": [{ "filter": { "param": "hover" } }],
+        "mark": { "type": "rule", "opacity": 0.35 },
+        "encoding": { "x": { "field": "d", "type": "temporal" } }
+      },
+
+      // Hover points on both lines
+      {
+        "transform": [{ "filter": { "param": "hover" } }],
+        "mark": { "type": "point", "filled": true, "size": 90 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": { "field": "CPIH (prices)", "type": "quantitative" },
+          "color": { "value": "#1f77b4" }
+        }
+      },
+      {
+        "transform": [{ "filter": { "param": "hover" } }],
+        "mark": { "type": "point", "filled": true, "size": 90 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": { "field": "Real earnings", "type": "quantitative" },
+          "color": { "value": "#ff7f0e" }
+        }
+      },
+
+      // Tooltip (single date)
+      {
+        "transform": [{ "filter": { "param": "hover" } }],
+        "mark": { "type": "point", "opacity": 0 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "tooltip": [
+            { "field": "d", "type": "temporal", "title": "Date" },
+            {
+              "field": "CPIH (prices)",
+              "type": "quantitative",
+              "title": "Prices (index)",
+              "format": ".1f"
+            },
+            {
+              "field": "Real earnings",
+              "type": "quantitative",
+              "title": "Real earnings (index)",
+              "format": ".1f"
+            },
+            { "field": "gap", "type": "quantitative", "title": "Gap (price − pay)", "format": ".1f" }
+          ]
+        }
+      }
+    ],
+
+    "config": {
+      "axis": { "labelFontSize": 12, "titleFontSize": 12 },
+      "title": { "fontSize": 16, "subtitleFontSize": 12 },
+      "view": { "stroke": null }
     }
   };
 
   // 2) Food vs headline
   const vis2 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Food inflation vs headline (annual rate)"},
-    "data": {"url":"data/vis2_food_vs_headline.json"},
-    "width":"container",
-    "height":320,
-    "mark": {"type":"line","point":true},
+    "title": { "text": "Food inflation vs headline (annual rate)" },
+    "data": { "url": "data/vis2_food_vs_headline.json" },
+    "width": "container",
+    "height": 320,
+    "mark": { "type": "line", "point": true },
     "encoding": {
-      "x": {"field":"date","type":"temporal","title":"Date"},
-      "y": {"field":"value","type":"quantitative","title":"Percent"},
-      "color": {"field":"series","type":"nominal","title":""},
+      "x": { "field": "date", "type": "temporal", "title": "Date" },
+      "y": { "field": "value", "type": "quantitative", "title": "Percent" },
+      "color": { "field": "series", "type": "nominal", "title": "" },
       "tooltip": [
-        {"field":"date","type":"temporal"},
-        {"field":"series","type":"nominal"},
-        {"field":"value","type":"quantitative","format":".1f"}
+        { "field": "date", "type": "temporal" },
+        { "field": "series", "type": "nominal" },
+        { "field": "value", "type": "quantitative", "format": ".1f" }
       ]
     }
   };
@@ -70,17 +213,22 @@
   // 3) Energy cap (step line)
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Energy price cap (typical annual bill)"},
-    "data": {"url":"data/vis3_energy_cap.json"},
-    "width":"container",
-    "height":280,
-    "mark": {"type":"line","interpolate":"step-after","point":true},
+    "title": { "text": "Energy price cap (typical annual bill)" },
+    "data": { "url": "data/vis3_energy_cap.json" },
+    "width": "container",
+    "height": 280,
+    "mark": { "type": "line", "interpolate": "step-after", "point": true },
     "encoding": {
-      "x": {"field":"period_date","type":"temporal","title":"Cap period"},
-      "y": {"field":"typical_annual_bill_gbp","type":"quantitative","title":"GBP"},
+      "x": { "field": "period_date", "type": "temporal", "title": "Cap period" },
+      "y": { "field": "typical_annual_bill_gbp", "type": "quantitative", "title": "GBP" },
       "tooltip": [
-        {"field":"period_label","type":"nominal","title":"Period"},
-        {"field":"typical_annual_bill_gbp","type":"quantitative","title":"GBP","format":",.0f"}
+        { "field": "period_label", "type": "nominal", "title": "Period" },
+        {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative",
+          "title": "GBP",
+          "format": ",.0f"
+        }
       ]
     }
   };
@@ -88,20 +236,20 @@
   // 4) Fuel weekly (two-series)
   const vis4 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Weekly fuel prices (pence per litre)"},
-    "data": {"url":"data/vis4_fuel_weekly.json"},
-    "width":"container",
-    "height":320,
-    "transform": [{"fold":["unleaded_ppl","diesel_ppl"],"as":["fuel","ppl"]}],
-    "mark": {"type":"line"},
+    "title": { "text": "Weekly fuel prices (pence per litre)" },
+    "data": { "url": "data/vis4_fuel_weekly.json" },
+    "width": "container",
+    "height": 320,
+    "transform": [{ "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel", "ppl"] }],
+    "mark": { "type": "line" },
     "encoding": {
-      "x": {"field":"date","type":"temporal","title":"Date"},
-      "y": {"field":"ppl","type":"quantitative","title":"Pence per litre"},
-      "color": {"field":"fuel","type":"nominal","title":""},
+      "x": { "field": "date", "type": "temporal", "title": "Date" },
+      "y": { "field": "ppl", "type": "quantitative", "title": "Pence per litre" },
+      "color": { "field": "fuel", "type": "nominal", "title": "" },
       "tooltip": [
-        {"field":"date","type":"temporal"},
-        {"field":"fuel","type":"nominal"},
-        {"field":"ppl","type":"quantitative","format":".1f"}
+        { "field": "date", "type": "temporal" },
+        { "field": "fuel", "type": "nominal" },
+        { "field": "ppl", "type": "quantitative", "format": ".1f" }
       ]
     }
   };
@@ -109,19 +257,19 @@
   // 5) Rent vs house inflation
   const vis5 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Rent vs house price inflation (annual rate)"},
-    "data": {"url":"data/vis5_rent_vs_house.json"},
-    "width":"container",
-    "height":320,
-    "mark": {"type":"line"},
+    "title": { "text": "Rent vs house price inflation (annual rate)" },
+    "data": { "url": "data/vis5_rent_vs_house.json" },
+    "width": "container",
+    "height": 320,
+    "mark": { "type": "line" },
     "encoding": {
-      "x": {"field":"date","type":"temporal","title":"Date"},
-      "y": {"field":"value","type":"quantitative","title":"Percent"},
-      "color": {"field":"series","type":"nominal","title":""},
+      "x": { "field": "date", "type": "temporal", "title": "Date" },
+      "y": { "field": "value", "type": "quantitative", "title": "Percent" },
+      "color": { "field": "series", "type": "nominal", "title": "" },
       "tooltip": [
-        {"field":"date","type":"temporal"},
-        {"field":"series","type":"nominal"},
-        {"field":"value","type":"quantitative","format":".1f"}
+        { "field": "date", "type": "temporal" },
+        { "field": "series", "type": "nominal" },
+        { "field": "value", "type": "quantitative", "format": ".1f" }
       ]
     }
   };
@@ -129,31 +277,40 @@
   // 6) Map: rent inflation by region (choropleth)
   const vis6 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Rent inflation across regions (latest)"},
-    "width":"container",
-    "height":420,
+    "title": { "text": "Rent inflation across regions (latest)" },
+    "width": "container",
+    "height": 420,
     "data": {
       "url": UK_TOPO_URL,
-      "format": {"type":"topojson","feature":"rgn"}
+      "format": { "type": "topojson", "feature": "rgn" }
     },
     "transform": [
       {
-        "lookup":"properties.areacd",
-        "from": {"data":{"url":"data/vis6_rent_map_regions.json"}, "key":"areacd", "fields":["areanm","rent_inflation_yoy_pct"]}
+        "lookup": "properties.areacd",
+        "from": {
+          "data": { "url": "data/vis6_rent_map_regions.json" },
+          "key": "areacd",
+          "fields": ["areanm", "rent_inflation_yoy_pct"]
+        }
       }
     ],
-    "projection": {"type":"mercator"},
-    "mark": {"type":"geoshape","stroke":"white","strokeWidth":0.6},
+    "projection": { "type": "mercator" },
+    "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.6 },
     "encoding": {
       "color": {
-        "field":"rent_inflation_yoy_pct",
-        "type":"quantitative",
-        "title":"% y/y",
-        "legend":{"orient":"bottom"}
+        "field": "rent_inflation_yoy_pct",
+        "type": "quantitative",
+        "title": "% y/y",
+        "legend": { "orient": "bottom" }
       },
-      "tooltip":[
-        {"field":"areanm","type":"nominal","title":"Area"},
-        {"field":"rent_inflation_yoy_pct","type":"quantitative","title":"% y/y","format":".1f"}
+      "tooltip": [
+        { "field": "areanm", "type": "nominal", "title": "Area" },
+        {
+          "field": "rent_inflation_yoy_pct",
+          "type": "quantitative",
+          "title": "% y/y",
+          "format": ".1f"
+        }
       ]
     }
   };
@@ -161,40 +318,63 @@
   // 7) Interactive trend: dropdown select region (compare to England)
   const vis7 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Rent inflation over time (select a region)"},
-    "data": {"url":"data/vis7_rent_trend_regions.json"},
-    "width":"container",
-    "height":320,
+    "title": { "text": "Rent inflation over time (select a region)" },
+    "data": { "url": "data/vis7_rent_trend_regions.json" },
+    "width": "container",
+    "height": 320,
     "params": [
       {
-        "name":"Region",
-        "value":"London",
-        "bind":{"input":"select","name":"Region: ","options":[
-          "North East","North West","Yorkshire and The Humber","East Midlands","West Midlands",
-          "East of England","London","South East","South West"
-        ]}
+        "name": "Region",
+        "value": "London",
+        "bind": {
+          "input": "select",
+          "name": "Region: ",
+          "options": [
+            "North East",
+            "North West",
+            "Yorkshire and The Humber",
+            "East Midlands",
+            "West Midlands",
+            "East of England",
+            "London",
+            "South East",
+            "South West"
+          ]
+        }
       }
     ],
     "transform": [
-      {"calculate":"datum.areanm === Region ? 'Selected region' : (datum.areanm === 'England' ? 'England' : 'Other')","as":"group"}
+      {
+        "calculate":
+          "datum.areanm === Region ? 'Selected region' : (datum.areanm === 'England' ? 'England' : 'Other')",
+        "as": "group"
+      }
     ],
-    "mark": {"type":"line"},
+    "mark": { "type": "line" },
     "encoding": {
-      "x": {"field":"date","type":"temporal","title":"Date"},
-      "y": {"field":"rent_inflation_yoy_pct","type":"quantitative","title":"% y/y"},
-      "detail": {"field":"areanm","type":"nominal"},
+      "x": { "field": "date", "type": "temporal", "title": "Date" },
+      "y": { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "% y/y" },
+      "detail": { "field": "areanm", "type": "nominal" },
       "opacity": {
-        "condition": [{"test":"datum.group === 'Selected region' || datum.group === 'England'","value":1}],
-        "value":0.15
+        "condition": [{ "test": "datum.group === 'Selected region' || datum.group === 'England'", "value": 1 }],
+        "value": 0.15
       },
       "size": {
-        "condition": [{"test":"datum.group === 'Selected region'","value":3},{"test":"datum.group === 'England'","value":2}],
-        "value":1
+        "condition": [
+          { "test": "datum.group === 'Selected region'", "value": 3 },
+          { "test": "datum.group === 'England'", "value": 2 }
+        ],
+        "value": 1
       },
-      "tooltip":[
-        {"field":"date","type":"temporal"},
-        {"field":"areanm","type":"nominal","title":"Area"},
-        {"field":"rent_inflation_yoy_pct","type":"quantitative","title":"% y/y","format":".1f"}
+      "tooltip": [
+        { "field": "date", "type": "temporal" },
+        { "field": "areanm", "type": "nominal", "title": "Area" },
+        {
+          "field": "rent_inflation_yoy_pct",
+          "type": "quantitative",
+          "title": "% y/y",
+          "format": ".1f"
+        }
       ]
     }
   };
@@ -202,31 +382,40 @@
   // 8) Map: UK countries rent inflation
   const vis8 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": {"text":"Rent inflation across UK countries (latest available)"},
-    "width":"container",
-    "height":420,
+    "title": { "text": "Rent inflation across UK countries (latest available)" },
+    "width": "container",
+    "height": 420,
     "data": {
       "url": UK_TOPO_URL,
-      "format": {"type":"topojson","feature":"ctry"}
+      "format": { "type": "topojson", "feature": "ctry" }
     },
     "transform": [
       {
-        "lookup":"properties.areacd",
-        "from": {"data":{"url":"data/vis8_rent_map_countries.json"}, "key":"areacd", "fields":["areanm","rent_inflation_yoy_pct"]}
+        "lookup": "properties.areacd",
+        "from": {
+          "data": { "url": "data/vis8_rent_map_countries.json" },
+          "key": "areacd",
+          "fields": ["areanm", "rent_inflation_yoy_pct"]
+        }
       }
     ],
-    "projection": {"type":"mercator"},
-    "mark": {"type":"geoshape","stroke":"white","strokeWidth":0.8},
+    "projection": { "type": "mercator" },
+    "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.8 },
     "encoding": {
       "color": {
-        "field":"rent_inflation_yoy_pct",
-        "type":"quantitative",
-        "title":"% y/y",
-        "legend":{"orient":"bottom"}
+        "field": "rent_inflation_yoy_pct",
+        "type": "quantitative",
+        "title": "% y/y",
+        "legend": { "orient": "bottom" }
       },
-      "tooltip":[
-        {"field":"areanm","type":"nominal","title":"Country"},
-        {"field":"rent_inflation_yoy_pct","type":"quantitative","title":"% y/y","format":".1f"}
+      "tooltip": [
+        { "field": "areanm", "type": "nominal", "title": "Country" },
+        {
+          "field": "rent_inflation_yoy_pct",
+          "type": "quantitative",
+          "title": "% y/y",
+          "format": ".1f"
+        }
       ]
     }
   };
