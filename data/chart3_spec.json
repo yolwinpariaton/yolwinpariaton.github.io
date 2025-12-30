@@ -11,9 +11,7 @@
   "padding": { "top": 8, "left": 8, "right": 8, "bottom": 8 },
 
   "projection": {
-    "type": "mercator",
-    "center": [-3, 54.7],
-    "scale": 2600
+    "type": "mercator"
   },
 
   "layer": [
