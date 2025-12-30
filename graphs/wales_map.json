@@ -7,16 +7,16 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 300,
+  "width": 280,
   "height": 450,
-  "padding": {"left": 5, "right": 5, "top": 5, "bottom": 5},
+  "autosize": {"type": "none", "contains": "padding"},
   "layer": [
     {
       "data": {
         "url": "https://raw.githubusercontent.com/jhellingsdata/RADataHub/refs/heads/main/MappingWorkshop/geo_data/LAD_WLS_2025_05.topojson",
         "format": {"type": "topojson", "feature": "object_name"}
       },
-      "projection": {"type": "mercator", "center": [-3.8, 52.3], "scale": 4000},
+      "projection": {"type": "mercator"},
       "transform": [
         {
           "lookup": "properties.LAD25CD",
