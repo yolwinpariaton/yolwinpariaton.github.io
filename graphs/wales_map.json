@@ -9,10 +9,10 @@
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
         "format": {
-          "type": "topojson",
-          "feature": "lad"
+          "type": "json",
+          "property": "features"
         }
       },
       "transform": [
