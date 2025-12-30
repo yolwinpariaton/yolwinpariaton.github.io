@@ -22,7 +22,7 @@
   "data": [
     {
       "name": "regions",
-      "url": "uk_regions.geojson",
+      "url": "uk_regions_simplified.geojson",
       "format": { "type": "json", "property": "features" }
     },
     {

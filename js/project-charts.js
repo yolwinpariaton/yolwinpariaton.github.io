@@ -121,7 +121,7 @@ function initCharts() {
   loadSpecAndFix("chart1_spec.json").then(spec => safeEmbed("#chart1", spec, EMBED_OPTS));
   loadSpecAndFix("chart2_spec.json").then(spec => safeEmbed("#chart2", spec, EMBED_OPTS));
 
-  // Chart 3 is Vega spec (map)
+  // Chart 3 is VEGA spec (map)
   loadSpecAndFix("chart3_spec.json").then(spec =>
     safeEmbed("#chart3", spec, { actions: false, renderer: "svg", mode: "vega" })
   );
