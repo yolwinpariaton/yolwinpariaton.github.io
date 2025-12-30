@@ -15,8 +15,8 @@
   },
   "projection": {
     "type": "mercator",
-    "center": [-3.25, 52.35],
-    "scale": 7200
+    "center": [-3.7, 52.35],
+    "scale": 7000
   },
   "transform": [
     {
@@ -56,7 +56,7 @@
     ]
   },
   "config": {
-    "view": {"stroke": "transparent", "clip": true},
+    "view": {"stroke": "transparent"},
     "background": "transparent"
   }
 }
