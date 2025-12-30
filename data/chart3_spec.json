@@ -1,10 +1,14 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Regional cost of living choropleth across the UK (NUTS1-style codes), matched to economic indicators via lookup on NUTS112CD.",
+  "description": "Regional cost of living choropleth across the UK (NUTS1-style regions)",
 
   "autosize": { "type": "fit", "contains": "padding" },
-  "width": "container",
-  "height": 520,
+
+  "signals": [
+    { "name": "width", "update": "containerSize()[0]" },
+    { "name": "height", "update": "containerSize()[1]" }
+  ],
+
   "padding": { "top": 10, "left": 10, "right": 10, "bottom": 10 },
   "background": "transparent",
 
@@ -34,12 +38,12 @@
         {
           "type": "formula",
           "as": "code",
-          "expr": "datum.properties && (datum.properties.NUTS112CD || datum.properties.nuts112cd || datum.properties.CODE || datum.properties.code || datum.properties.ITL121CD || datum.properties.itl121cd) ? (datum.properties.NUTS112CD || datum.properties.nuts112cd || datum.properties.CODE || datum.properties.code || datum.properties.ITL121CD || datum.properties.itl121cd) : null"
+          "expr": "datum.properties && (datum.properties.NUTS112CD || datum.properties.nuts112cd || datum.properties.ITL121CD || datum.properties.itl121cd || datum.properties.CODE || datum.properties.code)"
         },
         {
           "type": "formula",
           "as": "boundary_name",
-          "expr": "datum.properties && (datum.properties.NUTS112NM || datum.properties.nuts112nm || datum.properties.NAME || datum.properties.name || datum.properties.ITL121NM || datum.properties.itl121nm) ? (datum.properties.NUTS112NM || datum.properties.nuts112nm || datum.properties.NAME || datum.properties.name || datum.properties.ITL121NM || datum.properties.itl121nm) : null"
+          "expr": "datum.properties && (datum.properties.NUTS112NM || datum.properties.nuts112nm || datum.properties.ITL121NM || datum.properties.itl121nm || datum.properties.NAME || datum.properties.name)"
         },
         {
           "type": "lookup",
@@ -70,7 +74,7 @@
         {
           "type": "formula",
           "as": "population_m",
-          "expr": "datum.population ? datum.population/1000000 : null"
+          "expr": "datum.population ? datum.population / 1000000 : null"
         }
       ]
     },
@@ -78,7 +82,7 @@
       "name": "econ_points",
       "source": "econ",
       "transform": [
-        { "type": "formula", "as": "population_m", "expr": "datum.population/1000000" },
+        { "type": "formula", "as": "population_m", "expr": "datum.population / 1000000" },
         {
           "type": "geopoint",
           "projection": "ukproj",
@@ -147,11 +151,15 @@
         },
         "update": {
           "fill": [
-            { "test": "isValid(datum.cost_index) && datum.cost_index != null", "scale": "colorScale", "field": "cost_index" },
+            {
+              "test": "isValid(datum.cost_index)",
+              "scale": "colorScale",
+              "field": "cost_index"
+            },
             { "value": "#eef2ff" }
           ],
           "tooltip": {
-            "signal": "{'Region': datum.region || datum.boundary_name, 'Code': datum.code, 'Boundary name': datum.boundary_name, 'Cost index': datum.cost_index, 'Population (m)': datum.population_m, 'Rent/Income (%)': datum.rent_to_income, 'Energy burden (%)': datum.energy_burden, 'Food inflation (%)': datum.food_inflation}"
+            "signal": "{'Region': datum.region || datum.boundary_name, 'Code': datum.code, 'Cost index': datum.cost_index, 'Population (m)': datum.population_m, 'Rent/Income (%)': datum.rent_to_income, 'Energy burden (%)': datum.energy_burden, 'Food inflation (%)': datum.food_inflation}"
           }
         }
       }
@@ -185,7 +193,7 @@
           "y": { "field": "y" },
           "size": { "scale": "sizeScale", "field": "population" },
           "tooltip": {
-            "signal": "{'Region': datum.region, 'Code': datum.code, 'Cost index': datum.cost_index, 'Population': datum.population}"
+            "signal": "{'Region': datum.region, 'Population': datum.population}"
           }
         }
       }
