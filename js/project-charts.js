@@ -28,13 +28,12 @@
     });
   }
 
-  // 1) Prices vs pay (indexed) — improved + gap shading + clean axes
+  // 1) Prices vs pay (indexed) — improved + gap shading + robust field names
   const vis1 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
       "text": "Prices vs pay (indexed to 2019=100)",
-      "subtitle":
-        "Shaded area shows the gap: when prices run ahead of real earnings, purchasing power falls."
+      "subtitle": "Shaded area shows the gap (prices − pay). Hover to inspect monthly values."
     },
     "data": { "url": "data/vis1_prices_vs_pay.json" },
     "width": "container",
@@ -44,9 +43,13 @@
       { "calculate": "toDate(datum.date)", "as": "d" },
       { "calculate": "toNumber(datum.value)", "as": "v" },
 
-      // Pivot so we can compute the gap and plot two clean lines + shaded area.
+      // Pivot to wide format by date
       { "pivot": "series", "value": "v", "groupby": ["d"] },
-      { "calculate": "datum['CPIH (prices)'] - datum['Real earnings']", "as": "gap" }
+
+      // Rename to safe field names (avoids issues with parentheses/spaces in encodings)
+      { "calculate": "datum['CPIH (prices)']", "as": "prices" },
+      { "calculate": "datum['Real earnings']", "as": "earnings" },
+      { "calculate": "datum.prices - datum.earnings", "as": "gap" }
     ],
 
     "params": [
@@ -73,23 +76,9 @@
         }
       },
 
-      // Gap shading (area between earnings and prices)
+      // Gap shading (between earnings and prices)
       {
         "mark": { "type": "area", "opacity": 0.18 },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal" },
-          "y": {
-            "field": "Real earnings",
-            "type": "quantitative",
-            "scale": { "zero": false, "domain": [98, 114] }
-          },
-          "y2": { "field": "CPIH (prices)" }
-        }
-      },
-
-      // CPIH line
-      {
-        "mark": { "type": "line", "strokeWidth": 2.8 },
         "encoding": {
           "x": {
             "field": "d",
@@ -98,35 +87,33 @@
             "axis": { "format": "%Y", "tickCount": 7, "labelPadding": 8 }
           },
           "y": {
-            "field": "CPIH (prices)",
+            "field": "earnings",
             "type": "quantitative",
             "title": "Index (2019=100)",
             "scale": { "zero": false, "domain": [98, 114] },
             "axis": { "tickCount": 7, "grid": true }
           },
-          "color": { "value": "#1f77b4" },
-          "opacity": {
-            "condition": { "param": "hover", "value": 1 },
-            "value": 0.9
-          }
+          "y2": { "field": "prices" }
         }
       },
 
-      // Real earnings line
+      // Prices line
       {
         "mark": { "type": "line", "strokeWidth": 2.8 },
         "encoding": {
           "x": { "field": "d", "type": "temporal" },
-          "y": {
-            "field": "Real earnings",
-            "type": "quantitative",
-            "scale": { "zero": false, "domain": [98, 114] }
-          },
-          "color": { "value": "#ff7f0e" },
-          "opacity": {
-            "condition": { "param": "hover", "value": 1 },
-            "value": 0.9
-          }
+          "y": { "field": "prices", "type": "quantitative" },
+          "color": { "value": "#1f77b4" }
+        }
+      },
+
+      // Earnings line
+      {
+        "mark": { "type": "line", "strokeWidth": 2.8 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": { "field": "earnings", "type": "quantitative" },
+          "color": { "value": "#ff7f0e" }
         }
       },
 
@@ -137,22 +124,24 @@
         "encoding": { "x": { "field": "d", "type": "temporal" } }
       },
 
-      // Hover points on both lines
+      // Hover points (prices)
       {
         "transform": [{ "filter": { "param": "hover" } }],
         "mark": { "type": "point", "filled": true, "size": 90 },
         "encoding": {
           "x": { "field": "d", "type": "temporal" },
-          "y": { "field": "CPIH (prices)", "type": "quantitative" },
+          "y": { "field": "prices", "type": "quantitative" },
           "color": { "value": "#1f77b4" }
         }
       },
+
+      // Hover points (earnings)
       {
         "transform": [{ "filter": { "param": "hover" } }],
         "mark": { "type": "point", "filled": true, "size": 90 },
         "encoding": {
           "x": { "field": "d", "type": "temporal" },
-          "y": { "field": "Real earnings", "type": "quantitative" },
+          "y": { "field": "earnings", "type": "quantitative" },
           "color": { "value": "#ff7f0e" }
         }
       },
@@ -165,19 +154,9 @@
           "x": { "field": "d", "type": "temporal" },
           "tooltip": [
             { "field": "d", "type": "temporal", "title": "Date" },
-            {
-              "field": "CPIH (prices)",
-              "type": "quantitative",
-              "title": "Prices (index)",
-              "format": ".1f"
-            },
-            {
-              "field": "Real earnings",
-              "type": "quantitative",
-              "title": "Real earnings (index)",
-              "format": ".1f"
-            },
-            { "field": "gap", "type": "quantitative", "title": "Gap (price − pay)", "format": ".1f" }
+            { "field": "prices", "type": "quantitative", "title": "Prices (index)", "format": ".1f" },
+            { "field": "earnings", "type": "quantitative", "title": "Real earnings (index)", "format": ".1f" },
+            { "field": "gap", "type": "quantitative", "title": "Gap (prices − pay)", "format": ".1f" }
           ]
         }
       }
