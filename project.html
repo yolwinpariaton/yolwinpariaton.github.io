@@ -10,12 +10,12 @@
 
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Vega libraries (defer keeps order and ensures DOM is parsed before execution) -->
+  <!-- Vega libraries (defer preserves order and ensures DOM exists) -->
   <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Your chart script -->
+  <!-- Your charts script -->
   <script defer src="js/project-charts.js?v=2025-03-01"></script>
 
   <style>
@@ -47,6 +47,9 @@
       font-style: italic;
       font-weight: 400;
     }
+
+    /* Helps avoid “invisible chart” caused by zero-height containers in some CSS setups */
+    .chart-wrapper > div[id^="vis"] { min-height: 260px; }
   </style>
 </head>
 
@@ -126,9 +129,7 @@
 
         <section class="task">
           <h2>2) Food inflation vs headline inflation</h2>
-          <p>
-            Food is a high-salience component of household budgets. This chart compares food inflation with headline inflation over time.
-          </p>
+          <p>Food is a high-salience component of household budgets. This chart compares food inflation with headline inflation over time.</p>
           <div class="chart-wrapper">
             <div id="vis2"></div>
             <p class="chart-source">File(s): data/vis2_food_vs_headline.json.</p>
@@ -137,9 +138,7 @@
 
         <section class="task">
           <h2>3) Energy price cap (typical annual bill)</h2>
-          <p>
-            Energy bills were a major driver of the crisis. The energy price cap indicates typical annual costs faced by households.
-          </p>
+          <p>Energy bills were a major driver of the crisis. The energy price cap indicates typical annual costs faced by households.</p>
           <div class="chart-wrapper">
             <div id="vis3"></div>
             <p class="chart-source">File(s): data/vis3_energy_cap.json.</p>
@@ -148,9 +147,7 @@
 
         <section class="task">
           <h2>4) Weekly fuel prices</h2>
-          <p>
-            Transport costs rose sharply during the post-pandemic recovery and global energy shock. Weekly fuel prices show the timing of these peaks.
-          </p>
+          <p>Transport costs rose sharply during the post-pandemic recovery and global energy shock. Weekly fuel prices show the timing of these peaks.</p>
           <div class="chart-wrapper">
             <div id="vis4"></div>
             <p class="chart-source">File(s): data/vis4_fuel_weekly.json.</p>
@@ -159,9 +156,7 @@
 
         <section class="task">
           <h2>5) Rent vs house price inflation</h2>
-          <p>
-            Housing costs are persistent and unevenly distributed. This chart compares rent inflation with house price inflation.
-          </p>
+          <p>Housing costs are persistent and unevenly distributed. This chart compares rent inflation with house price inflation.</p>
           <div class="chart-wrapper">
             <div id="vis5"></div>
             <p class="chart-source">File(s): data/vis5_rent_vs_house.json.</p>
@@ -170,9 +165,7 @@
 
         <section class="task">
           <h2>6) Map: Rent inflation across English regions</h2>
-          <p>
-            The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.
-          </p>
+          <p>The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.</p>
           <div class="chart-wrapper">
             <div id="vis6"></div>
             <p class="chart-source">File(s): data/vis6_rent_map_regions.json.</p>
@@ -181,9 +174,7 @@
 
         <section class="task">
           <h2>7) Rent inflation over time (interactive)</h2>
-          <p>
-            Use the selector to examine how rent inflation evolved across regions compared with England overall.
-          </p>
+          <p>Use the selector to examine how rent inflation evolved across regions compared with England overall.</p>
           <div class="chart-wrapper">
             <div id="vis7"></div>
             <p class="chart-source">File(s): data/vis7_rent_trend_regions.json.</p>
@@ -192,9 +183,7 @@
 
         <section class="task">
           <h2>8) Map: Rent inflation across UK countries</h2>
-          <p>
-            This map compares rent inflation across the four nations of the UK.
-          </p>
+          <p>This map compares rent inflation across the four nations of the UK.</p>
           <div class="chart-wrapper">
             <div id="vis8"></div>
             <p class="chart-source">File(s): data/vis8_rent_map_countries.json.</p>
