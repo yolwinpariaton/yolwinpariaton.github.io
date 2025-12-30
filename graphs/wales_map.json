@@ -7,15 +7,19 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 280,
-  "height": 400,
+  "width": 250,
+  "height": 420,
   "layer": [
     {
       "data": {
         "url": "https://raw.githubusercontent.com/jhellingsdata/RADataHub/refs/heads/main/MappingWorkshop/geo_data/LAD_WLS_2025_05.topojson",
         "format": {"type": "topojson", "feature": "object_name"}
       },
-      "projection": {"type": "mercator"},
+      "projection": {
+        "type": "mercator",
+        "center": [-3.7, 52.3],
+        "scale": 3800
+      },
       "transform": [
         {
           "lookup": "properties.LAD25CD",
@@ -46,7 +50,9 @@
             "format": ",",
             "orient": "bottom",
             "direction": "horizontal",
-            "gradientLength": 220
+            "gradientLength": 200,
+            "labelFontSize": 11,
+            "titleFontSize": 12
           }
         },
         "tooltip": [

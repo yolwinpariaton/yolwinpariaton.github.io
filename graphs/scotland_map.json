@@ -7,8 +7,8 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 280,
-  "height": 400,
+  "width": 250,
+  "height": 420,
   "layer": [
     {
       "data": {
@@ -44,9 +44,12 @@
           "legend": {
             "title": "Annual Visitors",
             "format": ",",
-            "orient": "bottom-right",
-            "direction": "horizontal",
-            "symbolType": "circle"
+            "orient": "right",
+            "direction": "vertical",
+            "symbolType": "circle",
+            "symbolFillColor": "#8b6914",
+            "labelFontSize": 11,
+            "titleFontSize": 12
           }
         },
         "color": {
@@ -58,9 +61,12 @@
           },
           "legend": {
             "title": "Whisky Region",
-            "orient": "bottom-left",
-            "direction": "vertical",
-            "symbolType": "circle"
+            "orient": "bottom",
+            "direction": "horizontal",
+            "symbolType": "circle",
+            "columns": 3,
+            "labelFontSize": 10,
+            "titleFontSize": 12
           }
         },
         "tooltip": [
