@@ -100,7 +100,7 @@
     if (checks.some((ok) => !ok)) return;
 
     // =========================
-    // 1) Prices vs pay (FIXED)
+    // 1) Prices vs pay (UPDATED)
     // =========================
     const vis1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -114,8 +114,7 @@
       "width": "container",
       "height": 360,
 
-      // Extra right padding keeps end-labels INSIDE the plot
-      "padding": { "left": 6, "right": 70, "top": 10, "bottom": 42 },
+      "padding": { "left": 6, "right": 6, "top": 8, "bottom": 46 },
       "autosize": { "type": "fit", "contains": "padding" },
 
       "transform": [
@@ -123,20 +122,11 @@
         { "calculate": "toNumber(datum.value)", "as": "v" },
         { "pivot": "series", "value": "v", "groupby": ["d"] },
         { "calculate": "datum['CPIH (prices)']", "as": "prices" },
-        { "calculate": "datum['Real earnings']", "as": "earnings" }
+        { "calculate": "datum['Real earnings']", "as": "earnings" },
+        { "calculate": "datum.prices - datum.earnings", "as": "gap" }
       ],
 
       "layer": [
-        // Baseline at 100
-        {
-          "mark": { "type": "rule" },
-          "encoding": {
-            "y": { "datum": 100 },
-            "color": { "value": "#666" },
-            "opacity": { "value": 0.35 }
-          }
-        },
-
         // Gap shading
         {
           "mark": { "type": "area", "opacity": 0.14 },
@@ -158,7 +148,7 @@
           }
         },
 
-        // Lines + points (SAME strokeWidth, SAME point size, high opacity)
+        // Lines + points (with legend BELOW subtitle)
         {
           "transform": [
             { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
@@ -169,7 +159,7 @@
           ],
           "layer": [
             {
-              "mark": { "type": "line", "strokeWidth": 2.8, "opacity": 0.97 },
+              "mark": { "type": "line", "strokeWidth": 2.8, "opacity": 0.95 },
               "encoding": {
                 "x": {
                   "field": "d",
@@ -185,17 +175,26 @@
                     "domain": ["CPIH (prices)", "Real earnings"],
                     "range": ["#1f77b4", "#ff7f0e"]
                   },
-                  "legend": null
+                  "legend": {
+                    "title": null,
+                    "orient": "top",
+                    "direction": "horizontal",
+                    "labelFontSize": 12,
+                    "symbolType": "stroke",
+                    "symbolStrokeWidth": 4,
+                    "symbolSize": 180
+                  }
                 },
                 "tooltip": [
                   { "field": "d", "type": "temporal", "title": "Date" },
                   { "field": "line_label", "type": "nominal", "title": "Series" },
-                  { "field": "yval", "type": "quantitative", "title": "Index", "format": ".1f" }
+                  { "field": "yval", "type": "quantitative", "title": "Index", "format": ".1f" },
+                  { "field": "gap", "type": "quantitative", "title": "Gap (prices − pay)", "format": ".1f" }
                 ]
               }
             },
             {
-              "mark": { "type": "point", "filled": true, "size": 38, "opacity": 0.97 },
+              "mark": { "type": "point", "filled": true, "size": 34, "opacity": 0.95 },
               "encoding": {
                 "x": { "field": "d", "type": "temporal" },
                 "y": { "field": "yval", "type": "quantitative" },
@@ -211,36 +210,6 @@
               }
             }
           ]
-        },
-
-        // Label layer 1: CPIH (prices) label INSIDE plot, offset up a bit
-        {
-          "transform": [
-            { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }] },
-            { "filter": "datum.r === 1" }
-          ],
-          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 10, "dy": -10, "fontSize": 12, "fontWeight": "bold", "opacity": 0.95 },
-          "encoding": {
-            "x": { "field": "d", "type": "temporal" },
-            "y": { "field": "prices", "type": "quantitative" },
-            "text": { "value": "CPIH (prices)" },
-            "color": { "value": "#1f77b4" }
-          }
-        },
-
-        // Label layer 2: Real earnings label INSIDE plot, offset down a bit (prevents overlap)
-        {
-          "transform": [
-            { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }] },
-            { "filter": "datum.r === 1" }
-          ],
-          "mark": { "type": "text", "align": "left", "baseline": "middle", "dx": 10, "dy": 12, "fontSize": 12, "fontWeight": "bold", "opacity": 0.95 },
-          "encoding": {
-            "x": { "field": "d", "type": "temporal" },
-            "y": { "field": "earnings", "type": "quantitative" },
-            "text": { "value": "Real earnings" },
-            "color": { "value": "#ff7f0e" }
-          }
         }
       ],
 

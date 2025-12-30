@@ -77,22 +77,57 @@
   color: var(--navy);
 }
 
-/* --- Additions to prevent "missing charts" due to layout/overflow --- */
+/* Wrapper should not hide anything below the chart */
 .chart-wrapper{
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
+  overflow-y: visible;
 }
 
-/* Ensure the chart occupies layout space and doesn't overlap text below */
+/* Chart container must reserve space and never overlap following text */
 .vega-container{
   width: 100%;
   min-height: 280px;
-  margin-bottom: 14px;     /* critical: gives breathing room before Source/Note */
-  position: relative;      /* establishes stacking context */
+  display: block;
+  margin-bottom: 16px;
+  position: relative;
   z-index: 0;
 }
-/* ------------------------------------------------------------------- */
+
+.chart-source{
+  margin: 6px 0 0;
+  position: relative;
+  z-index: 2;
+}
+
+.chart-note{
+  margin: 6px 0 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== Vega-Embed hardening ===== */
+.vega-embed{
+  width: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.vega-embed,
+.vega-embed > div,
+.vega-embed canvas,
+.vega-embed svg{
+  max-width: 100%;
+}
+
+.vega-embed canvas,
+.vega-embed svg{
+  display: block;
+  position: relative;
+  z-index: 0;
+}
+/* =============================== */
 
 .chart-description{
   margin-top: 15px;
@@ -140,32 +175,3 @@
   color: var(--text);
   font-weight: 600;
 }
-
-/* ===== Vega-Embed hardening (prevents “renders but invisible” + overlap) ===== */
-.vega-embed{
-  width: 100%;
-  position: relative;  /* prevents absolute-position overlap weirdness */
-  z-index: 0;
-}
-
-.vega-embed,
-.vega-embed > div,
-.vega-embed canvas,
-.vega-embed svg{
-  max-width: 100%;
-}
-
-.vega-embed canvas,
-.vega-embed svg{
-  display: block;
-  position: relative;
-  z-index: 0;
-}
-
-/* Make sure text below charts stays above if any stacking occurs */
-.chart-source,
-.chart-note{
-  position: relative;
-  z-index: 1;
-}
-/* ================================================================ */
