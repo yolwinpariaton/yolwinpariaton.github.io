@@ -100,36 +100,30 @@
     if (checks.some((ok) => !ok)) return;
 
     // =========================
-    // 1) Prices vs pay (IMPROVED)
+    // 1) Prices vs pay (FIXED)
     // =========================
     const vis1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
       "title": {
         "text": "Prices vs pay (indexed to 2019 = 100)",
-        "subtitle": [
-          "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings.",
-          "Source: ONS CPIH and ONS AWE (real pay).",
-          "Note: y-axis is zoomed (98–114) rather than starting at zero to make the gap visible."
-        ]
+        "subtitle": "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
       },
 
       "data": { "url": "data/vis1_prices_vs_pay.json" },
       "width": "container",
       "height": 360,
 
-      // Give the x-axis title room (fixes your missing “Date” label)
-      "padding": { "left": 6, "right": 22, "top": 10, "bottom": 42 },
+      // Leave room for x-axis label and keep labels inside plot
+      "padding": { "left": 6, "right": 6, "top": 10, "bottom": 42 },
       "autosize": { "type": "fit", "contains": "padding" },
 
       "transform": [
         { "calculate": "toDate(datum.date)", "as": "d" },
         { "calculate": "toNumber(datum.value)", "as": "v" },
         { "pivot": "series", "value": "v", "groupby": ["d"] },
-
         { "calculate": "datum['CPIH (prices)']", "as": "prices" },
-        { "calculate": "datum['Real earnings']", "as": "earnings" },
-        { "calculate": "datum.prices - datum.earnings", "as": "gap" }
+        { "calculate": "datum['Real earnings']", "as": "earnings" }
       ],
 
       "layer": [
@@ -143,9 +137,9 @@
           }
         },
 
-        // Gap shading between earnings and prices
+        // Gap shading (slightly visible, not too strong)
         {
-          "mark": { "type": "area", "opacity": 0.16 },
+          "mark": { "type": "area", "opacity": 0.14 },
           "encoding": {
             "x": {
               "field": "d",
@@ -164,7 +158,7 @@
           }
         },
 
-        // Lines + points (folded so we can label cleanly)
+        // Lines/points (consistent size, more solid)
         {
           "transform": [
             { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
@@ -175,7 +169,7 @@
           ],
           "layer": [
             {
-              "mark": { "type": "line", "strokeWidth": 2.8, "opacity": 0.85 },
+              "mark": { "type": "line", "strokeWidth": 2.8, "opacity": 0.95 },
               "encoding": {
                 "x": {
                   "field": "d",
@@ -187,7 +181,10 @@
                 "color": {
                   "field": "line_label",
                   "type": "nominal",
-                  "scale": { "domain": ["CPIH (prices)", "Real earnings"], "range": ["#1f77b4", "#ff7f0e"] },
+                  "scale": {
+                    "domain": ["CPIH (prices)", "Real earnings"],
+                    "range": ["#1f77b4", "#ff7f0e"]
+                  },
                   "legend": null
                 },
                 "tooltip": [
@@ -198,14 +195,17 @@
               }
             },
             {
-              "mark": { "type": "point", "filled": true, "size": 40, "opacity": 0.9 },
+              "mark": { "type": "point", "filled": true, "size": 38, "opacity": 0.95 },
               "encoding": {
                 "x": { "field": "d", "type": "temporal" },
                 "y": { "field": "yval", "type": "quantitative" },
                 "color": {
                   "field": "line_label",
                   "type": "nominal",
-                  "scale": { "domain": ["CPIH (prices)", "Real earnings"], "range": ["#1f77b4", "#ff7f0e"] },
+                  "scale": {
+                    "domain": ["CPIH (prices)", "Real earnings"],
+                    "range": ["#1f77b4", "#ff7f0e"]
+                  },
                   "legend": null
                 }
               }
@@ -213,7 +213,7 @@
           ]
         },
 
-        // Direct labels at the end of each line (coloured)
+        // Inside-the-plot labels (placed near the end but inside bounds)
         {
           "transform": [
             { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
@@ -221,25 +221,31 @@
               "calculate": "datum.line_key === 'prices' ? 'CPIH (prices)' : 'Real earnings'",
               "as": "line_label"
             },
+            // take the most recent point for each line
             { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }], "groupby": ["line_label"] },
-            { "filter": "datum.r === 1" }
+            { "filter": "datum.r === 1" },
+            // shift labels slightly left so they stay inside plot
+            { "calculate": "datum.d", "as": "label_date" }
           ],
           "mark": {
             "type": "text",
-            "align": "left",
+            "align": "right",
             "baseline": "middle",
-            "dx": 8,
+            "dx": -10,
             "fontSize": 12,
             "fontWeight": "bold"
           },
           "encoding": {
-            "x": { "field": "d", "type": "temporal" },
+            "x": { "field": "label_date", "type": "temporal" },
             "y": { "field": "yval", "type": "quantitative" },
             "text": { "field": "line_label" },
             "color": {
               "field": "line_label",
               "type": "nominal",
-              "scale": { "domain": ["CPIH (prices)", "Real earnings"], "range": ["#1f77b4", "#ff7f0e"] },
+              "scale": {
+                "domain": ["CPIH (prices)", "Real earnings"],
+                "range": ["#1f77b4", "#ff7f0e"]
+              },
               "legend": null
             }
           }
