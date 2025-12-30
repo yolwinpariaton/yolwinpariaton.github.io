@@ -20,30 +20,20 @@
     "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
 
   function safeEmbed(selector, spec) {
-  const el = document.querySelector(selector);
-  if (!el) return;
-  vegaEmbed(selector, spec, opts).catch((err) => {
-    console.error("Vega embed error for", selector, err);
+    const el = document.querySelector(selector);
+    if (!el) return;
+    vegaEmbed(selector, spec, opts).catch((err) => {
+      console.error("Vega embed error for", selector, err);
+      el.innerHTML = "<p>Chart failed to load. Check console and JSON paths.</p>";
+    });
+  }
 
-    const msg =
-      (err && err.message) ? err.message :
-      (typeof err === "string" ? err : JSON.stringify(err));
-
-    el.innerHTML =
-      "<p><strong>Chart failed to load.</strong></p>" +
-      "<p style='font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; white-space: pre-wrap;'>" +
-      msg +
-      "</p>";
-  });
-}
-
-
-  // 1) Prices vs pay (indexed) — improved + gap shading + robust field names
+  // 1) Prices vs pay (indexed) — improved (no duplicate hover signals)
   const vis1 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
       "text": "Prices vs pay (indexed to 2019=100)",
-      "subtitle": "Shaded area shows the gap (prices − pay). Hover to inspect monthly values."
+      "subtitle": "Shaded band highlights the purchasing-power gap when prices run ahead of real earnings."
     },
     "data": { "url": "data/vis1_prices_vs_pay.json" },
     "width": "container",
@@ -56,23 +46,10 @@
       // Pivot to wide format by date
       { "pivot": "series", "value": "v", "groupby": ["d"] },
 
-      // Rename to safe field names (avoids issues with parentheses/spaces in encodings)
+      // Rename to safe field names
       { "calculate": "datum['CPIH (prices)']", "as": "prices" },
       { "calculate": "datum['Real earnings']", "as": "earnings" },
       { "calculate": "datum.prices - datum.earnings", "as": "gap" }
-    ],
-
-    "params": [
-      {
-        "name": "hover",
-        "select": {
-          "type": "point",
-          "fields": ["d"],
-          "nearest": true,
-          "on": "mousemove",
-          "clear": "mouseout"
-        }
-      }
     ],
 
     "layer": [
@@ -107,67 +84,29 @@
         }
       },
 
-      // Prices line
+      // Prices line (with points so tooltip feels interactive without custom hover signals)
       {
-        "mark": { "type": "line", "strokeWidth": 2.8 },
+        "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
         "encoding": {
           "x": { "field": "d", "type": "temporal" },
           "y": { "field": "prices", "type": "quantitative" },
-          "color": { "value": "#1f77b4" }
-        }
-      },
-
-      // Earnings line
-      {
-        "mark": { "type": "line", "strokeWidth": 2.8 },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal" },
-          "y": { "field": "earnings", "type": "quantitative" },
-          "color": { "value": "#ff7f0e" }
-        }
-      },
-
-      // Hover crosshair
-      {
-        "transform": [{ "filter": { "param": "hover" } }],
-        "mark": { "type": "rule", "opacity": 0.35 },
-        "encoding": { "x": { "field": "d", "type": "temporal" } }
-      },
-
-      // Hover points (prices)
-      {
-        "transform": [{ "filter": { "param": "hover" } }],
-        "mark": { "type": "point", "filled": true, "size": 90 },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal" },
-          "y": { "field": "prices", "type": "quantitative" },
-          "color": { "value": "#1f77b4" }
-        }
-      },
-
-      // Hover points (earnings)
-      {
-        "transform": [{ "filter": { "param": "hover" } }],
-        "mark": { "type": "point", "filled": true, "size": 90 },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal" },
-          "y": { "field": "earnings", "type": "quantitative" },
-          "color": { "value": "#ff7f0e" }
-        }
-      },
-
-      // Tooltip (single date)
-      {
-        "transform": [{ "filter": { "param": "hover" } }],
-        "mark": { "type": "point", "opacity": 0 },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal" },
+          "color": { "value": "#1f77b4" },
           "tooltip": [
             { "field": "d", "type": "temporal", "title": "Date" },
             { "field": "prices", "type": "quantitative", "title": "Prices (index)", "format": ".1f" },
             { "field": "earnings", "type": "quantitative", "title": "Real earnings (index)", "format": ".1f" },
             { "field": "gap", "type": "quantitative", "title": "Gap (prices − pay)", "format": ".1f" }
           ]
+        }
+      },
+
+      // Earnings line
+      {
+        "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": { "field": "earnings", "type": "quantitative" },
+          "color": { "value": "#ff7f0e" }
         }
       }
     ],
