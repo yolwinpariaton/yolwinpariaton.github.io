@@ -9,6 +9,7 @@
   },
   "width": 300,
   "height": 450,
+  "padding": {"left": 5, "right": 80, "top": 5, "bottom": 5},
   "layer": [
     {
       "data": {
@@ -46,7 +47,7 @@
             "format": ",",
             "orient": "right",
             "direction": "vertical",
-            "offset": 10
+            "offset": 0
           }
         },
         "color": {
