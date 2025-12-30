@@ -4,12 +4,12 @@
    Expected JSON files in /data (records):
    - vis1_prices_vs_pay.json            fields: date, series, value
    - vis2_food_vs_headline.json         fields: date, series, value
-   - vis3_energy_cap.json              fields: period_date, typical_annual_bill_gbp, period_label
-   - vis4_fuel_weekly.json             fields: date, unleaded_ppl, diesel_ppl
-   - vis5_rent_vs_house.json           fields: date, series, value
-   - vis6_rent_map_regions.json        fields: areacd, areanm, rent_inflation_yoy_pct
-   - vis7_rent_trend_regions.json      fields: date, areanm, rent_inflation_yoy_pct
-   - vis8_rent_map_countries.json      fields: areacd, areanm, rent_inflation_yoy_pct
+   - vis3_energy_cap.json               fields: period_date, typical_annual_bill_gbp, period_label
+   - vis4_fuel_weekly.json              fields: date, unleaded_ppl, diesel_ppl
+   - vis5_rent_vs_house.json            fields: date, series, value
+   - vis6_rent_map_regions.json         fields: areacd, areanm, rent_inflation_yoy_pct
+   - vis7_rent_trend_regions.json       fields: date, areanm, rent_inflation_yoy_pct
+   - vis8_rent_map_countries.json       fields: areacd, areanm, rent_inflation_yoy_pct
 */
 
 (function () {
@@ -28,14 +28,15 @@
     });
   }
 
+  // =========================
   // 1) Prices vs pay (indexed)
+  // =========================
   const vis1 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
     "title": {
       "text": "Prices vs pay (indexed to 2019 = 100)",
-      "subtitle":
-        "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
+      "subtitle": "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
     },
 
     "data": { "url": "data/vis1_prices_vs_pay.json" },
@@ -52,17 +53,17 @@
     ],
 
     "layer": [
-      // Baseline at 100 (dotted, lighter)
+      // Baseline at 100 (dotted, subtle)
       {
-        "mark": { "type": "rule", "strokeDash": [6, 5], "strokeWidth": 1.6 },
+        "mark": { "type": "rule", "strokeDash": [6, 6] },
         "encoding": {
           "y": { "datum": 100 },
-          "color": { "value": "#6b7280" },
-          "opacity": { "value": 0.85 }
+          "color": { "value": "#6b778d" },
+          "opacity": { "value": 0.9 }
         }
       },
 
-      // Gap shading (between earnings and prices)
+      // Gap shading
       {
         "mark": { "type": "area", "opacity": 0.14 },
         "encoding": {
@@ -85,16 +86,11 @@
 
       // Prices line
       {
-        "mark": {
-          "type": "line",
-          "strokeWidth": 3.0,
-          "opacity": 0.9,
-          "point": { "filled": true, "size": 45 }
-        },
+        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 45 } },
         "encoding": {
           "x": { "field": "d", "type": "temporal", "title": "Date" },
           "y": { "field": "prices", "type": "quantitative" },
-          "color": { "value": "#4C78A8" },
+          "color": { "value": "#4c72b0" },
           "tooltip": [
             { "field": "d", "type": "temporal", "title": "Date" },
             { "field": "prices", "type": "quantitative", "title": "CPIH (prices)", "format": ".1f" },
@@ -106,155 +102,102 @@
 
       // Earnings line
       {
-        "mark": {
-          "type": "line",
-          "strokeWidth": 3.0,
-          "opacity": 0.9,
-          "point": { "filled": true, "size": 45 }
-        },
+        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 45 } },
         "encoding": {
           "x": { "field": "d", "type": "temporal", "title": "Date" },
           "y": { "field": "earnings", "type": "quantitative" },
-          "color": { "value": "#F58518" }
+          "color": { "value": "#e1812c" }
         }
       }
     ],
 
     "config": {
+      "legend": { "orient": "top", "direction": "horizontal", "title": null, "padding": 10 },
       "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-      "title": { "fontSize": 18, "subtitleFontSize": 12 },
+      "title": { "fontSize": 26, "subtitleFontSize": 15 },
       "view": { "stroke": null }
     }
   };
 
-  // 2) Food vs headline (IMPROVED: smoother + raw context + hover highlight + centered legend)
+  // ======================================
+  // 2) Food inflation vs headline (improved)
+  // ======================================
+  // Keeps your same data file + fields. Adds:
+  // - safe parsing of date/value (prevents silent failures)
+  // - raw monthly series (lighter)
+  // - smoothed 5-month moving average (bold) for readability
   const vis2 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-
     "title": { "text": "Food inflation vs headline (annual rate)" },
-
     "data": { "url": "data/vis2_food_vs_headline.json" },
     "width": "container",
     "height": 420,
 
     "transform": [
       { "calculate": "toDate(datum.date)", "as": "d" },
-      { "calculate": "toNumber(datum.value)", "as": "v" },
-
-      // 5-month centred moving average to reduce jaggedness but keep turning points
-      {
-        "window": [{ "op": "mean", "field": "v", "as": "v_ma5" }],
-        "frame": [-2, 2],
-        "groupby": ["series"],
-        "sort": [{ "field": "d", "order": "ascending" }]
-      }
-    ],
-
-    "params": [
-      {
-        "name": "hover",
-        "select": { "type": "point", "fields": ["series"], "on": "mouseover", "clear": "mouseout" }
-      }
+      { "calculate": "toNumber(datum.value)", "as": "v" }
     ],
 
     "layer": [
-      // Zero line (dotted)
+      // Zero line (subtle reference)
       {
-        "mark": { "type": "rule", "strokeDash": [6, 5], "strokeWidth": 1.4 },
+        "mark": { "type": "rule", "strokeDash": [4, 6] },
         "encoding": {
           "y": { "datum": 0 },
-          "color": { "value": "#6b7280" },
-          "opacity": { "value": 0.6 }
+          "color": { "value": "#6b778d" },
+          "opacity": { "value": 0.7 }
         }
       },
 
-      // Raw series (light, context)
+      // Raw monthly (lighter, with points)
       {
-        "mark": { "type": "line", "strokeWidth": 1.5, "opacity": 0.25 },
+        "mark": { "type": "line", "strokeWidth": 2, "opacity": 0.35, "point": { "filled": true, "size": 30, "opacity": 0.35 } },
         "encoding": {
-          "x": {
-            "field": "d",
-            "type": "temporal",
-            "title": "Date",
-            "axis": { "format": "%Y", "tickCount": 7 }
-          },
-          "y": {
-            "field": "v",
-            "type": "quantitative",
-            "title": "Percent (y/y)",
-            "axis": { "grid": true, "tickCount": 7 }
-          },
-          "color": {
-            "field": "series",
-            "type": "nominal",
-            "legend": null,
-            "scale": {
-              "domain": ["Food (CPI)", "Headline (CPIH)"],
-              "range": ["#4C78A8", "#F58518"]
-            }
-          }
-        }
-      },
-
-      // Smoothed series (main read)
-      {
-        "mark": {
-          "type": "line",
-          "strokeWidth": 3.2,
-          "opacity": 0.92,
-          "point": false
-        },
-        "encoding": {
-          "x": {
-            "field": "d",
-            "type": "temporal",
-            "title": "Date",
-            "axis": { "format": "%Y", "tickCount": 7 }
-          },
-          "y": { "field": "v_ma5", "type": "quantitative", "title": "Percent (y/y)" },
-
+          "x": { "field": "d", "type": "temporal", "title": "Date" },
+          "y": { "field": "v", "type": "quantitative", "title": "Percent" },
           "color": {
             "field": "series",
             "type": "nominal",
             "title": null,
-            "scale": {
-              "domain": ["Food (CPI)", "Headline (CPIH)"],
-              "range": ["#4C78A8", "#F58518"]
-            },
-            // Legend below title/subtitle, centered
-            "legend": {
-              "orient": "top",
-              "direction": "horizontal",
-              "title": null,
-              "symbolType": "stroke",
-              "symbolStrokeWidth": 6,
-              "symbolSize": 400,
-              "labelFontSize": 13,
-              "offset": 6,
-              "anchor": "middle"
-            }
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": { "orient": "top", "direction": "horizontal", "title": null, "padding": 10 }
           },
-
-          // Hover highlight
-          "opacity": {
-            "condition": { "param": "hover", "value": 1 },
-            "value": 0.55
-          },
-
           "tooltip": [
             { "field": "d", "type": "temporal", "title": "Date" },
             { "field": "series", "type": "nominal", "title": "Series" },
-            { "field": "v", "type": "quantitative", "title": "Monthly (raw)", "format": ".1f" },
-            { "field": "v_ma5", "type": "quantitative", "title": "5-month average", "format": ".1f" }
+            { "field": "v", "type": "quantitative", "title": "Percent", "format": ".1f" }
           ]
+        }
+      },
+
+      // Smoothed line (5-month moving average, bolder)
+      {
+        "transform": [
+          {
+            "window": [{ "op": "mean", "field": "v", "as": "v_ma" }],
+            "frame": [-2, 2],
+            "sort": [{ "field": "d", "order": "ascending" }],
+            "groupby": ["series"]
+          }
+        ],
+        "mark": { "type": "line", "strokeWidth": 4 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal", "title": "Date" },
+          "y": { "field": "v_ma", "type": "quantitative", "title": "Percent" },
+          "color": {
+            "field": "series",
+            "type": "nominal",
+            "title": null,
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": { "orient": "top", "direction": "horizontal", "title": null, "padding": 10 }
+          }
         }
       }
     ],
 
     "config": {
       "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-      "title": { "fontSize": 18, "subtitleFontSize": 12 },
-      "legend": { "padding": 0 },
+      "title": { "fontSize": 26, "subtitleFontSize": 15 },
       "view": { "stroke": null }
     }
   };
@@ -265,7 +208,7 @@
     "title": { "text": "Energy price cap (typical annual bill)" },
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 320,
+    "height": 420,
     "mark": { "type": "line", "interpolate": "step-after", "point": true },
     "encoding": {
       "x": { "field": "period_date", "type": "temporal", "title": "Cap period" },
@@ -283,7 +226,7 @@
     "title": { "text": "Weekly fuel prices (pence per litre)" },
     "data": { "url": "data/vis4_fuel_weekly.json" },
     "width": "container",
-    "height": 360,
+    "height": 420,
     "transform": [{ "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel", "ppl"] }],
     "mark": { "type": "line" },
     "encoding": {
@@ -304,7 +247,7 @@
     "title": { "text": "Rent vs house price inflation (annual rate)" },
     "data": { "url": "data/vis5_rent_vs_house.json" },
     "width": "container",
-    "height": 360,
+    "height": 420,
     "mark": { "type": "line" },
     "encoding": {
       "x": { "field": "date", "type": "temporal", "title": "Date" },
@@ -323,7 +266,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": { "text": "Rent inflation across regions (latest)" },
     "width": "container",
-    "height": 460,
+    "height": 520,
     "data": {
       "url": UK_TOPO_URL,
       "format": { "type": "topojson", "feature": "rgn" }
@@ -360,7 +303,7 @@
     "title": { "text": "Rent inflation over time (select a region)" },
     "data": { "url": "data/vis7_rent_trend_regions.json" },
     "width": "container",
-    "height": 360,
+    "height": 420,
     "params": [
       {
         "name": "Region",
@@ -418,7 +361,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": { "text": "Rent inflation across UK countries (latest available)" },
     "width": "container",
-    "height": 460,
+    "height": 520,
     "data": {
       "url": UK_TOPO_URL,
       "format": { "type": "topojson", "feature": "ctry" }
@@ -449,6 +392,7 @@
     }
   };
 
+  // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
   safeEmbed("#vis3", vis3);
