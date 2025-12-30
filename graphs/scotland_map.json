@@ -45,6 +45,7 @@
             "title": "Annual Visitors",
             "format": ",",
             "orient": "right",
+            "offset": 40,
             "direction": "vertical",
             "symbolType": "circle",
             "symbolFillColor": "#8b6914",
