@@ -9,25 +9,33 @@
   },
   "width": 300,
   "height": 450,
+  "padding": {"top": 10, "right": 10, "bottom": 35, "left": 10},
+
+  "projection": {
+    "type": "mercator",
+    "center": [-4.2, 57.3],
+    "scale": 2600,
+    "translate": [150, 215]
+  },
+
   "layer": [
     {
       "data": {
         "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
         "format": {"type": "json", "property": "features"}
       },
-      "projection": {"type": "mercator"},
       "mark": {
         "type": "geoshape",
         "fill": "#f8f9fa",
         "stroke": "#adb5bd",
-        "strokeWidth": 0.5
+        "strokeWidth": 0.5,
+        "clip": false
       }
     },
     {
       "data": {
         "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/scotland_distilleries.csv"
       },
-      "projection": {"type": "mercator"},
       "mark": {
         "type": "circle",
         "opacity": 0.8,
