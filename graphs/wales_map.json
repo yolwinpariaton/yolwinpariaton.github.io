@@ -9,6 +9,9 @@
   },
   "width": 300,
   "height": 450,
+
+  "padding": {"top": 10, "right": 10, "bottom": 35, "left": 10},
+
   "data": {
     "url": "https://raw.githubusercontent.com/jhellingsdata/RADataHub/refs/heads/main/MappingWorkshop/geo_data/LAD_WLS_2025_05.topojson",
     "format": {"type": "topojson", "feature": "object_name"}
@@ -16,7 +19,8 @@
   "projection": {
     "type": "mercator",
     "center": [-4.45, 52.3],
-    "scale": 5300
+    "scale": 5300,
+    "translate": [150, 235]
   },
   "transform": [
     {
@@ -33,15 +37,14 @@
   "mark": {
     "type": "geoshape",
     "stroke": "white",
-    "strokeWidth": 0.8
+    "strokeWidth": 0.8,
+    "clip": false
   },
   "encoding": {
     "color": {
       "field": "Data values",
       "type": "quantitative",
-      "scale": {
-        "scheme": "blues"
-      },
+      "scale": {"scheme": "blues"},
       "legend": {
         "title": "Active Enterprises",
         "format": ".0s",
