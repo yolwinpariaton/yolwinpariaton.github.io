@@ -13,10 +13,8 @@
 */
 
 (function () {
-  // Fit charts to container; avoid overflow in "card" frames
   const opts = { actions: false, renderer: "canvas" };
 
-  // Stable TopoJSON from ONSdigital/uk-topojson (contains layers: uk, ctry, rgn, ...)
   const UK_TOPO_URL =
     "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
 
@@ -29,51 +27,54 @@
     });
   }
 
-  // Shared config: centered legend under subtitle; charts fit their frame
-  const baseConfig = {
+  // Centered “legend row” (below subtitle) – this avoids Vega legend alignment issues.
+  function legendRow(labels, colors) {
+    return {
+      width: "container",
+      height: 26,
+      data: { values: labels.map((d) => ({ label: d })) },
+      transform: [{ calculate: "'━━━ ' + datum.label", as: "lbl" }],
+      mark: { type: "text", align: "center", baseline: "middle", fontSize: 14 },
+      encoding: {
+        x: { field: "label", type: "nominal", axis: null, sort: null },
+        text: { field: "lbl" },
+        color: {
+          field: "label",
+          type: "nominal",
+          scale: { domain: labels, range: colors }
+        }
+      },
+      config: { view: { stroke: null } }
+    };
+  }
+
+  const baseCfg = {
     autosize: { type: "fit", contains: "padding" },
     config: {
       view: { stroke: null },
       axis: {
         labelFontSize: 12,
         titleFontSize: 12,
-        grid: true
+        grid: true,
+        gridOpacity: 0.35
       },
       title: {
-        fontSize: 20,
+        fontSize: 22,
         subtitleFontSize: 13,
         anchor: "middle"
-      },
-      legend: {
-        title: null,
-        orient: "top",
-        direction: "horizontal",
-        anchor: "middle",
-        labelFontSize: 13,
-        symbolType: "stroke",
-        symbolStrokeWidth: 5,
-        symbolSize: 280,
-        padding: 6
       }
     }
   };
 
-  // 1) Prices vs pay (indexed) — rebuilt so legend is real + centered; no source/note inside chart
-  const vis1 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  // -----------------------
+  // 1) Prices vs pay (indexed)
+  // -----------------------
 
-    title: {
-      text: "Prices vs pay (indexed to 2019 = 100)",
-      subtitle:
-        "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
-    },
-
+  const vis1Main = {
     data: { url: "data/vis1_prices_vs_pay.json" },
     width: "container",
     height: 360,
-
-    // Extra padding ensures x-axis title never gets clipped
-    padding: { left: 56, right: 18, top: 12, bottom: 46 },
+    padding: { left: 56, right: 18, top: 6, bottom: 46 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -82,9 +83,7 @@
 
       { calculate: "datum['CPIH (prices)']", as: "prices" },
       { calculate: "datum['Real earnings']", as: "earnings" },
-      { calculate: "datum.prices - datum.earnings", as: "gap" },
 
-      // Build a long format for the line layer so we get a proper legend
       { fold: ["prices", "earnings"], as: ["series_key", "series_value"] },
       {
         calculate:
@@ -94,29 +93,26 @@
     ],
 
     layer: [
-      // Baseline at 100 (dotted, softer colour)
+      // baseline at 100 (dotted + softer colour)
       {
         mark: { type: "rule", strokeDash: [5, 5], strokeWidth: 1.6 },
-        encoding: {
-          y: { datum: 100 },
-          color: { value: "#7a869a" }
-        }
+        encoding: { y: { datum: 100 }, color: { value: "#7a869a" } }
       },
 
-      // Gap shading (between earnings and prices) using the pivoted fields
+      // gap shading (computed from pivoted fields)
       {
         transform: [
-          // keep only one record per date after fold
-          { aggregate: [{ op: "max", field: "prices", as: "prices" }, { op: "max", field: "earnings", as: "earnings" }], groupby: ["d"] }
+          {
+            aggregate: [
+              { op: "max", field: "prices", as: "prices" },
+              { op: "max", field: "earnings", as: "earnings" }
+            ],
+            groupby: ["d"]
+          }
         ],
         mark: { type: "area", opacity: 0.14 },
         encoding: {
-          x: {
-            field: "d",
-            type: "temporal",
-            title: "Date",
-            axis: { format: "%Y", tickCount: 7 }
-          },
+          x: { field: "d", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
           y: {
             field: "earnings",
             type: "quantitative",
@@ -128,16 +124,11 @@
         }
       },
 
-      // Lines (proper legend; slightly more transparent; consistent size)
+      // lines (no built-in legend)
       {
-        mark: { type: "line", strokeWidth: 3.0, opacity: 0.92, point: { filled: true, size: 42 } },
+        mark: { type: "line", strokeWidth: 3, opacity: 0.92, point: { filled: true, size: 42 } },
         encoding: {
-          x: {
-            field: "d",
-            type: "temporal",
-            title: "Date",
-            axis: { format: "%Y", tickCount: 7 }
-          },
+          x: { field: "d", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
           y: {
             field: "series_value",
             type: "quantitative",
@@ -147,7 +138,11 @@
           color: {
             field: "series_label",
             type: "nominal",
-            scale: { domain: ["CPIH (prices)", "Real earnings"], range: ["#4c78a8", "#f58518"] }
+            legend: null,
+            scale: {
+              domain: ["CPIH (prices)", "Real earnings"],
+              range: ["#4c78a8", "#f58518"]
+            }
           },
           tooltip: [
             { field: "d", type: "temporal", title: "Date" },
@@ -156,34 +151,57 @@
           ]
         }
       }
-    ],
-
-    ...baseConfig
+    ]
   };
 
-  // 2) Food vs headline (legend centered under title/subtitle)
+  const vis1 = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    title: {
+      text: "Prices vs pay (indexed to 2019 = 100)",
+      subtitle:
+        "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
+    },
+    vconcat: [
+      legendRow(["CPIH (prices)", "Real earnings"], ["#4c78a8", "#f58518"]),
+      vis1Main
+    ],
+    spacing: 4,
+    ...baseCfg
+  };
+
+  // -----------------------
+  // 2) Food vs headline (centered legend row)
+  // -----------------------
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Food inflation vs headline (annual rate)" },
-    data: { url: "data/vis2_food_vs_headline.json" },
-    width: "container",
-    height: 320,
-    padding: { left: 56, right: 18, top: 12, bottom: 42 },
-    mark: { type: "line", strokeWidth: 3, opacity: 0.92, point: { filled: true, size: 40 } },
-    encoding: {
-      x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
-      y: { field: "value", type: "quantitative", title: "Percent" },
-      color: { field: "series", type: "nominal" },
-      tooltip: [
-        { field: "date", type: "temporal", title: "Date" },
-        { field: "series", type: "nominal", title: "Series" },
-        { field: "value", type: "quantitative", title: "Percent", format: ".1f" }
-      ]
-    },
-    ...baseConfig
+    vconcat: [
+      legendRow(["Food", "Headline"], ["#4c78a8", "#f58518"]),
+      {
+        data: { url: "data/vis2_food_vs_headline.json" },
+        width: "container",
+        height: 320,
+        padding: { left: 56, right: 18, top: 6, bottom: 42 },
+        mark: { type: "line", strokeWidth: 3, opacity: 0.92, point: { filled: true, size: 40 } },
+        encoding: {
+          x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
+          y: { field: "value", type: "quantitative", title: "Percent" },
+          color: { field: "series", type: "nominal", legend: null },
+          tooltip: [
+            { field: "date", type: "temporal", title: "Date" },
+            { field: "series", type: "nominal", title: "Series" },
+            { field: "value", type: "quantitative", title: "Percent", format: ".1f" }
+          ]
+        }
+      }
+    ],
+    spacing: 4,
+    ...baseCfg
   };
 
-  // 3) Energy cap (single series; no legend)
+  // -----------------------
+  // 3) Energy cap (single series; no legend row)
+  // -----------------------
   const vis3 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Energy price cap (typical annual bill)" },
@@ -200,59 +218,73 @@
         { field: "typical_annual_bill_gbp", type: "quantitative", title: "GBP", format: ",.0f" }
       ]
     },
-    autosize: baseConfig.autosize,
-    config: {
-      ...baseConfig.config,
-      legend: { disable: true }
-    }
+    ...baseCfg
   };
 
-  // 4) Fuel weekly (legend centered)
+  // -----------------------
+  // 4) Fuel weekly (centered legend row)
+  // -----------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Weekly fuel prices (pence per litre)" },
-    data: { url: "data/vis4_fuel_weekly.json" },
-    width: "container",
-    height: 320,
-    padding: { left: 62, right: 18, top: 12, bottom: 42 },
-    transform: [{ fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel", "ppl"] }],
-    mark: { type: "line", strokeWidth: 3, opacity: 0.92 },
-    encoding: {
-      x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
-      y: { field: "ppl", type: "quantitative", title: "Pence per litre" },
-      color: { field: "fuel", type: "nominal" },
-      tooltip: [
-        { field: "date", type: "temporal", title: "Date" },
-        { field: "fuel", type: "nominal", title: "Fuel" },
-        { field: "ppl", type: "quantitative", title: "ppl", format: ".1f" }
-      ]
-    },
-    ...baseConfig
+    vconcat: [
+      legendRow(["unleaded_ppl", "diesel_ppl"], ["#4c78a8", "#f58518"]),
+      {
+        data: { url: "data/vis4_fuel_weekly.json" },
+        width: "container",
+        height: 320,
+        padding: { left: 62, right: 18, top: 6, bottom: 42 },
+        transform: [{ fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel", "ppl"] }],
+        mark: { type: "line", strokeWidth: 3, opacity: 0.92 },
+        encoding: {
+          x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
+          y: { field: "ppl", type: "quantitative", title: "Pence per litre" },
+          color: { field: "fuel", type: "nominal", legend: null },
+          tooltip: [
+            { field: "date", type: "temporal", title: "Date" },
+            { field: "fuel", type: "nominal", title: "Fuel" },
+            { field: "ppl", type: "quantitative", title: "ppl", format: ".1f" }
+          ]
+        }
+      }
+    ],
+    spacing: 4,
+    ...baseCfg
   };
 
-  // 5) Rent vs house inflation (legend centered)
+  // -----------------------
+  // 5) Rent vs house inflation (centered legend row)
+  // -----------------------
   const vis5 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Rent vs house price inflation (annual rate)" },
-    data: { url: "data/vis5_rent_vs_house.json" },
-    width: "container",
-    height: 320,
-    padding: { left: 56, right: 18, top: 12, bottom: 42 },
-    mark: { type: "line", strokeWidth: 3, opacity: 0.92, point: { filled: true, size: 36 } },
-    encoding: {
-      x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
-      y: { field: "value", type: "quantitative", title: "Percent" },
-      color: { field: "series", type: "nominal" },
-      tooltip: [
-        { field: "date", type: "temporal", title: "Date" },
-        { field: "series", type: "nominal", title: "Series" },
-        { field: "value", type: "quantitative", title: "Percent", format: ".1f" }
-      ]
-    },
-    ...baseConfig
+    vconcat: [
+      legendRow(["Rent", "House prices"], ["#4c78a8", "#f58518"]),
+      {
+        data: { url: "data/vis5_rent_vs_house.json" },
+        width: "container",
+        height: 320,
+        padding: { left: 56, right: 18, top: 6, bottom: 42 },
+        mark: { type: "line", strokeWidth: 3, opacity: 0.92, point: { filled: true, size: 36 } },
+        encoding: {
+          x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
+          y: { field: "value", type: "quantitative", title: "Percent" },
+          color: { field: "series", type: "nominal", legend: null },
+          tooltip: [
+            { field: "date", type: "temporal", title: "Date" },
+            { field: "series", type: "nominal", title: "Series" },
+            { field: "value", type: "quantitative", title: "Percent", format: ".1f" }
+          ]
+        }
+      }
+    ],
+    spacing: 4,
+    ...baseCfg
   };
 
-  // 6) Map: rent inflation by region (choropleth)
+  // -----------------------
+  // 6) Map: rent inflation by region
+  // -----------------------
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Rent inflation across regions (latest)" },
@@ -287,19 +319,12 @@
         { field: "rent_inflation_yoy_pct", type: "quantitative", title: "% y/y", format: ".1f" }
       ]
     },
-    autosize: baseConfig.autosize,
-    config: {
-      ...baseConfig.config,
-      legend: {
-        ...baseConfig.config.legend,
-        orient: "bottom",
-        direction: "horizontal",
-        anchor: "middle"
-      }
-    }
+    ...baseCfg
   };
 
-  // 7) Interactive trend: dropdown select region (compare to England)
+  // -----------------------
+  // 7) Interactive trend
+  // -----------------------
   const vis7 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Rent inflation over time (select a region)" },
@@ -357,14 +382,12 @@
         { field: "rent_inflation_yoy_pct", type: "quantitative", title: "% y/y", format: ".1f" }
       ]
     },
-    autosize: baseConfig.autosize,
-    config: {
-      ...baseConfig.config,
-      legend: { disable: true }
-    }
+    ...baseCfg
   };
 
+  // -----------------------
   // 8) Map: UK countries rent inflation
+  // -----------------------
   const vis8 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Rent inflation across UK countries (latest available)" },
@@ -399,19 +422,9 @@
         { field: "rent_inflation_yoy_pct", type: "quantitative", title: "% y/y", format: ".1f" }
       ]
     },
-    autosize: baseConfig.autosize,
-    config: {
-      ...baseConfig.config,
-      legend: {
-        ...baseConfig.config.legend,
-        orient: "bottom",
-        direction: "horizontal",
-        anchor: "middle"
-      }
-    }
+    ...baseCfg
   };
 
-  // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
   safeEmbed("#vis3", vis3);
