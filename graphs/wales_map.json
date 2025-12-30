@@ -7,8 +7,8 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 250,
-  "height": 450,
+  "width": 280,
+  "height": 400,
   "layer": [
     {
       "data": {
@@ -46,7 +46,7 @@
             "format": ",",
             "orient": "bottom",
             "direction": "horizontal",
-            "gradientLength": 200
+            "gradientLength": 220
           }
         },
         "tooltip": [
