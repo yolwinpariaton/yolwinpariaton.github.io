@@ -29,7 +29,7 @@ const BASE_VL_CONFIG = {
   legend: { labelFontSize: 11, titleFontSize: 12 }
 };
 
-// Vega-Embed options
+// Vega-Embed options (default for Vega-Lite charts)
 const EMBED_OPTS = {
   actions: false,
   renderer: "svg",
@@ -70,7 +70,9 @@ function safeEmbed(selector, specOrUrl, opts = EMBED_OPTS) {
 
 // -----------------------------
 // Rewrite only RELATIVE data URLs inside specs
-// e.g., "chart2_wage_squeeze.json" -> "https://<site>/data/chart2_wage_squeeze.json?v=..."
+// Supports:
+//  - Vega-Lite: { data: { url: "..." } }
+//  - Vega: { url: "..." } inside data sources
 // -----------------------------
 function isRelativeDataUrl(u) {
   return (
@@ -86,9 +88,14 @@ function isRelativeDataUrl(u) {
 function rewriteDataUrlsDeep(node) {
   if (!node || typeof node !== "object") return;
 
-  // rewrite { data: { url: "..." } }
+  // Vega-Lite: rewrite { data: { url: "..." } }
   if (node.data && typeof node.data === "object" && isRelativeDataUrl(node.data.url)) {
     node.data.url = siteDataUrl(node.data.url);
+  }
+
+  // Vega: rewrite { url: "..." } where url is a relative data file
+  if (isRelativeDataUrl(node.url)) {
+    node.url = siteDataUrl(node.url);
   }
 
   // recurse
@@ -108,10 +115,14 @@ async function loadSpecAndFix(file) {
 }
 
 function initCharts() {
-  // Charts 1–3 are spec files in /data
-  loadSpecAndFix("chart1_spec.json").then(spec => safeEmbed("#chart1", spec));
-  loadSpecAndFix("chart2_spec.json").then(spec => safeEmbed("#chart2", spec));
-  loadSpecAndFix("chart3_spec.json").then(spec => safeEmbed("#chart3", spec));
+  // Charts 1–2 are Vega-Lite specs in /data
+  loadSpecAndFix("chart1_spec.json").then(spec => safeEmbed("#chart1", spec, EMBED_OPTS));
+  loadSpecAndFix("chart2_spec.json").then(spec => safeEmbed("#chart2", spec, EMBED_OPTS));
+
+  // Chart 3 is now a VEGA spec (more reliable map pipeline with projection fit)
+  loadSpecAndFix("chart3_spec.json").then(spec =>
+    safeEmbed("#chart3", spec, { actions: false, renderer: "svg", mode: "vega" })
+  );
 
   // Shared responsive sizing for inline specs
   const RESPONSIVE = {
@@ -170,7 +181,7 @@ function initCharts() {
       }
     ],
     "config": BASE_VL_CONFIG
-  });
+  }, EMBED_OPTS);
 
   // Chart 5
   safeEmbed("#chart5", {
@@ -197,7 +208,7 @@ function initCharts() {
       ]
     },
     "config": BASE_VL_CONFIG
-  });
+  }, EMBED_OPTS);
 
   // Chart 6
   safeEmbed("#chart6", {
@@ -239,7 +250,7 @@ function initCharts() {
       "color": { "field": "metric", "type": "nominal", "legend": { "title": "Metric" } }
     },
     "config": BASE_VL_CONFIG
-  });
+  }, EMBED_OPTS);
 
   // Chart 7
   safeEmbed("#chart7", {
@@ -257,7 +268,7 @@ function initCharts() {
       "opacity": { "condition": { "param": "countryHighlight", "value": 1 }, "value": 0.2 }
     },
     "config": BASE_VL_CONFIG
-  });
+  }, EMBED_OPTS);
 
   // Chart 8
   safeEmbed("#chart8", {
@@ -284,7 +295,7 @@ function initCharts() {
       "y": { "field": "inflation", "type": "quantitative", "title": "Inflation (%)" }
     },
     "config": BASE_VL_CONFIG
-  });
+  }, EMBED_OPTS);
 
   console.log("✅ project-charts.js loaded and embed calls executed.");
 }

@@ -1,166 +1,198 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Regional cost of living choropleth across the UK (NUTS1-style codes), matched to economic indicators via lookup on NUTS112CD.",
+
+  "autosize": { "type": "fit", "contains": "padding" },
+  "width": "container",
+  "height": 520,
+  "padding": { "top": 10, "left": 10, "right": 10, "bottom": 10 },
+  "background": "transparent",
+
   "title": {
     "text": "Regional Cost Variations Across UK",
-    "subtitle": "Cost of living index and affordability by region"
+    "subtitle": "Cost of living index and affordability by region",
+    "anchor": "start",
+    "fontSize": 14,
+    "subtitleFontSize": 12
   },
 
-  "width": "container",
-  "autosize": { "type": "fit", "contains": "padding" },
-  "height": 520,
-  "padding": { "top": 8, "left": 8, "right": 8, "bottom": 8 },
-
-  "projection": {
-    "type": "mercator"
-  },
-
-  "layer": [
+  "data": [
     {
-      "data": { "url": "uk_regions.geojson", "format": { "type": "geojson" } },
+      "name": "regions",
+      "url": "uk_regions.geojson",
+      "format": { "type": "json", "property": "features" }
+    },
+    {
+      "name": "econ",
+      "url": "chart3_regional_detailed.json",
+      "format": { "type": "json" }
+    },
+    {
+      "name": "regions_joined",
+      "source": "regions",
       "transform": [
         {
-          "calculate": "datum.properties.ITL121CD || datum.properties.itl121cd || datum.properties.ITL_CODE || datum.properties.itl_code || datum.properties.NUTS112CD || datum.properties.nuts112cd || datum.properties.NUTS118CD || datum.properties.nuts118cd || datum.properties.NUTS_ID || datum.properties.nuts_id || datum.properties.CODE || datum.properties.code || datum.properties.GSS_CODE || datum.properties.gss_code",
-          "as": "join_code"
+          "type": "formula",
+          "as": "code",
+          "expr": "datum.properties && (datum.properties.NUTS112CD || datum.properties.nuts112cd || datum.properties.CODE || datum.properties.code || datum.properties.ITL121CD || datum.properties.itl121cd) ? (datum.properties.NUTS112CD || datum.properties.nuts112cd || datum.properties.CODE || datum.properties.code || datum.properties.ITL121CD || datum.properties.itl121cd) : null"
         },
         {
-          "calculate": "datum.properties.NAME || datum.properties.name || datum.properties.ITL121NM || datum.properties.itl121nm || datum.properties.NUTS112NM || datum.properties.nuts112nm || datum.properties.Region || datum.properties.region",
-          "as": "join_name"
+          "type": "formula",
+          "as": "boundary_name",
+          "expr": "datum.properties && (datum.properties.NUTS112NM || datum.properties.nuts112nm || datum.properties.NAME || datum.properties.name || datum.properties.ITL121NM || datum.properties.itl121nm) ? (datum.properties.NUTS112NM || datum.properties.nuts112nm || datum.properties.NAME || datum.properties.name || datum.properties.ITL121NM || datum.properties.itl121nm) : null"
         },
-
         {
-          "lookup": "join_code",
-          "from": {
-            "data": { "url": "chart3_regional_detailed.json" },
-            "key": "code",
-            "fields": [
-              "region",
-              "cost_index",
-              "rent_to_income",
-              "energy_burden",
-              "food_inflation",
-              "population"
-            ]
-          },
+          "type": "lookup",
+          "from": "econ",
+          "key": "code",
+          "fields": ["code"],
+          "values": [
+            "region",
+            "cost_index",
+            "rent_to_income",
+            "energy_burden",
+            "food_inflation",
+            "population",
+            "lat",
+            "lon"
+          ],
           "as": [
-            "region_code",
-            "cost_index_code",
-            "rent_to_income_code",
-            "energy_burden_code",
-            "food_inflation_code",
-            "population_code"
+            "region",
+            "cost_index",
+            "rent_to_income",
+            "energy_burden",
+            "food_inflation",
+            "population",
+            "lat",
+            "lon"
           ]
         },
+        {
+          "type": "formula",
+          "as": "population_m",
+          "expr": "datum.population ? datum.population/1000000 : null"
+        }
+      ]
+    },
+    {
+      "name": "econ_points",
+      "source": "econ",
+      "transform": [
+        { "type": "formula", "as": "population_m", "expr": "datum.population/1000000" },
+        {
+          "type": "geopoint",
+          "projection": "ukproj",
+          "fields": ["lon", "lat"],
+          "as": ["x", "y"]
+        }
+      ]
+    }
+  ],
 
-        {
-          "lookup": "join_name",
-          "from": {
-            "data": { "url": "chart3_regional_detailed.json" },
-            "key": "region",
-            "fields": [
-              "region",
-              "cost_index",
-              "rent_to_income",
-              "energy_burden",
-              "food_inflation",
-              "population"
-            ]
-          },
-          "as": [
-            "region_name",
-            "cost_index_name",
-            "rent_to_income_name",
-            "energy_burden_name",
-            "food_inflation_name",
-            "population_name"
-          ]
-        },
+  "projections": [
+    {
+      "name": "ukproj",
+      "type": "mercator",
+      "fit": { "data": "regions", "field": "geometry" },
+      "size": [{ "signal": "width" }, { "signal": "height" }]
+    }
+  ],
 
-        {
-          "calculate": "datum.region_code || datum.region_name || datum.join_name",
-          "as": "region"
-        },
-        {
-          "calculate": "datum.cost_index_code != null ? datum.cost_index_code : datum.cost_index_name",
-          "as": "cost_index"
-        },
-        {
-          "calculate": "datum.rent_to_income_code != null ? datum.rent_to_income_code : datum.rent_to_income_name",
-          "as": "rent_to_income"
-        },
-        {
-          "calculate": "datum.energy_burden_code != null ? datum.energy_burden_code : datum.energy_burden_name",
-          "as": "energy_burden"
-        },
-        {
-          "calculate": "datum.food_inflation_code != null ? datum.food_inflation_code : datum.food_inflation_name",
-          "as": "food_inflation"
-        },
-        {
-          "calculate": "datum.population_code != null ? datum.population_code : datum.population_name",
-          "as": "population"
-        },
+  "scales": [
+    {
+      "name": "colorScale",
+      "type": "linear",
+      "domain": { "data": "econ", "field": "cost_index" },
+      "range": { "scheme": "reds" },
+      "nice": true,
+      "zero": false
+    },
+    {
+      "name": "sizeScale",
+      "type": "sqrt",
+      "domain": { "data": "econ", "field": "population" },
+      "range": [80, 900],
+      "zero": true
+    }
+  ],
 
-        { "calculate": "datum.population / 1000000", "as": "population_m" }
-      ],
-      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 1.0 },
-      "encoding": {
-        "color": {
-          "condition": {
-            "test": "isValid(datum.cost_index) && datum.cost_index != null",
-            "field": "cost_index",
-            "type": "quantitative",
-            "scale": { "scheme": "reds" },
-            "legend": { "title": "Cost Index", "gradientLength": 170 }
-          },
-          "value": "#eef2ff"
+  "legends": [
+    {
+      "fill": "colorScale",
+      "title": "Cost Index",
+      "orient": "right",
+      "gradientLength": 170,
+      "titleFontSize": 12,
+      "labelFontSize": 11
+    },
+    {
+      "size": "sizeScale",
+      "title": "Population",
+      "orient": "right",
+      "symbolType": "circle",
+      "titleFontSize": 12,
+      "labelFontSize": 11
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "shape",
+      "from": { "data": "regions_joined" },
+      "transform": [{ "type": "geoshape", "projection": "ukproj" }],
+      "encode": {
+        "enter": {
+          "stroke": { "value": "#ffffff" },
+          "strokeWidth": { "value": 1 }
         },
-        "tooltip": [
-          { "field": "region", "title": "Region" },
-          { "field": "join_code", "title": "Boundary code" },
-          { "field": "join_name", "title": "Boundary name" },
-          { "field": "cost_index", "title": "Cost Index", "format": ".1f" },
-          { "field": "population_m", "title": "Population (millions)", "format": ".2f" },
-          { "field": "rent_to_income", "title": "Rent/Income Ratio (%)", "format": ".0f" },
-          { "field": "energy_burden", "title": "Energy Burden (%)", "format": ".1f" },
-          { "field": "food_inflation", "title": "Food Inflation (%)", "format": ".1f" }
-        ]
+        "update": {
+          "fill": [
+            { "test": "isValid(datum.cost_index) && datum.cost_index != null", "scale": "colorScale", "field": "cost_index" },
+            { "value": "#eef2ff" }
+          ],
+          "tooltip": {
+            "signal": "{'Region': datum.region || datum.boundary_name, 'Code': datum.code, 'Boundary name': datum.boundary_name, 'Cost index': datum.cost_index, 'Population (m)': datum.population_m, 'Rent/Income (%)': datum.rent_to_income, 'Energy burden (%)': datum.energy_burden, 'Food inflation (%)': datum.food_inflation}"
+          }
+        }
       }
     },
 
     {
-      "data": { "url": "uk_regions.geojson", "format": { "type": "geojson" } },
-      "mark": { "type": "geoshape", "fill": "transparent", "stroke": "#111827", "strokeWidth": 1.0 }
+      "type": "shape",
+      "from": { "data": "regions" },
+      "transform": [{ "type": "geoshape", "projection": "ukproj" }],
+      "encode": {
+        "enter": {
+          "fill": { "value": "transparent" },
+          "stroke": { "value": "#111827" },
+          "strokeWidth": { "value": 1 }
+        }
+      }
     },
 
     {
-      "data": { "url": "chart3_regional_detailed.json" },
-      "transform": [{ "calculate": "datum.population / 1000000", "as": "population_m" }],
-      "mark": { "type": "circle", "opacity": 0.55, "stroke": "#ffffff", "strokeWidth": 1.1 },
-      "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
-        "size": {
-          "field": "population_m",
-          "type": "quantitative",
-          "scale": { "range": [35, 520] },
-          "legend": {
-            "title": "Population (millions)",
-            "values": [2, 4, 6, 8],
-            "format": ".0f",
-            "symbolType": "circle"
-          }
+      "type": "symbol",
+      "from": { "data": "econ_points" },
+      "encode": {
+        "enter": {
+          "fill": { "value": "#111827" },
+          "stroke": { "value": "#ffffff" },
+          "strokeWidth": { "value": 1.1 },
+          "opacity": { "value": 0.55 }
         },
-        "color": { "value": "#111827" },
-        "tooltip": [
-          { "field": "region", "title": "Region" },
-          { "field": "code", "title": "Code" }
-        ]
+        "update": {
+          "x": { "field": "x" },
+          "y": { "field": "y" },
+          "size": { "scale": "sizeScale", "field": "population" },
+          "tooltip": {
+            "signal": "{'Region': datum.region, 'Code': datum.code, 'Cost index': datum.cost_index, 'Population': datum.population}"
+          }
+        }
       }
     }
   ],
 
   "config": {
-    "background": "transparent",
     "view": { "stroke": "transparent" }
   }
 }
