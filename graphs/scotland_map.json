@@ -1,32 +1,72 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 500,
-  "height": 600,
-  "title": "Tourist Attractions in Scotland",
-  "data": {
-    "values": [
-      {"name": "Edinburgh Castle", "lat": 55.9486, "lon": -3.1999, "visitors": 2200, "type": "Historic"},
-      {"name": "Loch Ness", "lat": 57.3229, "lon": -4.4244, "visitors": 500, "type": "Natural"},
-      {"name": "Stirling Castle", "lat": 56.1164, "lon": -3.9486, "visitors": 650, "type": "Historic"},
-      {"name": "Glasgow Science Centre", "lat": 55.8593, "lon": -4.2943, "visitors": 450, "type": "Museum"},
-      {"name": "Isle of Skye", "lat": 57.2736, "lon": -6.2155, "visitors": 800, "type": "Natural"},
-      {"name": "St Andrews", "lat": 56.3398, "lon": -2.7967, "visitors": 300, "type": "Historic"},
-      {"name": "Ben Nevis", "lat": 56.7969, "lon": -5.0036, "visitors": 150, "type": "Natural"},
-      {"name": "Kelvingrove Museum", "lat": 55.8689, "lon": -4.2752, "visitors": 1500, "type": "Museum"},
-      {"name": "Rosslyn Chapel", "lat": 55.8551, "lon": -3.1594, "visitors": 180, "type": "Historic"},
-      {"name": "Glenfinnan Viaduct", "lat": 56.8740, "lon": -5.4321, "visitors": 400, "type": "Historic"}
-    ]
+  "width": 600,
+  "height": 700,
+  "title": {
+    "text": "Tourist Attractions in Scotland",
+    "fontSize": 18
   },
-  "mark": "circle",
-  "encoding": {
-    "x": {"field": "lon", "type": "quantitative", "title": "Longitude"},
-    "y": {"field": "lat", "type": "quantitative", "title": "Latitude"},
-    "size": {"field": "visitors", "type": "quantitative", "title": "Visitors (thousands)"},
-    "color": {"field": "type", "type": "nominal", "title": "Type"},
-    "tooltip": [
-      {"field": "name", "title": "Attraction"},
-      {"field": "type", "title": "Type"},
-      {"field": "visitors", "title": "Visitors (thousands)"}
-    ]
-  }
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/topo_lad.json",
+        "format": {
+          "type": "topojson",
+          "feature": "lad"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e0f2f7",
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"name": "Edinburgh Castle", "lat": 55.9486, "lon": -3.1999, "visitors": 2200, "type": "Historic"},
+          {"name": "Loch Ness", "lat": 57.3229, "lon": -4.4244, "visitors": 500, "type": "Natural"},
+          {"name": "Stirling Castle", "lat": 56.1164, "lon": -3.9486, "visitors": 650, "type": "Historic"},
+          {"name": "Glasgow Science Centre", "lat": 55.8593, "lon": -4.2943, "visitors": 450, "type": "Museum"},
+          {"name": "Isle of Skye", "lat": 57.2736, "lon": -6.2155, "visitors": 800, "type": "Natural"},
+          {"name": "St Andrews", "lat": 56.3398, "lon": -2.7967, "visitors": 300, "type": "Historic"},
+          {"name": "Ben Nevis", "lat": 56.7969, "lon": -5.0036, "visitors": 150, "type": "Natural"},
+          {"name": "Kelvingrove Museum", "lat": 55.8689, "lon": -4.2752, "visitors": 1500, "type": "Museum"},
+          {"name": "Rosslyn Chapel", "lat": 55.8551, "lon": -3.1594, "visitors": 180, "type": "Historic"},
+          {"name": "Glenfinnan Viaduct", "lat": 56.8740, "lon": -5.4321, "visitors": 400, "type": "Historic"}
+        ]
+      },
+      "mark": {
+        "type": "circle",
+        "opacity": 0.9,
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "size": {
+          "field": "visitors",
+          "type": "quantitative",
+          "scale": {"range": [100, 2000]},
+          "legend": {"title": "Annual Visitors (thousands)"}
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Historic", "Natural", "Museum"],
+            "range": ["#e74c3c", "#27ae60", "#3498db"]
+          },
+          "legend": {"title": "Type"}
+        },
+        "tooltip": [
+          {"field": "name", "title": "Attraction"},
+          {"field": "type", "title": "Type"},
+          {"field": "visitors", "title": "Visitors (thousands)"}
+        ]
+      }
+    }
+  ]
 }
