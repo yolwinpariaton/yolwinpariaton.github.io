@@ -10,10 +10,13 @@
 
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Vega libraries MUST be loaded BEFORE project-charts.js -->
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <!-- Load Vega libraries with defer so they execute after HTML is parsed (order is preserved). -->
+  <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <!-- Project charts script (defer ensures containers exist before execution). -->
+  <script defer src="js/project-charts.js?v=2025-03-01"></script>
 
   <style>
     /* Ensure the project hero uses living_cost.jpg */
@@ -30,7 +33,7 @@
     .hero--project .hero__overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.35); /* lighter than before */
+      background: rgba(0, 0, 0, 0.35);
       pointer-events: none;
     }
 
@@ -47,6 +50,9 @@
       font-style: italic;
       font-weight: 400;
     }
+
+    /* Optional: make sure chart wrappers have room */
+    .chart-wrapper { width: 100%; }
   </style>
 </head>
 
@@ -64,12 +70,11 @@
 
       <ul class="nav__menu">
         <li><a class="nav__link" href="index.html">Home</a></li>
-        <li><a class="nav__link" href="project.html" aria-current="page">Project</a></li>
-        <li><a class="nav__link" href="portfolio.html">Portfolio</a></li>
+        <li><a class="nav__link" href="project.html">Project</a></li>
+        <li><a class="nav__link" href="portfolio.html" aria-current="page">Portfolio</a></li>
       </ul>
     </nav>
 
-    <!-- Project hero with living_cost.jpg background -->
     <section class="hero hero--project" aria-label="Project intro">
       <div class="hero__overlay"></div>
       <div class="hero__center">
@@ -83,7 +88,6 @@
     <section class="white-space" aria-label="Project content">
       <div class="container">
 
-        <!-- Write-up (keep within 800 words overall) -->
         <section class="task">
           <h2>Aims</h2>
           <p>
@@ -114,7 +118,6 @@
           </p>
         </section>
 
-        <!-- 1 -->
         <section class="task">
           <h2>1) Prices vs pay: CPIH and real earnings (indexed)</h2>
           <p>
@@ -127,7 +130,6 @@
           </div>
         </section>
 
-        <!-- 2 -->
         <section class="task">
           <h2>2) Food inflation vs headline inflation</h2>
           <p>
@@ -139,7 +141,6 @@
           </div>
         </section>
 
-        <!-- 3 -->
         <section class="task">
           <h2>3) Energy price cap (typical annual bill)</h2>
           <p>
@@ -151,7 +152,6 @@
           </div>
         </section>
 
-        <!-- 4 -->
         <section class="task">
           <h2>4) Weekly fuel prices</h2>
           <p>
@@ -163,7 +163,6 @@
           </div>
         </section>
 
-        <!-- 5 -->
         <section class="task">
           <h2>5) Rent vs house price inflation</h2>
           <p>
@@ -175,7 +174,6 @@
           </div>
         </section>
 
-        <!-- 6 -->
         <section class="task">
           <h2>6) Map: Rent inflation across English regions</h2>
           <p>
@@ -187,7 +185,6 @@
           </div>
         </section>
 
-        <!-- 7 -->
         <section class="task">
           <h2>7) Rent inflation over time (interactive)</h2>
           <p>
@@ -199,7 +196,6 @@
           </div>
         </section>
 
-        <!-- 8 -->
         <section class="task">
           <h2>8) Map: Rent inflation across UK countries</h2>
           <p>
@@ -239,8 +235,5 @@
       </div>
     </div>
   </footer>
-
-  <!-- Chart JS MUST be after Vega libraries and after the chart containers -->
-  <script src="js/project-charts.js?v=2025-03-01"></script>
 </body>
 </html>
