@@ -100,7 +100,10 @@
     if (checks.some((ok) => !ok)) return;
 
     // =========================
-    // 1) Prices vs pay (UPDATED)
+    // 1) Prices vs pay (FINAL FIX)
+    // - Remove all end-of-line labels (no text marks)
+    // - Use a top legend (below subtitle)
+    // - Add dotted baseline at 100 (subtle, not black)
     // =========================
     const vis1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -114,6 +117,7 @@
       "width": "container",
       "height": 360,
 
+      // Keep enough bottom padding for x-axis title, but no extra right padding
       "padding": { "left": 6, "right": 6, "top": 8, "bottom": 46 },
       "autosize": { "type": "fit", "contains": "padding" },
 
@@ -127,6 +131,20 @@
       ],
 
       "layer": [
+        // Subtle dotted baseline at 100
+        {
+          "mark": {
+            "type": "rule",
+            "strokeDash": [4, 4],
+            "strokeWidth": 1.5,
+            "opacity": 0.75
+          },
+          "encoding": {
+            "y": { "datum": 100 },
+            "color": { "value": "#7f8fa6" } // soft grey-blue
+          }
+        },
+
         // Gap shading
         {
           "mark": { "type": "area", "opacity": 0.14 },
@@ -148,7 +166,7 @@
           }
         },
 
-        // Lines + points (with legend BELOW subtitle)
+        // Lines + points with legend (NO text labels anywhere)
         {
           "transform": [
             { "fold": ["prices", "earnings"], "as": ["line_key", "yval"] },
