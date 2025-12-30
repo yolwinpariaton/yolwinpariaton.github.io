@@ -57,7 +57,15 @@
     }
   };
 
-  // 1) Prices vs pay (indexed) — legend centered under subtitle; no source/note inside chart
+  // -----------------------------
+  // Taller heights (fix “squashed” look)
+  // -----------------------------
+  const HEIGHT_LINE_MAIN = 440;    // primary line charts
+  const HEIGHT_LINE_STD = 400;     // other line charts
+  const HEIGHT_LINE_SMALL = 360;   // step line / compact line
+  const HEIGHT_MAP = 560;          // maps need more vertical space
+
+  // 1) Prices vs pay (indexed)
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: {
@@ -67,8 +75,8 @@
     },
     data: { url: "data/vis1_prices_vs_pay.json" },
     width: "container",
-    height: 360,
-    padding: { left: 56, right: 18, top: 10, bottom: 46 },
+    height: HEIGHT_LINE_MAIN,
+    padding: { left: 56, right: 18, top: 10, bottom: 52 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -184,8 +192,8 @@
     title: { text: "Food inflation vs headline (annual rate)" },
     data: { url: "data/vis2_food_vs_headline.json" },
     width: "container",
-    height: 320,
-    padding: { left: 56, right: 18, top: 10, bottom: 42 },
+    height: HEIGHT_LINE_STD,
+    padding: { left: 56, right: 18, top: 10, bottom: 48 },
     mark: {
       type: "line",
       strokeWidth: 3,
@@ -215,8 +223,8 @@
     title: { text: "Energy price cap (typical annual bill)" },
     data: { url: "data/vis3_energy_cap.json" },
     width: "container",
-    height: 280,
-    padding: { left: 62, right: 18, top: 12, bottom: 42 },
+    height: HEIGHT_LINE_SMALL,
+    padding: { left: 62, right: 18, top: 12, bottom: 48 },
     mark: {
       type: "line",
       interpolate: "step-after",
@@ -235,14 +243,14 @@
     ...baseConfig
   };
 
-  // 4) Fuel weekly (two-series)
+  // 4) Fuel weekly
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Weekly fuel prices (pence per litre)" },
     data: { url: "data/vis4_fuel_weekly.json" },
     width: "container",
-    height: 320,
-    padding: { left: 62, right: 18, top: 10, bottom: 42 },
+    height: HEIGHT_LINE_STD,
+    padding: { left: 62, right: 18, top: 10, bottom: 48 },
     transform: [{ fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel", "ppl"] }],
     mark: { type: "line", strokeWidth: 3, opacity: 0.92 },
     encoding: {
@@ -268,8 +276,8 @@
     title: { text: "Rent vs house price inflation (annual rate)" },
     data: { url: "data/vis5_rent_vs_house.json" },
     width: "container",
-    height: 320,
-    padding: { left: 56, right: 18, top: 10, bottom: 42 },
+    height: HEIGHT_LINE_STD,
+    padding: { left: 56, right: 18, top: 10, bottom: 48 },
     mark: { type: "line", strokeWidth: 3, opacity: 0.92, point: { filled: true, size: 36 } },
     encoding: {
       x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
@@ -288,12 +296,12 @@
     ...baseConfig
   };
 
-  // 6) Map: rent inflation by region (choropleth)
+  // 6) Map: rent inflation by region
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Rent inflation across regions (latest)" },
     width: "container",
-    height: 420,
+    height: HEIGHT_MAP,
     padding: { left: 10, right: 10, top: 12, bottom: 12 },
     data: {
       url: UK_TOPO_URL,
@@ -326,14 +334,14 @@
     ...baseConfig
   };
 
-  // 7) Interactive trend: dropdown select region (compare to England)
+  // 7) Interactive trend
   const vis7 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Rent inflation over time (select a region)" },
     data: { url: "data/vis7_rent_trend_regions.json" },
     width: "container",
-    height: 320,
-    padding: { left: 56, right: 18, top: 12, bottom: 42 },
+    height: HEIGHT_LINE_STD,
+    padding: { left: 56, right: 18, top: 12, bottom: 48 },
     params: [
       {
         name: "Region",
@@ -392,7 +400,7 @@
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     title: { text: "Rent inflation across UK countries (latest available)" },
     width: "container",
-    height: 420,
+    height: HEIGHT_MAP,
     padding: { left: 10, right: 10, top: 12, bottom: 12 },
     data: {
       url: UK_TOPO_URL,

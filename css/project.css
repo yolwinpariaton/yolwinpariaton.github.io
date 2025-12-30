@@ -66,8 +66,7 @@
 
 /* ------------------------------------------------------------------ */
 /* IMPORTANT: override any card styling coming from css/style.css that
-   is being applied to .chart-wrapper (this is why Source/Note appear
-   "inside the frame" in your screenshot).                              */
+   is being applied to .chart-wrapper                                  */
 .chart-wrapper{
   background: transparent !important;
   border: none !important;
@@ -88,18 +87,20 @@
   border-radius: 22px;
   padding: 18px 18px 14px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-  overflow: hidden; /* keeps clean rounded edges */
+  overflow: hidden;
 }
 
-/* Vega container fills the card */
+/* Reserve more vertical space so taller charts never look cramped */
 .vega-container{
   width: 100%;
-  min-height: 280px;
+  min-height: 420px; /* was 280px; now matches taller line charts better */
   display: block;
   margin: 0;
 }
 
-/* Source/Note are outside the chart-frame */
+/* Maps are taller: if you want, you can add class="vega-container vega-map"
+   to vis6/vis8 containers, but this works fine globally. */
+
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
