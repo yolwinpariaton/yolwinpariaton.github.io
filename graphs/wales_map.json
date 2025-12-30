@@ -7,9 +7,8 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-  "width": 280,
+  "width": 250,
   "height": 450,
-  "autosize": {"type": "none", "contains": "padding"},
   "layer": [
     {
       "data": {
