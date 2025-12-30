@@ -1,83 +1,78 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 400,
-  "height": 500,
+  "title": {
+    "text": "Scottish Whisky Distilleries: Heritage Tourism",
+    "subtitle": "Annual visitor numbers to major distilleries (2024 estimates)",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "width": 350,
+  "height": 550,
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/topo_lad.json",
-        "format": {
-          "type": "topojson",
-          "feature": "lad"
-        }
+        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/sco/lad.json",
+        "format": {"type": "json", "property": "features"}
       },
+      "projection": {"type": "mercator"},
       "mark": {
         "type": "geoshape",
-        "fill": "#d4e3f0",
-        "stroke": "#7fa5c7",
-        "strokeWidth": 0.5
+        "fill": "#e8f4f8",
+        "stroke": "#5a8ca8",
+        "strokeWidth": 0.8
       }
     },
     {
       "data": {
-        "values": [
-          {"name": "Edinburgh Castle", "lat": 55.9486, "lon": -3.1999, "visitors": 2200, "type": "Historic"},
-          {"name": "Loch Ness", "lat": 57.3229, "lon": -4.4244, "visitors": 500, "type": "Natural"},
-          {"name": "Stirling Castle", "lat": 56.1164, "lon": -3.9486, "visitors": 650, "type": "Historic"},
-          {"name": "Glasgow Science Centre", "lat": 55.8593, "lon": -4.2943, "visitors": 450, "type": "Museum"},
-          {"name": "Isle of Skye", "lat": 57.2736, "lon": -6.2155, "visitors": 800, "type": "Natural"},
-          {"name": "St Andrews", "lat": 56.3398, "lon": -2.7967, "visitors": 300, "type": "Historic"},
-          {"name": "Ben Nevis", "lat": 56.7969, "lon": -5.0036, "visitors": 150, "type": "Natural"},
-          {"name": "Kelvingrove Museum", "lat": 55.8689, "lon": -4.2752, "visitors": 1500, "type": "Museum"},
-          {"name": "Rosslyn Chapel", "lat": 55.8551, "lon": -3.1594, "visitors": 180, "type": "Historic"},
-          {"name": "Glenfinnan Viaduct", "lat": 56.8740, "lon": -5.4321, "visitors": 400, "type": "Historic"}
-        ]
+        "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/scotland_distilleries.csv"
       },
+      "projection": {"type": "mercator"},
       "mark": {
         "type": "circle",
-        "opacity": 0.85,
-        "stroke": "#222",
-        "strokeWidth": 1.5
+        "opacity": 0.75,
+        "stroke": "#2c3e50",
+        "strokeWidth": 1.2
       },
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
         "latitude": {"field": "lat", "type": "quantitative"},
         "size": {
-          "field": "visitors",
+          "field": "annual_visitors",
           "type": "quantitative",
-          "scale": {"range": [200, 1800]},
+          "scale": {"range": [150, 1800]},
           "legend": {
-            "title": "Annual Visitors (thousands)",
+            "title": "Annual Visitors",
+            "format": ",",
+            "symbolFillColor": "#8b6914",
             "orient": "bottom",
-            "direction": "horizontal",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "titleAnchor": "middle",
-            "offset": 20
+            "direction": "horizontal"
           }
         },
         "color": {
-          "field": "type",
+          "field": "region",
           "type": "nominal",
           "scale": {
-            "domain": ["Historic", "Natural", "Museum"],
-            "range": ["#e74c3c", "#27ae60", "#3498db"]
+            "domain": ["Speyside", "Highlands", "Islay", "Lowlands", "Isle of Skye", "Orkney"],
+            "range": ["#d4af37", "#c17817", "#8b6914", "#6b5510", "#957029", "#b8860b"]
           },
           "legend": {
-            "title": "Attraction Type",
-            "orient": "top",
+            "title": "Whisky Region",
+            "orient": "bottom",
             "direction": "horizontal",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "offset": 10
+            "symbolType": "circle"
           }
         },
         "tooltip": [
-          {"field": "name", "title": "Attraction"},
-          {"field": "type", "title": "Type"},
-          {"field": "visitors", "title": "Visitors (thousands)", "format": ","}
+          {"field": "distillery", "title": "Distillery"},
+          {"field": "region", "title": "Region"},
+          {"field": "annual_visitors", "title": "Annual Visitors", "format": ","}
         ]
       }
     }
-  ]
+  ],
+  "config": {
+    "view": {"stroke": "transparent"},
+    "background": "transparent"
+  }
 }

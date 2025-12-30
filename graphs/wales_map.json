@@ -1,81 +1,59 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 400,
-  "height": 500,
+  "title": {
+    "text": "Business Density in Wales",
+    "subtitle": "Active enterprises by local authority (2024)",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "width": 350,
+  "height": 550,
   "data": {
-    "url": "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/maps/geoWalWards.json",
-    "format": {"type": "topojson", "feature": "wards"}
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/lad.json",
+    "format": {"type": "json", "property": "features"}
   },
   "transform": [
     {
-      "lookup": "properties.LAD13NM",
+      "lookup": "properties.LAD13CD",
       "from": {
         "data": {
-          "values": [
-            {"name": "Isle of Anglesey", "pop": 70},
-            {"name": "Gwynedd", "pop": 125},
-            {"name": "Conwy", "pop": 118},
-            {"name": "Denbighshire", "pop": 95},
-            {"name": "Flintshire", "pop": 156},
-            {"name": "Wrexham", "pop": 136},
-            {"name": "Ceredigion", "pop": 71},
-            {"name": "Pembrokeshire", "pop": 126},
-            {"name": "Carmarthenshire", "pop": 188},
-            {"name": "Swansea", "pop": 246},
-            {"name": "Neath Port Talbot", "pop": 144},
-            {"name": "Bridgend", "pop": 147},
-            {"name": "The Vale of Glamorgan", "pop": 135},
-            {"name": "Cardiff", "pop": 362},
-            {"name": "Rhondda Cynon Taf", "pop": 241},
-            {"name": "Caerphilly", "pop": 176},
-            {"name": "Blaenau Gwent", "pop": 70},
-            {"name": "Torfaen", "pop": 94},
-            {"name": "Monmouthshire", "pop": 95},
-            {"name": "Newport", "pop": 159},
-            {"name": "Powys", "pop": 133},
-            {"name": "Merthyr Tydfil", "pop": 60}
-          ]
+          "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/wales_business.csv"
         },
-        "key": "name",
-        "fields": ["pop"]
-      },
-      "default": null
-    },
-    {
-      "aggregate": [{
-        "op": "mean",
-        "field": "pop",
-        "as": "pop_agg"
-      }],
-      "groupby": ["properties.LAD13NM"]
+        "key": "geo_id",
+        "fields": ["Data values", "Area"]
+      }
     }
   ],
   "projection": {"type": "mercator"},
   "mark": {
     "type": "geoshape",
     "stroke": "white",
-    "strokeWidth": 0.5
+    "strokeWidth": 1
   },
   "encoding": {
     "color": {
-      "field": "pop_agg",
+      "field": "Data values",
       "type": "quantitative",
       "scale": {
-        "scheme": "blues",
-        "domain": [60, 370]
+        "scheme": "viridis",
+        "domain": [1000, 13500]
       },
       "legend": {
-        "title": "Population (thousands)",
+        "title": "Active Enterprises",
+        "format": ",",
         "orient": "bottom",
         "direction": "horizontal",
-        "titleFontSize": 11,
-        "labelFontSize": 10,
-        "titleAnchor": "middle"
+        "gradientLength": 200
       }
     },
     "tooltip": [
-      {"field": "properties.LAD13NM", "title": "Local Authority"},
-      {"field": "pop_agg", "title": "Population (thousands)", "format": ".0f"}
+      {"field": "Area", "title": "Local Authority"},
+      {"field": "Data values", "title": "Active Enterprises", "format": ","}
     ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "background": "transparent"
   }
 }

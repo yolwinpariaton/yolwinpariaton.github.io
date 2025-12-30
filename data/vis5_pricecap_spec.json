@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Energy price cap (typical annual dual-fuel bill, Great Britain)"
+  },
+  "data": {
+    "url": "data/chart5_energy_price_cap.json"
+  },
+  "width": "container",
+  "height": 260,
+  "mark": {
+    "type": "line",
+    "point": true
+  },
+  "encoding": {
+    "x": {
+      "field": "period",
+      "type": "ordinal",
+      "title": "Cap period"
+    },
+    "y": {
+      "field": "typical_annual_bill_gbp",
+      "type": "quantitative",
+      "title": "GBP per year"
+    },
+    "tooltip": [
+      {
+        "field": "period"
+      },
+      {
+        "field": "typical_annual_bill_gbp",
+        "type": "quantitative"
+      }
+    ]
+  }
+}

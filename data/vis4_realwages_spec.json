@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Real wages (AWE total pay, real terms) indexed to 2019=100"
+  },
+  "data": {
+    "url": "data/chart4_real_wages_index.json"
+  },
+  "width": "container",
+  "height": 300,
+  "mark": {
+    "type": "line",
+    "point": false
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": "Date"
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Index (2019=100)"
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal"
+      },
+      {
+        "field": "value",
+        "type": "quantitative"
+      }
+    ]
+  }
+}
