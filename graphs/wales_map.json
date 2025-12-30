@@ -1,10 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
-  "height": 700,
+  "width": 500,
+  "height": 600,
   "title": {
     "text": "Population by Local Authority in Wales",
-    "fontSize": 18
+    "fontSize": 16
   },
   "data": {
     "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
@@ -51,16 +51,20 @@
   "mark": {
     "type": "geoshape",
     "stroke": "white",
-    "strokeWidth": 1.5
+    "strokeWidth": 1
   },
   "encoding": {
     "color": {
       "field": "pop",
       "type": "quantitative",
       "scale": {
-        "scheme": "blues"
+        "scheme": "blues",
+        "domain": [60, 370]
       },
-      "legend": {"title": "Population (thousands)"}
+      "legend": {
+        "title": "Population (thousands)",
+        "orient": "bottom-right"
+      }
     },
     "tooltip": [
       {"field": "name", "title": "Local Authority"},
