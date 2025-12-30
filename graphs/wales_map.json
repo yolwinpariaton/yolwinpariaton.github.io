@@ -15,9 +15,9 @@
   },
   "projection": {
     "type": "albers",
-    "center": [-3.7, 52.3],
+    "center": [-3.7, 52.35],
     "rotate": [0, 0, 0],
-    "scale": 7800
+    "scale": 8200
   },
   "transform": [
     {
