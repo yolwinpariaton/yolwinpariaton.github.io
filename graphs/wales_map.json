@@ -17,8 +17,8 @@
       },
       "projection": {
         "type": "mercator",
-        "center": [-3.8, 52.35],
-        "scale": 5200
+        "center": [-3.3, 52.35],
+        "scale": 5600
       },
       "transform": [
         {
@@ -35,30 +35,26 @@
       "mark": {
         "type": "geoshape",
         "stroke": "white",
-        "strokeWidth": 1.2
+        "strokeWidth": 1
       },
       "encoding": {
         "color": {
           "field": "Data values",
           "type": "quantitative",
           "scale": {
-            "scheme": "blues",
-            "domain": [1000, 13500]
+            "scheme": "blues"
           },
           "legend": {
             "title": "Active Enterprises",
-            "format": ",",
+            "format": ".0s",
             "orient": "bottom",
-            "direction": "horizontal",
             "gradientLength": 200,
-            "labelFontSize": 11,
-            "titleFontSize": 12,
-            "offset": 20
+            "offset": 10
           }
         },
         "tooltip": [
           {"field": "Area", "title": "Local Authority"},
-          {"field": "Data values", "title": "Active Enterprises", "format": ","}
+          {"field": "Data values", "title": "Enterprises", "format": ","}
         ]
       }
     }
