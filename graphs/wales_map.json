@@ -2,94 +2,80 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 400,
   "height": 500,
-  "layer": [
+  "data": {
+    "url": "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/main/charts/maps/geoWalWards.json",
+    "format": {"type": "topojson", "feature": "wards"}
+  },
+  "transform": [
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
-        "format": {
-          "type": "topojson",
-          "feature": "lad"
-        }
+      "lookup": "properties.LAD13NM",
+      "from": {
+        "data": {
+          "values": [
+            {"name": "Isle of Anglesey", "pop": 70},
+            {"name": "Gwynedd", "pop": 125},
+            {"name": "Conwy", "pop": 118},
+            {"name": "Denbighshire", "pop": 95},
+            {"name": "Flintshire", "pop": 156},
+            {"name": "Wrexham", "pop": 136},
+            {"name": "Ceredigion", "pop": 71},
+            {"name": "Pembrokeshire", "pop": 126},
+            {"name": "Carmarthenshire", "pop": 188},
+            {"name": "Swansea", "pop": 246},
+            {"name": "Neath Port Talbot", "pop": 144},
+            {"name": "Bridgend", "pop": 147},
+            {"name": "The Vale of Glamorgan", "pop": 135},
+            {"name": "Cardiff", "pop": 362},
+            {"name": "Rhondda Cynon Taf", "pop": 241},
+            {"name": "Caerphilly", "pop": 176},
+            {"name": "Blaenau Gwent", "pop": 70},
+            {"name": "Torfaen", "pop": 94},
+            {"name": "Monmouthshire", "pop": 95},
+            {"name": "Newport", "pop": 159},
+            {"name": "Powys", "pop": 133},
+            {"name": "Merthyr Tydfil", "pop": 60}
+          ]
+        },
+        "key": "name",
+        "fields": ["pop"]
       },
-      "mark": {
-        "type": "geoshape",
-        "stroke": "#666",
-        "strokeWidth": 1
-      },
-      "encoding": {
-        "color": {"value": "#e0e0e0"}
-      }
+      "default": null
     },
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/wls/topo_lad.json",
-        "format": {
-          "type": "topojson",
-          "feature": "lad"
-        }
-      },
-      "transform": [
-        {
-          "lookup": "properties.LAD13CD",
-          "from": {
-            "data": {
-              "values": [
-                {"code": "W06000001", "pop": 70, "name": "Isle of Anglesey"},
-                {"code": "W06000002", "pop": 125, "name": "Gwynedd"},
-                {"code": "W06000003", "pop": 118, "name": "Conwy"},
-                {"code": "W06000004", "pop": 95, "name": "Denbighshire"},
-                {"code": "W06000005", "pop": 156, "name": "Flintshire"},
-                {"code": "W06000006", "pop": 136, "name": "Wrexham"},
-                {"code": "W06000008", "pop": 71, "name": "Ceredigion"},
-                {"code": "W06000009", "pop": 126, "name": "Pembrokeshire"},
-                {"code": "W06000010", "pop": 188, "name": "Carmarthenshire"},
-                {"code": "W06000011", "pop": 246, "name": "Swansea"},
-                {"code": "W06000012", "pop": 144, "name": "Neath Port Talbot"},
-                {"code": "W06000013", "pop": 147, "name": "Bridgend"},
-                {"code": "W06000014", "pop": 135, "name": "Vale of Glamorgan"},
-                {"code": "W06000015", "pop": 362, "name": "Cardiff"},
-                {"code": "W06000016", "pop": 241, "name": "Rhondda Cynon Taf"},
-                {"code": "W06000018", "pop": 176, "name": "Caerphilly"},
-                {"code": "W06000019", "pop": 70, "name": "Blaenau Gwent"},
-                {"code": "W06000020", "pop": 94, "name": "Torfaen"},
-                {"code": "W06000021", "pop": 95, "name": "Monmouthshire"},
-                {"code": "W06000022", "pop": 159, "name": "Newport"},
-                {"code": "W06000023", "pop": 133, "name": "Powys"},
-                {"code": "W06000024", "pop": 60, "name": "Merthyr Tydfil"}
-              ]
-            },
-            "key": "code",
-            "fields": ["pop", "name"]
-          }
-        }
-      ],
-      "mark": {
-        "type": "geoshape",
-        "stroke": "#666",
-        "strokeWidth": 1
-      },
-      "encoding": {
-        "color": {
-          "field": "pop",
-          "type": "quantitative",
-          "scale": {
-            "scheme": "blues",
-            "domain": [60, 370]
-          },
-          "legend": {
-            "title": "Population (thousands)",
-            "orient": "bottom",
-            "direction": "horizontal",
-            "titleFontSize": 11,
-            "labelFontSize": 10,
-            "titleAnchor": "middle"
-          }
-        },
-        "tooltip": [
-          {"field": "name", "title": "Local Authority"},
-          {"field": "pop", "title": "Population (thousands)", "format": ","}
-        ]
-      }
+      "aggregate": [{
+        "op": "mean",
+        "field": "pop",
+        "as": "pop_agg"
+      }],
+      "groupby": ["properties.LAD13NM"]
     }
-  ]
+  ],
+  "projection": {"type": "mercator"},
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 0.5
+  },
+  "encoding": {
+    "color": {
+      "field": "pop_agg",
+      "type": "quantitative",
+      "scale": {
+        "scheme": "blues",
+        "domain": [60, 370]
+      },
+      "legend": {
+        "title": "Population (thousands)",
+        "orient": "bottom",
+        "direction": "horizontal",
+        "titleFontSize": 11,
+        "labelFontSize": 10,
+        "titleAnchor": "middle"
+      }
+    },
+    "tooltip": [
+      {"field": "properties.LAD13NM", "title": "Local Authority"},
+      {"field": "pop_agg", "title": "Population (thousands)", "format": ".0f"}
+    ]
+  }
 }
