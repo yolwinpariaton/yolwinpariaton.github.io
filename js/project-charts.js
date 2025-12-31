@@ -28,16 +28,22 @@
     });
   }
 
-  // 1) Prices vs pay (indexed)
+  // ======================================
+  // 1) Prices vs pay (indexed) — size reduced
+  // ======================================
   const vis1 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
     "title": {
       "text": "Prices vs pay (indexed to 2019 = 100)",
-      "subtitle": "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
+      "subtitle":
+        "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings."
     },
+
     "data": { "url": "data/vis1_prices_vs_pay.json" },
     "width": "container",
-    "height": 360,
+    "height": 300, // reduced (was taller)
+
     "transform": [
       { "calculate": "toDate(datum.date)", "as": "d" },
       { "calculate": "toNumber(datum.value)", "as": "v" },
@@ -46,15 +52,19 @@
       { "calculate": "datum['Real earnings']", "as": "earnings" },
       { "calculate": "datum.prices - datum.earnings", "as": "gap" }
     ],
+
     "layer": [
+      // Baseline at 100 (dotted, subtle)
       {
-        "mark": { "type": "rule" },
+        "mark": { "type": "rule", "strokeDash": [4, 6] },
         "encoding": {
           "y": { "datum": 100 },
-          "color": { "value": "#666" },
-          "opacity": { "value": 0.35 }
+          "color": { "value": "#6b778d" },
+          "opacity": { "value": 0.7 }
         }
       },
+
+      // Gap shading (between earnings and prices)
       {
         "mark": { "type": "area", "opacity": 0.18 },
         "encoding": {
@@ -69,17 +79,19 @@
             "type": "quantitative",
             "title": "Index (2019 = 100)",
             "scale": { "zero": false, "domain": [98, 114] },
-            "axis": { "tickCount": 7, "grid": true }
+            "axis": { "tickCount": 6, "grid": true }
           },
           "y2": { "field": "prices" }
         }
       },
+
+      // Prices line
       {
-        "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
+        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
         "encoding": {
           "x": { "field": "d", "type": "temporal", "title": "Date" },
           "y": { "field": "prices", "type": "quantitative" },
-          "color": { "value": "#1f77b4" },
+          "color": { "value": "#4c72b0" },
           "tooltip": [
             { "field": "d", "type": "temporal", "title": "Date" },
             { "field": "prices", "type": "quantitative", "title": "CPIH (prices)", "format": ".1f" },
@@ -88,40 +100,107 @@
           ]
         }
       },
+
+      // Earnings line
       {
-        "mark": { "type": "line", "strokeWidth": 2.8, "point": { "filled": true, "size": 45 } },
+        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
         "encoding": {
           "x": { "field": "d", "type": "temporal", "title": "Date" },
           "y": { "field": "earnings", "type": "quantitative" },
-          "color": { "value": "#ff7f0e" }
+          "color": { "value": "#e1812c" }
         }
       }
     ],
+
     "config": {
       "legend": { "disable": true },
       "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-      "title": { "fontSize": 17, "subtitleFontSize": 12 },
+      "title": { "fontSize": 22, "subtitleFontSize": 14 },
       "view": { "stroke": null }
     }
   };
 
-  // 2) Food vs headline
+  // ======================================
+  // 2) Food inflation vs headline — size reduced
+  // ======================================
   const vis2 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": { "text": "Food inflation vs headline (annual rate)" },
     "data": { "url": "data/vis2_food_vs_headline.json" },
     "width": "container",
-    "height": 320,
-    "mark": { "type": "line", "point": true },
-    "encoding": {
-      "x": { "field": "date", "type": "temporal", "title": "Date" },
-      "y": { "field": "value", "type": "quantitative", "title": "Percent" },
-      "color": { "field": "series", "type": "nominal", "title": "" },
-      "tooltip": [
-        { "field": "date", "type": "temporal" },
-        { "field": "series", "type": "nominal" },
-        { "field": "value", "type": "quantitative", "format": ".1f" }
-      ]
+    "height": 300, // reduced (was taller)
+
+    "transform": [
+      { "calculate": "toDate(datum.date)", "as": "d" },
+      { "calculate": "toNumber(datum.value)", "as": "v" }
+    ],
+
+    "layer": [
+      // Zero line (subtle reference)
+      {
+        "mark": { "type": "rule", "strokeDash": [4, 6] },
+        "encoding": {
+          "y": { "datum": 0 },
+          "color": { "value": "#6b778d" },
+          "opacity": { "value": 0.7 }
+        }
+      },
+
+      // Raw monthly (lighter, with points)
+      {
+        "mark": {
+          "type": "line",
+          "strokeWidth": 2,
+          "opacity": 0.35,
+          "point": { "filled": true, "size": 30, "opacity": 0.35 }
+        },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal", "title": "Date" },
+          "y": { "field": "v", "type": "quantitative", "title": "Percent" },
+          "color": {
+            "field": "series",
+            "type": "nominal",
+            "title": null,
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": { "orient": "top", "direction": "horizontal", "title": null, "padding": 10 }
+          },
+          "tooltip": [
+            { "field": "d", "type": "temporal", "title": "Date" },
+            { "field": "series", "type": "nominal", "title": "Series" },
+            { "field": "v", "type": "quantitative", "title": "Percent", "format": ".1f" }
+          ]
+        }
+      },
+
+      // Smoothed line (5-month moving average, bolder)
+      {
+        "transform": [
+          {
+            "window": [{ "op": "mean", "field": "v", "as": "v_ma" }],
+            "frame": [-2, 2],
+            "sort": [{ "field": "d", "order": "ascending" }],
+            "groupby": ["series"]
+          }
+        ],
+        "mark": { "type": "line", "strokeWidth": 4 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal", "title": "Date" },
+          "y": { "field": "v_ma", "type": "quantitative", "title": "Percent" },
+          "color": {
+            "field": "series",
+            "type": "nominal",
+            "title": null,
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": { "orient": "top", "direction": "horizontal", "title": null, "padding": 10 }
+          }
+        }
+      }
+    ],
+
+    "config": {
+      "axis": { "labelFontSize": 12, "titleFontSize": 12 },
+      "title": { "fontSize": 22, "subtitleFontSize": 14 },
+      "view": { "stroke": null }
     }
   };
 
