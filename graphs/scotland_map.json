@@ -7,8 +7,9 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
+
   "width": 300,
-  "height": 450,
+  "height": 410,
   "padding": {"top": 10, "right": 10, "bottom": 10, "left": 10},
   "autosize": {"type": "pad", "contains": "padding"},
 
@@ -16,7 +17,7 @@
     "type": "mercator",
     "center": [-4.2, 57.3],
     "scale": 2100,
-    "translate": [140, 225]
+    "translate": [140, 205]
   },
 
   "layer": [
@@ -55,8 +56,8 @@
             "title": "Annual Visitors",
             "format": ".0s",
             "orient": "none",
-            "legendX": 284,
-            "legendY": 140,
+            "legendX": 278,
+            "legendY": 120,
             "labelFontSize": 10,
             "titleFontSize": 12,
             "labelAlign": "left",
@@ -75,7 +76,7 @@
             "title": "Whisky Region",
             "orient": "none",
             "legendX": 12,
-            "legendY": 415,
+            "legendY": 375,
             "columns": 3,
             "labelFontSize": 10,
             "titleFontSize": 12
