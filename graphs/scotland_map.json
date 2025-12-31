@@ -7,7 +7,6 @@
     "fontSize": 16,
     "subtitleFontSize": 12
   },
-
   "width": 300,
   "height": 450,
   "padding": {"top": 10, "right": 10, "bottom": 10, "left": 10},
@@ -56,10 +55,12 @@
             "title": "Annual Visitors",
             "format": ".0s",
             "orient": "none",
-            "legendX": 265,
-            "legendY": 145,
+            "legendX": 284,
+            "legendY": 140,
             "labelFontSize": 10,
-            "titleFontSize": 12
+            "titleFontSize": 12,
+            "labelAlign": "left",
+            "titleAlign": "left"
           }
         },
 
