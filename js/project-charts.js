@@ -204,21 +204,161 @@
     }
   };
 
-  // 3) Energy cap (step line)
+ // ======================================
+  // 3) Energy cap (ENHANCED - publication quality)
+  // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Energy price cap (typical annual bill)" },
+    
+    "title": {
+      "text": "UK Energy Price Cap: Typical Annual Household Bill",
+      "subtitle": "Quarterly caps show dramatic surge during 2023-2024 energy crisis",
+      "fontSize": 20,
+      "subtitleFontSize": 14,
+      "anchor": "start",
+      "color": "#2b2f36",
+      "subtitleColor": "#555"
+    },
+    
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 280,
-    "mark": { "type": "line", "interpolate": "step-after", "point": true },
-    "encoding": {
-      "x": { "field": "period_date", "type": "temporal", "title": "Cap period" },
-      "y": { "field": "typical_annual_bill_gbp", "type": "quantitative", "title": "GBP" },
-      "tooltip": [
-        { "field": "period_label", "type": "nominal", "title": "Period" },
-        { "field": "typical_annual_bill_gbp", "type": "quantitative", "title": "GBP", "format": ",.0f" }
-      ]
+    "height": 350,
+    
+    "layer": [
+      // Background reference line at £1000
+      {
+        "mark": {
+          "type": "rule",
+          "strokeDash": [6, 4],
+          "strokeWidth": 1.5,
+          "opacity": 0.4
+        },
+        "encoding": {
+          "y": { "datum": 1000 },
+          "color": { "value": "#94a3b8" }
+        }
+      },
+      
+      // Main step line (thicker, with rounded corners)
+      {
+        "mark": {
+          "type": "line",
+          "interpolate": "step-after",
+          "strokeWidth": 3.5,
+          "color": "#dc2626",
+          "strokeCap": "round"
+        },
+        "encoding": {
+          "x": {
+            "field": "period_date",
+            "type": "temporal",
+            "title": "Quarter",
+            "axis": {
+              "format": "%Y Q%q",
+              "labelAngle": -45,
+              "labelFontSize": 11,
+              "titleFontSize": 13,
+              "grid": false
+            }
+          },
+          "y": {
+            "field": "typical_annual_bill_gbp",
+            "type": "quantitative",
+            "title": "Annual Bill (£)",
+            "scale": { "domain": [900, 2200] },
+            "axis": {
+              "format": ",.0f",
+              "labelFontSize": 11,
+              "titleFontSize": 13,
+              "grid": true,
+              "gridOpacity": 0.15
+            }
+          }
+        }
+      },
+      
+      // Points at each period (larger, with white stroke)
+      {
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "size": 120,
+          "color": "#dc2626",
+          "stroke": "white",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "x": { "field": "period_date", "type": "temporal" },
+          "y": { "field": "typical_annual_bill_gbp", "type": "quantitative" },
+          "tooltip": [
+            {
+              "field": "period_label",
+              "type": "nominal",
+              "title": "Period"
+            },
+            {
+              "field": "typical_annual_bill_gbp",
+              "type": "quantitative",
+              "title": "Annual Bill",
+              "format": "£,.0f"
+            }
+          ]
+        }
+      },
+      
+      // Annotation for peak value
+      {
+        "transform": [
+          {
+            "filter": "datum.typical_annual_bill_gbp == 2070"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "dx": 8,
+          "dy": -15,
+          "fontSize": 13,
+          "fontWeight": "bold",
+          "color": "#dc2626"
+        },
+        "encoding": {
+          "x": { "field": "period_date", "type": "temporal" },
+          "y": { "field": "typical_annual_bill_gbp", "type": "quantitative" },
+          "text": { "value": "Peak: £2,070" }
+        }
+      },
+      
+      // Annotation for pre-crisis baseline
+      {
+        "transform": [
+          {
+            "filter": "datum.period_label == '2021 Q4'"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "right",
+          "dx": -8,
+          "dy": -15,
+          "fontSize": 12,
+          "fontWeight": 600,
+          "color": "#475569"
+        },
+        "encoding": {
+          "x": { "field": "period_date", "type": "temporal" },
+          "y": { "field": "typical_annual_bill_gbp", "type": "quantitative" },
+          "text": { "value": "Pre-crisis: £1,105" }
+        }
+      }
+    ],
+    
+    "config": {
+      "view": { "stroke": null },
+      "axis": {
+        "domainColor": "#cbd5e1",
+        "tickColor": "#cbd5e1"
+      }
     }
   };
 
