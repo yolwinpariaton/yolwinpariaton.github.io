@@ -222,22 +222,6 @@
     "width": "container",
     "height": 400,
     
-    "encoding": {
-      "x": {
-        "field": "period_label",
-        "type": "nominal",
-        "title": null,
-        "axis": {
-          "labelAngle": -45,
-          "labelFontSize": 10
-        },
-        "sort": {
-          "field": "period_date",
-          "order": "ascending"
-        }
-      }
-    },
-    
     "layer": [
       // Baseline reference at £1000
       {
@@ -248,6 +232,19 @@
           "strokeWidth": 1
         },
         "encoding": {
+          "x": {
+            "field": "period_label",
+            "type": "nominal",
+            "title": null,
+            "axis": {
+              "labelAngle": -45,
+              "labelFontSize": 10
+            },
+            "sort": {
+              "field": "period_date",
+              "order": "ascending"
+            }
+          },
           "y": { "datum": 1000 }
         }
       },
@@ -256,10 +253,23 @@
       {
         "mark": {
           "type": "rule",
-          "strokeWidth": 2,
+          "strokeWidth": 3,
           "color": "#cbd5e1"
         },
         "encoding": {
+          "x": {
+            "field": "period_label",
+            "type": "nominal",
+            "title": null,
+            "axis": {
+              "labelAngle": -45,
+              "labelFontSize": 10
+            },
+            "sort": {
+              "field": "period_date",
+              "order": "ascending"
+            }
+          },
           "y": {
             "field": "typical_annual_bill_gbp",
             "type": "quantitative",
@@ -281,11 +291,19 @@
       {
         "mark": {
           "type": "circle",
-          "size": 200,
+          "size": 250,
           "stroke": "white",
-          "strokeWidth": 2
+          "strokeWidth": 2.5
         },
         "encoding": {
+          "x": {
+            "field": "period_label",
+            "type": "nominal",
+            "sort": {
+              "field": "period_date",
+              "order": "ascending"
+            }
+          },
           "y": {
             "field": "typical_annual_bill_gbp",
             "type": "quantitative"
@@ -301,7 +319,9 @@
               "title": "Bill Range",
               "orient": "top",
               "direction": "horizontal",
-              "format": "£,.0f"
+              "format": "£,.0f",
+              "labelFontSize": 10,
+              "titleFontSize": 11
             }
           },
           "tooltip": [
@@ -333,7 +353,18 @@
           "color": "#991b1b"
         },
         "encoding": {
-          "y": { "field": "typical_annual_bill_gbp", "type": "quantitative" },
+          "x": {
+            "field": "period_label",
+            "type": "nominal",
+            "sort": {
+              "field": "period_date",
+              "order": "ascending"
+            }
+          },
+          "y": { 
+            "field": "typical_annual_bill_gbp", 
+            "type": "quantitative"
+          },
           "text": {
             "field": "typical_annual_bill_gbp",
             "type": "quantitative",
@@ -347,7 +378,7 @@
       "view": { "stroke": null }
     }
   };
-  
+
   // 4) Fuel weekly (two-series)
   const vis4 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
