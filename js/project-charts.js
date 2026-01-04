@@ -222,13 +222,6 @@
     "width": "container",
     "height": 400,
     
-    "transform": [
-      {
-        "calculate": "datum.typical_annual_bill_gbp",
-        "as": "bill"
-      }
-    ],
-    
     "encoding": {
       "x": {
         "field": "period_label",
@@ -238,6 +231,35 @@
         "axis": {
           "labelAngle": -45,
           "labelFontSize": 10
+        }
+      },
+      "y": {
+        "field": "typical_annual_bill_gbp",
+        "type": "quantitative",
+        "title": "Annual Bill (£)",
+        "scale": { "domain": [800, 2200] },
+        "axis": {
+          "format": ",.0f",
+          "labelFontSize": 11,
+          "titleFontSize": 12,
+          "grid": true,
+          "gridOpacity": 0.15
+        }
+      },
+      "color": {
+        "field": "typical_annual_bill_gbp",
+        "type": "quantitative",
+        "scale": {
+          "domain": [1000, 1400, 1800, 2100],
+          "range": ["#3b82f6", "#f59e0b", "#ef4444", "#991b1b"]
+        },
+        "legend": {
+          "title": "Bill Amount",
+          "format": "£,.0f",
+          "orient": "top",
+          "direction": "horizontal",
+          "labelFontSize": 10,
+          "titleFontSize": 11
         }
       }
     },
@@ -256,65 +278,29 @@
         }
       },
       
-      // Sticks (narrower bars)
+      // Lollipop sticks
       {
         "mark": {
-          "type": "bar",
-          "width": 4,
-          "opacity": 0.4
+          "type": "rule",
+          "strokeWidth": 3,
+          "opacity": 0.5
         },
         "encoding": {
-          "y": {
-            "field": "bill",
-            "type": "quantitative",
-            "title": "Annual Bill (£)",
-            "scale": { "domain": [800, 2200] }
-          },
-          "y2": { "datum": 800 },
-          "color": {
-            "field": "bill",
-            "type": "quantitative",
-            "scale": {
-              "domain": [1000, 1400, 1800, 2100],
-              "range": ["#3b82f6", "#f59e0b", "#ef4444", "#991b1b"]
-            },
-            "legend": null
-          }
+          "y2": { "datum": 800 }
         }
       },
       
-      // Circle heads (large and prominent)
+      // Lollipop heads - CRITICAL: using point mark with filled=true
       {
         "mark": {
-          "type": "circle",
-          "size": 300,
-          "stroke": "white",
-          "strokeWidth": 3
+          "type": "point",
+          "filled": true,
+          "size": 300
         },
         "encoding": {
-          "y": {
-            "field": "bill",
-            "type": "quantitative"
-          },
-          "color": {
-            "field": "bill",
-            "type": "quantitative",
-            "scale": {
-              "domain": [1000, 1400, 1800, 2100],
-              "range": ["#3b82f6", "#f59e0b", "#ef4444", "#991b1b"]
-            },
-            "legend": {
-              "title": "Bill Amount",
-              "format": "£,.0f",
-              "orient": "top",
-              "direction": "horizontal",
-              "labelFontSize": 10,
-              "titleFontSize": 11
-            }
-          },
           "tooltip": [
             {"field": "period_label", "type": "nominal", "title": "Quarter"},
-            {"field": "bill", "type": "quantitative", "title": "Annual Bill", "format": "£,.0f"}
+            {"field": "typical_annual_bill_gbp", "type": "quantitative", "title": "Annual Bill", "format": "£,.0f"}
           ]
         }
       },
@@ -322,22 +308,18 @@
       // Value labels on peaks
       {
         "transform": [
-          { "filter": "datum.bill > 1800" }
+          { "filter": "datum.typical_annual_bill_gbp > 1800" }
         ],
         "mark": {
           "type": "text",
           "dy": -20,
           "fontSize": 11,
           "fontWeight": "bold",
-          "color": "#991b1b"
+          "color": "#1e293b"
         },
         "encoding": {
-          "y": {
-            "field": "bill",
-            "type": "quantitative"
-          },
           "text": {
-            "field": "bill",
+            "field": "typical_annual_bill_gbp",
             "type": "quantitative",
             "format": "£,.0f"
           }
