@@ -204,12 +204,12 @@
     }
   };
 
-// ======================================
+  // ======================================
   // 3) Energy cap (LOLLIPOP - PUBLICATION QUALITY)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    
+
     "title": {
       "text": "UK Energy Price Cap (2021-2025)",
       "subtitle": "Quarterly typical annual household bill - dramatic 87% increase during crisis",
@@ -217,11 +217,11 @@
       "subtitleFontSize": 12,
       "anchor": "start"
     },
-    
+
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
     "height": 400,
-    
+
     "encoding": {
       "x": {
         "field": "period_label",
@@ -263,7 +263,7 @@
         }
       }
     },
-    
+
     "layer": [
       // Reference line at £1000
       {
@@ -277,7 +277,7 @@
           "y": { "datum": 1000 }
         }
       },
-      
+
       // Lollipop sticks
       {
         "mark": {
@@ -289,7 +289,7 @@
           "y2": { "datum": 800 }
         }
       },
-      
+
       // Lollipop heads - CRITICAL: using point mark with filled=true
       {
         "mark": {
@@ -299,12 +299,12 @@
         },
         "encoding": {
           "tooltip": [
-            {"field": "period_label", "type": "nominal", "title": "Quarter"},
-            {"field": "typical_annual_bill_gbp", "type": "quantitative", "title": "Annual Bill", "format": "£,.0f"}
+            { "field": "period_label", "type": "nominal", "title": "Quarter" },
+            { "field": "typical_annual_bill_gbp", "type": "quantitative", "title": "Annual Bill", "format": "£,.0f" }
           ]
         }
       },
-      
+
       // Value labels on peaks
       {
         "transform": [
@@ -328,24 +328,186 @@
     ]
   };
 
-  // 4) Fuel weekly (two-series)
+  // ======================================
+  // 4) Weekly fuel prices (PUBLICATION QUALITY UPGRADE)
+  // ======================================
   const vis4 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Weekly fuel prices (pence per litre)" },
+
+    "title": {
+      "text": "Weekly fuel prices (pence per litre)",
+      "subtitle": "Raw weekly series (faint) with a 5-week moving average (bold). Hover to read exact values; peaks are labelled."
+    },
+
     "data": { "url": "data/vis4_fuel_weekly.json" },
     "width": "container",
-    "height": 320,
-    "transform": [{ "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel", "ppl"] }],
-    "mark": { "type": "line" },
-    "encoding": {
-      "x": { "field": "date", "type": "temporal", "title": "Date" },
-      "y": { "field": "ppl", "type": "quantitative", "title": "Pence per litre" },
-      "color": { "field": "fuel", "type": "nominal", "title": "" },
-      "tooltip": [
-        { "field": "date", "type": "temporal" },
-        { "field": "fuel", "type": "nominal" },
-        { "field": "ppl", "type": "quantitative", "format": ".1f" }
-      ]
+    "height": 360,
+
+    "transform": [
+      { "calculate": "toDate(datum.date)", "as": "d" },
+      { "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel_raw", "ppl_raw"] },
+      { "calculate": "toNumber(datum.ppl_raw)", "as": "ppl" },
+      {
+        "calculate":
+          "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
+        "as": "fuel"
+      }
+    ],
+
+    "params": [
+      {
+        "name": "hover",
+        "select": {
+          "type": "point",
+          "nearest": true,
+          "on": "pointermove",
+          "clear": "pointerout",
+          "fields": ["d", "fuel"]
+        }
+      }
+    ],
+
+    "layer": [
+      // Raw weekly line (context)
+      {
+        "mark": { "type": "line", "strokeWidth": 1.6, "opacity": 0.28 },
+        "encoding": {
+          "x": {
+            "field": "d",
+            "type": "temporal",
+            "title": "Date",
+            "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11, "titleFontSize": 12 }
+          },
+          "y": {
+            "field": "ppl",
+            "type": "quantitative",
+            "title": "Pence per litre",
+            "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.15 }
+          },
+          "color": {
+            "field": "fuel",
+            "type": "nominal",
+            "title": null,
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
+          }
+        }
+      },
+
+      // Smoothed line (5-week moving average)
+      {
+        "transform": [
+          {
+            "window": [{ "op": "mean", "field": "ppl", "as": "ppl_ma" }],
+            "frame": [-2, 2],
+            "sort": [{ "field": "d", "order": "ascending" }],
+            "groupby": ["fuel"]
+          }
+        ],
+        "mark": { "type": "line", "strokeWidth": 3.4 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal", "title": "Date" },
+          "y": { "field": "ppl_ma", "type": "quantitative" },
+          "color": {
+            "field": "fuel",
+            "type": "nominal",
+            "title": null,
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
+          },
+          "tooltip": [
+            { "field": "d", "type": "temporal", "title": "Week" },
+            { "field": "fuel", "type": "nominal", "title": "Fuel" },
+            { "field": "ppl", "type": "quantitative", "title": "Weekly", "format": ".1f" }
+          ]
+        }
+      },
+
+      // Vertical hover rule
+      {
+        "transform": [{ "filter": { "param": "hover" } }],
+        "mark": { "type": "rule", "strokeWidth": 1.2, "opacity": 0.55 },
+        "encoding": { "x": { "field": "d", "type": "temporal" } }
+      },
+
+      // Hover point (emphasize)
+      {
+        "transform": [{ "filter": { "param": "hover" } }],
+        "mark": { "type": "point", "filled": true, "size": 120 },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": { "field": "ppl", "type": "quantitative" },
+          "color": {
+            "field": "fuel",
+            "type": "nominal",
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": null
+          }
+        }
+      },
+
+      // Hover value label
+      {
+        "transform": [{ "filter": { "param": "hover" } }],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "dx": 10,
+          "dy": -10,
+          "fontSize": 11,
+          "fontWeight": "bold"
+        },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": { "field": "ppl", "type": "quantitative" },
+          "text": { "field": "ppl", "type": "quantitative", "format": ".1f" },
+          "color": {
+            "field": "fuel",
+            "type": "nominal",
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": null
+          }
+        }
+      },
+
+      // Label peak (max) for each series
+      {
+        "transform": [
+          {
+            "window": [{ "op": "rank", "as": "r" }],
+            "sort": [{ "field": "ppl", "order": "descending" }],
+            "groupby": ["fuel"]
+          },
+          { "filter": "datum.r === 1" }
+        ],
+        "mark": {
+          "type": "text",
+          "dy": -18,
+          "fontSize": 11,
+          "fontWeight": "bold"
+        },
+        "encoding": {
+          "x": { "field": "d", "type": "temporal" },
+          "y": { "field": "ppl", "type": "quantitative" },
+          "text": {
+            "field": "ppl",
+            "type": "quantitative",
+            "format": ".1f"
+          },
+          "color": {
+            "field": "fuel",
+            "type": "nominal",
+            "scale": { "range": ["#4c72b0", "#e1812c"] },
+            "legend": null
+          }
+        }
+      }
+    ],
+
+    "config": {
+      "axis": { "labelFontSize": 11, "titleFontSize": 12 },
+      "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
+      "view": { "stroke": null }
     }
   };
 
