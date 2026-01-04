@@ -578,27 +578,144 @@ const vis4 = {
   }
 };
 
+  // ======================================
+// 5) Rent vs house price inflation (PUBLICATION QUALITY)
+// ======================================
+const vis5 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-  // 5) Rent vs house inflation
-  const vis5 = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": { "text": "Rent vs house price inflation (annual rate)" },
-    "data": { "url": "data/vis5_rent_vs_house.json" },
-    "width": "container",
-    "height": 320,
-    "mark": { "type": "line" },
-    "encoding": {
-      "x": { "field": "date", "type": "temporal", "title": "Date" },
-      "y": { "field": "value", "type": "quantitative", "title": "Percent" },
-      "color": { "field": "series", "type": "nominal", "title": "" },
-      "tooltip": [
-        { "field": "date", "type": "temporal" },
-        { "field": "series", "type": "nominal" },
-        { "field": "value", "type": "quantitative", "format": ".1f" }
-      ]
+  "title": {
+    "text": "Rent vs house price inflation (annual rate)",
+    "subtitle": "Faint lines show monthly values; bold lines show a 5-month moving average for readability."
+  },
+
+  "data": { "url": "data/vis5_rent_vs_house.json" },
+  "width": "container",
+  "height": 360,
+
+  "transform": [
+    { "calculate": "toDate(datum.date)", "as": "d" },
+    { "calculate": "toNumber(datum.value)", "as": "v" }
+  ],
+
+  "layer": [
+    // Zero reference line
+    {
+      "mark": { "type": "rule", "strokeDash": [4, 6], "opacity": 0.6 },
+      "encoding": { "y": { "datum": 0 } }
+    },
+
+    // Raw monthly lines (context)
+    {
+      "mark": { "type": "line", "strokeWidth": 1.6, "opacity": 0.25 },
+      "encoding": {
+        "x": {
+          "field": "d",
+          "type": "temporal",
+          "title": "Date",
+          "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11, "titleFontSize": 12 }
+        },
+        "y": {
+          "field": "v",
+          "type": "quantitative",
+          "title": "Percent",
+          "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.15 }
+        },
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "title": null,
+          "scale": { "range": ["#4c72b0", "#e1812c"] },
+          "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
+        }
+      }
+    },
+
+    // Smoothed lines (5-month moving average) — main read
+    {
+      "transform": [
+        {
+          "window": [{ "op": "mean", "field": "v", "as": "v_ma" }],
+          "frame": [-2, 2],
+          "sort": [{ "field": "d", "order": "ascending" }],
+          "groupby": ["series"]
+        }
+      ],
+      "mark": { "type": "line", "strokeWidth": 3.4 },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal", "title": "Date" },
+        "y": { "field": "v_ma", "type": "quantitative", "title": "Percent" },
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "title": null,
+          "scale": { "range": ["#4c72b0", "#e1812c"] },
+          "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
+        }
+      }
+    },
+
+    // Points on the smoothed lines for reliable hover tooltips (no selection signals)
+    {
+      "transform": [
+        {
+          "window": [{ "op": "mean", "field": "v", "as": "v_ma" }],
+          "frame": [-2, 2],
+          "sort": [{ "field": "d", "order": "ascending" }],
+          "groupby": ["series"]
+        }
+      ],
+      "mark": { "type": "point", "filled": true, "size": 40, "opacity": 0.9 },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "v_ma", "type": "quantitative" },
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "scale": { "range": ["#4c72b0", "#e1812c"] },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "d", "type": "temporal", "title": "Date" },
+          { "field": "series", "type": "nominal", "title": "Series" },
+          { "field": "v", "type": "quantitative", "title": "Monthly", "format": ".1f" },
+          { "field": "v_ma", "type": "quantitative", "title": "5-mo avg", "format": ".1f" }
+        ]
+      }
+    },
+
+    // Label peak (max) for each series (monthly values)
+    {
+      "transform": [
+        {
+          "window": [{ "op": "rank", "as": "r" }],
+          "sort": [{ "field": "v", "order": "descending" }],
+          "groupby": ["series"]
+        },
+        { "filter": "datum.r === 1" }
+      ],
+      "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold" },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "v", "type": "quantitative" },
+        "color": {
+          "field": "series",
+          "type": "nominal",
+          "scale": { "range": ["#4c72b0", "#e1812c"] },
+          "legend": null
+        },
+        "text": { "field": "v", "type": "quantitative", "format": ".1f" }
+      }
     }
-  };
+  ],
 
+  "config": {
+    "axis": { "labelFontSize": 11, "titleFontSize": 12 },
+    "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
+    "view": { "stroke": null }
+  }
+};
+  
   // 6) Map: rent inflation by region (choropleth)
   const vis6 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
