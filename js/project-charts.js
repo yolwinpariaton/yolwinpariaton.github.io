@@ -211,18 +211,16 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     
     "title": {
-      "text": "UK Energy Price Cap: Quarterly Household Bills (2021-2025)",
-      "subtitle": "Dramatic 87% increase peak-to-trough | Typical annual household bill under Ofgem price cap",
-      "fontSize": 18,
-      "subtitleFontSize": 13,
-      "anchor": "start",
-      "color": "#1e293b",
-      "subtitleColor": "#64748b"
+      "text": "UK Energy Price Cap (2021-2025)",
+      "subtitle": "Quarterly typical annual household bill - dramatic 87% increase during crisis",
+      "fontSize": 16,
+      "subtitleFontSize": 12,
+      "anchor": "start"
     },
     
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 450,
+    "height": 400,
     
     "encoding": {
       "x": {
@@ -231,10 +229,7 @@
         "title": null,
         "axis": {
           "labelAngle": -45,
-          "labelFontSize": 11,
-          "labelColor": "#475569",
-          "domainColor": "#cbd5e1",
-          "tickColor": "#cbd5e1"
+          "labelFontSize": 10
         },
         "sort": {
           "field": "period_date",
@@ -244,75 +239,25 @@
     },
     
     "layer": [
-      // Background grid
+      // Baseline reference at £1000
       {
         "mark": {
           "type": "rule",
-          "strokeDash": [2, 2],
-          "color": "#e2e8f0",
+          "strokeDash": [4, 4],
+          "color": "#94a3b8",
           "strokeWidth": 1
         },
         "encoding": {
           "y": { "datum": 1000 }
         }
       },
-      {
-        "mark": {
-          "type": "rule",
-          "strokeDash": [2, 2],
-          "color": "#e2e8f0",
-          "strokeWidth": 1
-        },
-        "encoding": {
-          "y": { "datum": 1500 }
-        }
-      },
-      {
-        "mark": {
-          "type": "rule",
-          "strokeDash": [2, 2],
-          "color": "#e2e8f0",
-          "strokeWidth": 1
-        },
-        "encoding": {
-          "y": { "datum": 2000 }
-        }
-      },
       
-      // Baseline reference at £950 (pre-crisis minimum)
+      // Lollipop sticks
       {
         "mark": {
           "type": "rule",
-          "strokeDash": [6, 4],
-          "color": "#10b981",
           "strokeWidth": 2,
-          "opacity": 0.6
-        },
-        "encoding": {
-          "y": { "datum": 950 }
-        }
-      },
-      
-      // Peak reference at £2070
-      {
-        "mark": {
-          "type": "rule",
-          "strokeDash": [6, 4],
-          "color": "#dc2626",
-          "strokeWidth": 2,
-          "opacity": 0.6
-        },
-        "encoding": {
-          "y": { "datum": 2070 }
-        }
-      },
-      
-      // Lollipop sticks (thicker and gradient-colored)
-      {
-        "mark": {
-          "type": "rule",
-          "strokeWidth": 6,
-          "opacity": 0.4
+          "color": "#cbd5e1"
         },
         "encoding": {
           "y": {
@@ -321,38 +266,24 @@
             "title": "Annual Bill (£)",
             "scale": { "domain": [800, 2200] },
             "axis": {
-              "format": "£,.0f",
-              "labelFontSize": 12,
-              "titleFontSize": 13,
-              "titleColor": "#1e293b",
-              "labelColor": "#475569",
+              "format": ",.0f",
+              "labelFontSize": 11,
+              "titleFontSize": 12,
               "grid": true,
-              "gridOpacity": 0.08,
-              "gridColor": "#cbd5e1",
-              "domainColor": "#cbd5e1",
-              "tickColor": "#cbd5e1"
+              "gridOpacity": 0.15
             }
           },
-          "y2": { "datum": 800 },
-          "color": {
-            "field": "typical_annual_bill_gbp",
-            "type": "quantitative",
-            "scale": {
-              "domain": [950, 1400, 1800, 2070],
-              "range": ["#10b981", "#fbbf24", "#f97316", "#dc2626"]
-            },
-            "legend": null
-          }
+          "y2": { "datum": 800 }
         }
       },
       
-      // Lollipop heads (large and prominent)
+      // Lollipop heads (color-coded by value)
       {
         "mark": {
           "type": "circle",
-          "size": 280,
+          "size": 200,
           "stroke": "white",
-          "strokeWidth": 3
+          "strokeWidth": 2
         },
         "encoding": {
           "y": {
@@ -363,21 +294,14 @@
             "field": "typical_annual_bill_gbp",
             "type": "quantitative",
             "scale": {
-              "domain": [950, 1400, 1800, 2070],
-              "range": ["#10b981", "#fbbf24", "#f97316", "#dc2626"]
+              "domain": [1000, 1400, 1800, 2100],
+              "range": ["#3b82f6", "#f59e0b", "#ef4444", "#991b1b"]
             },
             "legend": {
-              "title": "Bill Amount",
-              "orient": "top-left",
+              "title": "Bill Range",
+              "orient": "top",
               "direction": "horizontal",
-              "format": "£,.0f",
-              "titleFontSize": 12,
-              "labelFontSize": 11,
-              "titleColor": "#1e293b",
-              "labelColor": "#475569",
-              "symbolSize": 200,
-              "symbolStrokeWidth": 2,
-              "offset": 10
+              "format": "£,.0f"
             }
           },
           "tooltip": [
@@ -396,14 +320,17 @@
         }
       },
       
-      // Value labels on ALL points (professional readability)
+      // Value labels on top of highest values only
       {
+        "transform": [
+          { "filter": "datum.typical_annual_bill_gbp > 1800" }
+        ],
         "mark": {
           "type": "text",
-          "dy": -18,
-          "fontSize": 10,
-          "fontWeight": 600,
-          "color": "#1e293b"
+          "dy": -15,
+          "fontSize": 11,
+          "fontWeight": "bold",
+          "color": "#991b1b"
         },
         "encoding": {
           "y": { "field": "typical_annual_bill_gbp", "type": "quantitative" },
@@ -413,55 +340,14 @@
             "format": "£,.0f"
           }
         }
-      },
-      
-      // Annotation for peak
-      {
-        "transform": [
-          { "filter": "datum.typical_annual_bill_gbp === 2070" }
-        ],
-        "mark": {
-          "type": "text",
-          "dy": 30,
-          "dx": 0,
-          "fontSize": 11,
-          "fontWeight": "bold",
-          "color": "#dc2626",
-          "text": "Peak: +87% from 2022 Q3"
-        },
-        "encoding": {
-          "y": { "field": "typical_annual_bill_gbp", "type": "quantitative" }
-        }
-      },
-      
-      // Annotation for lowest point
-      {
-        "transform": [
-          { "filter": "datum.typical_annual_bill_gbp === 950" }
-        ],
-        "mark": {
-          "type": "text",
-          "dy": 30,
-          "fontSize": 11,
-          "fontWeight": "bold",
-          "color": "#10b981",
-          "text": "Pre-crisis low"
-        },
-        "encoding": {
-          "y": { "field": "typical_annual_bill_gbp", "type": "quantitative" }
-        }
       }
     ],
     
     "config": {
-      "view": { 
-        "stroke": null,
-        "continuousWidth": 600,
-        "continuousHeight": 450
-      },
-      "background": "#ffffff"
+      "view": { "stroke": null }
     }
   };
+  
   // 4) Fuel weekly (two-series)
   const vis4 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
