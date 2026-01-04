@@ -204,24 +204,29 @@
     }
   };
 
-  // ======================================
+// ======================================
   // 3) Energy cap (LOLLIPOP - PUBLICATION QUALITY)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-
+    
     "title": {
       "text": "UK Energy Price Cap (2021-2025)",
-      "subtitle": "Quarterly typical annual household bill - dramatic 87% increase during crisis",
+      "subtitle": "Quarterly typical annual household bill - dramatic increase during crisis",
       "fontSize": 16,
       "subtitleFontSize": 12,
       "anchor": "start"
     },
-
+    
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
     "height": 400,
-
+    
+    "mark": {
+      "type": "bar",
+      "width": 15
+    },
+    
     "encoding": {
       "x": {
         "field": "period_label",
@@ -237,13 +242,11 @@
         "field": "typical_annual_bill_gbp",
         "type": "quantitative",
         "title": "Annual Bill (£)",
-        "scale": { "domain": [800, 2200] },
+        "scale": { "domain": [0, 2200] },
         "axis": {
           "format": ",.0f",
           "labelFontSize": 11,
-          "titleFontSize": 12,
-          "grid": true,
-          "gridOpacity": 0.15
+          "titleFontSize": 12
         }
       },
       "color": {
@@ -257,75 +260,14 @@
           "title": "Bill Amount",
           "format": "£,.0f",
           "orient": "top",
-          "direction": "horizontal",
-          "labelFontSize": 10,
-          "titleFontSize": 11
-        }
-      }
-    },
-
-    "layer": [
-      // Reference line at £1000
-      {
-        "mark": {
-          "type": "rule",
-          "strokeDash": [4, 4],
-          "color": "#94a3b8",
-          "strokeWidth": 1.5
-        },
-        "encoding": {
-          "y": { "datum": 1000 }
+          "direction": "horizontal"
         }
       },
-
-      // Lollipop sticks
-      {
-        "mark": {
-          "type": "rule",
-          "strokeWidth": 3,
-          "opacity": 0.5
-        },
-        "encoding": {
-          "y2": { "datum": 800 }
-        }
-      },
-
-      // Lollipop heads - CRITICAL: using point mark with filled=true
-      {
-        "mark": {
-          "type": "point",
-          "filled": true,
-          "size": 300
-        },
-        "encoding": {
-          "tooltip": [
-            { "field": "period_label", "type": "nominal", "title": "Quarter" },
-            { "field": "typical_annual_bill_gbp", "type": "quantitative", "title": "Annual Bill", "format": "£,.0f" }
-          ]
-        }
-      },
-
-      // Value labels on peaks
-      {
-        "transform": [
-          { "filter": "datum.typical_annual_bill_gbp > 1800" }
-        ],
-        "mark": {
-          "type": "text",
-          "dy": -20,
-          "fontSize": 11,
-          "fontWeight": "bold",
-          "color": "#1e293b"
-        },
-        "encoding": {
-          "text": {
-            "field": "typical_annual_bill_gbp",
-            "type": "quantitative",
-            "format": "£,.0f"
-          }
-        }
-      }
-    ]
+      "tooltip": [
+        {"field": "period_label", "type": "nominal", "title": "Quarter"},
+        {"field": "typical_annual_bill_gbp", "type": "quantitative", "title": "Annual Bill", "format": "£,.0f"}
+      ]
+    }
   };
 
   // ======================================
