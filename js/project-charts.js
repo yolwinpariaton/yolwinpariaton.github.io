@@ -283,148 +283,157 @@
     }
   };
 
-  // ======================================
-  // 4) Weekly fuel prices (PUBLICATION QUALITY, ROBUST EMBED)
-  // ======================================
-  const vis4 = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+// ======================================
+// 4) Weekly fuel prices (PUBLICATION QUALITY, FIXED)
+// ======================================
+const vis4 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-    "title": {
-      "text": "Weekly fuel prices (pence per litre)",
-      "subtitle": "Raw weekly series (faint) and a 5-week moving average (bold). Hover to read exact values; max points are labelled."
-    },
+  "title": {
+    "text": "Weekly fuel prices (pence per litre)",
+    "subtitle": "Raw weekly series (faint) with a 5-week moving average (bold). Hover to read values; max points labelled."
+  },
 
-    "data": { "url": "data/vis4_fuel_weekly.json" },
-    "width": "container",
-    "height": 360,
+  "data": { "url": "data/vis4_fuel_weekly.json" },
+  "width": "container",
+  "height": 360,
 
-    "transform": [
-      { "calculate": "toDate(datum.date)", "as": "d" },
-      { "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel_raw", "ppl_raw"] },
-      { "calculate": "toNumber(datum.ppl_raw)", "as": "ppl" },
-      {
-        "calculate":
-          "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
-        "as": "fuel"
-      }
-    ],
-
-    "params": [
-      {
-        "name": "hover",
-        "select": {
-          "type": "point",
-          "nearest": true,
-          "on": "mouseover",
-          "clear": "mouseout",
-          "fields": ["d", "fuel"]
-        }
-      }
-    ],
-
-    "encoding": {
-      "x": {
-        "field": "d",
-        "type": "temporal",
-        "title": "Date",
-        "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11, "titleFontSize": 12 }
-      },
-      "y": {
-        "field": "ppl",
-        "type": "quantitative",
-        "title": "Pence per litre",
-        "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.15 }
-      },
-      "color": {
-        "field": "fuel",
-        "type": "nominal",
-        "title": null,
-        "scale": { "range": ["#4c72b0", "#e1812c"] },
-        "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
-      }
-    },
-
-    "layer": [
-      // Raw weekly line (context)
-      {
-        "mark": { "type": "line", "strokeWidth": 1.6, "opacity": 0.28 }
-      },
-
-      // Smoothed line (5-week moving average)
-      {
-        "transform": [
-          {
-            "window": [{ "op": "mean", "field": "ppl", "as": "ppl_ma" }],
-            "frame": [-2, 2],
-            "sort": [{ "field": "d", "order": "ascending" }],
-            "groupby": ["fuel"]
-          }
-        ],
-        "mark": { "type": "line", "strokeWidth": 3.4 },
-        "encoding": {
-          "y": { "field": "ppl_ma", "type": "quantitative", "title": "Pence per litre" }
-        }
-      },
-
-      // Vertical hover rule (stable)
-      {
-        "transform": [{ "filter": { "param": "hover" } }],
-        "mark": { "type": "rule", "strokeWidth": 1.2, "opacity": 0.55 },
-        "encoding": { "x": { "field": "d", "type": "temporal" } }
-      },
-
-      // Hover point
-      {
-        "mark": { "type": "point", "filled": true, "size": 120 },
-        "encoding": {
-          "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
-          "tooltip": [
-            { "field": "d", "type": "temporal", "title": "Week" },
-            { "field": "fuel", "type": "nominal", "title": "Fuel" },
-            { "field": "ppl", "type": "quantitative", "title": "Weekly", "format": ".1f" }
-          ]
-        }
-      },
-
-      // Hover value label
-      {
-        "mark": {
-          "type": "text",
-          "align": "left",
-          "dx": 10,
-          "dy": -10,
-          "fontSize": 11,
-          "fontWeight": "bold"
-        },
-        "encoding": {
-          "opacity": { "condition": { "param": "hover", "value": 1 }, "value": 0 },
-          "text": { "field": "ppl", "type": "quantitative", "format": ".1f" }
-        }
-      },
-
-      // Label peak (max) for each series
-      {
-        "transform": [
-          {
-            "window": [{ "op": "rank", "as": "r" }],
-            "sort": [{ "field": "ppl", "order": "descending" }],
-            "groupby": ["fuel"]
-          },
-          { "filter": "datum.r === 1" }
-        ],
-        "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold" },
-        "encoding": {
-          "text": { "field": "ppl", "type": "quantitative", "format": ".1f" }
-        }
-      }
-    ],
-
-    "config": {
-      "axis": { "labelFontSize": 11, "titleFontSize": 12 },
-      "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
-      "view": { "stroke": null }
+  "transform": [
+    { "calculate": "toDate(datum.date)", "as": "d" },
+    { "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel_raw", "ppl_raw"] },
+    { "calculate": "toNumber(datum.ppl_raw)", "as": "ppl" },
+    {
+      "calculate":
+        "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
+      "as": "fuel"
     }
-  };
+  ],
+
+  "encoding": {
+    "x": {
+      "field": "d",
+      "type": "temporal",
+      "title": "Date",
+      "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11, "titleFontSize": 12 }
+    },
+    "y": {
+      "field": "ppl",
+      "type": "quantitative",
+      "title": "Pence per litre",
+      "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.15 }
+    },
+    "color": {
+      "field": "fuel",
+      "type": "nominal",
+      "title": null,
+      "scale": { "range": ["#4c72b0", "#e1812c"] },
+      "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
+    }
+  },
+
+  "layer": [
+    // Raw weekly line (context)
+    {
+      "mark": { "type": "line", "strokeWidth": 1.6, "opacity": 0.28 }
+    },
+
+    // Smoothed line (5-week moving average)
+    {
+      "transform": [
+        {
+          "window": [{ "op": "mean", "field": "ppl", "as": "ppl_ma" }],
+          "frame": [-2, 2],
+          "sort": [{ "field": "d", "order": "ascending" }],
+          "groupby": ["fuel"]
+        }
+      ],
+      "mark": { "type": "line", "strokeWidth": 3.4 },
+      "encoding": {
+        "y": { "field": "ppl_ma", "type": "quantitative", "title": "Pence per litre" }
+      }
+    },
+
+    // Invisible points to drive hover selection (prevents hover_tuple duplication)
+    {
+      "params": [
+        {
+          "name": "hoverFuel",
+          "select": {
+            "type": "point",
+            "nearest": true,
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }
+      ],
+      "mark": { "type": "point", "opacity": 0 },
+      "encoding": {
+        "tooltip": [
+          { "field": "d", "type": "temporal", "title": "Week" },
+          { "field": "fuel", "type": "nominal", "title": "Fuel" },
+          { "field": "ppl", "type": "quantitative", "title": "Weekly", "format": ".1f" }
+        ]
+      }
+    },
+
+    // Vertical hover rule
+    {
+      "transform": [{ "filter": { "param": "hoverFuel", "empty": false } }],
+      "mark": { "type": "rule", "strokeWidth": 1.2, "opacity": 0.55 },
+      "encoding": { "x": { "field": "d", "type": "temporal" } }
+    },
+
+    // Visible hover point
+    {
+      "transform": [{ "filter": { "param": "hoverFuel", "empty": false } }],
+      "mark": { "type": "point", "filled": true, "size": 120 },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "ppl", "type": "quantitative" }
+      }
+    },
+
+    // Hover value label
+    {
+      "transform": [{ "filter": { "param": "hoverFuel", "empty": false } }],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "dy": -10,
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "ppl", "type": "quantitative" },
+        "text": { "field": "ppl", "type": "quantitative", "format": ".1f" }
+      }
+    },
+
+    // Label peak (max) for each series
+    {
+      "transform": [
+        {
+          "window": [{ "op": "rank", "as": "r" }],
+          "sort": [{ "field": "ppl", "order": "descending" }],
+          "groupby": ["fuel"]
+        },
+        { "filter": "datum.r === 1" }
+      ],
+      "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold" },
+      "encoding": {
+        "text": { "field": "ppl", "type": "quantitative", "format": ".1f" }
+      }
+    }
+  ],
+
+  "config": {
+    "axis": { "labelFontSize": 11, "titleFontSize": 12 },
+    "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
+    "view": { "stroke": null }
+  }
+};
 
   // 5) Rent vs house inflation
   const vis5 = {
