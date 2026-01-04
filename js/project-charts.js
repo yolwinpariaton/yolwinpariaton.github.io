@@ -222,37 +222,28 @@
     "width": "container",
     "height": 400,
     
+    "transform": [
+      {
+        "calculate": "datum.typical_annual_bill_gbp",
+        "as": "bill"
+      }
+    ],
+    
     "encoding": {
       "x": {
         "field": "period_label",
-        "type": "nominal",
+        "type": "ordinal",
         "title": null,
+        "sort": null,
         "axis": {
           "labelAngle": -45,
           "labelFontSize": 10
-        },
-        "sort": {
-          "field": "period_date",
-          "order": "ascending"
-        }
-      },
-      "y": {
-        "field": "typical_annual_bill_gbp",
-        "type": "quantitative",
-        "title": "Annual Bill (£)",
-        "scale": { "domain": [800, 2200] },
-        "axis": {
-          "format": ",.0f",
-          "labelFontSize": 11,
-          "titleFontSize": 12,
-          "grid": true,
-          "gridOpacity": 0.15
         }
       }
     },
     
     "layer": [
-      // Baseline reference at £1000
+      // Reference line at £1000
       {
         "mark": {
           "type": "rule",
@@ -265,17 +256,23 @@
         }
       },
       
-      // Lollipop sticks (from baseline to actual value)
+      // Sticks (narrower bars)
       {
         "mark": {
-          "type": "rule",
-          "strokeWidth": 4,
-          "opacity": 0.5
+          "type": "bar",
+          "width": 4,
+          "opacity": 0.4
         },
         "encoding": {
+          "y": {
+            "field": "bill",
+            "type": "quantitative",
+            "title": "Annual Bill (£)",
+            "scale": { "domain": [800, 2200] }
+          },
           "y2": { "datum": 800 },
           "color": {
-            "field": "typical_annual_bill_gbp",
+            "field": "bill",
             "type": "quantitative",
             "scale": {
               "domain": [1000, 1400, 1800, 2100],
@@ -286,73 +283,67 @@
         }
       },
       
-      // Lollipop heads (large colored circles)
+      // Circle heads (large and prominent)
       {
         "mark": {
-          "type": "point",
-          "filled": true,
-          "size": 250,
+          "type": "circle",
+          "size": 300,
           "stroke": "white",
           "strokeWidth": 3
         },
         "encoding": {
+          "y": {
+            "field": "bill",
+            "type": "quantitative"
+          },
           "color": {
-            "field": "typical_annual_bill_gbp",
+            "field": "bill",
             "type": "quantitative",
             "scale": {
               "domain": [1000, 1400, 1800, 2100],
               "range": ["#3b82f6", "#f59e0b", "#ef4444", "#991b1b"]
             },
             "legend": {
-              "title": "Bill Range",
+              "title": "Bill Amount",
+              "format": "£,.0f",
               "orient": "top",
               "direction": "horizontal",
-              "format": "£,.0f",
               "labelFontSize": 10,
               "titleFontSize": 11
             }
           },
           "tooltip": [
-            {
-              "field": "period_label",
-              "type": "nominal",
-              "title": "Quarter"
-            },
-            {
-              "field": "typical_annual_bill_gbp",
-              "type": "quantitative",
-              "title": "Annual Bill",
-              "format": "£,.0f"
-            }
+            {"field": "period_label", "type": "nominal", "title": "Quarter"},
+            {"field": "bill", "type": "quantitative", "title": "Annual Bill", "format": "£,.0f"}
           ]
         }
       },
       
-      // Value labels on highest values
+      // Value labels on peaks
       {
         "transform": [
-          { "filter": "datum.typical_annual_bill_gbp > 1800" }
+          { "filter": "datum.bill > 1800" }
         ],
         "mark": {
           "type": "text",
-          "dy": -18,
+          "dy": -20,
           "fontSize": 11,
           "fontWeight": "bold",
           "color": "#991b1b"
         },
         "encoding": {
+          "y": {
+            "field": "bill",
+            "type": "quantitative"
+          },
           "text": {
-            "field": "typical_annual_bill_gbp",
+            "field": "bill",
             "type": "quantitative",
             "format": "£,.0f"
           }
         }
       }
-    ],
-    
-    "config": {
-      "view": { "stroke": null }
-    }
+    ]
   };
 
   // 4) Fuel weekly (two-series)
