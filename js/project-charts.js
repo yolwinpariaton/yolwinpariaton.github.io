@@ -392,16 +392,16 @@
       "background": "#ffffff"
     }
   };
-  
+
 // ======================================
-// 4) Weekly fuel prices (PUBLICATION QUALITY, FIXED)
+// 4) Weekly fuel prices (PUBLICATION QUALITY, NO-SELECTION TO AVOID hover_tuple)
 // ======================================
 const vis4 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
   "title": {
     "text": "Weekly fuel prices (pence per litre)",
-    "subtitle": "Raw weekly series (faint) with a 5-week moving average (bold). Hover to read values; max points labelled."
+    "subtitle": "Weekly series (faint) with a 5-week moving average (bold). Hover points for exact values; peaks are labelled."
   },
 
   "data": { "url": "data/vis4_fuel_weekly.json" },
@@ -427,7 +427,6 @@ const vis4 = {
       "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11, "titleFontSize": 12 }
     },
     "y": {
-      "field": "ppl",
       "type": "quantitative",
       "title": "Pence per litre",
       "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.15 }
@@ -444,7 +443,10 @@ const vis4 = {
   "layer": [
     // Raw weekly line (context)
     {
-      "mark": { "type": "line", "strokeWidth": 1.6, "opacity": 0.28 }
+      "mark": { "type": "line", "strokeWidth": 1.6, "opacity": 0.28 },
+      "encoding": {
+        "y": { "field": "ppl", "type": "quantitative" }
+      }
     },
 
     // Smoothed line (5-week moving average)
@@ -459,69 +461,34 @@ const vis4 = {
       ],
       "mark": { "type": "line", "strokeWidth": 3.4 },
       "encoding": {
-        "y": { "field": "ppl_ma", "type": "quantitative", "title": "Pence per litre" }
+        "y": { "field": "ppl_ma", "type": "quantitative" }
       }
     },
 
-    // Invisible points to drive hover selection (prevents hover_tuple duplication)
+    // Points on the moving average for reliable hover tooltips (no selection signals)
     {
-      "params": [
+      "transform": [
         {
-          "name": "hoverFuel",
-          "select": {
-            "type": "point",
-            "nearest": true,
-            "on": "mouseover",
-            "clear": "mouseout"
-          }
+          "window": [{ "op": "mean", "field": "ppl", "as": "ppl_ma" }],
+          "frame": [-2, 2],
+          "sort": [{ "field": "d", "order": "ascending" }],
+          "groupby": ["fuel"]
         }
       ],
-      "mark": { "type": "point", "opacity": 0 },
+      "mark": { "type": "point", "filled": true, "size": 40, "opacity": 0.85 },
       "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "ppl_ma", "type": "quantitative" },
         "tooltip": [
           { "field": "d", "type": "temporal", "title": "Week" },
           { "field": "fuel", "type": "nominal", "title": "Fuel" },
-          { "field": "ppl", "type": "quantitative", "title": "Weekly", "format": ".1f" }
+          { "field": "ppl", "type": "quantitative", "title": "Weekly", "format": ".1f" },
+          { "field": "ppl_ma", "type": "quantitative", "title": "5-wk avg", "format": ".1f" }
         ]
       }
     },
 
-    // Vertical hover rule
-    {
-      "transform": [{ "filter": { "param": "hoverFuel", "empty": false } }],
-      "mark": { "type": "rule", "strokeWidth": 1.2, "opacity": 0.55 },
-      "encoding": { "x": { "field": "d", "type": "temporal" } }
-    },
-
-    // Visible hover point
-    {
-      "transform": [{ "filter": { "param": "hoverFuel", "empty": false } }],
-      "mark": { "type": "point", "filled": true, "size": 120 },
-      "encoding": {
-        "x": { "field": "d", "type": "temporal" },
-        "y": { "field": "ppl", "type": "quantitative" }
-      }
-    },
-
-    // Hover value label
-    {
-      "transform": [{ "filter": { "param": "hoverFuel", "empty": false } }],
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 10,
-        "dy": -10,
-        "fontSize": 11,
-        "fontWeight": "bold"
-      },
-      "encoding": {
-        "x": { "field": "d", "type": "temporal" },
-        "y": { "field": "ppl", "type": "quantitative" },
-        "text": { "field": "ppl", "type": "quantitative", "format": ".1f" }
-      }
-    },
-
-    // Label peak (max) for each series
+    // Label peak (max) for each series (based on weekly values)
     {
       "transform": [
         {
@@ -533,6 +500,7 @@ const vis4 = {
       ],
       "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold" },
       "encoding": {
+        "y": { "field": "ppl", "type": "quantitative" },
         "text": { "field": "ppl", "type": "quantitative", "format": ".1f" }
       }
     }
@@ -544,6 +512,7 @@ const vis4 = {
     "view": { "stroke": null }
   }
 };
+
 
   // 5) Rent vs house inflation
   const vis5 = {
