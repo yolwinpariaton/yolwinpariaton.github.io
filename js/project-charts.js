@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (SIMPLE, WORKING LOLLIPOP)
+  // 3) Energy cap (COMPLETE & POLISHED)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -213,42 +213,50 @@
     "title": {
       "text": "UK Energy Price Cap: The Crisis in Context",
       "subtitle": [
-        "Quarterly typical household bills (2021-2025) | Peak of £2,070 represents 118% increase from pre-crisis baseline",
-        "Each point shows Ofgem's quarterly price cap for a typical household"
+        "Quarterly typical household bills (2021-2025) | Peak of £2,070 represents 118% increase from pre-crisis baseline"
       ],
       "fontSize": 20,
       "subtitleFontSize": 12,
       "anchor": "start",
       "color": "#0f172a",
       "subtitleColor": "#64748b",
-      "offset": 25
+      "offset": 20
     },
     
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 500,
+    "height": 520,
     
     "encoding": {
       "x": {
         "field": "period_date",
         "type": "temporal",
-        "title": null,
+        "title": "Quarter",
+        "scale": {
+          "domain": [
+            {"year": 2021, "month": 10, "date": 1},
+            {"year": 2025, "month": 11, "date": 1}
+          ]
+        },
         "axis": {
           "format": "%Y Q%q",
           "labelAngle": -45,
-          "labelFontSize": 10,
+          "labelFontSize": 11,
           "labelColor": "#475569",
           "labelPadding": 10,
           "domainColor": "#cbd5e1",
           "tickColor": "#cbd5e1",
-          "tickCount": 17
+          "tickCount": "quarter",
+          "tickMinStep": 1,
+          "titleFontSize": 13,
+          "titleColor": "#0f172a"
         }
       },
       "y": {
         "field": "typical_annual_bill_gbp",
         "type": "quantitative",
         "title": "Annual Bill (£)",
-        "scale": { "domain": [850, 2150] },
+        "scale": { "domain": [900, 2150] },
         "axis": {
           "format": ",.0f",
           "labelFontSize": 12,
@@ -266,7 +274,7 @@
     },
     
     "layer": [
-      // Crisis shading (using temporal dates)
+      // Crisis shading (adjusted to actual peak period)
       {
         "mark": {
           "type": "rect",
@@ -275,7 +283,7 @@
         },
         "encoding": {
           "x": { "datum": {"year": 2024, "month": 4, "date": 1} },
-          "x2": { "datum": {"year": 2025, "month": 12, "date": 31} }
+          "x2": { "datum": {"year": 2025, "month": 11, "date": 1} }
         }
       },
       
@@ -285,7 +293,8 @@
           "type": "line",
           "strokeWidth": 2.5,
           "color": "#94a3b8",
-          "opacity": 0.5
+          "opacity": 0.5,
+          "interpolate": "monotone"
         }
       },
       
@@ -336,7 +345,7 @@
         }
       },
       
-      // Value labels for key points
+      // Value labels for key points only
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
@@ -357,11 +366,11 @@
         }
       },
       
-      // Crisis Period text annotation
+      // Crisis Period annotation
       {
         "data": {
           "values": [
-            {"x": {"year": 2025, "month": 1, "date": 1}, "y": 2110, "text": "← Crisis Period →"}
+            {"x": {"year": 2025, "month": 1, "date": 1}, "y": 2120, "text": "← Crisis Period →"}
           ]
         },
         "mark": {
@@ -384,11 +393,11 @@
         ],
         "mark": {
           "type": "text",
-          "dy": 25,
+          "dy": 28,
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#10b981",
-          "text": "Pre-crisis low"
+          "text": "Pre-crisis"
         }
       },
       
@@ -399,7 +408,7 @@
         ],
         "mark": {
           "type": "text",
-          "dy": 35,
+          "dy": 38,
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#dc2626",
@@ -537,14 +546,14 @@ const vis4 = {
 };
 
 // ======================================
-// 5) Rent vs house price inflation (PUBLICATION QUALITY - FIXED)
+// 5) Rent vs house price inflation (FINAL PUBLICATION VERSION)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
   "title": {
     "text": "Rent vs house price inflation (annual rate)",
-    "subtitle": "Faint lines show monthly values; bold lines show a 5-month moving average for readability."
+    "subtitle": "Faint lines show monthly values; bold lines show a 5-month moving average."
   },
 
   "data": { "url": "data/vis5_rent_vs_house.json" },
@@ -557,39 +566,38 @@ const vis5 = {
   ],
 
   "layer": [
-    // Zero reference line
+    // Raw monthly lines — further de-emphasised
     {
-      "mark": { "type": "rule", "strokeDash": [4, 6], "opacity": 0.55 },
-      "encoding": { "y": { "datum": 0 } }
-    },
-
-    // Raw monthly lines (context only)
-    {
-      "mark": { "type": "line", "strokeWidth": 1.4, "opacity": 0.22 },
+      "mark": { "type": "line", "strokeWidth": 1.2, "opacity": 0.18 },
       "encoding": {
         "x": {
           "field": "d",
           "type": "temporal",
           "title": "Date",
-          "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11, "titleFontSize": 12 }
+          "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11 }
         },
         "y": {
           "field": "v",
           "type": "quantitative",
           "title": "Percent",
-          "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.12 }
+          "scale": { "domain": [0, 10] },
+          "axis": {
+            "labelFontSize": 11,
+            "titleFontSize": 12,
+            "grid": true,
+            "gridOpacity": 0.1
+          }
         },
         "color": {
           "field": "series",
           "type": "nominal",
-          "title": null,
           "scale": { "range": ["#4c72b0", "#e1812c"] },
           "legend": null
         }
       }
     },
 
-    // Smoothed line (5-month moving average) — main read
+    // Smoothed lines (5-month MA) — main signal
     {
       "transform": [
         {
@@ -599,21 +607,20 @@ const vis5 = {
           "groupby": ["series"]
         }
       ],
-      "mark": { "type": "line", "strokeWidth": 3.4 },
+      "mark": { "type": "line", "strokeWidth": 3.6 },
       "encoding": {
-        "x": { "field": "d", "type": "temporal", "title": "Date" },
-        "y": { "field": "v_ma", "type": "quantitative", "title": "Percent" },
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "v_ma", "type": "quantitative" },
         "color": {
           "field": "series",
           "type": "nominal",
-          "title": null,
           "scale": { "range": ["#4c72b0", "#e1812c"] },
           "legend": null
         }
       }
     },
 
-    // Invisible points on the MA for clean tooltips (interactive without clutter)
+    // Invisible points for clean hover tooltips
     {
       "transform": [
         {
@@ -623,7 +630,7 @@ const vis5 = {
           "groupby": ["series"]
         }
       ],
-      "mark": { "type": "point", "opacity": 0, "size": 60 },
+      "mark": { "type": "point", "opacity": 0, "size": 40 },
       "encoding": {
         "x": { "field": "d", "type": "temporal" },
         "y": { "field": "v_ma", "type": "quantitative" },
@@ -631,12 +638,12 @@ const vis5 = {
           { "field": "d", "type": "temporal", "title": "Date" },
           { "field": "series", "type": "nominal", "title": "Series" },
           { "field": "v", "type": "quantitative", "title": "Monthly", "format": ".1f" },
-          { "field": "v_ma", "type": "quantitative", "title": "5-mo avg", "format": ".1f" }
+          { "field": "v_ma", "type": "quantitative", "title": "5-month avg", "format": ".1f" }
         ]
       }
     },
 
-    // End-of-line labels (publisher style, replaces peak labels)
+    // End-of-line labels — tightened and aligned
     {
       "transform": [
         {
@@ -655,8 +662,8 @@ const vis5 = {
       "mark": {
         "type": "text",
         "align": "left",
-        "dx": 10,
-        "fontSize": 12,
+        "dx": 6,
+        "fontSize": 11,
         "fontWeight": "bold"
       },
       "encoding": {
@@ -665,8 +672,7 @@ const vis5 = {
         "color": {
           "field": "series",
           "type": "nominal",
-          "scale": { "range": ["#4c72b0", "#e1812c"] },
-          "legend": null
+          "scale": { "range": ["#4c72b0", "#e1812c"] }
         },
         "text": { "field": "series", "type": "nominal" }
       }
@@ -677,7 +683,7 @@ const vis5 = {
     "axis": { "labelFontSize": 11, "titleFontSize": 12 },
     "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
     "view": { "stroke": null },
-    "padding": { "right": 90 }
+    "padding": { "right": 70 }
   }
 };
   
