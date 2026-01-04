@@ -205,84 +205,194 @@
   };
 
 // ======================================
-  // 3) Energy cap (LOLLIPOP - PUBLICATION QUALITY)
+  // 3) Energy cap (PUBLICATION QUALITY BAR CHART)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     
     "title": {
-      "text": "UK Energy Price Cap (2021-2025)",
-      "subtitle": "Quarterly typical annual household bill (£) - dramatic increase during crisis",
-      "fontSize": 16,
-      "subtitleFontSize": 12,
-      "anchor": "start"
+      "text": "UK Energy Price Cap: Quarterly Bills (2021-2025)",
+      "subtitle": [
+        "Typical annual household bill under Ofgem price cap",
+        "87% increase from lowest (£950, 2022 Q3) to highest (£2,070, 2025 Q4)"
+      ],
+      "fontSize": 18,
+      "subtitleFontSize": 13,
+      "anchor": "start",
+      "color": "#1e293b",
+      "subtitleColor": "#64748b",
+      "offset": 20
     },
     
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 400,
+    "height": 450,
     
-    "mark": {
-      "type": "bar",
-      "width": 20
-    },
+    "layer": [
+      // Main bars
+      {
+        "mark": {
+          "type": "bar",
+          "cornerRadiusEnd": 4,
+          "width": {"band": 0.7}
+        },
+        "encoding": {
+          "x": {
+            "field": "period_label",
+            "type": "ordinal",
+            "title": null,
+            "sort": null,
+            "axis": {
+              "labelAngle": -45,
+              "labelFontSize": 11,
+              "labelColor": "#475569",
+              "domainColor": "#cbd5e1",
+              "tickColor": "#cbd5e1",
+              "labelPadding": 8
+            }
+          },
+          "y": {
+            "field": "typical_annual_bill_gbp",
+            "type": "quantitative",
+            "title": "Annual Bill (£)",
+            "scale": { "domain": [0, 2200] },
+            "axis": {
+              "format": ",.0f",
+              "labelFontSize": 12,
+              "titleFontSize": 13,
+              "titleColor": "#1e293b",
+              "labelColor": "#475569",
+              "grid": true,
+              "gridOpacity": 0.1,
+              "gridColor": "#cbd5e1",
+              "domainColor": "#cbd5e1",
+              "tickColor": "#cbd5e1"
+            }
+          },
+          "color": {
+            "field": "typical_annual_bill_gbp",
+            "type": "quantitative",
+            "scale": {
+              "domain": [950, 1300, 1700, 2070],
+              "range": ["#10b981", "#3b82f6", "#f59e0b", "#dc2626"]
+            },
+            "legend": {
+              "title": "Bill Amount (£)",
+              "format": ",.0f",
+              "orient": "top-left",
+              "direction": "horizontal",
+              "labelFontSize": 11,
+              "titleFontSize": 12,
+              "titleColor": "#1e293b",
+              "labelColor": "#475569",
+              "symbolSize": 300,
+              "symbolType": "square",
+              "offset": 10,
+              "padding": 10
+            }
+          },
+          "tooltip": [
+            {
+              "field": "period_label",
+              "type": "nominal",
+              "title": "Quarter"
+            },
+            {
+              "field": "typical_annual_bill_gbp",
+              "type": "quantitative",
+              "title": "Annual Bill",
+              "format": ",.0f"
+            }
+          ]
+        }
+      },
+      
+      // Value labels on top of each bar
+      {
+        "mark": {
+          "type": "text",
+          "dy": -8,
+          "fontSize": 10,
+          "fontWeight": 600,
+          "color": "#1e293b"
+        },
+        "encoding": {
+          "x": {
+            "field": "period_label",
+            "type": "ordinal",
+            "sort": null
+          },
+          "y": {
+            "field": "typical_annual_bill_gbp",
+            "type": "quantitative"
+          },
+          "text": {
+            "field": "typical_annual_bill_gbp",
+            "type": "quantitative",
+            "format": ",.0f"
+          }
+        }
+      },
+      
+      // Highlight annotation for minimum
+      {
+        "transform": [
+          { "filter": "datum.typical_annual_bill_gbp === 950" }
+        ],
+        "mark": {
+          "type": "text",
+          "dy": -25,
+          "fontSize": 11,
+          "fontWeight": "bold",
+          "color": "#10b981",
+          "text": "↓ Lowest"
+        },
+        "encoding": {
+          "x": {
+            "field": "period_label",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "typical_annual_bill_gbp",
+            "type": "quantitative"
+          }
+        }
+      },
+      
+      // Highlight annotation for maximum
+      {
+        "transform": [
+          { "filter": "datum.typical_annual_bill_gbp === 2070" }
+        ],
+        "mark": {
+          "type": "text",
+          "dy": -25,
+          "fontSize": 11,
+          "fontWeight": "bold",
+          "color": "#dc2626",
+          "text": "↑ Peak"
+        },
+        "encoding": {
+          "x": {
+            "field": "period_label",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "typical_annual_bill_gbp",
+            "type": "quantitative"
+          }
+        }
+      }
+    ],
     
-    "encoding": {
-      "x": {
-        "field": "period_label",
-        "type": "ordinal",
-        "title": null,
-        "sort": null,
-        "axis": {
-          "labelAngle": -45,
-          "labelFontSize": 10
-        }
+    "config": {
+      "view": { 
+        "stroke": null
       },
-      "y": {
-        "field": "typical_annual_bill_gbp",
-        "type": "quantitative",
-        "title": "Annual Bill (£)",
-        "scale": { "domain": [0, 2200] },
-        "axis": {
-          "format": ",.0f",
-          "labelFontSize": 11,
-          "titleFontSize": 12,
-          "grid": true,
-          "gridOpacity": 0.15
-        }
-      },
-      "color": {
-        "field": "typical_annual_bill_gbp",
-        "type": "quantitative",
-        "scale": {
-          "domain": [1000, 1400, 1800, 2100],
-          "range": ["#3b82f6", "#f59e0b", "#ef4444", "#991b1b"]
-        },
-        "legend": {
-          "title": "Bill Range (£)",
-          "format": ",.0f",
-          "orient": "top",
-          "direction": "horizontal",
-          "labelFontSize": 10,
-          "titleFontSize": 11
-        }
-      },
-      "tooltip": [
-        {
-          "field": "period_label",
-          "type": "nominal",
-          "title": "Quarter"
-        },
-        {
-          "field": "typical_annual_bill_gbp",
-          "type": "quantitative",
-          "title": "Annual Bill (£)",
-          "format": ",.0f"
-        }
-      ]
+      "background": "#ffffff"
     }
   };
-
+  
 // ======================================
 // 4) Weekly fuel prices (PUBLICATION QUALITY, FIXED)
 // ======================================
