@@ -536,8 +536,8 @@ const vis4 = {
   }
 };
 
-  // ======================================
-// 5) Rent vs house price inflation (PUBLICATION QUALITY)
+// ======================================
+// 5) Rent vs house price inflation (PUBLICATION QUALITY - FIXED)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -559,13 +559,13 @@ const vis5 = {
   "layer": [
     // Zero reference line
     {
-      "mark": { "type": "rule", "strokeDash": [4, 6], "opacity": 0.6 },
+      "mark": { "type": "rule", "strokeDash": [4, 6], "opacity": 0.55 },
       "encoding": { "y": { "datum": 0 } }
     },
 
-    // Raw monthly lines (context)
+    // Raw monthly lines (context only)
     {
-      "mark": { "type": "line", "strokeWidth": 1.6, "opacity": 0.25 },
+      "mark": { "type": "line", "strokeWidth": 1.4, "opacity": 0.22 },
       "encoding": {
         "x": {
           "field": "d",
@@ -577,19 +577,19 @@ const vis5 = {
           "field": "v",
           "type": "quantitative",
           "title": "Percent",
-          "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.15 }
+          "axis": { "labelFontSize": 11, "titleFontSize": 12, "grid": true, "gridOpacity": 0.12 }
         },
         "color": {
           "field": "series",
           "type": "nominal",
           "title": null,
           "scale": { "range": ["#4c72b0", "#e1812c"] },
-          "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
+          "legend": null
         }
       }
     },
 
-    // Smoothed lines (5-month moving average) — main read
+    // Smoothed line (5-month moving average) — main read
     {
       "transform": [
         {
@@ -608,12 +608,12 @@ const vis5 = {
           "type": "nominal",
           "title": null,
           "scale": { "range": ["#4c72b0", "#e1812c"] },
-          "legend": { "orient": "top", "direction": "horizontal", "title": null, "labelFontSize": 11 }
+          "legend": null
         }
       }
     },
 
-    // Points on the smoothed lines for reliable hover tooltips (no selection signals)
+    // Invisible points on the MA for clean tooltips (interactive without clutter)
     {
       "transform": [
         {
@@ -623,16 +623,10 @@ const vis5 = {
           "groupby": ["series"]
         }
       ],
-      "mark": { "type": "point", "filled": true, "size": 40, "opacity": 0.9 },
+      "mark": { "type": "point", "opacity": 0, "size": 60 },
       "encoding": {
         "x": { "field": "d", "type": "temporal" },
         "y": { "field": "v_ma", "type": "quantitative" },
-        "color": {
-          "field": "series",
-          "type": "nominal",
-          "scale": { "range": ["#4c72b0", "#e1812c"] },
-          "legend": null
-        },
         "tooltip": [
           { "field": "d", "type": "temporal", "title": "Date" },
           { "field": "series", "type": "nominal", "title": "Series" },
@@ -642,27 +636,39 @@ const vis5 = {
       }
     },
 
-    // Label peak (max) for each series (monthly values)
+    // End-of-line labels (publisher style, replaces peak labels)
     {
       "transform": [
         {
           "window": [{ "op": "rank", "as": "r" }],
-          "sort": [{ "field": "v", "order": "descending" }],
+          "sort": [{ "field": "d", "order": "descending" }],
           "groupby": ["series"]
         },
-        { "filter": "datum.r === 1" }
+        { "filter": "datum.r === 1" },
+        {
+          "window": [{ "op": "mean", "field": "v", "as": "v_ma" }],
+          "frame": [-2, 2],
+          "sort": [{ "field": "d", "order": "ascending" }],
+          "groupby": ["series"]
+        }
       ],
-      "mark": { "type": "text", "dy": -18, "fontSize": 11, "fontWeight": "bold" },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
       "encoding": {
         "x": { "field": "d", "type": "temporal" },
-        "y": { "field": "v", "type": "quantitative" },
+        "y": { "field": "v_ma", "type": "quantitative" },
         "color": {
           "field": "series",
           "type": "nominal",
           "scale": { "range": ["#4c72b0", "#e1812c"] },
           "legend": null
         },
-        "text": { "field": "v", "type": "quantitative", "format": ".1f" }
+        "text": { "field": "series", "type": "nominal" }
       }
     }
   ],
@@ -670,7 +676,8 @@ const vis5 = {
   "config": {
     "axis": { "labelFontSize": 11, "titleFontSize": 12 },
     "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
-    "view": { "stroke": null }
+    "view": { "stroke": null },
+    "padding": { "right": 90 }
   }
 };
   
