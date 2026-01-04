@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (STUNNING LOLLIPOP - PUBLICATION QUALITY)
+  // 3) Energy cap (STUNNING LOLLIPOP - FIXED)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -226,21 +226,29 @@
     
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 480,
+    "height": 500,
     
     "layer": [
-      // Background shading for crisis period
+      // Background shading for crisis period (adjusted to start at 2024 Q2)
       {
+        "data": {
+          "values": [
+            {"x1": "2024 Q2", "x2": "2025 Q4"}
+          ]
+        },
         "mark": {
           "type": "rect",
           "color": "#fee2e2",
-          "opacity": 0.3
+          "opacity": 0.25
         },
         "encoding": {
-          "x": { "datum": "2023 Q3" },
-          "x2": { "datum": "2025 Q4" },
-          "y": { "value": 0 },
-          "y2": { "value": 480 }
+          "x": { 
+            "field": "x1",
+            "type": "ordinal"
+          },
+          "x2": { 
+            "field": "x2"
+          }
         }
       },
       
@@ -248,9 +256,9 @@
       {
         "mark": {
           "type": "line",
-          "strokeWidth": 2,
+          "strokeWidth": 2.5,
           "color": "#94a3b8",
-          "opacity": 0.6
+          "opacity": 0.5
         },
         "encoding": {
           "x": {
@@ -271,7 +279,7 @@
             "field": "typical_annual_bill_gbp",
             "type": "quantitative",
             "title": "Annual Bill (£)",
-            "scale": { "domain": [800, 2200] },
+            "scale": { "domain": [850, 2150] },
             "axis": {
               "format": ",.0f",
               "labelFontSize": 12,
@@ -285,6 +293,10 @@
               "domainColor": "#cbd5e1",
               "tickColor": "#cbd5e1"
             }
+          },
+          "order": {
+            "field": "period_date",
+            "type": "temporal"
           }
         }
       },
@@ -317,7 +329,7 @@
             "legend": {
               "title": "Bill Amount (£)",
               "format": ",.0f",
-              "orient": "top-right",
+              "orient": "top-left",
               "direction": "horizontal",
               "labelFontSize": 11,
               "titleFontSize": 12,
@@ -345,7 +357,7 @@
         }
       },
       
-      // Value labels for key points only (cleaner)
+      // Value labels for key points only
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
@@ -374,16 +386,22 @@
         }
       },
       
-      // "Crisis Period" annotation
+      // "Crisis Period" annotation (repositioned)
       {
         "mark": {
           "type": "text",
-          "x": {"expr": "width * 0.75"},
-          "y": 30,
-          "fontSize": 13,
+          "align": "left",
+          "baseline": "top",
+          "dx": 5,
+          "dy": 5,
+          "fontSize": 12,
           "fontWeight": "600",
           "color": "#dc2626",
           "text": "← Crisis Period"
+        },
+        "encoding": {
+          "x": { "datum": "2024 Q3" },
+          "y": { "datum": 2100 }
         }
       },
       
@@ -398,7 +416,7 @@
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#10b981",
-          "text": "Pre-crisis low"
+          "text": "Pre-crisis"
         },
         "encoding": {
           "x": {
@@ -412,18 +430,18 @@
         }
       },
       
-      // Peak annotation
+      // Peak annotation (repositioned below to avoid overlap)
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 2070" }
         ],
         "mark": {
           "type": "text",
-          "dy": 25,
+          "dy": 35,
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#dc2626",
-          "text": "+118% from baseline"
+          "text": "+118%"
         },
         "encoding": {
           "x": {
