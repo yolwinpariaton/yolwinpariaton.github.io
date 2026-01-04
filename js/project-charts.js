@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (STUNNING LOLLIPOP - FIXED)
+  // 3) Energy cap (COMPLETE LOLLIPOP - ALL DATA VISIBLE)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -228,31 +228,15 @@
     "width": "container",
     "height": 500,
     
-    "layer": [
-      // Background shading for crisis period (adjusted to start at 2024 Q2)
+    "transform": [
       {
-        "data": {
-          "values": [
-            {"x1": "2024 Q2", "x2": "2025 Q4"}
-          ]
-        },
-        "mark": {
-          "type": "rect",
-          "color": "#fee2e2",
-          "opacity": 0.25
-        },
-        "encoding": {
-          "x": { 
-            "field": "x1",
-            "type": "ordinal"
-          },
-          "x2": { 
-            "field": "x2"
-          }
-        }
-      },
-      
-      // Connecting line (thin, subtle)
+        "window": [{"op": "row_number", "as": "order"}],
+        "sort": [{"field": "period_date", "order": "ascending"}]
+      }
+    ],
+    
+    "layer": [
+      // Connecting line
       {
         "mark": {
           "type": "line",
@@ -262,17 +246,18 @@
         },
         "encoding": {
           "x": {
-            "field": "period_label",
-            "type": "ordinal",
+            "field": "order",
+            "type": "quantitative",
             "title": null,
-            "sort": null,
             "axis": {
+              "labelExpr": "datum.value === 1 ? '2021 Q4' : datum.value === 2 ? '2022 Q1' : datum.value === 3 ? '2022 Q2' : datum.value === 4 ? '2022 Q3' : datum.value === 5 ? '2022 Q4' : datum.value === 6 ? '2023 Q1' : datum.value === 7 ? '2023 Q2' : datum.value === 8 ? '2023 Q3' : datum.value === 9 ? '2023 Q4' : datum.value === 10 ? '2024 Q1' : datum.value === 11 ? '2024 Q2' : datum.value === 12 ? '2024 Q3' : datum.value === 13 ? '2024 Q4' : datum.value === 14 ? '2025 Q1' : datum.value === 15 ? '2025 Q2' : datum.value === 16 ? '2025 Q3' : datum.value === 17 ? '2025 Q4' : ''",
               "labelAngle": -45,
-              "labelFontSize": 11,
+              "labelFontSize": 10,
               "labelColor": "#475569",
               "labelPadding": 10,
               "domainColor": "#cbd5e1",
-              "tickColor": "#cbd5e1"
+              "tickColor": "#cbd5e1",
+              "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
             }
           },
           "y": {
@@ -293,11 +278,22 @@
               "domainColor": "#cbd5e1",
               "tickColor": "#cbd5e1"
             }
-          },
-          "order": {
-            "field": "period_date",
-            "type": "temporal"
           }
+        }
+      },
+      
+      // Crisis shading
+      {
+        "mark": {
+          "type": "rect",
+          "color": "#fee2e2",
+          "opacity": 0.25
+        },
+        "encoding": {
+          "x": { "datum": 11 },
+          "x2": { "datum": 17.5 },
+          "y": { "datum": 850 },
+          "y2": { "datum": 2150 }
         }
       },
       
@@ -311,9 +307,8 @@
         },
         "encoding": {
           "x": {
-            "field": "period_label",
-            "type": "ordinal",
-            "sort": null
+            "field": "order",
+            "type": "quantitative"
           },
           "y": {
             "field": "typical_annual_bill_gbp",
@@ -357,7 +352,7 @@
         }
       },
       
-      // Value labels for key points only
+      // Value labels for key points
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
@@ -371,8 +366,8 @@
         },
         "encoding": {
           "x": {
-            "field": "period_label",
-            "type": "ordinal"
+            "field": "order",
+            "type": "quantitative"
           },
           "y": {
             "field": "typical_annual_bill_gbp",
@@ -386,22 +381,21 @@
         }
       },
       
-      // "Crisis Period" annotation (repositioned)
+      // Crisis Period annotation
       {
         "mark": {
           "type": "text",
-          "align": "left",
+          "align": "center",
           "baseline": "top",
-          "dx": 5,
           "dy": 5,
           "fontSize": 12,
           "fontWeight": "600",
           "color": "#dc2626",
-          "text": "← Crisis Period"
+          "text": "← Crisis Period →"
         },
         "encoding": {
-          "x": { "datum": "2024 Q3" },
-          "y": { "datum": 2100 }
+          "x": { "datum": 14 },
+          "y": { "datum": 2110 }
         }
       },
       
@@ -416,12 +410,12 @@
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#10b981",
-          "text": "Pre-crisis"
+          "text": "Pre-crisis low"
         },
         "encoding": {
           "x": {
-            "field": "period_label",
-            "type": "ordinal"
+            "field": "order",
+            "type": "quantitative"
           },
           "y": {
             "field": "typical_annual_bill_gbp",
@@ -430,7 +424,7 @@
         }
       },
       
-      // Peak annotation (repositioned below to avoid overlap)
+      // Peak annotation
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 2070" }
@@ -441,12 +435,12 @@
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#dc2626",
-          "text": "+118%"
+          "text": "+118% from baseline"
         },
         "encoding": {
           "x": {
-            "field": "period_label",
-            "type": "ordinal"
+            "field": "order",
+            "type": "quantitative"
           },
           "y": {
             "field": "typical_annual_bill_gbp",
