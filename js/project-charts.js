@@ -222,6 +222,35 @@
     "width": "container",
     "height": 400,
     
+    "encoding": {
+      "x": {
+        "field": "period_label",
+        "type": "nominal",
+        "title": null,
+        "axis": {
+          "labelAngle": -45,
+          "labelFontSize": 10
+        },
+        "sort": {
+          "field": "period_date",
+          "order": "ascending"
+        }
+      },
+      "y": {
+        "field": "typical_annual_bill_gbp",
+        "type": "quantitative",
+        "title": "Annual Bill (£)",
+        "scale": { "domain": [800, 2200] },
+        "axis": {
+          "format": ",.0f",
+          "labelFontSize": 11,
+          "titleFontSize": 12,
+          "grid": true,
+          "gridOpacity": 0.15
+        }
+      }
+    },
+    
     "layer": [
       // Baseline reference at £1000
       {
@@ -229,85 +258,44 @@
           "type": "rule",
           "strokeDash": [4, 4],
           "color": "#94a3b8",
-          "strokeWidth": 1
+          "strokeWidth": 1.5
         },
         "encoding": {
-          "x": {
-            "field": "period_label",
-            "type": "nominal",
-            "title": null,
-            "axis": {
-              "labelAngle": -45,
-              "labelFontSize": 10
-            },
-            "sort": {
-              "field": "period_date",
-              "order": "ascending"
-            }
-          },
           "y": { "datum": 1000 }
         }
       },
       
-      // Lollipop sticks
+      // Lollipop sticks (from baseline to actual value)
       {
         "mark": {
           "type": "rule",
-          "strokeWidth": 3,
-          "color": "#cbd5e1"
+          "strokeWidth": 4,
+          "opacity": 0.5
         },
         "encoding": {
-          "x": {
-            "field": "period_label",
-            "type": "nominal",
-            "title": null,
-            "axis": {
-              "labelAngle": -45,
-              "labelFontSize": 10
-            },
-            "sort": {
-              "field": "period_date",
-              "order": "ascending"
-            }
-          },
-          "y": {
+          "y2": { "datum": 800 },
+          "color": {
             "field": "typical_annual_bill_gbp",
             "type": "quantitative",
-            "title": "Annual Bill (£)",
-            "scale": { "domain": [800, 2200] },
-            "axis": {
-              "format": ",.0f",
-              "labelFontSize": 11,
-              "titleFontSize": 12,
-              "grid": true,
-              "gridOpacity": 0.15
-            }
-          },
-          "y2": { "datum": 800 }
+            "scale": {
+              "domain": [1000, 1400, 1800, 2100],
+              "range": ["#3b82f6", "#f59e0b", "#ef4444", "#991b1b"]
+            },
+            "legend": null
+          }
         }
       },
       
-      // Lollipop heads (color-coded by value)
+      // Lollipop heads (large colored circles)
       {
         "mark": {
-          "type": "circle",
+          "type": "point",
+          "filled": true,
           "size": 250,
           "stroke": "white",
-          "strokeWidth": 2.5
+          "strokeWidth": 3
         },
         "encoding": {
-          "x": {
-            "field": "period_label",
-            "type": "nominal",
-            "sort": {
-              "field": "period_date",
-              "order": "ascending"
-            }
-          },
-          "y": {
-            "field": "typical_annual_bill_gbp",
-            "type": "quantitative"
-          },
           "color": {
             "field": "typical_annual_bill_gbp",
             "type": "quantitative",
@@ -340,31 +328,19 @@
         }
       },
       
-      // Value labels on top of highest values only
+      // Value labels on highest values
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp > 1800" }
         ],
         "mark": {
           "type": "text",
-          "dy": -15,
+          "dy": -18,
           "fontSize": 11,
           "fontWeight": "bold",
           "color": "#991b1b"
         },
         "encoding": {
-          "x": {
-            "field": "period_label",
-            "type": "nominal",
-            "sort": {
-              "field": "period_date",
-              "order": "ascending"
-            }
-          },
-          "y": { 
-            "field": "typical_annual_bill_gbp", 
-            "type": "quantitative"
-          },
           "text": {
             "field": "typical_annual_bill_gbp",
             "type": "quantitative",
