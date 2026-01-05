@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (FINAL - Clean, no warnings)
+  // 3) Energy cap (FIXED - Proper data inheritance)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -231,6 +231,11 @@
     "layer": [
       // Pre-crisis baseline shading (blue-gray)
       {
+        "data": {
+          "values": [
+            {"x1": "2021 Q4", "x2": "2022 Q2"}
+          ]
+        },
         "mark": {
           "type": "rect",
           "color": "#e0f2fe",
@@ -238,11 +243,13 @@
         },
         "encoding": {
           "x": {
-            "datum": "2021 Q4",
-            "type": "ordinal"
+            "field": "x1",
+            "type": "ordinal",
+            "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+            "axis": null
           },
           "x2": {
-            "datum": "2022 Q2"
+            "field": "x2"
           },
           "y": {
             "datum": 0,
@@ -256,6 +263,11 @@
       
       // Crisis peak period shading (amber/orange)
       {
+        "data": {
+          "values": [
+            {"x1": "2022 Q2", "x2": "2023 Q2"}
+          ]
+        },
         "mark": {
           "type": "rect",
           "color": "#fef3c7",
@@ -263,11 +275,13 @@
         },
         "encoding": {
           "x": {
-            "datum": "2022 Q2",
-            "type": "ordinal"
+            "field": "x1",
+            "type": "ordinal",
+            "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+            "axis": null
           },
           "x2": {
-            "datum": "2023 Q2"
+            "field": "x2"
           },
           "y": {
             "datum": 0,
@@ -451,6 +465,7 @@
           "x": {
             "field": "x",
             "type": "ordinal",
+            "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
             "axis": null
           },
           "y": {
@@ -478,6 +493,7 @@
           "x": {
             "field": "x",
             "type": "ordinal",
+            "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
             "axis": null
           },
           "y": {
@@ -506,6 +522,7 @@
           "x": {
             "field": "period_label",
             "type": "ordinal",
+            "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
             "axis": null
           },
           "y": {
@@ -533,6 +550,7 @@
           "x": {
             "field": "period_label",
             "type": "ordinal",
+            "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
             "axis": null
           },
           "y": {
@@ -937,7 +955,7 @@ const vis5 = {
 };
 
 // ======================================
-// 6) England regional map (IMPROVED - centered, not oversized)
+// 6) England regional map (FURTHER FIX - visually centered)
 // ======================================
 const vis6 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -954,8 +972,8 @@ const vis6 = {
   },
 
   "width": "container",
-  "height": 460,
-  "padding": { "top": 6, "bottom": 52, "left": 0, "right": 0 },
+  "height": 420,
+  "padding": { "top": 6, "bottom": 44, "left": 0, "right": 0 },
 
   "data": {
     "url": UK_TOPO_URL,
@@ -988,8 +1006,9 @@ const vis6 = {
 
   "projection": {
     "type": "mercator",
-    "center": [-2.3, 53.9],
-    "scale": 2600
+    /* Key change: LOWER latitude moves the map UP in the frame */
+    "center": [-2.3, 53.35],
+    "scale": 2450
   },
 
   "mark": { "type": "geoshape" },
@@ -1011,8 +1030,8 @@ const vis6 = {
         "labelFontSize": 11,
         "titleColor": "#0f172a",
         "labelColor": "#475569",
-        "gradientLength": 360,
-        "gradientThickness": 16,
+        "gradientLength": 340,
+        "gradientThickness": 14,
         "format": ".1f"
       }
     },
@@ -1037,7 +1056,6 @@ const vis6 = {
     "background": "#ffffff"
   }
 };
-
 
 // ======================================
 // 7) Interactive regional trend (COMPLETE FIX)
@@ -1160,7 +1178,7 @@ const vis7 = {
 };
 
 // ======================================
-// 8) UK nations map (IMPROVED - centered, not oversized)
+// 8) UK nations map (REFINED - slightly better balance)
 // ======================================
 const vis8 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1177,8 +1195,8 @@ const vis8 = {
   },
 
   "width": "container",
-  "height": 480,
-  "padding": { "top": 6, "bottom": 52, "left": 0, "right": 0 },
+  "height": 460,
+  "padding": { "top": 6, "bottom": 44, "left": 0, "right": 0 },
 
   "data": {
     "url": UK_TOPO_URL,
@@ -1211,8 +1229,8 @@ const vis8 = {
 
   "projection": {
     "type": "mercator",
-    "center": [-4.2, 54.8],
-    "scale": 1450
+    "center": [-4.1, 54.9],
+    "scale": 1400
   },
 
   "mark": { "type": "geoshape" },
@@ -1234,8 +1252,8 @@ const vis8 = {
         "labelFontSize": 11,
         "titleColor": "#0f172a",
         "labelColor": "#475569",
-        "gradientLength": 360,
-        "gradientThickness": 16,
+        "gradientLength": 340,
+        "gradientThickness": 14,
         "format": ".1f"
       }
     },
