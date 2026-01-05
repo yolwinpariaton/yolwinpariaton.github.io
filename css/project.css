@@ -85,26 +85,32 @@
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
-  padding: 18px 18px 14px;
+  padding: 18px 18px 18px;
+
+  /* KEY FIX:
+     Do NOT clip Vega’s internal title/legend (they can sit near edges). */
+  overflow: visible;
+
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-  overflow: hidden;
 }
 
-/* Default container height for non-map charts */
+/* Reserve enough vertical space so titles + legends aren’t cramped */
 .vega-container{
   width: 100%;
-  min-height: 420px;
-  display: block;
+  min-height: 520px;          /* maps need more height than line charts */
+  display: flex;              /* center the rendered SVG/canvas block */
+  justify-content: center;
+  align-items: center;
   margin: 0;
+  padding: 6px 0 10px;        /* breathing room for title/legend */
 }
 
-/* Maps: give them a stable height, but not oversized */
-#vis6.vega-container,
-#vis8.vega-container{
-  min-height: 460px;
+/* Optional: if you add class="vega-container vega-map" to maps, this will help */
+.vega-container.vega-map{
+  min-height: 560px;
 }
 
-/* Source / note text */
+/* Source / notes */
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
@@ -116,9 +122,22 @@
   font-style: italic;
 }
 
-/* ===== Vega-Embed hardening ===== */
+/* ===== Vega-Embed hardening + centering ===== */
 .vega-embed{
   width: 100%;
+}
+
+/* Vega-Embed typically creates:
+   <div class="vega-embed">
+     <div>  <-- contains SVG/canvas
+     <div class="vega-actions">...</div>
+   </div>
+   We center ONLY the render container, not the actions menu. */
+.vega-embed > div:not(.vega-actions){
+  width: 100%;
+  display: flex;
+  justify-content: center;   /* horizontal centering */
+  align-items: center;       /* vertical centering inside available height */
 }
 
 .vega-embed,
@@ -128,72 +147,18 @@
   max-width: 100%;
 }
 
+/* Prevent SVG/canvas from behaving like inline elements (causes odd baseline gaps) */
 .vega-embed canvas,
 .vega-embed svg{
   display: block;
 }
+
+/* Make sure the actions (if shown) don’t overlap the title area */
+.vega-actions{
+  margin-top: 8px;
+}
 /* =============================== */
 
-
-/* =========================================================
-   MAP CENTERING (horizontal + vertical)
-   Vega-Embed nesting:
-     #vis6
-       .vega-embed
-         div (inner wrapper)
-           canvas / svg
-   We center the inner wrapper AND the final render node.
-   ========================================================= */
-
-/* Center the whole embed inside the vis container */
-#vis6,
-#vis8{
-  display: flex;
-  align-items: center;        /* vertical centering within chart-frame */
-  justify-content: center;    /* horizontal centering within chart-frame */
-}
-
-/* Make embed behave like a centered block and take available width */
-#vis6 .vega-embed,
-#vis8 .vega-embed{
-  width: 100%;
-  display: flex;
-  align-items: center;        /* vertical */
-  justify-content: center;    /* horizontal */
-}
-
-/* Center the inner Vega wrapper */
-#vis6 .vega-embed > div,
-#vis8 .vega-embed > div{
-  margin-left: auto !important;
-  margin-right: auto !important;
-
-  /* If the canvas is narrower than the container, keep it centered */
-  display: flex;
-  align-items: center;        /* vertical */
-  justify-content: center;    /* horizontal */
-}
-
-/* Center the actual rendered element */
-#vis6 canvas,
-#vis8 canvas,
-#vis6 svg,
-#vis8 svg{
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Optional: prevent the map from feeling "too small" on wide screens */
-@media (min-width: 900px){
-  #vis6 .vega-embed > div,
-  #vis8 .vega-embed > div{
-    max-width: 860px;
-  }
-}
-/* ========================================================= */
-
-
-/* Links section */
 .project-links{
   margin: 50px 0;
   padding: 30px;
