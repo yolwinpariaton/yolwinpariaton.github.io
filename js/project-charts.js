@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (PROFESSIONAL PUBLICATION VERSION)
+// 3) Energy cap (CORRECTED SHADING)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -250,11 +250,11 @@ const vis3 = {
       }
     },
     
-    // Background shading - Crisis peak period
+    // Background shading - Crisis peak period (CORRECTED)
     {
       "data": {
         "values": [
-          {"period_label": "2022 Q3"}, {"period_label": "2022 Q4"}, {"period_label": "2023 Q1"}
+          {"period_label": "2022 Q4"}, {"period_label": "2023 Q1"}, {"period_label": "2023 Q2"}
         ]
       },
       "mark": {
@@ -433,7 +433,7 @@ const vis3 = {
       "data": {
         "values": [
           {"period_label": "2022 Q1", "y": 950, "text": "Pre-crisis", "color": "#0891b2"},
-          {"period_label": "2022 Q4", "y": 950, "text": "Peak", "color": "#f59e0b"}
+          {"period_label": "2023 Q1", "y": 950, "text": "Peak", "color": "#f59e0b"}
         ]
       },
       "mark": {
