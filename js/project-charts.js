@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (COMPLETE - ALL DATA VISIBLE)
+  // 3) Energy cap (PUBLICATION-READY WITH CONTEXT)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -273,6 +273,69 @@
     },
     
     "layer": [
+      // Crisis period shading (2024 Q2 onwards - peaks)
+      {
+        "data": {
+          "values": [
+            {"x1": "2024 Q2", "x2": "2025 Q4", "label": "Crisis Peak Period"}
+          ]
+        },
+        "mark": {
+          "type": "rect",
+          "color": "#fee2e2",
+          "opacity": 0.3
+        },
+        "encoding": {
+          "x": {"field": "x1", "type": "ordinal"},
+          "x2": {"field": "x2"},
+          "y": {"datum": 0},
+          "y2": {"datum": 2200}
+        }
+      },
+      
+      // Pre-crisis baseline shading (showing "normal" range)
+      {
+        "mark": {
+          "type": "rect",
+          "color": "#d1fae5",
+          "opacity": 0.25
+        },
+        "encoding": {
+          "x": {"datum": "2021 Q4"},
+          "x2": {"datum": "2022 Q3"},
+          "y": {"datum": 0},
+          "y2": {"datum": 2200}
+        }
+      },
+      
+      // Reference line at pre-crisis average (~£1,070)
+      {
+        "mark": {
+          "type": "rule",
+          "strokeDash": [6, 4],
+          "color": "#10b981",
+          "strokeWidth": 2,
+          "opacity": 0.6
+        },
+        "encoding": {
+          "y": {"datum": 1070}
+        }
+      },
+      
+      // Reference line at £1,500 (mid-point marker)
+      {
+        "mark": {
+          "type": "rule",
+          "strokeDash": [3, 3],
+          "color": "#94a3b8",
+          "strokeWidth": 1.5,
+          "opacity": 0.4
+        },
+        "encoding": {
+          "y": {"datum": 1500}
+        }
+      },
+      
       // Connecting line
       {
         "mark": {
@@ -348,6 +411,44 @@
             "type": "quantitative",
             "format": ",.0f"
           }
+        }
+      },
+      
+      // "Pre-crisis" label
+      {
+        "data": {
+          "values": [{"x": "2022 Q1", "y": 2150, "text": "Pre-crisis"}]
+        },
+        "mark": {
+          "type": "text",
+          "fontSize": 11,
+          "fontWeight": "600",
+          "color": "#10b981",
+          "align": "center"
+        },
+        "encoding": {
+          "x": {"field": "x", "type": "ordinal"},
+          "y": {"field": "y", "type": "quantitative"},
+          "text": {"field": "text"}
+        }
+      },
+      
+      // "Crisis Peak" label
+      {
+        "data": {
+          "values": [{"x": "2025 Q1", "y": 2150, "text": "Crisis Peak Period"}]
+        },
+        "mark": {
+          "type": "text",
+          "fontSize": 11,
+          "fontWeight": "600",
+          "color": "#dc2626",
+          "align": "center"
+        },
+        "encoding": {
+          "x": {"field": "x", "type": "ordinal"},
+          "y": {"field": "y", "type": "quantitative"},
+          "text": {"field": "text"}
         }
       },
       
