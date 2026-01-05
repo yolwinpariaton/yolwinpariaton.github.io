@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (SIMPLIFIED - WORKING VERSION)
+// 3) Energy cap (FIXED - All types explicit)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -232,47 +232,79 @@ const vis3 = {
     "x": {
       "field": "period_label",
       "type": "ordinal",
-      "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+      "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+      "axis": {
+        "labelAngle": -45,
+        "labelFontSize": 13,
+        "labelColor": "#000000",
+        "labelPadding": 12,
+        "domainColor": "#000000",
+        "tickColor": "#000000",
+        "titleFontSize": 14,
+        "titleColor": "#000000",
+        "titlePadding": 25,
+        "titleFontWeight": "bold",
+        "labelAlign": "right",
+        "labelBaseline": "middle",
+        "domain": true,
+        "ticks": true,
+        "domainWidth": 3,
+        "tickWidth": 2.5,
+        "tickSize": 10,
+        "title": "Quarter"
+      }
     },
     "y": {
       "field": "typical_annual_bill_gbp",
       "type": "quantitative",
-      "scale": {"domain": [0, 2300]}
+      "scale": {"domain": [0, 2300]},
+      "axis": {
+        "format": ",.0f",
+        "labelFontSize": 12,
+        "titleFontSize": 14,
+        "titleColor": "#1e293b",
+        "labelColor": "#334155",
+        "grid": true,
+        "gridOpacity": 0.15,
+        "gridColor": "#cbd5e1",
+        "domainColor": "#334155",
+        "tickColor": "#334155",
+        "domainWidth": 2,
+        "title": "Annual Bill (£)"
+      }
     }
   },
   
   "layer": [
-    // Pre-crisis shading
+    // Pre-crisis shading - using rect instead of area
     {
       "data": {
         "values": [
-          {"period_label": "2021 Q4", "y": 2300},
-          {"period_label": "2022 Q1", "y": 2300},
-          {"period_label": "2022 Q2", "y": 2300}
+          {"x_start": 0, "x_end": 2.5, "y_start": 0, "y_end": 2300}
         ]
       },
-      "mark": {"type": "area", "color": "#dbeafe", "opacity": 0.5, "line": false},
+      "mark": {"type": "rect", "color": "#dbeafe", "opacity": 0.5},
       "encoding": {
-        "y": {"datum": 0, "type": "quantitative"},
-        "y2": {"field": "y", "type": "quantitative"}
+        "x": {"field": "x_start", "type": "quantitative", "axis": null},
+        "x2": {"field": "x_end"},
+        "y": {"field": "y_start", "type": "quantitative", "axis": null},
+        "y2": {"field": "y_end"}
       }
     },
     
-    // Crisis peak shading
+    // Crisis peak shading - using rect
     {
       "data": {
         "values": [
-          {"period_label": "2022 Q2", "y": 2300},
-          {"period_label": "2022 Q3", "y": 2300},
-          {"period_label": "2022 Q4", "y": 2300},
-          {"period_label": "2023 Q1", "y": 2300},
-          {"period_label": "2023 Q2", "y": 2300}
+          {"x_start": 2.5, "x_end": 6.5, "y_start": 0, "y_end": 2300}
         ]
       },
-      "mark": {"type": "area", "color": "#fef3c7", "opacity": 0.6, "line": false},
+      "mark": {"type": "rect", "color": "#fef3c7", "opacity": 0.6},
       "encoding": {
-        "y": {"datum": 0, "type": "quantitative"},
-        "y2": {"field": "y", "type": "quantitative"}
+        "x": {"field": "x_start", "type": "quantitative", "axis": null},
+        "x2": {"field": "x_end"},
+        "y": {"field": "y_start", "type": "quantitative", "axis": null},
+        "y2": {"field": "y_end"}
       }
     },
     
@@ -364,45 +396,11 @@ const vis3 = {
     }
   ],
   
-  "resolve": {
-    "scale": {"y": "shared", "x": "shared"}
-  },
-  
   "config": {
     "view": {"stroke": null},
-    "background": "#ffffff",
-    "axis": {
-      "labelFontSize": 12,
-      "titleFontSize": 14,
-      "domainWidth": 2,
-      "tickWidth": 2
-    },
-    "axisX": {
-      "labelAngle": -45,
-      "labelAlign": "right",
-      "labelBaseline": "middle",
-      "labelColor": "#000000",
-      "domainColor": "#000000",
-      "tickColor": "#000000",
-      "titleColor": "#000000",
-      "labelPadding": 10,
-      "titlePadding": 20,
-      "title": "Quarter"
-    },
-    "axisY": {
-      "title": "Annual Bill (£)",
-      "format": ",.0f",
-      "grid": true,
-      "gridOpacity": 0.15,
-      "gridColor": "#cbd5e1",
-      "labelColor": "#334155",
-      "domainColor": "#334155",
-      "tickColor": "#334155",
-      "titleColor": "#1e293b"
-    }
+    "background": "#ffffff"
   }
 };
-
 // ======================================
 // 4) Weekly fuel prices (COMPLETE FIX - Professional with context)
 // ======================================
