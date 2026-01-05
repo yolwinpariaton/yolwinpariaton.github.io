@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (WORKING VERSION)
+// 3) Energy cap (WITH SHADING AND VISIBLE X-AXIS)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -236,21 +236,22 @@ const vis3 = {
       "scale": {"domain": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]},
       "axis": {
         "labelAngle": -45,
-        "labelFontSize": 11,
-        "labelColor": "#334155",
-        "labelPadding": 10,
-        "domainColor": "#334155",
-        "tickColor": "#334155",
-        "titleFontSize": 13,
+        "labelFontSize": 12,
+        "labelColor": "#1e293b",
+        "labelPadding": 12,
+        "domainColor": "#1e293b",
+        "tickColor": "#1e293b",
+        "titleFontSize": 14,
         "titleColor": "#1e293b",
         "titlePadding": 20,
+        "titleFontWeight": "bold",
         "labelAlign": "right",
         "labelBaseline": "middle",
         "domain": true,
         "ticks": true,
-        "domainWidth": 2,
-        "tickWidth": 1.5,
-        "tickSize": 6,
+        "domainWidth": 2.5,
+        "tickWidth": 2,
+        "tickSize": 8,
         "title": "Quarter"
       }
     },
@@ -277,7 +278,7 @@ const vis3 = {
   },
   
   "layer": [
-    // Pre-crisis shading
+    // Pre-crisis shading (blue)
     {
       "data": {
         "values": [
@@ -286,14 +287,14 @@ const vis3 = {
           {"period_label": "2022 Q2", "y": 2300}
         ]
       },
-      "mark": {"type": "area", "color": "#e0f2fe", "opacity": 0.4, "line": false},
+      "mark": {"type": "area", "color": "#dbeafe", "opacity": 0.5, "line": false},
       "encoding": {
         "y": {"datum": 0},
         "y2": {"field": "y"}
       }
     },
     
-    // Crisis peak shading
+    // Crisis peak shading (amber)
     {
       "data": {
         "values": [
@@ -304,7 +305,7 @@ const vis3 = {
           {"period_label": "2023 Q2", "y": 2300}
         ]
       },
-      "mark": {"type": "area", "color": "#fef3c7", "opacity": 0.5, "line": false},
+      "mark": {"type": "area", "color": "#fef3c7", "opacity": 0.6, "line": false},
       "encoding": {
         "y": {"datum": 0},
         "y2": {"field": "y"}
@@ -376,8 +377,8 @@ const vis3 = {
     
     // Pre-crisis label
     {
-      "data": {"values": [{"period_label": "2022 Q1", "y": 200, "text": "Pre-crisis Period"}]},
-      "mark": {"type": "text", "fontSize": 11, "fontWeight": "600", "color": "#0369a1", "align": "center"},
+      "data": {"values": [{"period_label": "2022 Q1", "y": 150, "text": "Pre-crisis Period"}]},
+      "mark": {"type": "text", "fontSize": 12, "fontWeight": "600", "color": "#0369a1", "align": "center"},
       "encoding": {
         "y": {"field": "y"},
         "text": {"field": "text"}
@@ -386,8 +387,8 @@ const vis3 = {
     
     // Crisis label
     {
-      "data": {"values": [{"period_label": "2022 Q4", "y": 200, "text": "Crisis Peak Period"}]},
-      "mark": {"type": "text", "fontSize": 11, "fontWeight": "600", "color": "#b45309", "align": "center"},
+      "data": {"values": [{"period_label": "2022 Q4", "y": 150, "text": "Crisis Peak Period"}]},
+      "mark": {"type": "text", "fontSize": 12, "fontWeight": "600", "color": "#d97706", "align": "center"},
       "encoding": {
         "y": {"field": "y"},
         "text": {"field": "text"}
@@ -798,7 +799,7 @@ const vis5 = {
 };
 
 // ======================================
-// 6) England regional map (CENTERED + CLEAN STROKES)
+// 6) England regional map (FINAL CENTERING TUNE)
 // ======================================
 const vis6 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -815,7 +816,6 @@ const vis6 = {
   },
 
   "width": "container",
-  /* Less height = less dead white space above */
   "height": 380,
   "padding": { "top": 6, "bottom": 44, "left": 0, "right": 0 },
 
@@ -850,19 +850,18 @@ const vis6 = {
 
   "projection": {
     "type": "mercator",
-    /* Fix centering:
-       - move LEFT  => center lon less negative (east)  -2.30 -> -2.05
-       - move UP    => center lat lower (south)         53.35 -> 52.90
-    */
-    "center": [-2.05, 52.90],
 
-    /* Slightly larger to fill the frame better */
+    /* Centering fixes (based on your screenshot):
+       - Shift LEFT:  -2.05 -> -2.55
+       - Shift UP:    52.90 -> 52.75
+    */
+    "center": [-2.55, 52.75],
+
     "scale": 2850
   },
 
   "mark": {
     "type": "geoshape",
-    /* Remove “spiky” edges */
     "strokeJoin": "round",
     "strokeMiterLimit": 2
   },
@@ -910,7 +909,6 @@ const vis6 = {
     "background": "#ffffff"
   }
 };
-
 
 // ======================================
 // 7) Interactive regional trend (COMPLETE FIX)
@@ -1033,7 +1031,7 @@ const vis7 = {
 };
 
 // ======================================
-// 8) UK nations map (CENTERED + CLEAN STROKES)
+// 8) UK nations map (FINAL CENTERING TUNE)
 // ======================================
 const vis8 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1084,13 +1082,13 @@ const vis8 = {
 
   "projection": {
     "type": "mercator",
-    /* Fix centering:
-       - move LEFT  => center lon less negative (east)  -4.10 -> -3.95
-       - move UP    => center lat lower (south)         54.90 -> 54.35
-    */
-    "center": [-3.95, 54.35],
 
-    /* Slightly larger to occupy the frame better */
+    /* Centering fixes (based on your screenshot):
+       - Shift LEFT:  -3.95 -> -4.35
+       - Shift UP:    54.35 -> 54.15
+    */
+    "center": [-4.35, 54.15],
+
     "scale": 1525
   },
 
@@ -1143,7 +1141,6 @@ const vis8 = {
     "background": "#ffffff"
   }
 };
-
 
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
