@@ -866,7 +866,7 @@ const vis5 = {
 };
 
 // ======================================
-// 6) England regional map (FINAL CENTERING TUNE)
+// 6) England regional map (AUTO-FIT => centered in canvas)
 // ======================================
 const vis6 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -903,29 +903,18 @@ const vis6 = {
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "rent_yoy" }
   ],
 
+  /* KEY FIX: let Vega fit + center the geometry to the view */
+  "projection": {
+    "type": "mercator",
+    "fit": "data"
+  },
+
   "params": [
     {
       "name": "hover",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout",
-        "fields": ["properties.areacd"]
-      }
+      "select": { "type": "point", "on": "mouseover", "clear": "mouseout" }
     }
   ],
-
-  "projection": {
-    "type": "mercator",
-
-    /* Centering fixes (based on your screenshot):
-       - Shift LEFT:  -2.05 -> -2.55
-       - Shift UP:    52.90 -> 52.75
-    */
-    "center": [-2.55, 52.75],
-
-    "scale": 2850
-  },
 
   "mark": {
     "type": "geoshape",
@@ -1098,7 +1087,7 @@ const vis7 = {
 };
 
 // ======================================
-// 8) UK nations map (FINAL CENTERING TUNE)
+// 8) UK nations map (AUTO-FIT => centered in canvas)
 // ======================================
 const vis8 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1135,29 +1124,18 @@ const vis8 = {
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "rent_yoy" }
   ],
 
+  /* KEY FIX: let Vega fit + center the geometry to the view */
+  "projection": {
+    "type": "mercator",
+    "fit": "data"
+  },
+
   "params": [
     {
       "name": "hover",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout",
-        "fields": ["properties.areacd"]
-      }
+      "select": { "type": "point", "on": "mouseover", "clear": "mouseout" }
     }
   ],
-
-  "projection": {
-    "type": "mercator",
-
-    /* Centering fixes (based on your screenshot):
-       - Shift LEFT:  -3.95 -> -4.35
-       - Shift UP:    54.35 -> 54.15
-    */
-    "center": [-4.35, 54.15],
-
-    "scale": 1525
-  },
 
   "mark": {
     "type": "geoshape",
