@@ -309,7 +309,7 @@
   };
 
 // --------------------------------------
-  // 4) Weekly fuel prices - COMPLETE FIXED VERSION
+  // 4) Weekly fuel prices - FINAL CORRECTED
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -338,33 +338,25 @@
     ],
 
     layer: [
-      // BACKGROUND: Crisis period highlight
+      // BACKGROUND: Crisis period highlight - FIXED
       {
-        data: {
-          values: [
-            { x: "2022-03-01", x2: "2022-08-01", y: 250 }
-          ]
-        },
         mark: { type: "rect", color: "#fef3c7", opacity: 0.45 },
         encoding: {
-          x: { field: "x", type: "temporal" },
-          x2: { field: "x2", type: "temporal" },
-          y: { field: "y", type: "quantitative" }
+          x: { datum: "2022-03-01", type: "temporal" },
+          x2: { datum: "2022-08-01", type: "temporal" }
         }
       },
 
       // REFERENCE: Pre-pandemic baseline at 125p
       {
-        data: { values: [{ y: 125 }] },
         mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
         encoding: {
-          y: { field: "y", type: "quantitative" }
+          y: { datum: 125 }
         }
       },
 
       // ANNOTATION: Baseline label
       {
-        data: { values: [{ x: "2019-02-01", y: 125, label: "Pre-pandemic baseline (~125p)" }] },
         mark: { 
           type: "text", 
           align: "left", 
@@ -372,29 +364,12 @@
           dy: -8, 
           fontSize: 10.5, 
           color: "#64748b",
-          fontWeight: 600
+          fontWeight: 600,
+          text: "Pre-pandemic baseline (~125p)"
         },
         encoding: {
-          x: { field: "x", type: "temporal" },
-          y: { field: "y", type: "quantitative" },
-          text: { field: "label", type: "nominal" }
-        }
-      },
-
-      // ANNOTATION: Crisis period label
-      {
-        data: { values: [{ x: "2022-05-15", y: 198, label: "Russia-Ukraine Crisis" }] },
-        mark: { 
-          type: "text", 
-          align: "center",
-          fontSize: 11.5, 
-          color: "#92400e",
-          fontWeight: 700
-        },
-        encoding: {
-          x: { field: "x", type: "temporal" },
-          y: { field: "y", type: "quantitative" },
-          text: { field: "label", type: "nominal" }
+          x: { datum: "2019-02-01", type: "temporal" },
+          y: { datum: 125, type: "quantitative" }
         }
       },
 
@@ -451,6 +426,35 @@
               labelLimit: 200
             }
           }
+        }
+      },
+
+      // ANNOTATION: Crisis period label - POSITIONED DYNAMICALLY
+      {
+        transform: [
+          {
+            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
+            frame: [-2, 2],
+            sort: [{ field: "d", order: "ascending" }],
+            groupby: ["fuel"]
+          },
+          {
+            aggregate: [{ op: "max", field: "ppl_ma", as: "max_val" }]
+          },
+          { calculate: "datum.max_val + 5", as: "label_y" },
+          { calculate: "'2022-05-15'", as: "label_x" }
+        ],
+        mark: { 
+          type: "text", 
+          align: "center",
+          fontSize: 11.5, 
+          color: "#92400e",
+          fontWeight: 700,
+          text: "Russia-Ukraine Crisis"
+        },
+        encoding: {
+          x: { field: "label_x", type: "temporal" },
+          y: { field: "label_y", type: "quantitative" }
         }
       },
 
