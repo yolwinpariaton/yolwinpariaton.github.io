@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (WITH SHADING AND VISIBLE X-AXIS)
+// 3) Energy cap (FORCING X-AXIS TO SHOW)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -226,56 +226,7 @@ const vis3 = {
   },
   "width": "container",
   "height": 550,
-  "padding": {"bottom": 90, "top": 20, "left": 10, "right": 10},
-  
-  "encoding": {
-    "x": {
-      "field": "period_label",
-      "type": "ordinal",
-      "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
-      "scale": {"domain": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]},
-      "axis": {
-        "labelAngle": -45,
-        "labelFontSize": 12,
-        "labelColor": "#1e293b",
-        "labelPadding": 12,
-        "domainColor": "#1e293b",
-        "tickColor": "#1e293b",
-        "titleFontSize": 14,
-        "titleColor": "#1e293b",
-        "titlePadding": 20,
-        "titleFontWeight": "bold",
-        "labelAlign": "right",
-        "labelBaseline": "middle",
-        "domain": true,
-        "ticks": true,
-        "domainWidth": 2.5,
-        "tickWidth": 2,
-        "tickSize": 8,
-        "title": "Quarter"
-      }
-    },
-    "y": {
-      "field": "typical_annual_bill_gbp",
-      "type": "quantitative",
-      "scale": {"domain": [0, 2300]},
-      "axis": {
-        "format": ",.0f",
-        "labelFontSize": 12,
-        "titleFontSize": 14,
-        "titleFontWeight": "normal",
-        "titleColor": "#1e293b",
-        "labelColor": "#334155",
-        "grid": true,
-        "gridOpacity": 0.15,
-        "gridColor": "#cbd5e1",
-        "domainColor": "#334155",
-        "tickColor": "#334155",
-        "domainWidth": 2,
-        "title": "Annual Bill (£)"
-      }
-    }
-  },
+  "padding": {"bottom": 100, "top": 20, "left": 10, "right": 10},
   
   "layer": [
     // Pre-crisis shading (blue)
@@ -289,7 +240,13 @@ const vis3 = {
       },
       "mark": {"type": "area", "color": "#dbeafe", "opacity": 0.5, "line": false},
       "encoding": {
-        "y": {"datum": 0},
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
+        },
+        "y": {"datum": 0, "type": "quantitative"},
         "y2": {"field": "y"}
       }
     },
@@ -307,7 +264,13 @@ const vis3 = {
       },
       "mark": {"type": "area", "color": "#fef3c7", "opacity": 0.6, "line": false},
       "encoding": {
-        "y": {"datum": 0},
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
+        },
+        "y": {"datum": 0, "type": "quantitative"},
         "y2": {"field": "y"}
       }
     },
@@ -322,19 +285,80 @@ const vis3 = {
         "opacity": 0.6
       },
       "encoding": {
-        "y": {"datum": 1070}
+        "y": {"datum": 1070, "type": "quantitative"}
       }
     },
     
     // Connecting line
     {
-      "mark": {"type": "line", "strokeWidth": 3, "color": "#64748b", "opacity": 0.7}
+      "mark": {"type": "line", "strokeWidth": 3, "color": "#64748b", "opacity": 0.7},
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
+        },
+        "y": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative",
+          "scale": {"domain": [0, 2300]},
+          "axis": null
+        }
+      }
     },
     
-    // Circles
+    // Circles WITH VISIBLE AXIS
     {
       "mark": {"type": "circle", "size": 450, "stroke": "white", "strokeWidth": 3},
       "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "title": "Quarter",
+          "axis": {
+            "labelAngle": -45,
+            "labelFontSize": 13,
+            "labelColor": "#000000",
+            "labelPadding": 15,
+            "domainColor": "#000000",
+            "tickColor": "#000000",
+            "titleFontSize": 14,
+            "titleColor": "#000000",
+            "titlePadding": 25,
+            "titleFontWeight": "bold",
+            "labelAlign": "right",
+            "labelBaseline": "middle",
+            "domain": true,
+            "ticks": true,
+            "domainWidth": 3,
+            "tickWidth": 2.5,
+            "tickSize": 10,
+            "labelLimit": 100,
+            "orient": "bottom"
+          }
+        },
+        "y": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative",
+          "scale": {"domain": [0, 2300]},
+          "title": "Annual Bill (£)",
+          "axis": {
+            "format": ",.0f",
+            "labelFontSize": 12,
+            "titleFontSize": 14,
+            "titleFontWeight": "normal",
+            "titleColor": "#1e293b",
+            "labelColor": "#334155",
+            "grid": true,
+            "gridOpacity": 0.15,
+            "gridColor": "#cbd5e1",
+            "domainColor": "#334155",
+            "tickColor": "#334155",
+            "domainWidth": 2
+          }
+        },
         "color": {
           "field": "typical_annual_bill_gbp",
           "type": "quantitative",
@@ -371,6 +395,17 @@ const vis3 = {
       ],
       "mark": {"type": "text", "dy": -26, "fontSize": 13, "fontWeight": "bold", "color": "#1e293b"},
       "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
+        },
+        "y": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative",
+          "axis": null
+        },
         "text": {"field": "typical_annual_bill_gbp", "type": "quantitative", "format": ",.0f"}
       }
     },
@@ -380,7 +415,13 @@ const vis3 = {
       "data": {"values": [{"period_label": "2022 Q1", "y": 150, "text": "Pre-crisis Period"}]},
       "mark": {"type": "text", "fontSize": 12, "fontWeight": "600", "color": "#0369a1", "align": "center"},
       "encoding": {
-        "y": {"field": "y"},
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
+        },
+        "y": {"field": "y", "type": "quantitative"},
         "text": {"field": "text"}
       }
     },
@@ -390,7 +431,13 @@ const vis3 = {
       "data": {"values": [{"period_label": "2022 Q4", "y": 150, "text": "Crisis Peak Period"}]},
       "mark": {"type": "text", "fontSize": 12, "fontWeight": "600", "color": "#d97706", "align": "center"},
       "encoding": {
-        "y": {"field": "y"},
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
+        },
+        "y": {"field": "y", "type": "quantitative"},
         "text": {"field": "text"}
       }
     },
@@ -398,17 +445,37 @@ const vis3 = {
     // Annotations
     {
       "transform": [{"filter": "datum.typical_annual_bill_gbp === 950"}],
-      "mark": {"type": "text", "dy": 32, "fontSize": 11, "fontStyle": "italic", "color": "#0369a1", "text": "Pre-crisis low"}
+      "mark": {"type": "text", "dy": 32, "fontSize": 11, "fontStyle": "italic", "color": "#0369a1", "text": "Pre-crisis low"},
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+        },
+        "y": {"field": "typical_annual_bill_gbp", "type": "quantitative"}
+      }
     },
     {
       "transform": [{"filter": "datum.typical_annual_bill_gbp === 2070"}],
-      "mark": {"type": "text", "dy": 42, "fontSize": 11, "fontStyle": "italic", "color": "#dc2626", "text": "+118%"}
+      "mark": {"type": "text", "dy": 42, "fontSize": 11, "fontStyle": "italic", "color": "#dc2626", "text": "+118%"},
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+        },
+        "y": {"field": "typical_annual_bill_gbp", "type": "quantitative"}
+      }
     }
   ],
   
   "config": {
     "view": {"stroke": null},
-    "background": "#ffffff"
+    "background": "#ffffff",
+    "axis": {
+      "labelFont": "sans-serif",
+      "titleFont": "sans-serif"
+    }
   }
 };
 
