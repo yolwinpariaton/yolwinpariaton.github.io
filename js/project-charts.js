@@ -853,31 +853,31 @@ const vis5 = {
 };
 
 // ======================================
-// 6) England regional map (COMPLETE FIX - Centered, professional)
+// 6) England regional map (IMPROVED - centered, publication-ready)
 // ======================================
 const vis6 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  
+
   "title": {
     "text": "Regional Rent Inflation Across England",
-    "subtitle": "Latest year-on-year percentage change by English region | Darker colors indicate higher inflation rates",
+    "subtitle": "Latest year-on-year percentage change by English region | Darker colours indicate higher inflation",
     "fontSize": 20,
     "subtitleFontSize": 12,
     "anchor": "start",
     "color": "#0f172a",
     "subtitleColor": "#64748b",
-    "offset": 20
+    "offset": 14
   },
-  
+
   "width": "container",
   "height": 520,
-  "padding": {"top": 10, "bottom": 60},
-  
+  "padding": { "top": 6, "bottom": 52, "left": 0, "right": 0 },
+
   "data": {
     "url": UK_TOPO_URL,
     "format": { "type": "topojson", "feature": "rgn" }
   },
-  
+
   "transform": [
     {
       "lookup": "properties.areacd",
@@ -886,86 +886,70 @@ const vis6 = {
         "key": "areacd",
         "fields": ["areanm", "rent_inflation_yoy_pct"]
       }
+    },
+    { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "rent_yoy" }
+  ],
+
+  "params": [
+    {
+      "name": "hover",
+      "select": { "type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["properties.areacd"] }
     }
   ],
-  
-  "projection": { 
+
+  "projection": {
     "type": "mercator",
-    "center": [-2, 53],
-    "scale": 2400
+    // Slightly north and tighter than before to reduce dead space
+    "center": [-2.3, 54.35],
+    "scale": 3200
   },
-  
-  "layer": [
-    // Main map
-    {
-      "mark": { 
-        "type": "geoshape", 
-        "stroke": "white", 
-        "strokeWidth": 2
+
+  "mark": { "type": "geoshape" },
+
+  "encoding": {
+    "color": {
+      "field": "rent_yoy",
+      "type": "quantitative",
+      "title": "Rent inflation (% y/y)",
+      "scale": {
+        "domain": [3, 10],
+        "scheme": { "name": "oranges", "extent": [0.25, 0.98] },
+        "unknown": "#e5e7eb"
       },
-      "encoding": {
-        "color": {
-          "field": "rent_inflation_yoy_pct",
-          "type": "quantitative",
-          "title": "Rent Inflation (% y/y)",
-          "scale": {
-            "scheme": "oranges",
-            "domain": [3, 10]
-          },
-          "legend": { 
-            "orient": "bottom",
-            "direction": "horizontal",
-            "titleFontSize": 12,
-            "labelFontSize": 11,
-            "titleColor": "#0f172a",
-            "labelColor": "#475569",
-            "gradientLength": 320,
-            "gradientThickness": 16,
-            "format": ".1f"
-          }
-        },
-        "tooltip": [
-          { "field": "areanm", "type": "nominal", "title": "Region" },
-          { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
-        ]
+      "legend": {
+        "orient": "bottom",
+        "direction": "horizontal",
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "titleColor": "#0f172a",
+        "labelColor": "#475569",
+        "gradientLength": 360,
+        "gradientThickness": 16,
+        "format": ".1f"
       }
     },
-    
-    // Region labels
-    {
-      "transform": [
-        {
-          "calculate": "if(datum.areanm === 'London', 'LON', if(datum.areanm === 'South East', 'SE', if(datum.areanm === 'North West', 'NW', '')))",
-          "as": "label"
-        },
-        { "filter": "datum.label !== ''" }
-      ],
-      "mark": {
-        "type": "text",
-        "fontSize": 11,
-        "fontWeight": "bold",
-        "color": "#ffffff",
-        "opacity": 0.9
-      },
-      "encoding": {
-        "longitude": {
-          "field": "properties.long",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "properties.lat",
-          "type": "quantitative"
-        },
-        "text": {"field": "label", "type": "nominal"}
-      }
-    }
-  ],
-  
+
+    "stroke": {
+      "condition": { "param": "hover", "value": "#0f172a" },
+      "value": "#ffffff"
+    },
+    "strokeWidth": {
+      "condition": { "param": "hover", "value": 3 },
+      "value": 2
+    },
+
+    "tooltip": [
+      { "field": "areanm", "type": "nominal", "title": "Region" },
+      { "field": "rent_yoy", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
+    ]
+  },
+
   "config": {
     "view": { "stroke": null },
     "background": "#ffffff"
   }
 };
+
 
 // ======================================
 // 7) Interactive regional trend (COMPLETE FIX)
@@ -1088,31 +1072,31 @@ const vis7 = {
 };
 
 // ======================================
-// 8) UK nations map (COMPLETE FIX - Centered, professional)
+// 8) UK nations map (IMPROVED - centered, publication-ready)
 // ======================================
 const vis8 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  
+
   "title": {
     "text": "Rent Inflation Across UK Nations",
-    "subtitle": "Latest year-on-year percentage change | Darker blues indicate higher inflation rates",
+    "subtitle": "Latest year-on-year percentage change | Darker blues indicate higher inflation",
     "fontSize": 20,
     "subtitleFontSize": 12,
     "anchor": "start",
     "color": "#0f172a",
     "subtitleColor": "#64748b",
-    "offset": 20
+    "offset": 14
   },
-  
+
   "width": "container",
   "height": 560,
-  "padding": {"top": 10, "bottom": 60},
-  
+  "padding": { "top": 6, "bottom": 52, "left": 0, "right": 0 },
+
   "data": {
     "url": UK_TOPO_URL,
     "format": { "type": "topojson", "feature": "ctry" }
   },
-  
+
   "transform": [
     {
       "lookup": "properties.areacd",
@@ -1121,85 +1105,70 @@ const vis8 = {
         "key": "areacd",
         "fields": ["areanm", "rent_inflation_yoy_pct"]
       }
+    },
+    { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "rent_yoy" }
+  ],
+
+  "params": [
+    {
+      "name": "hover",
+      "select": { "type": "point", "on": "mouseover", "clear": "mouseout", "fields": ["properties.areacd"] }
     }
   ],
-  
-  "projection": { 
+
+  "projection": {
     "type": "mercator",
-    "center": [-3, 54.5],
-    "scale": 1200
+    // Shift slightly north-west and zoom in to fill the frame
+    "center": [-4.2, 55.4],
+    "scale": 1750
   },
-  
-  "layer": [
-    // Main map
-    {
-      "mark": { 
-        "type": "geoshape", 
-        "stroke": "white", 
-        "strokeWidth": 2.5
+
+  "mark": { "type": "geoshape" },
+
+  "encoding": {
+    "color": {
+      "field": "rent_yoy",
+      "type": "quantitative",
+      "title": "Rent inflation (% y/y)",
+      "scale": {
+        "domain": [3, 9],
+        "scheme": { "name": "blues", "extent": [0.25, 0.98] },
+        "unknown": "#e5e7eb"
       },
-      "encoding": {
-        "color": {
-          "field": "rent_inflation_yoy_pct",
-          "type": "quantitative",
-          "title": "Rent Inflation (% y/y)",
-          "scale": {
-            "scheme": "blues",
-            "domain": [3, 9]
-          },
-          "legend": { 
-            "orient": "bottom",
-            "direction": "horizontal",
-            "titleFontSize": 12,
-            "labelFontSize": 11,
-            "titleColor": "#0f172a",
-            "labelColor": "#475569",
-            "gradientLength": 320,
-            "gradientThickness": 16,
-            "format": ".1f"
-          }
-        },
-        "tooltip": [
-          { "field": "areanm", "type": "nominal", "title": "Country" },
-          { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
-        ]
+      "legend": {
+        "orient": "bottom",
+        "direction": "horizontal",
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "titleColor": "#0f172a",
+        "labelColor": "#475569",
+        "gradientLength": 360,
+        "gradientThickness": 16,
+        "format": ".1f"
       }
     },
-    
-    // Country labels
-    {
-      "transform": [
-        {
-          "calculate": "if(datum.areanm === 'England', 'ENG', if(datum.areanm === 'Scotland', 'SCO', if(datum.areanm === 'Wales', 'WAL', if(datum.areanm === 'Northern Ireland', 'NI', ''))))",
-          "as": "label"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "fontSize": 12,
-        "fontWeight": "bold",
-        "color": "#ffffff",
-        "opacity": 0.9
-      },
-      "encoding": {
-        "longitude": {
-          "field": "properties.long",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "properties.lat",
-          "type": "quantitative"
-        },
-        "text": {"field": "label", "type": "nominal"}
-      }
-    }
-  ],
-  
+
+    "stroke": {
+      "condition": { "param": "hover", "value": "#0f172a" },
+      "value": "#ffffff"
+    },
+    "strokeWidth": {
+      "condition": { "param": "hover", "value": 3 },
+      "value": 2.5
+    },
+
+    "tooltip": [
+      { "field": "areanm", "type": "nominal", "title": "Nation" },
+      { "field": "rent_yoy", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
+    ]
+  },
+
   "config": {
     "view": { "stroke": null },
     "background": "#ffffff"
   }
 };
+
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
