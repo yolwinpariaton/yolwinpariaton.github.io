@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (FIXED - All types explicit)
+// 3) Energy cap (PROFESSIONAL VERSION)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -225,8 +225,8 @@ const vis3 = {
     "url": "data/vis3_energy_cap.json"
   },
   "width": "container",
-  "height": 550,
-  "padding": {"bottom": 100, "top": 20, "left": 10, "right": 10},
+  "height": 500,
+  "padding": {"bottom": 80, "top": 20, "left": 10, "right": 10},
   
   "encoding": {
     "x": {
@@ -235,40 +235,40 @@ const vis3 = {
       "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
       "axis": {
         "labelAngle": -45,
-        "labelFontSize": 13,
-        "labelColor": "#000000",
-        "labelPadding": 12,
-        "domainColor": "#000000",
-        "tickColor": "#000000",
-        "titleFontSize": 14,
-        "titleColor": "#000000",
-        "titlePadding": 25,
-        "titleFontWeight": "bold",
+        "labelFontSize": 11,
+        "labelColor": "#1e293b",
+        "labelPadding": 10,
+        "domainColor": "#1e293b",
+        "tickColor": "#1e293b",
+        "titleFontSize": 13,
+        "titleColor": "#1e293b",
+        "titlePadding": 18,
+        "titleFontWeight": "600",
         "labelAlign": "right",
         "labelBaseline": "middle",
         "domain": true,
         "ticks": true,
-        "domainWidth": 3,
-        "tickWidth": 2.5,
-        "tickSize": 10,
+        "domainWidth": 2,
+        "tickWidth": 1.5,
+        "tickSize": 6,
         "title": "Quarter"
       }
     },
     "y": {
       "field": "typical_annual_bill_gbp",
       "type": "quantitative",
-      "scale": {"domain": [0, 2300]},
+      "scale": {"domain": [800, 2150]},
       "axis": {
         "format": ",.0f",
-        "labelFontSize": 12,
-        "titleFontSize": 14,
+        "labelFontSize": 11,
+        "titleFontSize": 13,
         "titleColor": "#1e293b",
-        "labelColor": "#334155",
+        "labelColor": "#475569",
         "grid": true,
-        "gridOpacity": 0.15,
+        "gridOpacity": 0.1,
         "gridColor": "#cbd5e1",
-        "domainColor": "#334155",
-        "tickColor": "#334155",
+        "domainColor": "#1e293b",
+        "tickColor": "#1e293b",
         "domainWidth": 2,
         "title": "Annual Bill (£)"
       }
@@ -276,14 +276,12 @@ const vis3 = {
   },
   
   "layer": [
-    // Pre-crisis shading - using rect instead of area
+    // Pre-crisis shading (positions 0-2: covers 2021Q4, 2022Q1, 2022Q2)
     {
       "data": {
-        "values": [
-          {"x_start": 0, "x_end": 2.5, "y_start": 0, "y_end": 2300}
-        ]
+        "values": [{"x_start": -0.5, "x_end": 2, "y_start": 800, "y_end": 2150}]
       },
-      "mark": {"type": "rect", "color": "#dbeafe", "opacity": 0.5},
+      "mark": {"type": "rect", "color": "#e0f2fe", "opacity": 0.4},
       "encoding": {
         "x": {"field": "x_start", "type": "quantitative", "axis": null},
         "x2": {"field": "x_end"},
@@ -292,14 +290,12 @@ const vis3 = {
       }
     },
     
-    // Crisis peak shading - using rect
+    // Crisis peak shading (positions 5-8: covers 2022Q4, 2023Q1, 2023Q2, 2023Q3)
     {
       "data": {
-        "values": [
-          {"x_start": 2.5, "x_end": 6.5, "y_start": 0, "y_end": 2300}
-        ]
+        "values": [{"x_start": 4.5, "x_end": 8.5, "y_start": 800, "y_end": 2150}]
       },
-      "mark": {"type": "rect", "color": "#fef3c7", "opacity": 0.6},
+      "mark": {"type": "rect", "color": "#fef3c7", "opacity": 0.5},
       "encoding": {
         "x": {"field": "x_start", "type": "quantitative", "axis": null},
         "x2": {"field": "x_end"},
@@ -308,9 +304,9 @@ const vis3 = {
       }
     },
     
-    // Reference line
+    // Reference line at £1,070
     {
-      "mark": {"type": "rule", "strokeDash": [6, 4], "color": "#0369a1", "strokeWidth": 2, "opacity": 0.6},
+      "mark": {"type": "rule", "strokeDash": [4, 4], "color": "#0891b2", "strokeWidth": 1.5, "opacity": 0.5},
       "encoding": {
         "y": {"datum": 1070}
       }
@@ -318,12 +314,12 @@ const vis3 = {
     
     // Connecting line
     {
-      "mark": {"type": "line", "strokeWidth": 3, "color": "#64748b", "opacity": 0.7}
+      "mark": {"type": "line", "strokeWidth": 2.5, "color": "#64748b", "opacity": 0.6}
     },
     
     // Circles
     {
-      "mark": {"type": "circle", "size": 450, "stroke": "white", "strokeWidth": 3},
+      "mark": {"type": "circle", "size": 350, "stroke": "white", "strokeWidth": 2.5},
       "encoding": {
         "color": {
           "field": "typical_annual_bill_gbp",
@@ -337,14 +333,14 @@ const vis3 = {
             "format": ",.0f",
             "orient": "top-left",
             "direction": "horizontal",
-            "labelFontSize": 11,
-            "titleFontSize": 12,
+            "labelFontSize": 10,
+            "titleFontSize": 11,
             "titleColor": "#1e293b",
-            "labelColor": "#334155",
-            "symbolSize": 300,
+            "labelColor": "#475569",
+            "symbolSize": 250,
             "symbolType": "circle",
             "symbolStrokeWidth": 2,
-            "offset": 10
+            "offset": 8
           }
         },
         "tooltip": [
@@ -354,31 +350,29 @@ const vis3 = {
       }
     },
     
-    // Value labels
+    // Value labels for key points
     {
       "transform": [
         {"filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070"}
       ],
-      "mark": {"type": "text", "dy": -26, "fontSize": 13, "fontWeight": "bold", "color": "#1e293b"},
+      "mark": {"type": "text", "dy": -22, "fontSize": 12, "fontWeight": "bold", "color": "#1e293b"},
       "encoding": {
         "text": {"field": "typical_annual_bill_gbp", "type": "quantitative", "format": ",.0f"}
       }
     },
     
-    // Pre-crisis label
+    // Period labels
     {
-      "data": {"values": [{"period_label": "2022 Q1", "y": 150, "text": "Pre-crisis Period"}]},
-      "mark": {"type": "text", "fontSize": 12, "fontWeight": "600", "color": "#0369a1", "align": "center"},
+      "data": {"values": [{"period_label": "2022 Q1", "y": 850, "text": "Pre-crisis"}]},
+      "mark": {"type": "text", "fontSize": 11, "fontWeight": "600", "color": "#0891b2", "align": "center"},
       "encoding": {
         "y": {"field": "y", "type": "quantitative"},
         "text": {"field": "text", "type": "nominal"}
       }
     },
-    
-    // Crisis label  
     {
-      "data": {"values": [{"period_label": "2022 Q4", "y": 150, "text": "Crisis Peak Period"}]},
-      "mark": {"type": "text", "fontSize": 12, "fontWeight": "600", "color": "#d97706", "align": "center"},
+      "data": {"values": [{"period_label": "2023 Q1", "y": 850, "text": "Crisis Peak"}]},
+      "mark": {"type": "text", "fontSize": 11, "fontWeight": "600", "color": "#d97706", "align": "center"},
       "encoding": {
         "y": {"field": "y", "type": "quantitative"},
         "text": {"field": "text", "type": "nominal"}
@@ -388,11 +382,11 @@ const vis3 = {
     // Annotations
     {
       "transform": [{"filter": "datum.typical_annual_bill_gbp === 950"}],
-      "mark": {"type": "text", "dy": 32, "fontSize": 11, "fontStyle": "italic", "color": "#0369a1", "text": "Pre-crisis low"}
+      "mark": {"type": "text", "dy": 28, "fontSize": 10, "fontStyle": "italic", "color": "#0891b2", "text": "Pre-crisis low"}
     },
     {
       "transform": [{"filter": "datum.typical_annual_bill_gbp === 2070"}],
-      "mark": {"type": "text", "dy": 42, "fontSize": 11, "fontStyle": "italic", "color": "#dc2626", "text": "+118%"}
+      "mark": {"type": "text", "dy": 38, "fontSize": 10, "fontStyle": "italic", "color": "#dc2626", "text": "+118%"}
     }
   ],
   
