@@ -212,8 +212,8 @@
     width: "container",
     height: 360,
 
-    // Give the right legend a bit more breathing room inside the frame
-    padding: { top: 6, right: 18, bottom: 6, left: 6 },
+    // Extra bottom breathing room for rotated x labels (key fix)
+    padding: { top: 6, right: 18, bottom: 28, left: 6 },
 
     layer: [
       {
@@ -326,6 +326,9 @@
     width: "container",
     height: 360,
 
+    // Extra bottom breathing room for x-axis labels
+    padding: { top: 6, right: 6, bottom: 22, left: 6 },
+
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
       { fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel_raw", "ppl_raw"] },
@@ -418,6 +421,9 @@
     width: "container",
     height: 360,
 
+    // Extra bottom breathing room for x-axis labels
+    padding: { top: 6, right: 6, bottom: 22, left: 6 },
+
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
       { calculate: "toNumber(datum.value)", as: "v" }
@@ -491,7 +497,9 @@
 
     width: "container",
     height: 360,
-    padding: { top: 6, bottom: 58, left: 0, right: 0 },
+
+    // More bottom space for the legend (key fix)
+    padding: { top: 6, bottom: 74, left: 0, right: 0 },
 
     data: {
       url: UK_TOPO_URL,
@@ -557,6 +565,9 @@
     data: { url: "data/vis7_rent_trend_regions.json" },
     width: "container",
     height: 340,
+
+    // Slight bottom breathing room
+    padding: { top: 6, right: 6, bottom: 18, left: 6 },
 
     params: [
       {
@@ -638,7 +649,9 @@
 
     width: "container",
     height: 380,
-    padding: { top: 6, bottom: 58, left: 0, right: 0 },
+
+    // More bottom space for the legend (key fix)
+    padding: { top: 6, bottom: 74, left: 0, right: 0 },
 
     data: {
       url: UK_TOPO_URL,

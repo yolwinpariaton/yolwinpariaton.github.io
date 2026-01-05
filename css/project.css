@@ -44,7 +44,10 @@
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.22);
   border-radius: 22px;
-  padding: 18px 16px 14px;
+
+  /* More breathing room at the bottom (key fix) */
+  padding: 18px 16px 22px;
+
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 
   width: 100%;
@@ -114,7 +117,8 @@
 /* Improve mobile spacing and avoid cramped titles */
 @media (max-width: 600px){
   .chart-frame{
-    padding: 14px 12px 12px;
+    /* More bottom space on mobile as well */
+    padding: 14px 12px 18px;
     border-radius: 18px;
   }
   .task{
