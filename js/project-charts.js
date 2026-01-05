@@ -2,7 +2,8 @@
    Eight interactive Vega-Lite charts for the UK cost of living project.
 */
 (function () {
-  const opts = { actions: false, renderer: "canvas" };
+  // Use SVG for robust responsive sizing inside framed containers
+  const opts = { actions: false, renderer: "svg" };
 
   // Stable TopoJSON from ONSdigital/uk-topojson (contains layers: uk, ctry, rgn, ...)
   const UK_TOPO_URL =
@@ -26,9 +27,13 @@
     title: { fontSize: 20, subtitleFontSize: 12, color: "#0f172a", subtitleColor: "#64748b" }
   };
 
+  // A shared autosize policy to prevent “frame clashes”
+  const FIT = { autosize: { type: "fit", contains: "padding" } };
+
   function safeEmbed(selector, spec) {
     const el = document.querySelector(selector);
     if (!el) return;
+
     vegaEmbed(selector, spec, opts).catch((err) => {
       console.error("Vega embed error for", selector, err);
       el.innerHTML = "<p>Chart failed to load. Check console and JSON paths.</p>";
@@ -36,10 +41,11 @@
   }
 
   // --------------------------------------
-  // 1) Prices vs pay (indexed) — clean, no legend warnings
+  // 1) Prices vs pay (indexed)
   // --------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
     title: {
       text: "Prices vs pay (indexed to 2019 = 100)",
@@ -63,13 +69,10 @@
     ],
 
     layer: [
-      // Baseline at 100
       {
         mark: { type: "rule", strokeDash: [4, 6], color: "#94a3b8", opacity: 0.7 },
         encoding: { y: { datum: 100 } }
       },
-
-      // Gap shading between earnings and prices
       {
         mark: { type: "area", opacity: 0.18, color: "#94a3b8" },
         encoding: {
@@ -84,8 +87,6 @@
           y2: { field: "prices" }
         }
       },
-
-      // Prices line
       {
         mark: { type: "line", strokeWidth: 3, point: { filled: true, size: 40 } },
         encoding: {
@@ -100,8 +101,6 @@
           ]
         }
       },
-
-      // Earnings line
       {
         mark: { type: "line", strokeWidth: 3, point: { filled: true, size: 40 } },
         encoding: {
@@ -116,10 +115,12 @@
   };
 
   // --------------------------------------
-  // 2) Food inflation vs headline — FIX legend conflict (legend defined once only)
+  // 2) Food inflation vs headline
   // --------------------------------------
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
+
     title: { text: "Food inflation vs headline (annual rate)", anchor: "start", offset: 14 },
     data: { url: "data/vis2_food_vs_headline.json" },
     width: "container",
@@ -131,13 +132,10 @@
     ],
 
     layer: [
-      // Zero line
       {
         mark: { type: "rule", strokeDash: [4, 6], color: "#94a3b8", opacity: 0.7 },
         encoding: { y: { datum: 0 } }
       },
-
-      // Raw monthly (legend OFF here to avoid conflicts)
       {
         mark: {
           type: "line",
@@ -161,8 +159,6 @@
           ]
         }
       },
-
-      // Smoothed (legend ON here only)
       {
         transform: [
           {
@@ -190,7 +186,7 @@
   };
 
   // --------------------------------------
-  // 3) Energy cap — reduce height; keep your design; align sorting to avoid union warnings
+  // 3) Energy cap
   // --------------------------------------
   const QUARTER_SORT = [
     "2021 Q4",
@@ -202,6 +198,7 @@
 
   const vis3 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
     title: {
       text: "UK Energy Price Cap: The Crisis in Context",
@@ -215,8 +212,10 @@
     width: "container",
     height: 360,
 
+    // Give the right legend a bit more breathing room inside the frame
+    padding: { top: 6, right: 18, bottom: 6, left: 6 },
+
     layer: [
-      // Pre-crisis shading
       {
         data: { values: [{ period_label: "2021 Q4" }, { period_label: "2022 Q1" }, { period_label: "2022 Q2" }] },
         mark: { type: "bar", color: "#dbeafe", opacity: 0.28 },
@@ -225,8 +224,6 @@
           y: { datum: 2200 }
         }
       },
-
-      // Peak shading
       {
         data: { values: [{ period_label: "2024 Q2" }, { period_label: "2024 Q3" }, { period_label: "2024 Q4" }] },
         mark: { type: "bar", color: "#fef3c7", opacity: 0.32 },
@@ -235,14 +232,10 @@
           y: { datum: 2200 }
         }
       },
-
-      // Reference line
       {
         mark: { type: "rule", strokeDash: [4, 4], color: "#0891b2", strokeWidth: 1.5, opacity: 0.5 },
         encoding: { y: { datum: 1070 } }
       },
-
-      // Line + points
       {
         layer: [
           { mark: { type: "line", strokeWidth: 2.5, color: "#64748b" } },
@@ -292,8 +285,6 @@
           }
         }
       },
-
-      // Value labels (950 and 2070)
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070" }],
         mark: { type: "text", dy: -16, fontSize: 12, fontWeight: "bold", color: "#0f172a" },
@@ -303,8 +294,6 @@
           text: { field: "typical_annual_bill_gbp", type: "quantitative", format: ",.0f" }
         }
       },
-
-      // +118% label
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 2070" }],
         mark: { type: "text", dy: 26, fontSize: 11, fontWeight: "bold", color: "#dc2626" },
@@ -320,10 +309,11 @@
   };
 
   // --------------------------------------
-  // 4) Weekly fuel prices — FIX Infinity extent warnings (no start/end fields)
+  // 4) Weekly fuel prices
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
     title: {
       text: "UK fuel prices: weekly volatility (2019–2024)",
@@ -347,7 +337,6 @@
     ],
 
     layer: [
-      // Crisis shading (ROBUST: datum-based temporal bounds)
       {
         mark: { type: "rect", color: "#fee2e2", opacity: 0.28 },
         encoding: {
@@ -355,8 +344,6 @@
           x2: { datum: "2022-08-01", type: "temporal" }
         }
       },
-
-      // Raw weekly (faint)
       {
         mark: { type: "line", strokeWidth: 1.5, opacity: 0.22 },
         encoding: {
@@ -365,8 +352,6 @@
           color: { field: "fuel", type: "nominal", scale: { range: ["#2563eb", "#f59e0b"] }, legend: null }
         }
       },
-
-      // Smoothed (5-week MA)
       {
         transform: [
           {
@@ -384,12 +369,10 @@
             field: "fuel",
             type: "nominal",
             scale: { range: ["#2563eb", "#f59e0b"] },
-            legend: { title: "Fuel type", orient: "top", direction: "horizontal", title: null, padding: 10 }
+            legend: { orient: "top", direction: "horizontal", title: null, padding: 10 }
           }
         }
       },
-
-      // Tooltip points on MA
       {
         transform: [
           {
@@ -418,10 +401,11 @@
   };
 
   // --------------------------------------
-  // 5) Rent vs house price — reduce height; keep professional styling
+  // 5) Rent vs house price
   // --------------------------------------
   const vis5 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
     title: {
       text: "Housing costs: rent vs house price inflation",
@@ -441,8 +425,6 @@
 
     layer: [
       { mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.6 }, encoding: { y: { datum: 0 } } },
-
-      // Raw monthly
       {
         mark: { type: "line", strokeWidth: 1.2, opacity: 0.18 },
         encoding: {
@@ -451,8 +433,6 @@
           color: { field: "series", type: "nominal", scale: { range: ["#2563eb", "#f59e0b"] }, legend: null }
         }
       },
-
-      // Smoothed lines
       {
         transform: [
           {
@@ -469,8 +449,6 @@
           color: { field: "series", type: "nominal", scale: { range: ["#2563eb", "#f59e0b"] }, legend: null }
         }
       },
-
-      // Tooltip points
       {
         transform: [
           {
@@ -498,10 +476,11 @@
   };
 
   // --------------------------------------
-  // 6) England regional map — centered, compact, consistent legend
+  // 6) England regional map
   // --------------------------------------
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
     title: {
       text: "Regional rent inflation across England",
@@ -512,7 +491,7 @@
 
     width: "container",
     height: 360,
-    padding: { top: 6, bottom: 44, left: 0, right: 0 },
+    padding: { top: 6, bottom: 58, left: 0, right: 0 },
 
     data: {
       url: UK_TOPO_URL,
@@ -548,9 +527,8 @@
           gradientThickness: 14,
           titleFontSize: 12,
           labelFontSize: 11,
-          titleColor: "#0f172a",
-          labelColor: "#475569",
-          format: ".1f"
+          format: ".1f",
+          offset: 10
         }
       },
       tooltip: [
@@ -563,10 +541,11 @@
   };
 
   // --------------------------------------
-  // 7) Interactive regional trend — reduce height
+  // 7) Interactive regional trend
   // --------------------------------------
   const vis7 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
     title: {
       text: "Regional rent inflation trends over time",
@@ -644,10 +623,11 @@
   };
 
   // --------------------------------------
-  // 8) UK nations map — centered, compact
+  // 8) UK nations map
   // --------------------------------------
   const vis8 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
     title: {
       text: "Rent inflation across UK nations",
@@ -658,7 +638,7 @@
 
     width: "container",
     height: 380,
-    padding: { top: 6, bottom: 44, left: 0, right: 0 },
+    padding: { top: 6, bottom: 58, left: 0, right: 0 },
 
     data: {
       url: UK_TOPO_URL,
@@ -694,9 +674,8 @@
           gradientThickness: 14,
           titleFontSize: 12,
           labelFontSize: 11,
-          titleColor: "#0f172a",
-          labelColor: "#475569",
-          format: ".1f"
+          format: ".1f",
+          offset: 10
         }
       },
       tooltip: [
