@@ -205,17 +205,16 @@
   };
 
 // ======================================
-// 3) Energy cap (CLEAN SIMPLE VERSION)
+// 3) Energy cap (SIMPLE & WORKING)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   
   "title": {
     "text": "UK Energy Price Cap: The Crisis in Context",
-    "subtitle": "Quarterly typical household bills (2021-2025) | Peak of £2,070 represents 118% increase from pre-crisis baseline",
+    "subtitle": "Quarterly typical household bills (2021-2025)",
     "fontSize": 18,
     "subtitleFontSize": 11,
-    "anchor": "start",
     "color": "#1e293b",
     "subtitleColor": "#64748b"
   },
@@ -226,16 +225,11 @@ const vis3 = {
   
   "width": "container",
   "height": 400,
-  "padding": 5,
   
   "mark": {
     "type": "line",
-    "point": {
-      "filled": true,
-      "size": 200
-    },
-    "strokeWidth": 3,
-    "color": "#3b82f6"
+    "point": true,
+    "strokeWidth": 3
   },
   
   "encoding": {
@@ -244,57 +238,36 @@ const vis3 = {
       "type": "ordinal",
       "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
       "axis": {
-        "title": null,
+        "title": "Quarter",
         "labelAngle": -45,
         "labelAlign": "right",
-        "labelFontSize": 10,
-        "labelColor": "#1e293b",
-        "domainColor": "#94a3b8",
-        "tickColor": "#94a3b8",
-        "gridOpacity": 0
+        "labelFontSize": 10
       }
     },
     "y": {
       "field": "typical_annual_bill_gbp",
       "type": "quantitative",
-      "scale": {
-        "domain": [900, 2100]
-      },
+      "scale": {"domain": [900, 2100]},
       "axis": {
         "title": "Annual Bill (£)",
-        "titleFontSize": 12,
-        "titleColor": "#1e293b",
-        "titleFontWeight": "600",
-        "labelFontSize": 10,
-        "labelColor": "#64748b",
         "format": ",.0f",
-        "grid": true,
-        "gridColor": "#e2e8f0",
-        "gridOpacity": 0.5,
-        "domainColor": "#94a3b8",
-        "tickColor": "#94a3b8"
+        "labelFontSize": 10,
+        "grid": true
       }
     },
     "color": {
       "field": "typical_annual_bill_gbp",
       "type": "quantitative",
       "scale": {
-        "domain": [950, 1300, 1700, 2070],
-        "range": ["#22d3ee", "#3b82f6", "#f59e0b", "#dc2626"]
+        "scheme": "redyellowblue",
+        "reverse": true
       },
-      "legend": null
+      "legend": {"title": "Bill Amount (£)"}
     },
     "tooltip": [
-      {"field": "period_label", "type": "nominal", "title": "Quarter"},
-      {"field": "typical_annual_bill_gbp", "type": "quantitative", "title": "Bill", "format": "£,.0f"}
+      {"field": "period_label", "title": "Quarter"},
+      {"field": "typical_annual_bill_gbp", "title": "Annual Bill", "format": ",.0f"}
     ]
-  },
-  
-  "config": {
-    "view": {
-      "stroke": null
-    },
-    "background": "#ffffff"
   }
 };
 
