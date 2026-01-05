@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (PUBLICATION-READY WITH CONTEXT)
+  // 3) Energy cap (PUBLICATION-READY - POLISHED)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -226,7 +226,7 @@
     },
     "width": "container",
     "height": 550,
-    "padding": {"bottom": 60},
+    "padding": {"bottom": 60, "top": 10},
     
     "encoding": {
       "x": {
@@ -253,7 +253,7 @@
         "type": "quantitative",
         "title": "Annual Bill (£)",
         "scale": { 
-          "domain": [0, 2200],
+          "domain": [0, 2250],
           "nice": false
         },
         "axis": {
@@ -273,11 +273,26 @@
     },
     
     "layer": [
-      // Crisis period shading (2024 Q2 onwards - peaks)
+      // Pre-crisis baseline shading (green - showing "normal" range)
+      {
+        "mark": {
+          "type": "rect",
+          "color": "#d1fae5",
+          "opacity": 0.3
+        },
+        "encoding": {
+          "x": {"datum": "2021 Q4"},
+          "x2": {"datum": "2022 Q3"},
+          "y": {"datum": 0},
+          "y2": {"datum": 2250}
+        }
+      },
+      
+      // Crisis period shading (red - peaks)
       {
         "data": {
           "values": [
-            {"x1": "2024 Q2", "x2": "2025 Q4", "label": "Crisis Peak Period"}
+            {"x1": "2024 Q2", "x2": "2025 Q4"}
           ]
         },
         "mark": {
@@ -289,22 +304,7 @@
           "x": {"field": "x1", "type": "ordinal"},
           "x2": {"field": "x2"},
           "y": {"datum": 0},
-          "y2": {"datum": 2200}
-        }
-      },
-      
-      // Pre-crisis baseline shading (showing "normal" range)
-      {
-        "mark": {
-          "type": "rect",
-          "color": "#d1fae5",
-          "opacity": 0.25
-        },
-        "encoding": {
-          "x": {"datum": "2021 Q4"},
-          "x2": {"datum": "2022 Q3"},
-          "y": {"datum": 0},
-          "y2": {"datum": 2200}
+          "y2": {"datum": 2250}
         }
       },
       
@@ -315,24 +315,10 @@
           "strokeDash": [6, 4],
           "color": "#10b981",
           "strokeWidth": 2,
-          "opacity": 0.6
+          "opacity": 0.5
         },
         "encoding": {
           "y": {"datum": 1070}
-        }
-      },
-      
-      // Reference line at £1,500 (mid-point marker)
-      {
-        "mark": {
-          "type": "rule",
-          "strokeDash": [3, 3],
-          "color": "#94a3b8",
-          "strokeWidth": 1.5,
-          "opacity": 0.4
-        },
-        "encoding": {
-          "y": {"datum": 1500}
         }
       },
       
@@ -414,14 +400,14 @@
         }
       },
       
-      // "Pre-crisis" label
+      // "Pre-crisis Period" label (top)
       {
         "data": {
-          "values": [{"x": "2022 Q1", "y": 2150, "text": "Pre-crisis"}]
+          "values": [{"x": "2022 Q1", "y": 2200, "text": "Pre-crisis Period"}]
         },
         "mark": {
           "type": "text",
-          "fontSize": 11,
+          "fontSize": 12,
           "fontWeight": "600",
           "color": "#10b981",
           "align": "center"
@@ -433,14 +419,14 @@
         }
       },
       
-      // "Crisis Peak" label
+      // "Crisis Peak Period" label (top)
       {
         "data": {
-          "values": [{"x": "2025 Q1", "y": 2150, "text": "Crisis Peak Period"}]
+          "values": [{"x": "2025 Q1", "y": 2200, "text": "Crisis Peak Period"}]
         },
         "mark": {
           "type": "text",
-          "fontSize": 11,
+          "fontSize": 12,
           "fontWeight": "600",
           "color": "#dc2626",
           "align": "center"
@@ -452,7 +438,7 @@
         }
       },
       
-      // "Pre-crisis low" annotation
+      // "Pre-crisis low" annotation (bottom)
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950" }
