@@ -205,14 +205,14 @@
   };
 
 // ======================================
-// 3) Energy cap (SIMPLE & WORKING)
+// 3) Energy cap (POLISHED VERSION)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   
   "title": {
     "text": "UK Energy Price Cap: The Crisis in Context",
-    "subtitle": "Quarterly typical household bills (2021-2025)",
+    "subtitle": "Quarterly typical household bills (2021-2025) | Peak of £2,070 represents 118% increase from £950 baseline",
     "fontSize": 18,
     "subtitleFontSize": 11,
     "color": "#1e293b",
@@ -224,50 +224,144 @@ const vis3 = {
   },
   
   "width": "container",
-  "height": 400,
+  "height": 420,
   
-  "mark": {
-    "type": "line",
-    "point": true,
-    "strokeWidth": 3
-  },
-  
-  "encoding": {
-    "x": {
-      "field": "period_label",
-      "type": "ordinal",
-      "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
-      "axis": {
-        "title": "Quarter",
-        "labelAngle": -45,
-        "labelAlign": "right",
-        "labelFontSize": 10
-      }
-    },
-    "y": {
-      "field": "typical_annual_bill_gbp",
-      "type": "quantitative",
-      "scale": {"domain": [900, 2100]},
-      "axis": {
-        "title": "Annual Bill (£)",
-        "format": ",.0f",
-        "labelFontSize": 10,
-        "grid": true
-      }
-    },
-    "color": {
-      "field": "typical_annual_bill_gbp",
-      "type": "quantitative",
-      "scale": {
-        "scheme": "redyellowblue",
-        "reverse": true
+  "layer": [
+    // Line
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5,
+        "color": "#64748b"
       },
-      "legend": {"title": "Bill Amount (£)"}
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": {
+            "title": "Quarter",
+            "labelAngle": -45,
+            "labelAlign": "right",
+            "labelFontSize": 10,
+            "titleFontSize": 12,
+            "titleFontWeight": "600"
+          }
+        },
+        "y": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative",
+          "scale": {"domain": [900, 2100]},
+          "axis": {
+            "title": "Annual Bill (£)",
+            "format": ",.0f",
+            "labelFontSize": 10,
+            "titleFontSize": 12,
+            "titleFontWeight": "600",
+            "grid": true,
+            "gridOpacity": 0.15
+          }
+        }
+      }
     },
-    "tooltip": [
-      {"field": "period_label", "title": "Quarter"},
-      {"field": "typical_annual_bill_gbp", "title": "Annual Bill", "format": ",.0f"}
-    ]
+    
+    // Points with color
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 200,
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+        },
+        "y": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative",
+          "scale": {
+            "domain": [950, 1300, 1700, 2070],
+            "range": ["#22d3ee", "#3b82f6", "#f59e0b", "#dc2626"]
+          },
+          "legend": {
+            "title": "Bill Amount (£)",
+            "orient": "right",
+            "format": ",.0f"
+          }
+        },
+        "tooltip": [
+          {"field": "period_label", "title": "Quarter"},
+          {"field": "typical_annual_bill_gbp", "title": "Annual Bill", "format": "£,.0f"}
+        ]
+      }
+    },
+    
+    // Labels for min and max
+    {
+      "transform": [
+        {"filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070"}
+      ],
+      "mark": {
+        "type": "text",
+        "dy": -15,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#1e293b"
+      },
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+        },
+        "y": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative",
+          "format": ",.0f"
+        }
+      }
+    },
+    
+    // Peak percentage label
+    {
+      "transform": [
+        {"filter": "datum.typical_annual_bill_gbp === 2070"}
+      ],
+      "mark": {
+        "type": "text",
+        "dy": 28,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#dc2626",
+        "text": "+118%"
+      },
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "typical_annual_bill_gbp",
+          "type": "quantitative"
+        }
+      }
+    }
+  ],
+  
+  "config": {
+    "view": {"stroke": null}
   }
 };
 
