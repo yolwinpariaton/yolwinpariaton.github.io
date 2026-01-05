@@ -1,6 +1,6 @@
 /* Project-specific styles */
 
-/* Hero */
+/* Landing-style hero with background image */
 .hero--project{
   position: relative;
   min-height: 70vh;
@@ -9,63 +9,9 @@
   background: url("../images/living_cost.jpg") center/cover no-repeat;
 }
 
-/* Optional: if used elsewhere */
-.project-container{
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.project-intro{ margin: 40px 0; }
-
-.key-metrics{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.metric{
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.metric-value{
-  display: block;
-  font-size: 2.5em;
-  font-weight: bold;
-  color: var(--accent);
-}
-
-.metric-label{
-  display: block;
-  margin-top: 5px;
-  font-size: 0.9em;
-  color: var(--muted);
-}
-
-.project-section{ margin: 50px 0; }
-
-.project-section h2{
-  color: var(--navy);
-  border-bottom: 2px solid #000;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.project-section p{
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-/* ------------------------------------------------------------ */
-/* Section spacing: prevents any “collision” with chart blocks   */
-/* ------------------------------------------------------------ */
+/* --- Overall page typography spacing --- */
 .task{
-  margin: 44px 0; /* gives each section breathing room */
+  margin: 48px 0;
 }
 
 .task h2{
@@ -74,10 +20,12 @@
 
 .task > p{
   margin: 0 0 18px 0;
+  line-height: 1.6;
 }
 
 /* ------------------------------------------------------------------ */
-/* Override any card styling from css/style.css that might hit wrapper */
+/* Chart wrapper: keep it clean, centered, and not oversized           */
+/* ------------------------------------------------------------------ */
 .chart-wrapper{
   background: transparent !important;
   border: none !important;
@@ -87,80 +35,43 @@
 
   width: 100%;
   max-width: 980px;
-  margin: 0 auto;         /* no big top margin: spacing is on .task */
+  margin: 16px auto 0 auto;
   overflow: visible;
 }
-/* ------------------------------------------------------------------ */
 
-/* The chart card */
+/* Chart "card" contains ONLY the visualization */
 .chart-frame{
   background: #fff;
-  border: 2px solid rgba(120, 150, 210, 0.25);
+  border: 2px solid rgba(120, 150, 210, 0.22);
   border-radius: 22px;
-  padding: 14px 14px 12px;  /* keep modest */
+  padding: 18px 16px 14px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-  overflow: visible;
+  overflow: hidden;
   width: 100%;
 }
 
-/* Base chart container size */
+/* Vega container */
 .vega-container{
   width: 100%;
-  min-height: 340px;
   display: block;
   margin: 0;
+  min-height: 280px;
 }
 
-/* Maps: centre reliably without affecting non-map charts */
+/* Maps: center without forcing weird scaling */
 .vega-map{
-  min-height: 520px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* avoid scrollbars from internal bounds */
-}
-
-.vega-map .vega-embed{
-  width: 100%;
+  min-height: 360px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.vega-map .vega-embed > div{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.vega-map svg,
-.vega-map canvas{
-  display: block;
-  max-width: 100%;
-  height: auto;
-  max-height: 430px;
-}
-
-/* Sources/notes */
-.chart-source{
-  margin: 10px 2px 0;
-  color: #2b2f36;
-  font-size: 0.95rem;
-}
-
-.chart-note{
-  margin: 6px 2px 0;
-  color: #555;
-  font-style: italic;
-  font-size: 0.95rem;
-}
-
-/* Vega-Embed sizing */
+/* Vega-Embed wrapper should fill the frame */
 .vega-embed{
   width: 100%;
 }
 
+/* Ensure SVG/canvas stays responsive */
 .vega-embed,
 .vega-embed > div,
 .vega-embed canvas,
@@ -173,43 +84,34 @@
   display: block;
 }
 
-/* Links block (if used) */
-.project-links{
-  margin: 50px 0;
-  padding: 30px;
-  background: #f8f9fa;
-  border-radius: 10px;
+/* --- Source/notes typography (outside the chart card) --- */
+.chart-source{
+  margin: 12px 2px 0;
+  color: #2b2f36;
+  font-size: 0.95rem;
 }
 
-.link-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+.chart-note{
+  margin: 6px 2px 0;
+  color: #555;
+  font-style: italic;
+  font-size: 0.95rem;
 }
 
-.resource-link{
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  background: white;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: transform 0.2s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* Optional: keep the page from feeling "giant" on large screens */
+@media (min-width: 1100px){
+  .container{
+    max-width: 1040px;
+  }
 }
 
-.resource-link:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.link-icon{
-  font-size: 1.5em;
-  margin-right: 10px;
-}
-
-.link-text{
-  color: var(--text);
-  font-weight: 600;
+/* Improve mobile spacing and avoid cramped titles */
+@media (max-width: 600px){
+  .chart-frame{
+    padding: 14px 12px 12px;
+    border-radius: 18px;
+  }
+  .task{
+    margin: 36px 0;
+  }
 }
