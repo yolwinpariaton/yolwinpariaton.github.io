@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (POLISHED VERSION)
+// 3) Energy cap (FIXED - NO FORMAT ERRORS)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -298,8 +298,8 @@ const vis3 = {
           }
         },
         "tooltip": [
-          {"field": "period_label", "title": "Quarter"},
-          {"field": "typical_annual_bill_gbp", "title": "Annual Bill", "format": "£,.0f"}
+          {"field": "period_label", "title": "Quarter", "type": "nominal"},
+          {"field": "typical_annual_bill_gbp", "title": "Annual Bill (£)", "type": "quantitative", "format": ",.0f"}
         ]
       }
     },
@@ -350,7 +350,8 @@ const vis3 = {
       "encoding": {
         "x": {
           "field": "period_label",
-          "type": "ordinal"
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
         },
         "y": {
           "field": "typical_annual_bill_gbp",
