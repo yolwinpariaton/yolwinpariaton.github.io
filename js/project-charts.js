@@ -621,8 +621,8 @@
     config: THEME
   };
 
-  // --------------------------------------
-  // 6) England regional map (FIXED)
+    // --------------------------------------
+  // 6) England regional map (FIXED LAYOUT)
   // --------------------------------------
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -630,7 +630,8 @@
 
     title: {
       text: "Regional rent inflation across England",
-      subtitle: "Latest year-on-year percentage change by English region | Darker colours indicate higher inflation",
+      subtitle:
+        "Latest year-on-year percentage change by English region | Darker colours indicate higher inflation",
       anchor: "start",
       offset: 14
     },
@@ -638,8 +639,9 @@
     width: "container",
     height: 360,
 
-    // FIX: reduce bottom padding (was pushing map up) + add side padding for better frame balance
-    padding: { top: 6, right: 10, bottom: 46, left: 10 },
+    // Key change: do NOT use huge bottom padding (it shrinks the map).
+    // Keep modest padding + handle spacing via legend + translate.
+    padding: { top: 6, bottom: 36, left: 0, right: 0 },
 
     data: {
       url: UK_TOPO_URL,
@@ -658,30 +660,48 @@
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    // FIX: scale up to fill the available view (without increasing chart height)
-    // and adjust center slightly so the geography sits more naturally above the legend
-    projection: { type: "mercator", center: [-2.6, 53.4], scale: 2350 },
+    // Key change: keep your scale/center, but add responsive translate to push map DOWN.
+    // This reduces the empty bottom gap without increasing overall chart size.
+    projection: {
+      type: "mercator",
+      center: [-2.6, 53.7],
+      scale: 1900,
+      translate: [
+        { signal: "width / 2" },
+        { signal: "height / 2 + 18" } // push map down (tune 12–22 if needed)
+      ]
+    },
 
-    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
+    mark: {
+      type: "geoshape",
+      stroke: "#ffffff",
+      strokeWidth: 2,
+      strokeJoin: "round"
+    },
 
     encoding: {
       color: {
         field: "rent_yoy",
         type: "quantitative",
         title: "Rent inflation (% y/y)",
-        scale: { domain: [3, 10], scheme: { name: "oranges", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
+        scale: {
+          domain: [3, 10],
+          scheme: { name: "oranges", extent: [0.25, 0.98] },
+          unknown: "#e5e7eb"
+        },
+        // Key change: reserve space for legend safely, without huge chart padding
         legend: {
           orient: "bottom",
           direction: "horizontal",
-          // FIX: shorter legend so it fits responsive frames (no need for huge padding)
-          gradientLength: 280,
-          gradientThickness: 12,
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 6,
-          labelOffset: 4,
-          titlePadding: 6
+          gradientLength: 520,
+          gradientThickness: 14,
+          offset: 14,
+          padding: 10,
+          // Key change: stabilize tick labels so they don’t “drop” values unexpectedly
+          values: [3, 4, 5, 6, 7, 8, 9, 10]
         }
       },
       tooltip: [
@@ -692,7 +712,6 @@
 
     config: THEME
   };
-
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -777,8 +796,8 @@
     config: THEME
   };
 
-  // --------------------------------------
-  // 8) UK nations map (FIXED)
+   // --------------------------------------
+  // 8) UK nations map (FIXED LAYOUT)
   // --------------------------------------
   const vis8 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -794,8 +813,8 @@
     width: "container",
     height: 380,
 
-    // FIX: reduce bottom padding + add side padding for balance
-    padding: { top: 6, right: 10, bottom: 46, left: 10 },
+    // Same principle: avoid oversized bottom padding; keep modest.
+    padding: { top: 6, bottom: 38, left: 0, right: 0 },
 
     data: {
       url: UK_TOPO_URL,
@@ -814,28 +833,45 @@
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    // FIX: increase scale so the UK fills the view more; small center tweak for better vertical placement
-    projection: { type: "mercator", center: [-3.8, 55.2], scale: 1280 },
+    // Keep your projection choice but push the map DOWN responsively.
+    projection: {
+      type: "mercator",
+      center: [-4.3, 55.6],
+      scale: 1020,
+      translate: [
+        { signal: "width / 2" },
+        { signal: "height / 2 + 22" } // slightly more than vis6
+      ]
+    },
 
-    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
+    mark: {
+      type: "geoshape",
+      stroke: "#ffffff",
+      strokeWidth: 2.5,
+      strokeJoin: "round"
+    },
 
     encoding: {
       color: {
         field: "rent_yoy",
         type: "quantitative",
         title: "Rent inflation (% y/y)",
-        scale: { domain: [3, 9], scheme: { name: "blues", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
+        scale: {
+          domain: [3, 9],
+          scheme: { name: "blues", extent: [0.25, 0.98] },
+          unknown: "#e5e7eb"
+        },
         legend: {
           orient: "bottom",
           direction: "horizontal",
-          gradientLength: 280,
-          gradientThickness: 12,
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 6,
-          labelOffset: 4,
-          titlePadding: 6
+          gradientLength: 520,
+          gradientThickness: 14,
+          offset: 14,
+          padding: 10,
+          values: [3, 4, 5, 6, 7, 8, 9]
         }
       },
       tooltip: [
@@ -846,7 +882,6 @@
 
     config: THEME
   };
-
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
