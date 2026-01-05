@@ -788,7 +788,7 @@ const vis6 = {
   },
 
   "width": "container",
-  "height": 360,
+  "height": 380,
   "padding": { "top": 6, "bottom": 44, "left": 0, "right": 0 },
 
   "data": {
@@ -809,14 +809,14 @@ const vis6 = {
   ],
 
   /*
-    KEY FIXES vs your current output:
-    - scale reduced (stops clipping)
-    - center adjusted slightly (better balance)
+    FIX for your screenshot:
+    - move view slightly NORTH and WEST to remove top whitespace + bottom clipping
+    - scale slightly reduced to keep full England within view
   */
   "projection": {
     "type": "mercator",
-    "center": [-1.9, 53.05],
-    "scale": 2050
+    "center": [-2.6, 53.7],
+    "scale": 1900
   },
 
   "mark": {
@@ -849,7 +849,6 @@ const vis6 = {
         "format": ".1f"
       }
     },
-
     "tooltip": [
       { "field": "areanm", "type": "nominal", "title": "Region" },
       { "field": "rent_yoy", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
@@ -861,6 +860,7 @@ const vis6 = {
     "background": "#ffffff"
   }
 };
+
 
 // ======================================
 // 7) Interactive regional trend (COMPLETE FIX)
@@ -1000,7 +1000,7 @@ const vis8 = {
   },
 
   "width": "container",
-  "height": 420,
+  "height": 430,
   "padding": { "top": 6, "bottom": 44, "left": 0, "right": 0 },
 
   "data": {
@@ -1021,14 +1021,15 @@ const vis8 = {
   ],
 
   /*
-    KEY FIXES vs your current output:
-    - scale reduced (stops clipping at bottom)
-    - center shifted slightly (better balance)
+    FIX for your screenshot:
+    - push view NORTH to remove bottom clipping
+    - slight WEST shift to balance Scotland/NI islands better
+    - reduce scale to avoid cropping
   */
   "projection": {
     "type": "mercator",
-    "center": [-3.6, 54.85],
-    "scale": 1120
+    "center": [-4.3, 55.6],
+    "scale": 1020
   },
 
   "mark": {
@@ -1061,7 +1062,6 @@ const vis8 = {
         "format": ".1f"
       }
     },
-
     "tooltip": [
       { "field": "areanm", "type": "nominal", "title": "Nation" },
       { "field": "rent_yoy", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
@@ -1073,6 +1073,7 @@ const vis8 = {
     "background": "#ffffff"
   }
 };
+
 
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
