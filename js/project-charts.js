@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (FINAL - ALL 17 POINTS VISIBLE)
+  // 3) Energy cap (FINAL - GUARANTEED ALL 17 POINTS)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -223,28 +223,15 @@
     
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 500,
-    
-    "transform": [
-      {
-        "calculate": "datetime(year(datum.period_date), month(datum.period_date), 1)",
-        "as": "date_parsed"
-      }
-    ],
+    "height": 520,
     
     "encoding": {
       "x": {
-        "field": "date_parsed",
-        "type": "temporal",
+        "field": "period_label",
+        "type": "nominal",
         "title": "Quarter",
-        "scale": {
-          "domain": [
-            {"year": 2021, "month": 10, "date": 1},
-            {"year": 2025, "month": 10, "date": 31}
-          ]
-        },
+        "sort": null,
         "axis": {
-          "format": "%Y Q%q",
           "labelAngle": -45,
           "labelFontSize": 10,
           "labelColor": "#475569",
@@ -253,26 +240,7 @@
           "tickColor": "#cbd5e1",
           "titleFontSize": 13,
           "titleColor": "#0f172a",
-          "titlePadding": 10,
-          "values": [
-            {"year": 2021, "month": 10, "date": 1},
-            {"year": 2022, "month": 1, "date": 1},
-            {"year": 2022, "month": 4, "date": 1},
-            {"year": 2022, "month": 7, "date": 1},
-            {"year": 2022, "month": 10, "date": 1},
-            {"year": 2023, "month": 1, "date": 1},
-            {"year": 2023, "month": 4, "date": 1},
-            {"year": 2023, "month": 7, "date": 1},
-            {"year": 2023, "month": 10, "date": 1},
-            {"year": 2024, "month": 1, "date": 1},
-            {"year": 2024, "month": 4, "date": 1},
-            {"year": 2024, "month": 7, "date": 1},
-            {"year": 2024, "month": 10, "date": 1},
-            {"year": 2025, "month": 1, "date": 1},
-            {"year": 2025, "month": 4, "date": 1},
-            {"year": 2025, "month": 7, "date": 1},
-            {"year": 2025, "month": 10, "date": 1}
-          ]
+          "titlePadding": 10
         }
       },
       "y": {
@@ -297,26 +265,14 @@
     },
     
     "layer": [
-      // Crisis shading
-      {
-        "mark": {
-          "type": "rect",
-          "color": "#fee2e2",
-          "opacity": 0.25
-        },
-        "encoding": {
-          "x": { "datum": {"year": 2024, "month": 4, "date": 1} },
-          "x2": { "datum": {"year": 2025, "month": 10, "date": 31} }
-        }
-      },
-      
       // Connecting line
       {
         "mark": {
           "type": "line",
           "strokeWidth": 2.5,
           "color": "#94a3b8",
-          "opacity": 0.5
+          "opacity": 0.5,
+          "point": false
         }
       },
       
@@ -388,25 +344,7 @@
         }
       },
       
-      // Crisis Period annotation
-      {
-        "data": {
-          "values": [{"x": {"year": 2024, "month": 11, "date": 1}, "y": 2120, "text": "← Crisis Period →"}]
-        },
-        "mark": {
-          "type": "text",
-          "fontSize": 12,
-          "fontWeight": "600",
-          "color": "#dc2626"
-        },
-        "encoding": {
-          "x": {"field": "x", "type": "temporal"},
-          "y": {"field": "y", "type": "quantitative"},
-          "text": {"field": "text", "type": "nominal"}
-        }
-      },
-      
-      // "Pre-crisis low" annotation
+      // "Pre-crisis" annotation
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950" }
@@ -417,7 +355,7 @@
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#10b981",
-          "text": "Pre-crisis"
+          "text": "Pre-crisis low"
         }
       },
       
@@ -566,7 +504,7 @@ const vis4 = {
 };
 
 // ======================================
-// 5) Rent vs house price inflation (FINAL, PUBLISHER POLISH)
+// 5) Rent vs house price inflation (FINAL — X-AXIS VISIBILITY FIX)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -579,6 +517,9 @@ const vis5 = {
   "data": { "url": "data/vis5_rent_vs_house.json" },
   "width": "container",
   "height": 360,
+
+  // Add bottom padding so axis/title aren’t cramped or clipped
+  "padding": { "top": 5, "left": 5, "right": 60, "bottom": 40 },
 
   "transform": [
     { "calculate": "toDate(datum.date)", "as": "d" },
@@ -594,7 +535,19 @@ const vis5 = {
           "field": "d",
           "type": "temporal",
           "title": "Date",
-          "axis": { "format": "%Y", "tickCount": 7, "labelFontSize": 11 }
+          "axis": {
+            "format": "%Y",
+            "tickCount": 7,
+            "labelFontSize": 11,
+            "titleFontSize": 12,
+            "titlePadding": 14,
+            "domain": true,
+            "domainColor": "#333",
+            "domainWidth": 1.6,
+            "tickColor": "#333",
+            "tickWidth": 1.2,
+            "labelPadding": 6
+          }
         },
         "y": {
           "field": "v",
@@ -707,8 +660,7 @@ const vis5 = {
   "config": {
     "axis": { "labelFontSize": 11, "titleFontSize": 12 },
     "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
-    "view": { "stroke": null },
-    "padding": { "right": 60 }
+    "view": { "stroke": null }
   }
 };
   
