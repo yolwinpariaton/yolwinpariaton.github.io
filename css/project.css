@@ -64,6 +64,15 @@
   margin-bottom: 15px;
 }
 
+/* Task sections - spacing fixes */
+.task h2{
+  margin-bottom: 15px;
+}
+
+.task > p{
+  margin-bottom: 25px;
+}
+
 /* ------------------------------------------------------------------ */
 /* IMPORTANT: override any card styling coming from css/style.css that
    is being applied to .chart-wrapper                                  */
@@ -75,8 +84,8 @@
   padding: 0 !important;
 
   width: 100%;
-  max-width: 980px;     /* makes the whole page feel less "huge" */
-  margin: 0 auto;       /* centre charts within the text column */
+  max-width: 980px;
+  margin: 30px auto 0 auto; /* Added top margin */
   overflow: visible;
 }
 /* ------------------------------------------------------------------ */
@@ -86,37 +95,29 @@
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
-  padding: 14px 14px 12px; /* slightly tighter than before */
+  padding: 20px 18px 16px; /* Increased top padding from 14px to 20px */
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-
-  /* IMPORTANT: do NOT clip titles/legends/tooltips */
   overflow: visible;
-
-  /* keep the card aligned and consistent */
   width: 100%;
 }
 
-/* Default chart container height (smaller than before to avoid "huge" feel) */
+/* Default chart container height */
 .vega-container{
   width: 100%;
-  min-height: 340px;   /* tighter default */
+  min-height: 340px;
   display: block;
   margin: 0;
+  padding-top: 10px; /* Extra space for chart title */
 }
 
 /* --- Map containers (vis6 & vis8) --- */
-/* Add class="vega-container vega-map" in HTML (already done above) */
 .vega-map{
-  /* Enough space for map + legend without giant empty areas */
   min-height: 520px;
-
-  /* Center the rendered view within the available card space */
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Prevent weird scrollbars from internal SVG bounds */
   overflow: hidden;
+  padding-top: 10px; /* Consistent with other containers */
 }
 
 /* Center Vega-Embed wrappers */
@@ -141,12 +142,10 @@
   display: block;
   max-width: 100%;
   height: auto;
-
-  /* Cap the visual height so the map doesn't dominate the page */
   max-height: 430px;
 }
 
-/* Slightly improve legend readability in maps (without moving it) */
+/* Slightly improve legend readability in maps */
 .vega-map .vega-embed .mark-group .role-legend,
 .vega-map .vega-embed .role-legend{
   font-size: 12px;
