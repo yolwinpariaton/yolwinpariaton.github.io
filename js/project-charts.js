@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (ABSOLUTELY FINAL - ALL 17 QUARTERS GUARANTEED)
+  // 3) Energy cap (COMPLETE - ALL 17 QUARTERS VISIBLE)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -225,7 +225,7 @@
       "url": "data/vis3_energy_cap.json"
     },
     "width": "container",
-    "height": 520,
+    "height": 550,
     "padding": {"bottom": 50},
     
     "encoding": {
@@ -252,7 +252,7 @@
         "field": "typical_annual_bill_gbp",
         "type": "quantitative",
         "title": "Annual Bill (£)",
-        "scale": { "domain": [900, 2150] },
+        "scale": { "domain": [850, 2150] },
         "axis": {
           "format": ",.0f",
           "labelFontSize": 12,
@@ -327,15 +327,15 @@
         }
       },
       
-      // Value labels for ALL key points including 950, 1105, 1173
+      // Value labels for key points (highs and lows)
       {
         "transform": [
-          { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 1105 || datum.typical_annual_bill_gbp === 1173 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
+          { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
         ],
         "mark": {
           "type": "text",
           "dy": -26,
-          "fontSize": 12,
+          "fontSize": 13,
           "fontWeight": "bold",
           "color": "#0f172a"
         },
@@ -508,7 +508,7 @@ const vis4 = {
 };
 
 // ======================================
-// 5) Rent vs house price inflation (FIXED: visible x-axis + labels INSIDE plot)
+// 5) Rent vs house price inflation (FINAL — STRONGER X-AXIS TITLE)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -522,13 +522,16 @@ const vis5 = {
   "width": "container",
   "height": 360,
 
+  // Give the x-axis title more breathing room
+  "padding": { "top": 5, "left": 5, "right": 10, "bottom": 55 },
+
   "transform": [
     { "calculate": "toDate(datum.date)", "as": "d" },
     { "calculate": "toNumber(datum.value)", "as": "v" }
   ],
 
   "layer": [
-    // EXPLICIT x-axis baseline (so it is always visible)
+    // Explicit x-axis baseline
     {
       "mark": { "type": "rule", "strokeWidth": 1.8, "color": "#2f2f2f" },
       "encoding": { "y": { "datum": 0 } }
@@ -546,6 +549,16 @@ const vis5 = {
             "format": "%Y",
             "tickCount": 7,
             "labelFontSize": 11,
+            "labelColor": "#1f2937",
+            "labelPadding": 8,
+
+            // Make the axis title clearly visible
+            "titleFontSize": 14,
+            "titleFontWeight": "bold",
+            "titleColor": "#111827",
+            "titlePadding": 22,
+
+            // Keep baseline/ticks strong
             "domain": true,
             "domainColor": "#2f2f2f",
             "domainWidth": 1.8,
@@ -561,6 +574,9 @@ const vis5 = {
           "axis": {
             "labelFontSize": 11,
             "titleFontSize": 12,
+            "titleFontWeight": "bold",
+            "titleColor": "#111827",
+            "labelColor": "#1f2937",
             "grid": true,
             "gridOpacity": 0.08
           }
@@ -620,7 +636,7 @@ const vis5 = {
       }
     },
 
-    // Series labels INSIDE the plotting area (at the last date, shifted left)
+    // Series labels inside plotting area
     {
       "transform": [
         {
@@ -663,12 +679,11 @@ const vis5 = {
   ],
 
   "config": {
-    "axis": { "labelFontSize": 11, "titleFontSize": 12 },
     "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
-    "view": { "stroke": null },
-    "padding": { "right": 10 }
+    "view": { "stroke": null }
   }
 };
+
   
   // 6) Map: rent inflation by region (choropleth)
   const vis6 = {
