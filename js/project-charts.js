@@ -309,7 +309,7 @@
   };
 
   // --------------------------------------
-  // 4) Weekly fuel prices - ENHANCED VERSION
+  // 4) Weekly fuel prices - CORRECTED VERSION
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -326,7 +326,6 @@
     width: "container",
     height: 400,
 
-    // Extra bottom breathing room for x-axis labels
     padding: { top: 6, right: 6, bottom: 22, left: 6 },
 
     transform: [
@@ -342,16 +341,16 @@
     layer: [
       // Crisis period background highlight
       {
-        mark: { type: "rect", color: "#fef3c7", opacity: 0.35 },
+        mark: { type: "rect", color: "#fef3c7", opacity: 0.4 },
         encoding: {
-          x: { datum: "2022-02-24", type: "temporal" },
-          x2: { datum: "2022-09-01", type: "temporal" }
+          x: { datum: { year: 2022, month: 2, date: 24 }, type: "temporal" },
+          x2: { datum: { year: 2022, month: 9, date: 1 }, type: "temporal" }
         }
       },
       
       // Pre-pandemic baseline reference line
       {
-        mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.5, opacity: 0.5 },
+        mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.5, opacity: 0.6 },
         encoding: { y: { datum: 125 } }
       },
       
@@ -361,13 +360,13 @@
           type: "text", 
           align: "left", 
           dx: 5, 
-          dy: -6, 
+          dy: -8, 
           fontSize: 10, 
           color: "#64748b",
           fontWeight: 500
         },
         encoding: {
-          x: { datum: "2019-01-01", type: "temporal" },
+          x: { datum: { year: 2019, month: 1, date: 1 }, type: "temporal" },
           y: { datum: 125 },
           text: { value: "Pre-pandemic baseline (~125p)" }
         }
@@ -378,14 +377,14 @@
         mark: { 
           type: "text", 
           align: "center",
-          dy: -185,
+          dy: -12,
           fontSize: 11, 
           color: "#92400e",
           fontWeight: 600
         },
         encoding: {
-          x: { datum: "2022-06-01", type: "temporal" },
-          y: { datum: 191 },
+          x: { datum: { year: 2022, month: 6, date: 1 }, type: "temporal" },
+          y: { datum: 195 },
           text: { value: "Russia-Ukraine Crisis" }
         }
       },
@@ -404,7 +403,6 @@
             field: "ppl", 
             type: "quantitative", 
             title: "Pence per litre",
-            scale: { domain: [100, 200] },
             axis: { tickCount: 6, labelFontSize: 11 }
           },
           color: { 
@@ -447,7 +445,7 @@
         }
       },
 
-      // Peak price markers
+      // Peak price markers and labels - SIMPLIFIED APPROACH
       {
         transform: [
           {
@@ -456,10 +454,15 @@
             sort: [{ field: "d", order: "ascending" }],
             groupby: ["fuel"]
           },
+          // Filter to approximate peak period
+          { filter: "year(datum.d) === 2022 && month(datum.d) >= 5 && month(datum.d) <= 7" },
+          // Get max within this window
           {
-            aggregate: [{ op: "max", field: "ppl_ma", as: "max_price" }],
+            joinaggregate: [{ op: "max", field: "ppl_ma", as: "peak_price" }],
             groupby: ["fuel"]
-          }
+          },
+          // Keep only the peak point
+          { filter: "datum.ppl_ma === datum.peak_price" }
         ],
         mark: { 
           type: "point", 
@@ -469,8 +472,8 @@
           strokeWidth: 3 
         },
         encoding: {
-          x: { datum: "2022-07-03", type: "temporal" },
-          y: { field: "max_price", type: "quantitative" },
+          x: { field: "d", type: "temporal" },
+          y: { field: "ppl_ma", type: "quantitative" },
           color: { 
             field: "fuel", 
             type: "nominal", 
@@ -480,7 +483,7 @@
         }
       },
 
-      // Peak price labels
+      // Peak price text labels
       {
         transform: [
           {
@@ -489,14 +492,12 @@
             sort: [{ field: "d", order: "ascending" }],
             groupby: ["fuel"]
           },
+          { filter: "year(datum.d) === 2022 && month(datum.d) >= 5 && month(datum.d) <= 7" },
           {
-            aggregate: [{ op: "max", field: "ppl_ma", as: "max_price" }],
+            joinaggregate: [{ op: "max", field: "ppl_ma", as: "peak_price" }],
             groupby: ["fuel"]
           },
-          {
-            calculate: "datum.fuel === 'Diesel' ? '192.0p' : '191.5p'",
-            as: "label"
-          }
+          { filter: "datum.ppl_ma === datum.peak_price" }
         ],
         mark: { 
           type: "text",
@@ -506,9 +507,9 @@
           align: "left"
         },
         encoding: {
-          x: { datum: "2022-07-03", type: "temporal" },
-          y: { field: "max_price", type: "quantitative" },
-          text: { field: "label", type: "nominal" },
+          x: { field: "d", type: "temporal" },
+          y: { field: "ppl_ma", type: "quantitative" },
+          text: { field: "ppl_ma", type: "quantitative", format: ".1f" },
           color: { 
             field: "fuel", 
             type: "nominal", 
@@ -545,7 +546,7 @@
 
     config: THEME
   };
-
+  
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
