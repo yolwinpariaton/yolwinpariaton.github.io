@@ -465,6 +465,7 @@ const vis3 = {
     "background": "#ffffff"
   }
 };
+
   // ======================================
 // 4) Weekly fuel prices (COMPLETE FIX - Professional with context)
 // ======================================
