@@ -782,7 +782,7 @@ const vis5 = {
 };
 
 // ======================================
-// 6) England regional map (RELIABLE + CENTERED VIA TRANSLATE)
+// 6) England regional map (FINAL - no clipping + centered visually)
 // ======================================
 const vis6 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -799,7 +799,7 @@ const vis6 = {
   },
 
   "width": "container",
-  "height": 380,
+  "height": 360,
   "padding": { "top": 6, "bottom": 44, "left": 0, "right": 0 },
 
   "data": {
@@ -819,29 +819,21 @@ const vis6 = {
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "rent_yoy" }
   ],
 
-  "params": [
-    {
-      "name": "hover",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout",
-        "fields": ["properties.areacd"]
-      }
-    }
-  ],
-
+  /*
+    KEY FIXES vs your current output:
+    - scale reduced (stops clipping)
+    - center adjusted slightly (better balance)
+  */
   "projection": {
     "type": "mercator",
-    "center": [-2.3, 53.2],
-    "scale": 2850,
-
-    /* KEY: move geometry within the canvas */
-    "translate": [260, 185]
+    "center": [-1.9, 53.05],
+    "scale": 2050
   },
 
   "mark": {
     "type": "geoshape",
+    "stroke": "#ffffff",
+    "strokeWidth": 2,
     "strokeJoin": "round",
     "strokeMiterLimit": 2
   },
@@ -854,7 +846,7 @@ const vis6 = {
       "scale": {
         "domain": [3, 10],
         "scheme": { "name": "oranges", "extent": [0.25, 0.98] },
-        "unknown": "#d1d5db"
+        "unknown": "#e5e7eb"
       },
       "legend": {
         "orient": "bottom",
@@ -867,16 +859,6 @@ const vis6 = {
         "gradientThickness": 14,
         "format": ".1f"
       }
-    },
-
-    /* DEFAULT stroke must be visible */
-    "stroke": {
-      "condition": { "param": "hover", "value": "#0f172a" },
-      "value": "#0f172a"
-    },
-    "strokeWidth": {
-      "condition": { "param": "hover", "value": 3 },
-      "value": 1.5
     },
 
     "tooltip": [
@@ -1012,7 +994,7 @@ const vis7 = {
 };
 
 // ======================================
-// 8) UK nations map (RELIABLE + CENTERED VIA TRANSLATE)
+// 8) UK nations map (FINAL - no clipping + centered visually)
 // ======================================
 const vis8 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1029,7 +1011,7 @@ const vis8 = {
   },
 
   "width": "container",
-  "height": 430,
+  "height": 420,
   "padding": { "top": 6, "bottom": 44, "left": 0, "right": 0 },
 
   "data": {
@@ -1049,29 +1031,21 @@ const vis8 = {
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "rent_yoy" }
   ],
 
-  "params": [
-    {
-      "name": "hover",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout",
-        "fields": ["properties.areacd"]
-      }
-    }
-  ],
-
+  /*
+    KEY FIXES vs your current output:
+    - scale reduced (stops clipping at bottom)
+    - center shifted slightly (better balance)
+  */
   "projection": {
     "type": "mercator",
-    "center": [-4.0, 54.5],
-    "scale": 1525,
-
-    /* KEY: move geometry within the canvas */
-    "translate": [270, 220]
+    "center": [-3.6, 54.85],
+    "scale": 1120
   },
 
   "mark": {
     "type": "geoshape",
+    "stroke": "#ffffff",
+    "strokeWidth": 2.5,
     "strokeJoin": "round",
     "strokeMiterLimit": 2
   },
@@ -1084,7 +1058,7 @@ const vis8 = {
       "scale": {
         "domain": [3, 9],
         "scheme": { "name": "blues", "extent": [0.25, 0.98] },
-        "unknown": "#d1d5db"
+        "unknown": "#e5e7eb"
       },
       "legend": {
         "orient": "bottom",
@@ -1097,16 +1071,6 @@ const vis8 = {
         "gradientThickness": 14,
         "format": ".1f"
       }
-    },
-
-    /* DEFAULT stroke must be visible */
-    "stroke": {
-      "condition": { "param": "hover", "value": "#0f172a" },
-      "value": "#0f172a"
-    },
-    "strokeWidth": {
-      "condition": { "param": "hover", "value": 3 },
-      "value": 1.6
     },
 
     "tooltip": [

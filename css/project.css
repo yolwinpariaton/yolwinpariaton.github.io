@@ -88,21 +88,33 @@
   padding: 18px 18px 14px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
   overflow: hidden;
-
-  /* Center the Vega view within the frame (single centering context) */
-  display: grid;
-  place-items: center;
 }
 
-/* Reserve more vertical space so taller charts never look cramped */
+/* Default chart sizing */
 .vega-container{
   width: 100%;
-  min-height: 420px;
+  min-height: 340px;   /* sensible default for line charts */
   display: block;
   margin: 0;
 }
 
-/* Source/note styling */
+/* --------------------------------------------- */
+/* MAPS ONLY: constrain canvas width and center it */
+/* This is the missing piece that fixes "not in middle". */
+#vis6 .vega-embed,
+#vis8 .vega-embed{
+  width: 100%;
+  max-width: 820px;     /* adjust 760–900 if you prefer */
+  margin: 0 auto;       /* centers the Vega view inside the card */
+}
+
+#vis6 canvas, #vis6 svg,
+#vis8 canvas, #vis8 svg{
+  display: block;
+  margin: 0 auto;       /* ensures the drawing surface is centered */
+}
+/* --------------------------------------------- */
+
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
@@ -114,7 +126,7 @@
   font-style: italic;
 }
 
-/* ===== Vega-Embed hardening (do not flex-center here) ===== */
+/* ===== Vega-Embed hardening ===== */
 .vega-embed{
   width: 100%;
 }
@@ -129,7 +141,6 @@
 .vega-embed canvas,
 .vega-embed svg{
   display: block;
-  margin: 0 auto;
 }
 /* =============================== */
 
