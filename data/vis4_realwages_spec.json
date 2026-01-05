@@ -1,37 +1,90 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Real wages (AWE total pay, real terms) indexed to 2019=100"
+    "text": "UK Fuel Prices: The 2022 Energy Crisis",
+    "subtitle": "Weekly pump prices (2019-2025) showing the dramatic spike during the Russia-Ukraine conflict"
   },
   "data": {
-    "url": "data/chart4_real_wages_index.json"
+    "url": "data/vis4_fuel_weekly.json"
   },
   "width": "container",
-  "height": 300,
-  "mark": {
-    "type": "line",
-    "point": false
-  },
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "title": "Date"
+  "height": 400,
+  "transform": [
+    {
+      "calculate": "toDate(datum.date)",
+      "as": "d"
     },
-    "y": {
-      "field": "value",
-      "type": "quantitative",
-      "title": "Index (2019=100)"
+    {
+      "fold": [
+        "unleaded_ppl",
+        "diesel_ppl"
+      ],
+      "as": [
+        "fuel_type",
+        "price"
+      ]
     },
-    "tooltip": [
-      {
-        "field": "date",
-        "type": "temporal"
+    {
+      "calculate": "datum.fuel_type === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
+      "as": "fuel"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5
       },
-      {
-        "field": "value",
-        "type": "quantitative"
+      "encoding": {
+        "x": {
+          "field": "d",
+          "type": "temporal",
+          "title": "Date",
+          "axis": {
+            "format": "%Y",
+            "tickCount": 7
+          }
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative",
+          "title": "Pence per litre"
+        },
+        "color": {
+          "field": "fuel",
+          "type": "nominal",
+          "scale": {
+            "range": [
+              "#1e40af",
+              "#d97706"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "direction": "horizontal",
+            "title": null
+          }
+        },
+        "tooltip": [
+          {
+            "field": "d",
+            "type": "temporal",
+            "title": "Week",
+            "format": "%b %d, %Y"
+          },
+          {
+            "field": "fuel",
+            "type": "nominal",
+            "title": "Fuel type"
+          },
+          {
+            "field": "price",
+            "type": "quantitative",
+            "title": "Price (p)",
+            "format": ".1f"
+          }
+        ]
       }
-    ]
-  }
+    }
+  ]
 }

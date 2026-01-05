@@ -1,1 +1,1807 @@
-[{"date":"2023-01-01","unleaded_ppl":149.5,"diesel_ppl":159.5},{"date":"2023-01-08","unleaded_ppl":149.1,"diesel_ppl":160.2},{"date":"2023-01-15","unleaded_ppl":148.8,"diesel_ppl":160.6},{"date":"2023-01-22","unleaded_ppl":149.0,"diesel_ppl":160.4},{"date":"2023-01-29","unleaded_ppl":148.9,"diesel_ppl":160.0},{"date":"2023-02-05","unleaded_ppl":149.0,"diesel_ppl":159.0},{"date":"2023-02-12","unleaded_ppl":149.1,"diesel_ppl":158.8},{"date":"2023-02-19","unleaded_ppl":149.0,"diesel_ppl":158.8},{"date":"2023-02-26","unleaded_ppl":149.0,"diesel_ppl":158.8},{"date":"2023-03-05","unleaded_ppl":149.1,"diesel_ppl":158.7},{"date":"2023-03-12","unleaded_ppl":149.0,"diesel_ppl":158.2},{"date":"2023-03-19","unleaded_ppl":149.3,"diesel_ppl":158.1},{"date":"2023-03-26","unleaded_ppl":150.2,"diesel_ppl":158.1},{"date":"2023-04-02","unleaded_ppl":150.5,"diesel_ppl":158.8},{"date":"2023-04-09","unleaded_ppl":150.6,"diesel_ppl":159.7},{"date":"2023-04-16","unleaded_ppl":149.7,"diesel_ppl":159.6},{"date":"2023-04-23","unleaded_ppl":149.9,"diesel_ppl":159.2},{"date":"2023-04-30","unleaded_ppl":148.9,"diesel_ppl":159.2},{"date":"2023-05-07","unleaded_ppl":148.2,"diesel_ppl":158.9},{"date":"2023-05-14","unleaded_ppl":148.7,"diesel_ppl":158.5},{"date":"2023-05-21","unleaded_ppl":149.0,"diesel_ppl":158.5},{"date":"2023-05-28","unleaded_ppl":148.9,"diesel_ppl":158.0},{"date":"2023-06-04","unleaded_ppl":148.1,"diesel_ppl":158.3},{"date":"2023-06-11","unleaded_ppl":147.9,"diesel_ppl":158.2},{"date":"2023-06-18","unleaded_ppl":147.5,"diesel_ppl":158.4},{"date":"2023-06-25","unleaded_ppl":147.9,"diesel_ppl":158.3},{"date":"2023-07-02","unleaded_ppl":149.0,"diesel_ppl":157.9},{"date":"2023-07-09","unleaded_ppl":149.1,"diesel_ppl":157.4},{"date":"2023-07-16","unleaded_ppl":148.7,"diesel_ppl":157.3},{"date":"2023-07-23","unleaded_ppl":148.1,"diesel_ppl":157.0},{"date":"2023-07-30","unleaded_ppl":148.1,"diesel_ppl":157.2},{"date":"2023-08-06","unleaded_ppl":148.0,"diesel_ppl":157.2},{"date":"2023-08-13","unleaded_ppl":147.4,"diesel_ppl":156.5},{"date":"2023-08-20","unleaded_ppl":147.5,"diesel_ppl":156.5},{"date":"2023-08-27","unleaded_ppl":146.9,"diesel_ppl":155.8},{"date":"2023-09-03","unleaded_ppl":147.5,"diesel_ppl":155.5},{"date":"2023-09-10","unleaded_ppl":148.0,"diesel_ppl":155.4},{"date":"2023-09-17","unleaded_ppl":148.6,"diesel_ppl":154.3},{"date":"2023-09-24","unleaded_ppl":148.3,"diesel_ppl":154.4},{"date":"2023-10-01","unleaded_ppl":148.6,"diesel_ppl":154.5},{"date":"2023-10-08","unleaded_ppl":148.5,"diesel_ppl":154.4},{"date":"2023-10-15","unleaded_ppl":148.3,"diesel_ppl":154.2},{"date":"2023-10-22","unleaded_ppl":148.1,"diesel_ppl":154.0},{"date":"2023-10-29","unleaded_ppl":147.5,"diesel_ppl":153.5},{"date":"2023-11-05","unleaded_ppl":146.8,"diesel_ppl":153.4},{"date":"2023-11-12","unleaded_ppl":147.2,"diesel_ppl":153.1},{"date":"2023-11-19","unleaded_ppl":147.1,"diesel_ppl":153.1},{"date":"2023-11-26","unleaded_ppl":147.2,"diesel_ppl":152.5},{"date":"2023-12-03","unleaded_ppl":147.7,"diesel_ppl":152.6},{"date":"2023-12-10","unleaded_ppl":146.8,"diesel_ppl":152.7},{"date":"2023-12-17","unleaded_ppl":146.4,"diesel_ppl":152.6},{"date":"2023-12-24","unleaded_ppl":146.5,"diesel_ppl":152.4},{"date":"2023-12-31","unleaded_ppl":146.7,"diesel_ppl":152.7},{"date":"2024-01-07","unleaded_ppl":146.5,"diesel_ppl":151.9},{"date":"2024-01-14","unleaded_ppl":147.0,"diesel_ppl":152.1},{"date":"2024-01-21","unleaded_ppl":147.1,"diesel_ppl":152.2},{"date":"2024-01-28","unleaded_ppl":146.5,"diesel_ppl":152.4},{"date":"2024-02-04","unleaded_ppl":146.1,"diesel_ppl":152.6},{"date":"2024-02-11","unleaded_ppl":146.5,"diesel_ppl":152.2},{"date":"2024-02-18","unleaded_ppl":146.7,"diesel_ppl":152.1},{"date":"2024-02-25","unleaded_ppl":145.7,"diesel_ppl":152.4},{"date":"2024-03-03","unleaded_ppl":146.4,"diesel_ppl":152.6},{"date":"2024-03-10","unleaded_ppl":146.7,"diesel_ppl":152.7},{"date":"2024-03-17","unleaded_ppl":147.4,"diesel_ppl":152.0},{"date":"2024-03-24","unleaded_ppl":147.2,"diesel_ppl":152.3},{"date":"2024-03-31","unleaded_ppl":147.1,"diesel_ppl":152.8},{"date":"2024-04-07","unleaded_ppl":146.5,"diesel_ppl":153.3},{"date":"2024-04-14","unleaded_ppl":147.8,"diesel_ppl":153.5},{"date":"2024-04-21","unleaded_ppl":147.7,"diesel_ppl":152.7},{"date":"2024-04-28","unleaded_ppl":148.5,"diesel_ppl":153.1},{"date":"2024-05-05","unleaded_ppl":148.1,"diesel_ppl":153.1},{"date":"2024-05-12","unleaded_ppl":148.2,"diesel_ppl":151.8},{"date":"2024-05-19","unleaded_ppl":147.4,"diesel_ppl":152.0},{"date":"2024-05-26","unleaded_ppl":147.2,"diesel_ppl":151.3},{"date":"2024-06-02","unleaded_ppl":147.7,"diesel_ppl":150.6},{"date":"2024-06-09","unleaded_ppl":147.1,"diesel_ppl":150.3},{"date":"2024-06-16","unleaded_ppl":147.6,"diesel_ppl":150.9},{"date":"2024-06-23","unleaded_ppl":147.8,"diesel_ppl":150.7},{"date":"2024-06-30","unleaded_ppl":147.2,"diesel_ppl":150.9},{"date":"2024-07-07","unleaded_ppl":147.0,"diesel_ppl":151.7},{"date":"2024-07-14","unleaded_ppl":146.8,"diesel_ppl":152.5},{"date":"2024-07-21","unleaded_ppl":146.7,"diesel_ppl":152.5},{"date":"2024-07-28","unleaded_ppl":146.5,"diesel_ppl":152.4},{"date":"2024-08-04","unleaded_ppl":146.1,"diesel_ppl":151.7},{"date":"2024-08-11","unleaded_ppl":145.9,"diesel_ppl":151.4},{"date":"2024-08-18","unleaded_ppl":145.4,"diesel_ppl":151.6},{"date":"2024-08-25","unleaded_ppl":144.7,"diesel_ppl":151.8},{"date":"2024-09-01","unleaded_ppl":144.7,"diesel_ppl":151.9},{"date":"2024-09-08","unleaded_ppl":145.2,"diesel_ppl":152.4},{"date":"2024-09-15","unleaded_ppl":144.4,"diesel_ppl":152.0},{"date":"2024-09-22","unleaded_ppl":144.4,"diesel_ppl":151.9},{"date":"2024-09-29","unleaded_ppl":144.1,"diesel_ppl":152.3},{"date":"2024-10-06","unleaded_ppl":143.6,"diesel_ppl":152.6},{"date":"2024-10-13","unleaded_ppl":144.0,"diesel_ppl":153.1},{"date":"2024-10-20","unleaded_ppl":143.8,"diesel_ppl":153.3},{"date":"2024-10-27","unleaded_ppl":144.5,"diesel_ppl":153.2},{"date":"2024-11-03","unleaded_ppl":144.1,"diesel_ppl":153.4},{"date":"2024-11-10","unleaded_ppl":144.3,"diesel_ppl":152.9},{"date":"2024-11-17","unleaded_ppl":144.2,"diesel_ppl":152.0},{"date":"2024-11-24","unleaded_ppl":143.8,"diesel_ppl":152.3},{"date":"2024-12-01","unleaded_ppl":144.1,"diesel_ppl":152.3},{"date":"2024-12-08","unleaded_ppl":144.0,"diesel_ppl":152.5},{"date":"2024-12-15","unleaded_ppl":144.3,"diesel_ppl":151.6},{"date":"2024-12-22","unleaded_ppl":144.3,"diesel_ppl":151.4},{"date":"2024-12-29","unleaded_ppl":143.8,"diesel_ppl":151.1},{"date":"2025-01-05","unleaded_ppl":143.7,"diesel_ppl":150.7},{"date":"2025-01-12","unleaded_ppl":143.7,"diesel_ppl":149.6},{"date":"2025-01-19","unleaded_ppl":144.2,"diesel_ppl":149.4},{"date":"2025-01-26","unleaded_ppl":143.8,"diesel_ppl":149.8},{"date":"2025-02-02","unleaded_ppl":143.8,"diesel_ppl":150.0},{"date":"2025-02-09","unleaded_ppl":142.9,"diesel_ppl":149.7},{"date":"2025-02-16","unleaded_ppl":143.2,"diesel_ppl":149.7},{"date":"2025-02-23","unleaded_ppl":142.7,"diesel_ppl":150.1},{"date":"2025-03-02","unleaded_ppl":141.8,"diesel_ppl":148.7},{"date":"2025-03-09","unleaded_ppl":141.7,"diesel_ppl":148.7},{"date":"2025-03-16","unleaded_ppl":142.3,"diesel_ppl":148.9},{"date":"2025-03-23","unleaded_ppl":141.5,"diesel_ppl":149.3},{"date":"2025-03-30","unleaded_ppl":141.0,"diesel_ppl":150.1},{"date":"2025-04-06","unleaded_ppl":140.6,"diesel_ppl":150.7},{"date":"2025-04-13","unleaded_ppl":140.1,"diesel_ppl":150.9},{"date":"2025-04-20","unleaded_ppl":140.2,"diesel_ppl":151.0},{"date":"2025-04-27","unleaded_ppl":139.8,"diesel_ppl":151.4},{"date":"2025-05-04","unleaded_ppl":139.5,"diesel_ppl":151.1},{"date":"2025-05-11","unleaded_ppl":139.8,"diesel_ppl":151.1},{"date":"2025-05-18","unleaded_ppl":139.4,"diesel_ppl":151.6},{"date":"2025-05-25","unleaded_ppl":139.6,"diesel_ppl":152.5},{"date":"2025-06-01","unleaded_ppl":139.1,"diesel_ppl":152.5},{"date":"2025-06-08","unleaded_ppl":138.5,"diesel_ppl":152.4},{"date":"2025-06-15","unleaded_ppl":137.6,"diesel_ppl":152.5},{"date":"2025-06-22","unleaded_ppl":138.5,"diesel_ppl":153.2},{"date":"2025-06-29","unleaded_ppl":138.4,"diesel_ppl":153.2},{"date":"2025-07-06","unleaded_ppl":138.5,"diesel_ppl":153.9},{"date":"2025-07-13","unleaded_ppl":138.5,"diesel_ppl":153.4},{"date":"2025-07-20","unleaded_ppl":138.6,"diesel_ppl":153.3},{"date":"2025-07-27","unleaded_ppl":138.6,"diesel_ppl":153.2},{"date":"2025-08-03","unleaded_ppl":139.5,"diesel_ppl":153.6},{"date":"2025-08-10","unleaded_ppl":139.0,"diesel_ppl":154.2},{"date":"2025-08-17","unleaded_ppl":138.2,"diesel_ppl":153.4},{"date":"2025-08-24","unleaded_ppl":137.7,"diesel_ppl":153.0},{"date":"2025-08-31","unleaded_ppl":137.1,"diesel_ppl":153.1},{"date":"2025-09-07","unleaded_ppl":137.4,"diesel_ppl":152.8},{"date":"2025-09-14","unleaded_ppl":137.8,"diesel_ppl":152.0},{"date":"2025-09-21","unleaded_ppl":137.4,"diesel_ppl":152.6},{"date":"2025-09-28","unleaded_ppl":136.7,"diesel_ppl":152.8},{"date":"2025-10-05","unleaded_ppl":136.5,"diesel_ppl":153.0},{"date":"2025-10-12","unleaded_ppl":137.2,"diesel_ppl":152.8},{"date":"2025-10-19","unleaded_ppl":135.8,"diesel_ppl":153.3},{"date":"2025-10-26","unleaded_ppl":136.0,"diesel_ppl":153.2},{"date":"2025-11-02","unleaded_ppl":135.5,"diesel_ppl":153.7},{"date":"2025-11-09","unleaded_ppl":136.0,"diesel_ppl":153.3},{"date":"2025-11-16","unleaded_ppl":135.5,"diesel_ppl":152.9},{"date":"2025-11-23","unleaded_ppl":135.3,"diesel_ppl":153.0},{"date":"2025-11-30","unleaded_ppl":134.6,"diesel_ppl":152.6}]
+[
+  {
+    "date": "2019-01-06",
+    "unleaded_ppl": 117.7,
+    "diesel_ppl": 132.3
+  },
+  {
+    "date": "2019-01-13",
+    "unleaded_ppl": 122.3,
+    "diesel_ppl": 126.6
+  },
+  {
+    "date": "2019-01-20",
+    "unleaded_ppl": 120.0,
+    "diesel_ppl": 131.6
+  },
+  {
+    "date": "2019-01-27",
+    "unleaded_ppl": 120.7,
+    "diesel_ppl": 127.8
+  },
+  {
+    "date": "2019-02-03",
+    "unleaded_ppl": 121.2,
+    "diesel_ppl": 127.3
+  },
+  {
+    "date": "2019-02-10",
+    "unleaded_ppl": 119.2,
+    "diesel_ppl": 131.6
+  },
+  {
+    "date": "2019-02-17",
+    "unleaded_ppl": 119.9,
+    "diesel_ppl": 129.7
+  },
+  {
+    "date": "2019-02-24",
+    "unleaded_ppl": 117.2,
+    "diesel_ppl": 129.7
+  },
+  {
+    "date": "2019-03-03",
+    "unleaded_ppl": 119.7,
+    "diesel_ppl": 128.5
+  },
+  {
+    "date": "2019-03-10",
+    "unleaded_ppl": 121.1,
+    "diesel_ppl": 128.7
+  },
+  {
+    "date": "2019-03-17",
+    "unleaded_ppl": 119.2,
+    "diesel_ppl": 128.8
+  },
+  {
+    "date": "2019-03-24",
+    "unleaded_ppl": 118.1,
+    "diesel_ppl": 128.8
+  },
+  {
+    "date": "2019-03-31",
+    "unleaded_ppl": 117.6,
+    "diesel_ppl": 129.0
+  },
+  {
+    "date": "2019-04-07",
+    "unleaded_ppl": 117.2,
+    "diesel_ppl": 130.1
+  },
+  {
+    "date": "2019-04-14",
+    "unleaded_ppl": 120.9,
+    "diesel_ppl": 127.8
+  },
+  {
+    "date": "2019-04-21",
+    "unleaded_ppl": 117.3,
+    "diesel_ppl": 128.6
+  },
+  {
+    "date": "2019-04-28",
+    "unleaded_ppl": 123.2,
+    "diesel_ppl": 133.1
+  },
+  {
+    "date": "2019-05-05",
+    "unleaded_ppl": 118.5,
+    "diesel_ppl": 128.4
+  },
+  {
+    "date": "2019-05-12",
+    "unleaded_ppl": 122.6,
+    "diesel_ppl": 130.2
+  },
+  {
+    "date": "2019-05-19",
+    "unleaded_ppl": 123.2,
+    "diesel_ppl": 132.5
+  },
+  {
+    "date": "2019-05-26",
+    "unleaded_ppl": 118.2,
+    "diesel_ppl": 127.8
+  },
+  {
+    "date": "2019-06-02",
+    "unleaded_ppl": 122.6,
+    "diesel_ppl": 130.5
+  },
+  {
+    "date": "2019-06-09",
+    "unleaded_ppl": 119.4,
+    "diesel_ppl": 133.5
+  },
+  {
+    "date": "2019-06-16",
+    "unleaded_ppl": 122.5,
+    "diesel_ppl": 130.5
+  },
+  {
+    "date": "2019-06-23",
+    "unleaded_ppl": 117.9,
+    "diesel_ppl": 131.1
+  },
+  {
+    "date": "2019-06-30",
+    "unleaded_ppl": 121.8,
+    "diesel_ppl": 129.3
+  },
+  {
+    "date": "2019-07-07",
+    "unleaded_ppl": 122.5,
+    "diesel_ppl": 132.0
+  },
+  {
+    "date": "2019-07-14",
+    "unleaded_ppl": 122.0,
+    "diesel_ppl": 132.3
+  },
+  {
+    "date": "2019-07-21",
+    "unleaded_ppl": 118.3,
+    "diesel_ppl": 128.4
+  },
+  {
+    "date": "2019-07-28",
+    "unleaded_ppl": 121.8,
+    "diesel_ppl": 133.5
+  },
+  {
+    "date": "2019-08-04",
+    "unleaded_ppl": 118.4,
+    "diesel_ppl": 132.8
+  },
+  {
+    "date": "2019-08-11",
+    "unleaded_ppl": 123.5,
+    "diesel_ppl": 132.1
+  },
+  {
+    "date": "2019-08-18",
+    "unleaded_ppl": 123.2,
+    "diesel_ppl": 132.4
+  },
+  {
+    "date": "2019-08-25",
+    "unleaded_ppl": 123.1,
+    "diesel_ppl": 130.5
+  },
+  {
+    "date": "2019-09-01",
+    "unleaded_ppl": 120.2,
+    "diesel_ppl": 130.7
+  },
+  {
+    "date": "2019-09-08",
+    "unleaded_ppl": 124.1,
+    "diesel_ppl": 129.4
+  },
+  {
+    "date": "2019-09-15",
+    "unleaded_ppl": 122.0,
+    "diesel_ppl": 128.7
+  },
+  {
+    "date": "2019-09-22",
+    "unleaded_ppl": 124.2,
+    "diesel_ppl": 130.4
+  },
+  {
+    "date": "2019-09-29",
+    "unleaded_ppl": 124.4,
+    "diesel_ppl": 130.2
+  },
+  {
+    "date": "2019-10-06",
+    "unleaded_ppl": 118.8,
+    "diesel_ppl": 130.5
+  },
+  {
+    "date": "2019-10-13",
+    "unleaded_ppl": 120.6,
+    "diesel_ppl": 129.3
+  },
+  {
+    "date": "2019-10-20",
+    "unleaded_ppl": 123.6,
+    "diesel_ppl": 133.5
+  },
+  {
+    "date": "2019-10-27",
+    "unleaded_ppl": 119.8,
+    "diesel_ppl": 129.6
+  },
+  {
+    "date": "2019-11-03",
+    "unleaded_ppl": 120.4,
+    "diesel_ppl": 133.6
+  },
+  {
+    "date": "2019-11-10",
+    "unleaded_ppl": 119.5,
+    "diesel_ppl": 132.2
+  },
+  {
+    "date": "2019-11-17",
+    "unleaded_ppl": 122.3,
+    "diesel_ppl": 133.1
+  },
+  {
+    "date": "2019-11-24",
+    "unleaded_ppl": 124.7,
+    "diesel_ppl": 130.9
+  },
+  {
+    "date": "2019-12-01",
+    "unleaded_ppl": 121.2,
+    "diesel_ppl": 131.7
+  },
+  {
+    "date": "2019-12-08",
+    "unleaded_ppl": 124.7,
+    "diesel_ppl": 130.3
+  },
+  {
+    "date": "2019-12-15",
+    "unleaded_ppl": 119.6,
+    "diesel_ppl": 133.7
+  },
+  {
+    "date": "2019-12-22",
+    "unleaded_ppl": 119.7,
+    "diesel_ppl": 132.8
+  },
+  {
+    "date": "2019-12-29",
+    "unleaded_ppl": 124.8,
+    "diesel_ppl": 134.8
+  },
+  {
+    "date": "2020-01-05",
+    "unleaded_ppl": 118.7,
+    "diesel_ppl": 129.4
+  },
+  {
+    "date": "2020-01-12",
+    "unleaded_ppl": 117.9,
+    "diesel_ppl": 126.8
+  },
+  {
+    "date": "2020-01-19",
+    "unleaded_ppl": 114.9,
+    "diesel_ppl": 127.2
+  },
+  {
+    "date": "2020-01-26",
+    "unleaded_ppl": 114.8,
+    "diesel_ppl": 124.0
+  },
+  {
+    "date": "2020-02-02",
+    "unleaded_ppl": 114.7,
+    "diesel_ppl": 124.3
+  },
+  {
+    "date": "2020-02-09",
+    "unleaded_ppl": 110.7,
+    "diesel_ppl": 119.5
+  },
+  {
+    "date": "2020-02-16",
+    "unleaded_ppl": 112.0,
+    "diesel_ppl": 121.0
+  },
+  {
+    "date": "2020-02-23",
+    "unleaded_ppl": 109.1,
+    "diesel_ppl": 119.2
+  },
+  {
+    "date": "2020-03-01",
+    "unleaded_ppl": 109.0,
+    "diesel_ppl": 115.9
+  },
+  {
+    "date": "2020-03-08",
+    "unleaded_ppl": 107.6,
+    "diesel_ppl": 114.3
+  },
+  {
+    "date": "2020-03-15",
+    "unleaded_ppl": 105.0,
+    "diesel_ppl": 113.4
+  },
+  {
+    "date": "2020-03-22",
+    "unleaded_ppl": 104.1,
+    "diesel_ppl": 112.4
+  },
+  {
+    "date": "2020-03-29",
+    "unleaded_ppl": 104.0,
+    "diesel_ppl": 112.2
+  },
+  {
+    "date": "2020-04-05",
+    "unleaded_ppl": 104.4,
+    "diesel_ppl": 111.3
+  },
+  {
+    "date": "2020-04-12",
+    "unleaded_ppl": 106.0,
+    "diesel_ppl": 112.2
+  },
+  {
+    "date": "2020-04-19",
+    "unleaded_ppl": 104.7,
+    "diesel_ppl": 109.8
+  },
+  {
+    "date": "2020-04-26",
+    "unleaded_ppl": 104.5,
+    "diesel_ppl": 113.1
+  },
+  {
+    "date": "2020-05-03",
+    "unleaded_ppl": 104.3,
+    "diesel_ppl": 111.1
+  },
+  {
+    "date": "2020-05-10",
+    "unleaded_ppl": 104.5,
+    "diesel_ppl": 110.9
+  },
+  {
+    "date": "2020-05-17",
+    "unleaded_ppl": 105.3,
+    "diesel_ppl": 113.1
+  },
+  {
+    "date": "2020-05-24",
+    "unleaded_ppl": 105.0,
+    "diesel_ppl": 112.7
+  },
+  {
+    "date": "2020-05-31",
+    "unleaded_ppl": 105.7,
+    "diesel_ppl": 109.8
+  },
+  {
+    "date": "2020-06-07",
+    "unleaded_ppl": 103.9,
+    "diesel_ppl": 111.3
+  },
+  {
+    "date": "2020-06-14",
+    "unleaded_ppl": 107.5,
+    "diesel_ppl": 114.9
+  },
+  {
+    "date": "2020-06-21",
+    "unleaded_ppl": 107.2,
+    "diesel_ppl": 115.5
+  },
+  {
+    "date": "2020-06-28",
+    "unleaded_ppl": 108.3,
+    "diesel_ppl": 111.4
+  },
+  {
+    "date": "2020-07-05",
+    "unleaded_ppl": 103.1,
+    "diesel_ppl": 114.1
+  },
+  {
+    "date": "2020-07-12",
+    "unleaded_ppl": 106.4,
+    "diesel_ppl": 110.2
+  },
+  {
+    "date": "2020-07-19",
+    "unleaded_ppl": 106.6,
+    "diesel_ppl": 110.8
+  },
+  {
+    "date": "2020-07-26",
+    "unleaded_ppl": 106.7,
+    "diesel_ppl": 110.2
+  },
+  {
+    "date": "2020-08-02",
+    "unleaded_ppl": 108.5,
+    "diesel_ppl": 114.6
+  },
+  {
+    "date": "2020-08-09",
+    "unleaded_ppl": 106.9,
+    "diesel_ppl": 112.3
+  },
+  {
+    "date": "2020-08-16",
+    "unleaded_ppl": 108.8,
+    "diesel_ppl": 111.0
+  },
+  {
+    "date": "2020-08-23",
+    "unleaded_ppl": 108.6,
+    "diesel_ppl": 112.2
+  },
+  {
+    "date": "2020-08-30",
+    "unleaded_ppl": 103.7,
+    "diesel_ppl": 113.7
+  },
+  {
+    "date": "2020-09-06",
+    "unleaded_ppl": 107.4,
+    "diesel_ppl": 113.9
+  },
+  {
+    "date": "2020-09-13",
+    "unleaded_ppl": 104.9,
+    "diesel_ppl": 114.7
+  },
+  {
+    "date": "2020-09-20",
+    "unleaded_ppl": 107.2,
+    "diesel_ppl": 114.1
+  },
+  {
+    "date": "2020-09-27",
+    "unleaded_ppl": 108.6,
+    "diesel_ppl": 112.2
+  },
+  {
+    "date": "2020-10-04",
+    "unleaded_ppl": 104.1,
+    "diesel_ppl": 114.6
+  },
+  {
+    "date": "2020-10-11",
+    "unleaded_ppl": 104.7,
+    "diesel_ppl": 113.9
+  },
+  {
+    "date": "2020-10-18",
+    "unleaded_ppl": 103.6,
+    "diesel_ppl": 110.7
+  },
+  {
+    "date": "2020-10-25",
+    "unleaded_ppl": 104.3,
+    "diesel_ppl": 110.3
+  },
+  {
+    "date": "2020-11-01",
+    "unleaded_ppl": 103.9,
+    "diesel_ppl": 110.4
+  },
+  {
+    "date": "2020-11-08",
+    "unleaded_ppl": 103.7,
+    "diesel_ppl": 115.3
+  },
+  {
+    "date": "2020-11-15",
+    "unleaded_ppl": 105.4,
+    "diesel_ppl": 112.4
+  },
+  {
+    "date": "2020-11-22",
+    "unleaded_ppl": 104.9,
+    "diesel_ppl": 112.2
+  },
+  {
+    "date": "2020-11-29",
+    "unleaded_ppl": 103.6,
+    "diesel_ppl": 114.8
+  },
+  {
+    "date": "2020-12-06",
+    "unleaded_ppl": 104.1,
+    "diesel_ppl": 114.2
+  },
+  {
+    "date": "2020-12-13",
+    "unleaded_ppl": 103.1,
+    "diesel_ppl": 112.3
+  },
+  {
+    "date": "2020-12-20",
+    "unleaded_ppl": 107.0,
+    "diesel_ppl": 112.6
+  },
+  {
+    "date": "2020-12-27",
+    "unleaded_ppl": 107.7,
+    "diesel_ppl": 115.5
+  },
+  {
+    "date": "2021-01-03",
+    "unleaded_ppl": 108.5,
+    "diesel_ppl": 114.5
+  },
+  {
+    "date": "2021-01-10",
+    "unleaded_ppl": 110.5,
+    "diesel_ppl": 113.3
+  },
+  {
+    "date": "2021-01-17",
+    "unleaded_ppl": 109.0,
+    "diesel_ppl": 115.3
+  },
+  {
+    "date": "2021-01-24",
+    "unleaded_ppl": 111.1,
+    "diesel_ppl": 116.8
+  },
+  {
+    "date": "2021-01-31",
+    "unleaded_ppl": 108.7,
+    "diesel_ppl": 114.3
+  },
+  {
+    "date": "2021-02-07",
+    "unleaded_ppl": 113.3,
+    "diesel_ppl": 119.0
+  },
+  {
+    "date": "2021-02-14",
+    "unleaded_ppl": 113.8,
+    "diesel_ppl": 115.5
+  },
+  {
+    "date": "2021-02-21",
+    "unleaded_ppl": 114.5,
+    "diesel_ppl": 119.2
+  },
+  {
+    "date": "2021-02-28",
+    "unleaded_ppl": 115.3,
+    "diesel_ppl": 116.8
+  },
+  {
+    "date": "2021-03-07",
+    "unleaded_ppl": 115.3,
+    "diesel_ppl": 120.3
+  },
+  {
+    "date": "2021-03-14",
+    "unleaded_ppl": 112.2,
+    "diesel_ppl": 119.2
+  },
+  {
+    "date": "2021-03-21",
+    "unleaded_ppl": 116.5,
+    "diesel_ppl": 119.7
+  },
+  {
+    "date": "2021-03-28",
+    "unleaded_ppl": 114.3,
+    "diesel_ppl": 123.8
+  },
+  {
+    "date": "2021-04-04",
+    "unleaded_ppl": 113.1,
+    "diesel_ppl": 125.2
+  },
+  {
+    "date": "2021-04-11",
+    "unleaded_ppl": 114.7,
+    "diesel_ppl": 124.6
+  },
+  {
+    "date": "2021-04-18",
+    "unleaded_ppl": 117.7,
+    "diesel_ppl": 125.7
+  },
+  {
+    "date": "2021-04-25",
+    "unleaded_ppl": 117.7,
+    "diesel_ppl": 122.7
+  },
+  {
+    "date": "2021-05-02",
+    "unleaded_ppl": 116.0,
+    "diesel_ppl": 127.1
+  },
+  {
+    "date": "2021-05-09",
+    "unleaded_ppl": 117.4,
+    "diesel_ppl": 128.8
+  },
+  {
+    "date": "2021-05-16",
+    "unleaded_ppl": 118.0,
+    "diesel_ppl": 126.0
+  },
+  {
+    "date": "2021-05-23",
+    "unleaded_ppl": 119.6,
+    "diesel_ppl": 124.7
+  },
+  {
+    "date": "2021-05-30",
+    "unleaded_ppl": 122.9,
+    "diesel_ppl": 130.1
+  },
+  {
+    "date": "2021-06-06",
+    "unleaded_ppl": 118.7,
+    "diesel_ppl": 131.5
+  },
+  {
+    "date": "2021-06-13",
+    "unleaded_ppl": 120.7,
+    "diesel_ppl": 128.2
+  },
+  {
+    "date": "2021-06-20",
+    "unleaded_ppl": 124.8,
+    "diesel_ppl": 133.2
+  },
+  {
+    "date": "2021-06-27",
+    "unleaded_ppl": 126.4,
+    "diesel_ppl": 129.7
+  },
+  {
+    "date": "2021-07-04",
+    "unleaded_ppl": 122.6,
+    "diesel_ppl": 134.5
+  },
+  {
+    "date": "2021-07-11",
+    "unleaded_ppl": 124.6,
+    "diesel_ppl": 133.2
+  },
+  {
+    "date": "2021-07-18",
+    "unleaded_ppl": 127.1,
+    "diesel_ppl": 136.0
+  },
+  {
+    "date": "2021-07-25",
+    "unleaded_ppl": 127.3,
+    "diesel_ppl": 131.1
+  },
+  {
+    "date": "2021-08-01",
+    "unleaded_ppl": 128.3,
+    "diesel_ppl": 131.8
+  },
+  {
+    "date": "2021-08-08",
+    "unleaded_ppl": 128.7,
+    "diesel_ppl": 137.3
+  },
+  {
+    "date": "2021-08-15",
+    "unleaded_ppl": 129.8,
+    "diesel_ppl": 136.6
+  },
+  {
+    "date": "2021-08-22",
+    "unleaded_ppl": 130.8,
+    "diesel_ppl": 138.9
+  },
+  {
+    "date": "2021-08-29",
+    "unleaded_ppl": 131.5,
+    "diesel_ppl": 139.2
+  },
+  {
+    "date": "2021-09-05",
+    "unleaded_ppl": 129.1,
+    "diesel_ppl": 135.2
+  },
+  {
+    "date": "2021-09-12",
+    "unleaded_ppl": 127.9,
+    "diesel_ppl": 138.3
+  },
+  {
+    "date": "2021-09-19",
+    "unleaded_ppl": 131.2,
+    "diesel_ppl": 141.2
+  },
+  {
+    "date": "2021-09-26",
+    "unleaded_ppl": 134.0,
+    "diesel_ppl": 138.4
+  },
+  {
+    "date": "2021-10-03",
+    "unleaded_ppl": 130.4,
+    "diesel_ppl": 140.0
+  },
+  {
+    "date": "2021-10-10",
+    "unleaded_ppl": 130.9,
+    "diesel_ppl": 141.1
+  },
+  {
+    "date": "2021-10-17",
+    "unleaded_ppl": 131.6,
+    "diesel_ppl": 139.9
+  },
+  {
+    "date": "2021-10-24",
+    "unleaded_ppl": 132.9,
+    "diesel_ppl": 141.5
+  },
+  {
+    "date": "2021-10-31",
+    "unleaded_ppl": 136.2,
+    "diesel_ppl": 141.4
+  },
+  {
+    "date": "2021-11-07",
+    "unleaded_ppl": 135.3,
+    "diesel_ppl": 143.2
+  },
+  {
+    "date": "2021-11-14",
+    "unleaded_ppl": 134.9,
+    "diesel_ppl": 144.8
+  },
+  {
+    "date": "2021-11-21",
+    "unleaded_ppl": 139.5,
+    "diesel_ppl": 143.4
+  },
+  {
+    "date": "2021-11-28",
+    "unleaded_ppl": 135.5,
+    "diesel_ppl": 148.0
+  },
+  {
+    "date": "2021-12-05",
+    "unleaded_ppl": 140.0,
+    "diesel_ppl": 146.5
+  },
+  {
+    "date": "2021-12-12",
+    "unleaded_ppl": 139.6,
+    "diesel_ppl": 150.2
+  },
+  {
+    "date": "2021-12-19",
+    "unleaded_ppl": 139.0,
+    "diesel_ppl": 145.9
+  },
+  {
+    "date": "2021-12-26",
+    "unleaded_ppl": 138.9,
+    "diesel_ppl": 147.7
+  },
+  {
+    "date": "2022-01-02",
+    "unleaded_ppl": 147.2,
+    "diesel_ppl": 156.9
+  },
+  {
+    "date": "2022-01-09",
+    "unleaded_ppl": 153.0,
+    "diesel_ppl": 159.5
+  },
+  {
+    "date": "2022-01-16",
+    "unleaded_ppl": 153.4,
+    "diesel_ppl": 160.6
+  },
+  {
+    "date": "2022-01-23",
+    "unleaded_ppl": 157.4,
+    "diesel_ppl": 165.4
+  },
+  {
+    "date": "2022-01-30",
+    "unleaded_ppl": 157.0,
+    "diesel_ppl": 170.0
+  },
+  {
+    "date": "2022-02-06",
+    "unleaded_ppl": 159.0,
+    "diesel_ppl": 171.9
+  },
+  {
+    "date": "2022-02-13",
+    "unleaded_ppl": 161.9,
+    "diesel_ppl": 175.7
+  },
+  {
+    "date": "2022-02-20",
+    "unleaded_ppl": 166.4,
+    "diesel_ppl": 174.6
+  },
+  {
+    "date": "2022-02-27",
+    "unleaded_ppl": 167.7,
+    "diesel_ppl": 177.5
+  },
+  {
+    "date": "2022-03-06",
+    "unleaded_ppl": 161.3,
+    "diesel_ppl": 169.4
+  },
+  {
+    "date": "2022-03-13",
+    "unleaded_ppl": 164.4,
+    "diesel_ppl": 171.5
+  },
+  {
+    "date": "2022-03-20",
+    "unleaded_ppl": 166.5,
+    "diesel_ppl": 173.3
+  },
+  {
+    "date": "2022-03-27",
+    "unleaded_ppl": 167.8,
+    "diesel_ppl": 174.6
+  },
+  {
+    "date": "2022-04-03",
+    "unleaded_ppl": 170.2,
+    "diesel_ppl": 173.6
+  },
+  {
+    "date": "2022-04-10",
+    "unleaded_ppl": 169.6,
+    "diesel_ppl": 175.2
+  },
+  {
+    "date": "2022-04-17",
+    "unleaded_ppl": 172.0,
+    "diesel_ppl": 177.3
+  },
+  {
+    "date": "2022-04-24",
+    "unleaded_ppl": 173.7,
+    "diesel_ppl": 180.2
+  },
+  {
+    "date": "2022-05-01",
+    "unleaded_ppl": 176.9,
+    "diesel_ppl": 180.6
+  },
+  {
+    "date": "2022-05-08",
+    "unleaded_ppl": 176.9,
+    "diesel_ppl": 180.4
+  },
+  {
+    "date": "2022-05-15",
+    "unleaded_ppl": 178.4,
+    "diesel_ppl": 181.5
+  },
+  {
+    "date": "2022-05-22",
+    "unleaded_ppl": 181.0,
+    "diesel_ppl": 184.1
+  },
+  {
+    "date": "2022-05-29",
+    "unleaded_ppl": 182.9,
+    "diesel_ppl": 184.8
+  },
+  {
+    "date": "2022-06-05",
+    "unleaded_ppl": 184.4,
+    "diesel_ppl": 185.4
+  },
+  {
+    "date": "2022-06-12",
+    "unleaded_ppl": 185.2,
+    "diesel_ppl": 189.5
+  },
+  {
+    "date": "2022-06-19",
+    "unleaded_ppl": 188.3,
+    "diesel_ppl": 188.5
+  },
+  {
+    "date": "2022-06-26",
+    "unleaded_ppl": 189.6,
+    "diesel_ppl": 190.3
+  },
+  {
+    "date": "2022-07-03",
+    "unleaded_ppl": 190.2,
+    "diesel_ppl": 192.9
+  },
+  {
+    "date": "2022-07-10",
+    "unleaded_ppl": 191.2,
+    "diesel_ppl": 190.3
+  },
+  {
+    "date": "2022-07-17",
+    "unleaded_ppl": 191.5,
+    "diesel_ppl": 191.5
+  },
+  {
+    "date": "2022-07-24",
+    "unleaded_ppl": 189.7,
+    "diesel_ppl": 192.9
+  },
+  {
+    "date": "2022-07-31",
+    "unleaded_ppl": 189.8,
+    "diesel_ppl": 192.9
+  },
+  {
+    "date": "2022-08-07",
+    "unleaded_ppl": 189.3,
+    "diesel_ppl": 189.1
+  },
+  {
+    "date": "2022-08-14",
+    "unleaded_ppl": 188.6,
+    "diesel_ppl": 190.5
+  },
+  {
+    "date": "2022-08-21",
+    "unleaded_ppl": 187.2,
+    "diesel_ppl": 188.5
+  },
+  {
+    "date": "2022-08-28",
+    "unleaded_ppl": 184.3,
+    "diesel_ppl": 189.3
+  },
+  {
+    "date": "2022-09-04",
+    "unleaded_ppl": 183.1,
+    "diesel_ppl": 187.8
+  },
+  {
+    "date": "2022-09-11",
+    "unleaded_ppl": 183.6,
+    "diesel_ppl": 186.7
+  },
+  {
+    "date": "2022-09-18",
+    "unleaded_ppl": 179.6,
+    "diesel_ppl": 184.2
+  },
+  {
+    "date": "2022-09-25",
+    "unleaded_ppl": 178.8,
+    "diesel_ppl": 183.8
+  },
+  {
+    "date": "2022-10-02",
+    "unleaded_ppl": 176.4,
+    "diesel_ppl": 183.2
+  },
+  {
+    "date": "2022-10-09",
+    "unleaded_ppl": 176.1,
+    "diesel_ppl": 178.7
+  },
+  {
+    "date": "2022-10-16",
+    "unleaded_ppl": 174.8,
+    "diesel_ppl": 177.1
+  },
+  {
+    "date": "2022-10-23",
+    "unleaded_ppl": 173.9,
+    "diesel_ppl": 176.4
+  },
+  {
+    "date": "2022-10-30",
+    "unleaded_ppl": 170.6,
+    "diesel_ppl": 178.3
+  },
+  {
+    "date": "2022-11-06",
+    "unleaded_ppl": 169.9,
+    "diesel_ppl": 175.9
+  },
+  {
+    "date": "2022-11-13",
+    "unleaded_ppl": 169.4,
+    "diesel_ppl": 175.2
+  },
+  {
+    "date": "2022-11-20",
+    "unleaded_ppl": 165.2,
+    "diesel_ppl": 173.3
+  },
+  {
+    "date": "2022-11-27",
+    "unleaded_ppl": 166.0,
+    "diesel_ppl": 171.8
+  },
+  {
+    "date": "2022-12-04",
+    "unleaded_ppl": 162.1,
+    "diesel_ppl": 171.6
+  },
+  {
+    "date": "2022-12-11",
+    "unleaded_ppl": 161.7,
+    "diesel_ppl": 170.0
+  },
+  {
+    "date": "2022-12-18",
+    "unleaded_ppl": 160.7,
+    "diesel_ppl": 169.1
+  },
+  {
+    "date": "2022-12-25",
+    "unleaded_ppl": 157.7,
+    "diesel_ppl": 165.5
+  },
+  {
+    "date": "2023-01-01",
+    "unleaded_ppl": 149.2,
+    "diesel_ppl": 158.8
+  },
+  {
+    "date": "2023-01-08",
+    "unleaded_ppl": 148.2,
+    "diesel_ppl": 158.9
+  },
+  {
+    "date": "2023-01-15",
+    "unleaded_ppl": 148.1,
+    "diesel_ppl": 160.3
+  },
+  {
+    "date": "2023-01-22",
+    "unleaded_ppl": 149.1,
+    "diesel_ppl": 157.0
+  },
+  {
+    "date": "2023-01-29",
+    "unleaded_ppl": 147.0,
+    "diesel_ppl": 160.8
+  },
+  {
+    "date": "2023-02-05",
+    "unleaded_ppl": 150.1,
+    "diesel_ppl": 160.5
+  },
+  {
+    "date": "2023-02-12",
+    "unleaded_ppl": 150.6,
+    "diesel_ppl": 159.6
+  },
+  {
+    "date": "2023-02-19",
+    "unleaded_ppl": 150.4,
+    "diesel_ppl": 160.4
+  },
+  {
+    "date": "2023-02-26",
+    "unleaded_ppl": 150.0,
+    "diesel_ppl": 161.0
+  },
+  {
+    "date": "2023-03-05",
+    "unleaded_ppl": 149.6,
+    "diesel_ppl": 158.2
+  },
+  {
+    "date": "2023-03-12",
+    "unleaded_ppl": 150.7,
+    "diesel_ppl": 160.2
+  },
+  {
+    "date": "2023-03-19",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 158.6
+  },
+  {
+    "date": "2023-03-26",
+    "unleaded_ppl": 147.9,
+    "diesel_ppl": 157.1
+  },
+  {
+    "date": "2023-04-02",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 157.9
+  },
+  {
+    "date": "2023-04-09",
+    "unleaded_ppl": 148.7,
+    "diesel_ppl": 157.1
+  },
+  {
+    "date": "2023-04-16",
+    "unleaded_ppl": 147.5,
+    "diesel_ppl": 159.7
+  },
+  {
+    "date": "2023-04-23",
+    "unleaded_ppl": 149.9,
+    "diesel_ppl": 158.6
+  },
+  {
+    "date": "2023-04-30",
+    "unleaded_ppl": 148.3,
+    "diesel_ppl": 160.5
+  },
+  {
+    "date": "2023-05-07",
+    "unleaded_ppl": 147.1,
+    "diesel_ppl": 159.2
+  },
+  {
+    "date": "2023-05-14",
+    "unleaded_ppl": 150.1,
+    "diesel_ppl": 160.1
+  },
+  {
+    "date": "2023-05-21",
+    "unleaded_ppl": 148.7,
+    "diesel_ppl": 159.2
+  },
+  {
+    "date": "2023-05-28",
+    "unleaded_ppl": 148.0,
+    "diesel_ppl": 157.2
+  },
+  {
+    "date": "2023-06-04",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 158.3
+  },
+  {
+    "date": "2023-06-11",
+    "unleaded_ppl": 150.9,
+    "diesel_ppl": 159.5
+  },
+  {
+    "date": "2023-06-18",
+    "unleaded_ppl": 148.0,
+    "diesel_ppl": 160.5
+  },
+  {
+    "date": "2023-06-25",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 160.8
+  },
+  {
+    "date": "2023-07-02",
+    "unleaded_ppl": 148.8,
+    "diesel_ppl": 157.6
+  },
+  {
+    "date": "2023-07-09",
+    "unleaded_ppl": 148.5,
+    "diesel_ppl": 160.1
+  },
+  {
+    "date": "2023-07-16",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 159.0
+  },
+  {
+    "date": "2023-07-23",
+    "unleaded_ppl": 147.3,
+    "diesel_ppl": 158.4
+  },
+  {
+    "date": "2023-07-30",
+    "unleaded_ppl": 148.0,
+    "diesel_ppl": 157.6
+  },
+  {
+    "date": "2023-08-06",
+    "unleaded_ppl": 148.7,
+    "diesel_ppl": 158.3
+  },
+  {
+    "date": "2023-08-13",
+    "unleaded_ppl": 147.7,
+    "diesel_ppl": 157.2
+  },
+  {
+    "date": "2023-08-20",
+    "unleaded_ppl": 146.4,
+    "diesel_ppl": 157.4
+  },
+  {
+    "date": "2023-08-27",
+    "unleaded_ppl": 146.9,
+    "diesel_ppl": 156.7
+  },
+  {
+    "date": "2023-09-03",
+    "unleaded_ppl": 147.8,
+    "diesel_ppl": 157.4
+  },
+  {
+    "date": "2023-09-10",
+    "unleaded_ppl": 146.8,
+    "diesel_ppl": 156.5
+  },
+  {
+    "date": "2023-09-17",
+    "unleaded_ppl": 148.5,
+    "diesel_ppl": 156.9
+  },
+  {
+    "date": "2023-09-24",
+    "unleaded_ppl": 146.4,
+    "diesel_ppl": 157.3
+  },
+  {
+    "date": "2023-10-01",
+    "unleaded_ppl": 145.7,
+    "diesel_ppl": 154.3
+  },
+  {
+    "date": "2023-10-08",
+    "unleaded_ppl": 146.3,
+    "diesel_ppl": 155.3
+  },
+  {
+    "date": "2023-10-15",
+    "unleaded_ppl": 145.7,
+    "diesel_ppl": 155.7
+  },
+  {
+    "date": "2023-10-22",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 154.0
+  },
+  {
+    "date": "2023-10-29",
+    "unleaded_ppl": 147.8,
+    "diesel_ppl": 155.0
+  },
+  {
+    "date": "2023-11-05",
+    "unleaded_ppl": 145.0,
+    "diesel_ppl": 154.5
+  },
+  {
+    "date": "2023-11-12",
+    "unleaded_ppl": 147.2,
+    "diesel_ppl": 154.9
+  },
+  {
+    "date": "2023-11-19",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 153.3
+  },
+  {
+    "date": "2023-11-26",
+    "unleaded_ppl": 145.3,
+    "diesel_ppl": 154.5
+  },
+  {
+    "date": "2023-12-03",
+    "unleaded_ppl": 146.1,
+    "diesel_ppl": 152.4
+  },
+  {
+    "date": "2023-12-10",
+    "unleaded_ppl": 146.5,
+    "diesel_ppl": 152.9
+  },
+  {
+    "date": "2023-12-17",
+    "unleaded_ppl": 146.1,
+    "diesel_ppl": 153.1
+  },
+  {
+    "date": "2023-12-24",
+    "unleaded_ppl": 146.7,
+    "diesel_ppl": 151.6
+  },
+  {
+    "date": "2023-12-31",
+    "unleaded_ppl": 146.5,
+    "diesel_ppl": 152.0
+  },
+  {
+    "date": "2024-01-07",
+    "unleaded_ppl": 146.4,
+    "diesel_ppl": 152.7
+  },
+  {
+    "date": "2024-01-14",
+    "unleaded_ppl": 144.2,
+    "diesel_ppl": 153.9
+  },
+  {
+    "date": "2024-01-21",
+    "unleaded_ppl": 144.4,
+    "diesel_ppl": 151.2
+  },
+  {
+    "date": "2024-01-28",
+    "unleaded_ppl": 146.1,
+    "diesel_ppl": 151.1
+  },
+  {
+    "date": "2024-02-04",
+    "unleaded_ppl": 144.2,
+    "diesel_ppl": 152.4
+  },
+  {
+    "date": "2024-02-11",
+    "unleaded_ppl": 147.8,
+    "diesel_ppl": 152.5
+  },
+  {
+    "date": "2024-02-18",
+    "unleaded_ppl": 147.7,
+    "diesel_ppl": 151.6
+  },
+  {
+    "date": "2024-02-25",
+    "unleaded_ppl": 145.4,
+    "diesel_ppl": 152.2
+  },
+  {
+    "date": "2024-03-03",
+    "unleaded_ppl": 147.6,
+    "diesel_ppl": 151.4
+  },
+  {
+    "date": "2024-03-10",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 153.6
+  },
+  {
+    "date": "2024-03-17",
+    "unleaded_ppl": 147.8,
+    "diesel_ppl": 151.9
+  },
+  {
+    "date": "2024-03-24",
+    "unleaded_ppl": 147.3,
+    "diesel_ppl": 151.5
+  },
+  {
+    "date": "2024-03-31",
+    "unleaded_ppl": 147.6,
+    "diesel_ppl": 152.9
+  },
+  {
+    "date": "2024-04-07",
+    "unleaded_ppl": 147.0,
+    "diesel_ppl": 151.6
+  },
+  {
+    "date": "2024-04-14",
+    "unleaded_ppl": 147.6,
+    "diesel_ppl": 152.3
+  },
+  {
+    "date": "2024-04-21",
+    "unleaded_ppl": 146.1,
+    "diesel_ppl": 150.0
+  },
+  {
+    "date": "2024-04-28",
+    "unleaded_ppl": 146.7,
+    "diesel_ppl": 153.3
+  },
+  {
+    "date": "2024-05-05",
+    "unleaded_ppl": 145.7,
+    "diesel_ppl": 150.5
+  },
+  {
+    "date": "2024-05-12",
+    "unleaded_ppl": 147.6,
+    "diesel_ppl": 152.1
+  },
+  {
+    "date": "2024-05-19",
+    "unleaded_ppl": 148.0,
+    "diesel_ppl": 150.1
+  },
+  {
+    "date": "2024-05-26",
+    "unleaded_ppl": 144.3,
+    "diesel_ppl": 151.6
+  },
+  {
+    "date": "2024-06-02",
+    "unleaded_ppl": 146.0,
+    "diesel_ppl": 151.5
+  },
+  {
+    "date": "2024-06-09",
+    "unleaded_ppl": 144.6,
+    "diesel_ppl": 150.2
+  },
+  {
+    "date": "2024-06-16",
+    "unleaded_ppl": 146.5,
+    "diesel_ppl": 153.0
+  },
+  {
+    "date": "2024-06-23",
+    "unleaded_ppl": 144.9,
+    "diesel_ppl": 151.1
+  },
+  {
+    "date": "2024-06-30",
+    "unleaded_ppl": 145.7,
+    "diesel_ppl": 152.2
+  },
+  {
+    "date": "2024-07-07",
+    "unleaded_ppl": 145.3,
+    "diesel_ppl": 152.4
+  },
+  {
+    "date": "2024-07-14",
+    "unleaded_ppl": 144.4,
+    "diesel_ppl": 153.4
+  },
+  {
+    "date": "2024-07-21",
+    "unleaded_ppl": 147.3,
+    "diesel_ppl": 151.3
+  },
+  {
+    "date": "2024-07-28",
+    "unleaded_ppl": 147.1,
+    "diesel_ppl": 150.4
+  },
+  {
+    "date": "2024-08-04",
+    "unleaded_ppl": 147.4,
+    "diesel_ppl": 150.2
+  },
+  {
+    "date": "2024-08-11",
+    "unleaded_ppl": 145.6,
+    "diesel_ppl": 151.7
+  },
+  {
+    "date": "2024-08-18",
+    "unleaded_ppl": 144.1,
+    "diesel_ppl": 150.2
+  },
+  {
+    "date": "2024-08-25",
+    "unleaded_ppl": 145.6,
+    "diesel_ppl": 153.5
+  },
+  {
+    "date": "2024-09-01",
+    "unleaded_ppl": 146.8,
+    "diesel_ppl": 153.4
+  },
+  {
+    "date": "2024-09-08",
+    "unleaded_ppl": 146.4,
+    "diesel_ppl": 151.7
+  },
+  {
+    "date": "2024-09-15",
+    "unleaded_ppl": 146.2,
+    "diesel_ppl": 150.4
+  },
+  {
+    "date": "2024-09-22",
+    "unleaded_ppl": 145.6,
+    "diesel_ppl": 151.2
+  },
+  {
+    "date": "2024-09-29",
+    "unleaded_ppl": 145.4,
+    "diesel_ppl": 151.6
+  },
+  {
+    "date": "2024-10-06",
+    "unleaded_ppl": 145.3,
+    "diesel_ppl": 153.8
+  },
+  {
+    "date": "2024-10-13",
+    "unleaded_ppl": 146.8,
+    "diesel_ppl": 153.4
+  },
+  {
+    "date": "2024-10-20",
+    "unleaded_ppl": 146.3,
+    "diesel_ppl": 152.0
+  },
+  {
+    "date": "2024-10-27",
+    "unleaded_ppl": 145.4,
+    "diesel_ppl": 153.1
+  },
+  {
+    "date": "2024-11-03",
+    "unleaded_ppl": 146.3,
+    "diesel_ppl": 154.0
+  },
+  {
+    "date": "2024-11-10",
+    "unleaded_ppl": 145.6,
+    "diesel_ppl": 152.1
+  },
+  {
+    "date": "2024-11-17",
+    "unleaded_ppl": 146.2,
+    "diesel_ppl": 151.7
+  },
+  {
+    "date": "2024-11-24",
+    "unleaded_ppl": 147.0,
+    "diesel_ppl": 150.2
+  },
+  {
+    "date": "2024-12-01",
+    "unleaded_ppl": 147.3,
+    "diesel_ppl": 151.6
+  },
+  {
+    "date": "2024-12-08",
+    "unleaded_ppl": 144.6,
+    "diesel_ppl": 150.3
+  },
+  {
+    "date": "2024-12-15",
+    "unleaded_ppl": 144.2,
+    "diesel_ppl": 150.1
+  },
+  {
+    "date": "2024-12-22",
+    "unleaded_ppl": 146.8,
+    "diesel_ppl": 151.2
+  },
+  {
+    "date": "2024-12-29",
+    "unleaded_ppl": 147.1,
+    "diesel_ppl": 153.1
+  },
+  {
+    "date": "2025-01-05",
+    "unleaded_ppl": 144.2,
+    "diesel_ppl": 148.9
+  },
+  {
+    "date": "2025-01-12",
+    "unleaded_ppl": 143.2,
+    "diesel_ppl": 149.2
+  },
+  {
+    "date": "2025-01-19",
+    "unleaded_ppl": 143.9,
+    "diesel_ppl": 149.3
+  },
+  {
+    "date": "2025-01-26",
+    "unleaded_ppl": 142.9,
+    "diesel_ppl": 149.5
+  },
+  {
+    "date": "2025-02-02",
+    "unleaded_ppl": 142.4,
+    "diesel_ppl": 150.3
+  },
+  {
+    "date": "2025-02-09",
+    "unleaded_ppl": 143.6,
+    "diesel_ppl": 148.9
+  },
+  {
+    "date": "2025-02-16",
+    "unleaded_ppl": 141.5,
+    "diesel_ppl": 150.0
+  },
+  {
+    "date": "2025-02-23",
+    "unleaded_ppl": 141.1,
+    "diesel_ppl": 148.4
+  },
+  {
+    "date": "2025-03-02",
+    "unleaded_ppl": 142.8,
+    "diesel_ppl": 148.7
+  },
+  {
+    "date": "2025-03-09",
+    "unleaded_ppl": 141.5,
+    "diesel_ppl": 149.3
+  },
+  {
+    "date": "2025-03-16",
+    "unleaded_ppl": 141.2,
+    "diesel_ppl": 149.3
+  },
+  {
+    "date": "2025-03-23",
+    "unleaded_ppl": 141.8,
+    "diesel_ppl": 148.8
+  },
+  {
+    "date": "2025-03-30",
+    "unleaded_ppl": 142.4,
+    "diesel_ppl": 148.2
+  },
+  {
+    "date": "2025-04-06",
+    "unleaded_ppl": 141.0,
+    "diesel_ppl": 149.6
+  },
+  {
+    "date": "2025-04-13",
+    "unleaded_ppl": 142.6,
+    "diesel_ppl": 150.6
+  },
+  {
+    "date": "2025-04-20",
+    "unleaded_ppl": 142.4,
+    "diesel_ppl": 149.8
+  },
+  {
+    "date": "2025-04-27",
+    "unleaded_ppl": 141.0,
+    "diesel_ppl": 150.0
+  },
+  {
+    "date": "2025-05-04",
+    "unleaded_ppl": 142.6,
+    "diesel_ppl": 149.7
+  },
+  {
+    "date": "2025-05-11",
+    "unleaded_ppl": 140.0,
+    "diesel_ppl": 148.5
+  },
+  {
+    "date": "2025-05-18",
+    "unleaded_ppl": 142.7,
+    "diesel_ppl": 148.5
+  },
+  {
+    "date": "2025-05-25",
+    "unleaded_ppl": 140.9,
+    "diesel_ppl": 149.3
+  },
+  {
+    "date": "2025-06-01",
+    "unleaded_ppl": 141.5,
+    "diesel_ppl": 149.0
+  },
+  {
+    "date": "2025-06-08",
+    "unleaded_ppl": 141.2,
+    "diesel_ppl": 149.1
+  },
+  {
+    "date": "2025-06-15",
+    "unleaded_ppl": 140.8,
+    "diesel_ppl": 149.8
+  },
+  {
+    "date": "2025-06-22",
+    "unleaded_ppl": 141.9,
+    "diesel_ppl": 148.4
+  },
+  {
+    "date": "2025-06-29",
+    "unleaded_ppl": 141.6,
+    "diesel_ppl": 148.3
+  },
+  {
+    "date": "2025-07-06",
+    "unleaded_ppl": 140.8,
+    "diesel_ppl": 149.7
+  },
+  {
+    "date": "2025-07-13",
+    "unleaded_ppl": 139.9,
+    "diesel_ppl": 149.7
+  },
+  {
+    "date": "2025-07-20",
+    "unleaded_ppl": 139.6,
+    "diesel_ppl": 149.4
+  },
+  {
+    "date": "2025-07-27",
+    "unleaded_ppl": 140.4,
+    "diesel_ppl": 148.6
+  },
+  {
+    "date": "2025-08-03",
+    "unleaded_ppl": 140.3,
+    "diesel_ppl": 148.8
+  },
+  {
+    "date": "2025-08-10",
+    "unleaded_ppl": 140.0,
+    "diesel_ppl": 149.2
+  },
+  {
+    "date": "2025-08-17",
+    "unleaded_ppl": 141.6,
+    "diesel_ppl": 147.1
+  },
+  {
+    "date": "2025-08-24",
+    "unleaded_ppl": 140.0,
+    "diesel_ppl": 148.8
+  },
+  {
+    "date": "2025-08-31",
+    "unleaded_ppl": 141.2,
+    "diesel_ppl": 149.4
+  },
+  {
+    "date": "2025-09-07",
+    "unleaded_ppl": 140.7,
+    "diesel_ppl": 147.9
+  },
+  {
+    "date": "2025-09-14",
+    "unleaded_ppl": 138.7,
+    "diesel_ppl": 148.5
+  },
+  {
+    "date": "2025-09-21",
+    "unleaded_ppl": 138.9,
+    "diesel_ppl": 148.9
+  },
+  {
+    "date": "2025-09-28",
+    "unleaded_ppl": 140.6,
+    "diesel_ppl": 148.6
+  },
+  {
+    "date": "2025-10-05",
+    "unleaded_ppl": 139.6,
+    "diesel_ppl": 149.0
+  },
+  {
+    "date": "2025-10-12",
+    "unleaded_ppl": 138.6,
+    "diesel_ppl": 146.9
+  },
+  {
+    "date": "2025-10-19",
+    "unleaded_ppl": 140.3,
+    "diesel_ppl": 149.0
+  },
+  {
+    "date": "2025-10-26",
+    "unleaded_ppl": 138.4,
+    "diesel_ppl": 149.1
+  },
+  {
+    "date": "2025-11-02",
+    "unleaded_ppl": 138.4,
+    "diesel_ppl": 146.7
+  },
+  {
+    "date": "2025-11-09",
+    "unleaded_ppl": 139.7,
+    "diesel_ppl": 148.9
+  },
+  {
+    "date": "2025-11-16",
+    "unleaded_ppl": 139.0,
+    "diesel_ppl": 147.2
+  },
+  {
+    "date": "2025-11-23",
+    "unleaded_ppl": 138.4,
+    "diesel_ppl": 147.5
+  },
+  {
+    "date": "2025-11-30",
+    "unleaded_ppl": 138.3,
+    "diesel_ppl": 147.4
+  }
+]
