@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (FINAL - GUARANTEED ALL 17 POINTS)
+  // 3) Energy cap (ABSOLUTELY FINAL - ALL 17 QUARTERS GUARANTEED)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -221,26 +221,31 @@
       "offset": 20
     },
     
-    "data": { "url": "data/vis3_energy_cap.json" },
+    "data": { 
+      "url": "data/vis3_energy_cap.json"
+    },
     "width": "container",
     "height": 520,
+    "padding": {"bottom": 50},
     
     "encoding": {
       "x": {
         "field": "period_label",
-        "type": "nominal",
+        "type": "ordinal",
         "title": "Quarter",
-        "sort": null,
+        "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
         "axis": {
           "labelAngle": -45,
-          "labelFontSize": 10,
+          "labelFontSize": 11,
           "labelColor": "#475569",
-          "labelPadding": 8,
+          "labelPadding": 10,
           "domainColor": "#cbd5e1",
           "tickColor": "#cbd5e1",
           "titleFontSize": 13,
           "titleColor": "#0f172a",
-          "titlePadding": 10
+          "titlePadding": 15,
+          "labelAlign": "right",
+          "labelBaseline": "middle"
         }
       },
       "y": {
@@ -269,10 +274,9 @@
       {
         "mark": {
           "type": "line",
-          "strokeWidth": 2.5,
+          "strokeWidth": 3,
           "color": "#94a3b8",
-          "opacity": 0.5,
-          "point": false
+          "opacity": 0.6
         }
       },
       
@@ -280,7 +284,7 @@
       {
         "mark": {
           "type": "circle",
-          "size": 400,
+          "size": 450,
           "stroke": "white",
           "strokeWidth": 3
         },
@@ -301,7 +305,7 @@
               "titleFontSize": 12,
               "titleColor": "#0f172a",
               "labelColor": "#475569",
-              "symbolSize": 250,
+              "symbolSize": 300,
               "symbolType": "circle",
               "symbolStrokeWidth": 2,
               "offset": 10
@@ -323,15 +327,15 @@
         }
       },
       
-      // Value labels for key points
+      // Value labels for ALL key points including 950, 1105, 1173
       {
         "transform": [
-          { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
+          { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 1105 || datum.typical_annual_bill_gbp === 1173 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
         ],
         "mark": {
           "type": "text",
-          "dy": -24,
-          "fontSize": 13,
+          "dy": -26,
+          "fontSize": 12,
           "fontWeight": "bold",
           "color": "#0f172a"
         },
@@ -344,14 +348,14 @@
         }
       },
       
-      // "Pre-crisis" annotation
+      // "Pre-crisis low" annotation
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950" }
         ],
         "mark": {
           "type": "text",
-          "dy": 30,
+          "dy": 32,
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#10b981",
@@ -366,7 +370,7 @@
         ],
         "mark": {
           "type": "text",
-          "dy": 40,
+          "dy": 42,
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#dc2626",
@@ -504,7 +508,7 @@ const vis4 = {
 };
 
 // ======================================
-// 5) Rent vs house price inflation (FINAL — X-AXIS VISIBILITY FIX)
+// 5) Rent vs house price inflation (FIXED: visible x-axis + labels INSIDE plot)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -518,15 +522,18 @@ const vis5 = {
   "width": "container",
   "height": 360,
 
-  // Add bottom padding so axis/title aren’t cramped or clipped
-  "padding": { "top": 5, "left": 5, "right": 60, "bottom": 40 },
-
   "transform": [
     { "calculate": "toDate(datum.date)", "as": "d" },
     { "calculate": "toNumber(datum.value)", "as": "v" }
   ],
 
   "layer": [
+    // EXPLICIT x-axis baseline (so it is always visible)
+    {
+      "mark": { "type": "rule", "strokeWidth": 1.8, "color": "#2f2f2f" },
+      "encoding": { "y": { "datum": 0 } }
+    },
+
     // Raw monthly lines (background context)
     {
       "mark": { "type": "line", "strokeWidth": 1.2, "opacity": 0.16 },
@@ -539,14 +546,11 @@ const vis5 = {
             "format": "%Y",
             "tickCount": 7,
             "labelFontSize": 11,
-            "titleFontSize": 12,
-            "titlePadding": 14,
             "domain": true,
-            "domainColor": "#333",
-            "domainWidth": 1.6,
-            "tickColor": "#333",
-            "tickWidth": 1.2,
-            "labelPadding": 6
+            "domainColor": "#2f2f2f",
+            "domainWidth": 1.8,
+            "tickColor": "#2f2f2f",
+            "tickWidth": 1.2
           }
         },
         "y": {
@@ -616,7 +620,7 @@ const vis5 = {
       }
     },
 
-    // End-of-line labels (short, clean)
+    // Series labels INSIDE the plotting area (at the last date, shifted left)
     {
       "transform": [
         {
@@ -639,8 +643,9 @@ const vis5 = {
       ],
       "mark": {
         "type": "text",
-        "align": "left",
-        "dx": 6,
+        "align": "right",
+        "dx": -12,
+        "dy": -2,
         "fontSize": 11,
         "fontWeight": "bold"
       },
@@ -660,7 +665,8 @@ const vis5 = {
   "config": {
     "axis": { "labelFontSize": 11, "titleFontSize": 12 },
     "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
-    "view": { "stroke": null }
+    "view": { "stroke": null },
+    "padding": { "right": 10 }
   }
 };
   
