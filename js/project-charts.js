@@ -309,7 +309,7 @@
   };
 
   // --------------------------------------
-  // 4) Weekly fuel prices - ENHANCED STYLING ONLY
+  // 4) Weekly fuel prices - DIAGNOSTIC MINIMAL VERSION
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -325,7 +325,6 @@
     data: { url: "data/vis4_fuel_weekly.json" },
     width: "container",
     height: 400,
-
     padding: { top: 6, right: 6, bottom: 22, left: 6 },
 
     transform: [
@@ -339,99 +338,37 @@
     ],
 
     layer: [
-      // Crisis period background - ENHANCED COLOR
+      // LAYER 1: Raw data - let's see if THIS shows up properly
       {
-        mark: { type: "rect", color: "#fef3c7", opacity: 0.45 },
+        mark: { type: "line", strokeWidth: 1.5, opacity: 0.2 },
         encoding: {
-          x: { datum: "2022-03-01", type: "temporal" },
-          x2: { datum: "2022-08-01", type: "temporal" }
-        }
-      },
-
-      // Pre-pandemic baseline
-      {
-        mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
-        encoding: { y: { datum: 125 } }
-      },
-
-      // Baseline label
-      {
-        mark: { 
-          type: "text", 
-          align: "left", 
-          dx: 5, 
-          dy: -8, 
-          fontSize: 10.5, 
-          color: "#64748b",
-          fontWeight: 600,
-          text: "Pre-pandemic baseline (~125p)"
-        },
-        encoding: {
-          x: { datum: "2019-01-01", type: "temporal" },
-          y: { datum: 125, type: "quantitative" }
-        }
-      },
-
-      // Crisis annotation
-      {
-        mark: { 
-          type: "text", 
-          align: "center",
-          dy: -12,
-          fontSize: 11.5, 
-          color: "#92400e",
-          fontWeight: 700,
-          text: "Russia-Ukraine Crisis"
-        },
-        encoding: {
-          x: { datum: "2022-05-15", type: "temporal" },
-          y: { datum: 195, type: "quantitative" }
-        }
-      },
-
-      // Raw weekly data - SUBTLE
-      {
-        mark: { type: "line", strokeWidth: 1.2, opacity: 0.12 },
-        encoding: {
-          x: { field: "d", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
-          y: { field: "ppl", type: "quantitative", title: "Pence per litre" },
-          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
-        }
-      },
-
-      // 5-week moving average - BOLD with PROFESSIONAL COLORS
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["fuel"]
-          }
-        ],
-        mark: { type: "line", strokeWidth: 3.8 },
-        encoding: {
-          x: { field: "d", type: "temporal", title: "Date" },
-          y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre" },
-          color: {
-            field: "fuel",
-            type: "nominal",
+          x: { 
+            field: "d", 
+            type: "temporal", 
+            title: "Date",
+            axis: { format: "%Y", tickCount: 7, labelFontSize: 11 }
+          },
+          y: { 
+            field: "ppl", 
+            type: "quantitative", 
+            title: "Pence per litre",
+            axis: { labelFontSize: 11 }
+          },
+          color: { 
+            field: "fuel", 
+            type: "nominal", 
             scale: { range: ["#1e40af", "#d97706"] },
             legend: { 
               orient: "top", 
               direction: "horizontal", 
               title: null, 
-              padding: 13,
-              symbolSize: 220,
-              labelFontSize: 12.5,
-              labelLimit: 200,
-              symbolStrokeWidth: 3.8
+              padding: 10
             }
           }
         }
       },
 
-      // Enhanced tooltips with better styling
+      // LAYER 2: 5-week moving average
       {
         transform: [
           {
@@ -441,16 +378,39 @@
             groupby: ["fuel"]
           }
         ],
-        mark: { type: "point", filled: true, size: 65, opacity: 0 },
+        mark: { type: "line", strokeWidth: 3.5 },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "ppl_ma", type: "quantitative" },
-          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null },
+          color: {
+            field: "fuel",
+            type: "nominal",
+            scale: { range: ["#1e40af", "#d97706"] },
+            legend: null
+          }
+        }
+      },
+
+      // LAYER 3: Tooltips
+      {
+        transform: [
+          {
+            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
+            frame: [-2, 2],
+            sort: [{ field: "d", order: "ascending" }],
+            groupby: ["fuel"]
+          }
+        ],
+        mark: { type: "point", filled: true, size: 50, opacity: 0 },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "ppl_ma", type: "quantitative" },
+          color: { field: "fuel", type: "nominal", legend: null },
           tooltip: [
             { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
             { field: "fuel", type: "nominal", title: "Fuel type" },
-            { field: "ppl", type: "quantitative", title: "Weekly price (p)", format: ".1f" },
-            { field: "ppl_ma", type: "quantitative", title: "5-week average (p)", format: ".1f" }
+            { field: "ppl", type: "quantitative", title: "Weekly", format: ".1f" },
+            { field: "ppl_ma", type: "quantitative", title: "5-week avg", format: ".1f" }
           ]
         }
       }
@@ -458,7 +418,6 @@
 
     config: THEME
   };
-
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
