@@ -569,10 +569,8 @@
   };
 
 // --------------------------------------
-// 6) England regional map — centered + compact, with controlled legend band
+// 6) England regional map — compact + visually centered
 // --------------------------------------
-const LEGEND_BAND_6 = 64;
-
 const vis6 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   ...FIT,
@@ -587,8 +585,8 @@ const vis6 = {
   width: "container",
   height: 360,
 
-  // Reserve exactly LEGEND_BAND_6 pixels for the legend area
-  padding: { top: 6, bottom: LEGEND_BAND_6, left: 0, right: 0 },
+  // Legend needs space, but not a big empty band
+  padding: { top: 6, bottom: 50, left: 0, right: 0 },
 
   data: {
     url: UK_TOPO_URL,
@@ -607,17 +605,8 @@ const vis6 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  projection: {
-    type: "mercator",
-    center: [-2.6, 53.6],
-    scale: 2400,
-
-    // Center the map within the drawable area (height - legend band)
-    translate: [
-      { signal: "width/2" },
-      { signal: "(height - LEGEND_BAND_6)/2 + 20" }
-    ]
-  },
+  // Key: slightly larger scale + slightly LOWER latitude to shift map down
+  projection: { type: "mercator", center: [-2.6, 52.9], scale: 2550 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -626,20 +615,17 @@ const vis6 = {
       field: "rent_yoy",
       type: "quantitative",
       title: "Rent inflation (% y/y)",
-      scale: {
-        domain: [3, 10],
-        scheme: { name: "oranges", extent: [0.25, 0.98] },
-        unknown: "#e5e7eb"
-      },
+      scale: { domain: [3, 10], scheme: { name: "oranges", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
       legend: {
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 520,
+        // shorter bar = less need for padding
+        gradientLength: 420,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
         format: ".1f",
-        offset: 10
+        offset: 6
       }
     },
     tooltip: [
@@ -650,6 +636,7 @@ const vis6 = {
 
   config: THEME
 };
+
 
   // --------------------------------------
   // 7) Interactive regional trend
@@ -737,10 +724,8 @@ const vis6 = {
   };
 
 // --------------------------------------
-// 8) UK nations map — centered + compact, with controlled legend band
+// 8) UK nations map — compact + visually centered
 // --------------------------------------
-const LEGEND_BAND_8 = 64;
-
 const vis8 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   ...FIT,
@@ -755,7 +740,7 @@ const vis8 = {
   width: "container",
   height: 380,
 
-  padding: { top: 6, bottom: LEGEND_BAND_8, left: 0, right: 0 },
+  padding: { top: 6, bottom: 50, left: 0, right: 0 },
 
   data: {
     url: UK_TOPO_URL,
@@ -774,17 +759,8 @@ const vis8 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  projection: {
-    type: "mercator",
-    center: [-4.3, 55.7],
-    scale: 1300,
-
-    // Center the map within the drawable area (height - legend band)
-    translate: [
-      { signal: "width/2" },
-      { signal: "(height - LEGEND_BAND_8)/2 + 22" }
-    ]
-  },
+  // Key: slightly larger scale + slightly LOWER latitude to shift map down
+  projection: { type: "mercator", center: [-4.3, 54.7], scale: 1500 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 
@@ -793,20 +769,16 @@ const vis8 = {
       field: "rent_yoy",
       type: "quantitative",
       title: "Rent inflation (% y/y)",
-      scale: {
-        domain: [3, 9],
-        scheme: { name: "blues", extent: [0.25, 0.98] },
-        unknown: "#e5e7eb"
-      },
+      scale: { domain: [3, 9], scheme: { name: "blues", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
       legend: {
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 520,
+        gradientLength: 420,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
         format: ".1f",
-        offset: 10
+        offset: 6
       }
     },
     tooltip: [
