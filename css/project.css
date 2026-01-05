@@ -85,32 +85,39 @@
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
-  padding: 18px 18px 18px;
 
-  /* KEY FIX:
-     Do NOT clip Vega’s internal title/legend (they can sit near edges). */
-  overflow: visible;
+  /* Extra breathing room so Vega titles/legends are never clipped */
+  padding: 20px 22px 26px;
 
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+
+  /* Keep rounded corners; padding above ensures titles/legends fit */
+  overflow: hidden;
+
+  /* Critical: center the visualization inside the frame */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Reserve enough vertical space so titles + legends aren’t cramped */
+/* Reserve more vertical space; maps need more height than line charts */
 .vega-container{
   width: 100%;
-  min-height: 520px;          /* maps need more height than line charts */
-  display: flex;              /* center the rendered SVG/canvas block */
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 6px 0 10px;        /* breathing room for title/legend */
-}
-
-/* Optional: if you add class="vega-container vega-map" to maps, this will help */
-.vega-container.vega-map{
   min-height: 560px;
+  display: flex;                 /* enables true centering */
+  justify-content: center;       /* horizontal centering */
+  align-items: center;           /* vertical centering */
+  margin: 0;
+  padding: 0;
 }
 
-/* Source / notes */
+/* If you later want different heights, you can optionally add:
+   class="vega-container vega-map" on map holders and override here. */
+/*
+.vega-container.vega-map{ min-height: 600px; }
+.vega-container.vega-chart{ min-height: 420px; }
+*/
+
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
@@ -125,21 +132,23 @@
 /* ===== Vega-Embed hardening + centering ===== */
 .vega-embed{
   width: 100%;
+  display: flex;               /* make embed itself centerable */
+  justify-content: center;     /* center the inner view */
+  align-items: center;
 }
 
-/* Vega-Embed typically creates:
-   <div class="vega-embed">
-     <div>  <-- contains SVG/canvas
-     <div class="vega-actions">...</div>
-   </div>
-   We center ONLY the render container, not the actions menu. */
-.vega-embed > div:not(.vega-actions){
+/* Vega-Embed creates a nested div that holds the canvas/svg */
+.vega-embed > div{
   width: 100%;
   display: flex;
-  justify-content: center;   /* horizontal centering */
-  align-items: center;       /* vertical centering inside available height */
+  justify-content: center;
+  align-items: center;
+
+  /* Avoid odd left offsets from inherited styles */
+  margin: 0 auto;
 }
 
+/* Ensure rendered view never overflows the frame */
 .vega-embed,
 .vega-embed > div,
 .vega-embed canvas,
@@ -147,15 +156,20 @@
   max-width: 100%;
 }
 
-/* Prevent SVG/canvas from behaving like inline elements (causes odd baseline gaps) */
+/* Make the actual drawing surface centered in its parent */
 .vega-embed canvas,
 .vega-embed svg{
   display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Make sure the actions (if shown) don’t overlap the title area */
-.vega-actions{
-  margin-top: 8px;
+/* Vega action links (if enabled) should not push layout around */
+.vega-embed .vega-actions{
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  z-index: 2;
 }
 /* =============================== */
 
