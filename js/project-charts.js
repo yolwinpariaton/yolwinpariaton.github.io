@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (FIXED - NO FORMAT ERRORS)
+// 3) Energy cap (PROFESSIONAL PUBLICATION VERSION)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -213,10 +213,11 @@ const vis3 = {
   "title": {
     "text": "UK Energy Price Cap: The Crisis in Context",
     "subtitle": "Quarterly typical household bills (2021-2025) | Peak of £2,070 represents 118% increase from £950 baseline",
-    "fontSize": 18,
-    "subtitleFontSize": 11,
-    "color": "#1e293b",
-    "subtitleColor": "#64748b"
+    "fontSize": 19,
+    "subtitleFontSize": 12,
+    "color": "#0f172a",
+    "subtitleColor": "#64748b",
+    "anchor": "start"
   },
   
   "data": { 
@@ -224,9 +225,67 @@ const vis3 = {
   },
   
   "width": "container",
-  "height": 420,
+  "height": 450,
   
   "layer": [
+    // Background shading - Pre-crisis period
+    {
+      "data": {
+        "values": [
+          {"period_label": "2021 Q4"}, {"period_label": "2022 Q1"}, {"period_label": "2022 Q2"}
+        ]
+      },
+      "mark": {
+        "type": "bar",
+        "color": "#dbeafe",
+        "opacity": 0.3
+      },
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+        },
+        "y": {"datum": 2100}
+      }
+    },
+    
+    // Background shading - Crisis peak period
+    {
+      "data": {
+        "values": [
+          {"period_label": "2022 Q3"}, {"period_label": "2022 Q4"}, {"period_label": "2023 Q1"}
+        ]
+      },
+      "mark": {
+        "type": "bar",
+        "color": "#fef3c7",
+        "opacity": 0.35
+      },
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+        },
+        "y": {"datum": 2100}
+      }
+    },
+    
+    // Reference line at £1,070
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [4, 4],
+        "color": "#0891b2",
+        "strokeWidth": 1.5,
+        "opacity": 0.5
+      },
+      "encoding": {
+        "y": {"datum": 1070}
+      }
+    },
+    
     // Line
     {
       "mark": {
@@ -245,7 +304,9 @@ const vis3 = {
             "labelAlign": "right",
             "labelFontSize": 10,
             "titleFontSize": 12,
-            "titleFontWeight": "600"
+            "titleFontWeight": "600",
+            "titleColor": "#0f172a",
+            "labelColor": "#475569"
           }
         },
         "y": {
@@ -258,8 +319,11 @@ const vis3 = {
             "labelFontSize": 10,
             "titleFontSize": 12,
             "titleFontWeight": "600",
+            "titleColor": "#0f172a",
+            "labelColor": "#475569",
             "grid": true,
-            "gridOpacity": 0.15
+            "gridOpacity": 0.12,
+            "gridColor": "#cbd5e1"
           }
         }
       }
@@ -270,9 +334,9 @@ const vis3 = {
       "mark": {
         "type": "point",
         "filled": true,
-        "size": 200,
+        "size": 220,
         "stroke": "white",
-        "strokeWidth": 2
+        "strokeWidth": 2.5
       },
       "encoding": {
         "x": {
@@ -289,12 +353,16 @@ const vis3 = {
           "type": "quantitative",
           "scale": {
             "domain": [950, 1300, 1700, 2070],
-            "range": ["#22d3ee", "#3b82f6", "#f59e0b", "#dc2626"]
+            "range": ["#06b6d4", "#3b82f6", "#f59e0b", "#dc2626"]
           },
           "legend": {
             "title": "Bill Amount (£)",
             "orient": "right",
-            "format": ",.0f"
+            "format": ",.0f",
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "titleColor": "#0f172a",
+            "labelColor": "#475569"
           }
         },
         "tooltip": [
@@ -304,17 +372,17 @@ const vis3 = {
       }
     },
     
-    // Labels for min and max
+    // Value labels for key points
     {
       "transform": [
         {"filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070"}
       ],
       "mark": {
         "type": "text",
-        "dy": -15,
-        "fontSize": 12,
+        "dy": -18,
+        "fontSize": 13,
         "fontWeight": "bold",
-        "color": "#1e293b"
+        "color": "#0f172a"
       },
       "encoding": {
         "x": {
@@ -334,15 +402,15 @@ const vis3 = {
       }
     },
     
-    // Peak percentage label
+    // Peak percentage
     {
       "transform": [
         {"filter": "datum.typical_annual_bill_gbp === 2070"}
       ],
       "mark": {
         "type": "text",
-        "dy": 28,
-        "fontSize": 11,
+        "dy": 30,
+        "fontSize": 12,
         "fontWeight": "bold",
         "color": "#dc2626",
         "text": "+118%"
@@ -358,11 +426,43 @@ const vis3 = {
           "type": "quantitative"
         }
       }
+    },
+    
+    // Period labels
+    {
+      "data": {
+        "values": [
+          {"period_label": "2022 Q1", "y": 950, "text": "Pre-crisis", "color": "#0891b2"},
+          {"period_label": "2022 Q4", "y": 950, "text": "Peak", "color": "#f59e0b"}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "600",
+        "dy": 0
+      },
+      "encoding": {
+        "x": {
+          "field": "period_label",
+          "type": "ordinal",
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+        },
+        "y": {"field": "y", "type": "quantitative"},
+        "text": {"field": "text", "type": "nominal"},
+        "color": {
+          "field": "color",
+          "type": "nominal",
+          "scale": null,
+          "legend": null
+        }
+      }
     }
   ],
   
   "config": {
-    "view": {"stroke": null}
+    "view": {"stroke": null},
+    "background": "#ffffff"
   }
 };
 
