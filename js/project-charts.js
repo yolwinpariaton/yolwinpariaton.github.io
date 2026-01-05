@@ -205,16 +205,14 @@
   };
 
 // ======================================
-  // 3) Energy cap (COMPLETE & POLISHED)
+  // 3) Energy cap (FINAL - ALL 17 POINTS VISIBLE)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     
     "title": {
       "text": "UK Energy Price Cap: The Crisis in Context",
-      "subtitle": [
-        "Quarterly typical household bills (2021-2025) | Peak of £2,070 represents 118% increase from pre-crisis baseline"
-      ],
+      "subtitle": "Quarterly typical household bills (2021-2025) | Peak of £2,070 represents 118% increase from pre-crisis baseline",
       "fontSize": 20,
       "subtitleFontSize": 12,
       "anchor": "start",
@@ -225,31 +223,56 @@
     
     "data": { "url": "data/vis3_energy_cap.json" },
     "width": "container",
-    "height": 520,
+    "height": 500,
+    
+    "transform": [
+      {
+        "calculate": "datetime(year(datum.period_date), month(datum.period_date), 1)",
+        "as": "date_parsed"
+      }
+    ],
     
     "encoding": {
       "x": {
-        "field": "period_date",
+        "field": "date_parsed",
         "type": "temporal",
         "title": "Quarter",
         "scale": {
           "domain": [
             {"year": 2021, "month": 10, "date": 1},
-            {"year": 2025, "month": 11, "date": 1}
+            {"year": 2025, "month": 10, "date": 31}
           ]
         },
         "axis": {
           "format": "%Y Q%q",
           "labelAngle": -45,
-          "labelFontSize": 11,
+          "labelFontSize": 10,
           "labelColor": "#475569",
-          "labelPadding": 10,
+          "labelPadding": 8,
           "domainColor": "#cbd5e1",
           "tickColor": "#cbd5e1",
-          "tickCount": "quarter",
-          "tickMinStep": 1,
           "titleFontSize": 13,
-          "titleColor": "#0f172a"
+          "titleColor": "#0f172a",
+          "titlePadding": 10,
+          "values": [
+            {"year": 2021, "month": 10, "date": 1},
+            {"year": 2022, "month": 1, "date": 1},
+            {"year": 2022, "month": 4, "date": 1},
+            {"year": 2022, "month": 7, "date": 1},
+            {"year": 2022, "month": 10, "date": 1},
+            {"year": 2023, "month": 1, "date": 1},
+            {"year": 2023, "month": 4, "date": 1},
+            {"year": 2023, "month": 7, "date": 1},
+            {"year": 2023, "month": 10, "date": 1},
+            {"year": 2024, "month": 1, "date": 1},
+            {"year": 2024, "month": 4, "date": 1},
+            {"year": 2024, "month": 7, "date": 1},
+            {"year": 2024, "month": 10, "date": 1},
+            {"year": 2025, "month": 1, "date": 1},
+            {"year": 2025, "month": 4, "date": 1},
+            {"year": 2025, "month": 7, "date": 1},
+            {"year": 2025, "month": 10, "date": 1}
+          ]
         }
       },
       "y": {
@@ -274,7 +297,7 @@
     },
     
     "layer": [
-      // Crisis shading (adjusted to actual peak period)
+      // Crisis shading
       {
         "mark": {
           "type": "rect",
@@ -283,7 +306,7 @@
         },
         "encoding": {
           "x": { "datum": {"year": 2024, "month": 4, "date": 1} },
-          "x2": { "datum": {"year": 2025, "month": 11, "date": 1} }
+          "x2": { "datum": {"year": 2025, "month": 10, "date": 31} }
         }
       },
       
@@ -293,8 +316,7 @@
           "type": "line",
           "strokeWidth": 2.5,
           "color": "#94a3b8",
-          "opacity": 0.5,
-          "interpolate": "monotone"
+          "opacity": 0.5
         }
       },
       
@@ -302,7 +324,7 @@
       {
         "mark": {
           "type": "circle",
-          "size": 350,
+          "size": 400,
           "stroke": "white",
           "strokeWidth": 3
         },
@@ -345,15 +367,15 @@
         }
       },
       
-      // Value labels for key points only
+      // Value labels for key points
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
         ],
         "mark": {
           "type": "text",
-          "dy": -22,
-          "fontSize": 12,
+          "dy": -24,
+          "fontSize": 13,
           "fontWeight": "bold",
           "color": "#0f172a"
         },
@@ -369,9 +391,7 @@
       // Crisis Period annotation
       {
         "data": {
-          "values": [
-            {"x": {"year": 2025, "month": 1, "date": 1}, "y": 2120, "text": "← Crisis Period →"}
-          ]
+          "values": [{"x": {"year": 2024, "month": 11, "date": 1}, "y": 2120, "text": "← Crisis Period →"}]
         },
         "mark": {
           "type": "text",
@@ -380,9 +400,9 @@
           "color": "#dc2626"
         },
         "encoding": {
-          "x": { "field": "x", "type": "temporal" },
-          "y": { "field": "y", "type": "quantitative" },
-          "text": { "field": "text", "type": "nominal" }
+          "x": {"field": "x", "type": "temporal"},
+          "y": {"field": "y", "type": "quantitative"},
+          "text": {"field": "text", "type": "nominal"}
         }
       },
       
@@ -393,7 +413,7 @@
         ],
         "mark": {
           "type": "text",
-          "dy": 28,
+          "dy": 30,
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#10b981",
@@ -408,7 +428,7 @@
         ],
         "mark": {
           "type": "text",
-          "dy": 38,
+          "dy": 40,
           "fontSize": 11,
           "fontStyle": "italic",
           "color": "#dc2626",
@@ -546,7 +566,7 @@ const vis4 = {
 };
 
 // ======================================
-// 5) Rent vs house price inflation (FINAL PUBLICATION VERSION)
+// 5) Rent vs house price inflation (FINAL, PUBLISHER POLISH)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -566,9 +586,9 @@ const vis5 = {
   ],
 
   "layer": [
-    // Raw monthly lines — further de-emphasised
+    // Raw monthly lines (background context)
     {
-      "mark": { "type": "line", "strokeWidth": 1.2, "opacity": 0.18 },
+      "mark": { "type": "line", "strokeWidth": 1.2, "opacity": 0.16 },
       "encoding": {
         "x": {
           "field": "d",
@@ -585,7 +605,7 @@ const vis5 = {
             "labelFontSize": 11,
             "titleFontSize": 12,
             "grid": true,
-            "gridOpacity": 0.1
+            "gridOpacity": 0.08
           }
         },
         "color": {
@@ -597,7 +617,7 @@ const vis5 = {
       }
     },
 
-    // Smoothed lines (5-month MA) — main signal
+    // Smoothed lines (5-month MA)
     {
       "transform": [
         {
@@ -620,7 +640,7 @@ const vis5 = {
       }
     },
 
-    // Invisible points for clean hover tooltips
+    // Invisible points for tooltips
     {
       "transform": [
         {
@@ -643,7 +663,7 @@ const vis5 = {
       }
     },
 
-    // End-of-line labels — tightened and aligned
+    // End-of-line labels (short, clean)
     {
       "transform": [
         {
@@ -657,6 +677,11 @@ const vis5 = {
           "frame": [-2, 2],
           "sort": [{ "field": "d", "order": "ascending" }],
           "groupby": ["series"]
+        },
+        {
+          "calculate":
+            "datum.series === 'Private rents (UK)' ? 'Private rents' : 'House prices'",
+          "as": "label"
         }
       ],
       "mark": {
@@ -674,7 +699,7 @@ const vis5 = {
           "type": "nominal",
           "scale": { "range": ["#4c72b0", "#e1812c"] }
         },
-        "text": { "field": "series", "type": "nominal" }
+        "text": { "field": "label", "type": "nominal" }
       }
     }
   ],
@@ -683,7 +708,7 @@ const vis5 = {
     "axis": { "labelFontSize": 11, "titleFontSize": 12 },
     "title": { "fontSize": 22, "subtitleFontSize": 13, "anchor": "start" },
     "view": { "stroke": null },
-    "padding": { "right": 70 }
+    "padding": { "right": 60 }
   }
 };
   
