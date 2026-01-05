@@ -205,7 +205,7 @@
   };
 
 // ======================================
-// 3) Energy cap (CORRECTED SHADING)
+// 3) Energy cap (FIXED SHADING + X-AXIS TITLE)
 // ======================================
 const vis3 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -244,17 +244,18 @@ const vis3 = {
         "x": {
           "field": "period_label",
           "type": "ordinal",
-          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
         },
-        "y": {"datum": 2100}
+        "y": {"datum": 2200}
       }
     },
     
-    // Background shading - Crisis peak period (CORRECTED)
+    // Background shading - Peak period (CORRECTED to actual peak quarters)
     {
       "data": {
         "values": [
-          {"period_label": "2022 Q4"}, {"period_label": "2023 Q1"}, {"period_label": "2023 Q2"}
+          {"period_label": "2024 Q2"}, {"period_label": "2024 Q3"}, {"period_label": "2024 Q4"}
         ]
       },
       "mark": {
@@ -266,9 +267,10 @@ const vis3 = {
         "x": {
           "field": "period_label",
           "type": "ordinal",
-          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"]
+          "sort": ["2021 Q4", "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4", "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4", "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4", "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"],
+          "axis": null
         },
-        "y": {"datum": 2100}
+        "y": {"datum": 2200}
       }
     },
     
@@ -312,7 +314,7 @@ const vis3 = {
         "y": {
           "field": "typical_annual_bill_gbp",
           "type": "quantitative",
-          "scale": {"domain": [900, 2100]},
+          "scale": {"domain": [0, 2200]},
           "axis": {
             "title": "Annual Bill (£)",
             "format": ",.0f",
@@ -432,8 +434,8 @@ const vis3 = {
     {
       "data": {
         "values": [
-          {"period_label": "2022 Q1", "y": 950, "text": "Pre-crisis", "color": "#0891b2"},
-          {"period_label": "2023 Q1", "y": 950, "text": "Peak", "color": "#f59e0b"}
+          {"period_label": "2022 Q1", "y": 100, "text": "Pre-crisis", "color": "#0891b2"},
+          {"period_label": "2024 Q3", "y": 100, "text": "Peak", "color": "#f59e0b"}
         ]
       },
       "mark": {
