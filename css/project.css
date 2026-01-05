@@ -89,53 +89,20 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
   overflow: hidden;
 
-  /* NEW: center the embedded Vega view within the frame */
-  display: flex;
-  align-items: center;     /* vertical centering */
-  justify-content: center; /* horizontal centering */
+  /* Center the Vega view within the frame (single centering context) */
+  display: grid;
+  place-items: center;
 }
 
 /* Reserve more vertical space so taller charts never look cramped */
 .vega-container{
   width: 100%;
   min-height: 420px;
-  margin: 0;
-
-  /* NEW: ensure the Vega wrapper is also centering its child */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ===== Vega-Embed hardening + centering ===== */
-.vega-embed{
-  width: 100%;
-  display: flex;            /* NEW */
-  align-items: center;      /* NEW */
-  justify-content: center;  /* NEW */
-}
-
-.vega-embed,
-.vega-embed > div{
-  max-width: 100%;
-}
-
-/* NEW: prevent the internal Vega view from “hugging” one side */
-.vega-embed > div{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.vega-embed canvas,
-.vega-embed svg{
-  max-width: 100%;
   display: block;
-  margin: 0 auto; /* NEW: keeps the rendered output centered */
+  margin: 0;
 }
-/* =============================== */
 
+/* Source/note styling */
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
@@ -146,6 +113,25 @@
   color: #555;
   font-style: italic;
 }
+
+/* ===== Vega-Embed hardening (do not flex-center here) ===== */
+.vega-embed{
+  width: 100%;
+}
+
+.vega-embed,
+.vega-embed > div,
+.vega-embed canvas,
+.vega-embed svg{
+  max-width: 100%;
+}
+
+.vega-embed canvas,
+.vega-embed svg{
+  display: block;
+  margin: 0 auto;
+}
+/* =============================== */
 
 .project-links{
   margin: 50px 0;
