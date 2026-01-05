@@ -90,31 +90,21 @@
   overflow: hidden;
 }
 
-/* Default chart sizing */
+/* Reserve vertical space so charts never look cramped */
 .vega-container{
   width: 100%;
-  min-height: 340px;   /* sensible default for line charts */
+  min-height: 420px;
   display: block;
   margin: 0;
 }
 
-/* --------------------------------------------- */
-/* MAPS ONLY: constrain canvas width and center it */
-/* This is the missing piece that fixes "not in middle". */
-#vis6 .vega-embed,
-#vis8 .vega-embed{
-  width: 100%;
-  max-width: 820px;     /* adjust 760–900 if you prefer */
-  margin: 0 auto;       /* centers the Vega view inside the card */
+/* Maps: slightly shorter so they don't feel oversized */
+#vis6.vega-container,
+#vis8.vega-container{
+  min-height: 420px;
 }
 
-#vis6 canvas, #vis6 svg,
-#vis8 canvas, #vis8 svg{
-  display: block;
-  margin: 0 auto;       /* ensures the drawing surface is centered */
-}
-/* --------------------------------------------- */
-
+/* Source / note text */
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
@@ -144,6 +134,37 @@
 }
 /* =============================== */
 
+
+/* =========================================================
+   MAP CENTERING FIX (critical)
+   Vega-Embed nests an inner wrapper div. Even when the
+   outer container is full width, the inner div can sit
+   left-aligned. This forces true centering for vis6/vis8.
+   ========================================================= */
+#vis6 .vega-embed,
+#vis8 .vega-embed{
+  display: flex;
+  justify-content: center;
+}
+
+#vis6 .vega-embed > div,
+#vis8 .vega-embed > div{
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Ensure the map canvas itself is centered and not offset */
+#vis6 canvas,
+#vis8 canvas,
+#vis6 svg,
+#vis8 svg{
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* ========================================================= */
+
+
+/* Links section */
 .project-links{
   margin: 50px 0;
   padding: 30px;
