@@ -75,7 +75,8 @@
   padding: 0 !important;
 
   width: 100%;
-  max-width: 100%;
+  max-width: 980px;     /* makes the whole page feel less "huge" */
+  margin: 0 auto;       /* centre charts within the text column */
   overflow: visible;
 }
 /* ------------------------------------------------------------------ */
@@ -85,79 +86,104 @@
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
-
-  /* Slightly more breathing room so titles/legends never feel cramped */
-  padding: 20px 22px 18px;
-
+  padding: 14px 14px 12px; /* slightly tighter than before */
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 
-  /* Keep the rounded frame clean, but do not clip Vega legends */
-  overflow: hidden;
+  /* IMPORTANT: do NOT clip titles/legends/tooltips */
+  overflow: visible;
+
+  /* keep the card aligned and consistent */
+  width: 100%;
 }
 
-/* Reserve consistent space so charts don't jump between pages */
+/* Default chart container height (smaller than before to avoid "huge" feel) */
 .vega-container{
   width: 100%;
-  min-height: 520px; /* maps + legends need more vertical space */
+  min-height: 340px;   /* tighter default */
   display: block;
   margin: 0;
 }
 
-/* -------------------- */
-/* Vega-Embed alignment */
-/* -------------------- */
-/* Center the Vega view inside your frame reliably */
-.vega-embed{
+/* --- Map containers (vis6 & vis8) --- */
+/* Add class="vega-container vega-map" in HTML (already done above) */
+.vega-map{
+  /* Enough space for map + legend without giant empty areas */
+  min-height: 520px;
+
+  /* Center the rendered view within the available card space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Prevent weird scrollbars from internal SVG bounds */
+  overflow: hidden;
+}
+
+/* Center Vega-Embed wrappers */
+.vega-map .vega-embed{
   width: 100%;
   display: flex;
-  justify-content: center; /* horizontal centering */
+  align-items: center;
+  justify-content: center;
 }
 
-/* Vega-Embed places the actual view inside a child div */
-.vega-embed > div{
-  margin-left: auto;
-  margin-right: auto;
+/* The inner div is where Vega injects the SVG/canvas */
+.vega-map .vega-embed > div{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Ensure SVG/canvas don't cause odd left alignment */
-.vega-embed canvas,
-.vega-embed svg{
+/* Ensure SVG/canvas scales nicely and stays centered */
+.vega-map svg,
+.vega-map canvas{
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   max-width: 100%;
   height: auto;
+
+  /* Cap the visual height so the map doesn't dominate the page */
+  max-height: 430px;
 }
 
-/* Prevent any internal overflow from pushing the view */
-.vega-embed,
-.vega-embed > div{
-  max-width: 100%;
+/* Slightly improve legend readability in maps (without moving it) */
+.vega-map .vega-embed .mark-group .role-legend,
+.vega-map .vega-embed .role-legend{
+  font-size: 12px;
 }
 
-/* -------------------- */
-/* Typography polish    */
-/* -------------------- */
+/* --- Source/notes typography (outside the chart card) --- */
 .chart-source{
-  margin: 14px 0 0;
+  margin: 12px 2px 0;
   color: #2b2f36;
+  font-size: 0.95rem;
 }
 
 .chart-note{
-  margin: 6px 0 0;
+  margin: 6px 2px 0;
   color: #555;
   font-style: italic;
+  font-size: 0.95rem;
 }
 
-/* Make Vega text look consistent with your site */
-.vega-embed .mark-text text,
-.vega-embed text{
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+/* ===== Vega-Embed hardening ===== */
+.vega-embed{
+  width: 100%;
 }
 
-/* -------------------- */
-/* Links section        */
-/* -------------------- */
+.vega-embed,
+.vega-embed > div,
+.vega-embed canvas,
+.vega-embed svg{
+  max-width: 100%;
+}
+
+.vega-embed canvas,
+.vega-embed svg{
+  display: block;
+}
+/* =============================== */
+
 .project-links{
   margin: 50px 0;
   padding: 30px;
