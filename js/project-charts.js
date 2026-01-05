@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (PUBLICATION-READY - NO OVERLAP)
+  // 3) Energy cap (COMPLETE FIX - X-axis visible, labels visible)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -226,7 +226,7 @@
     },
     "width": "container",
     "height": 550,
-    "padding": {"bottom": 60, "top": 20},
+    "padding": {"bottom": 70, "top": 20},
     
     "encoding": {
       "x": {
@@ -245,7 +245,9 @@
           "titleColor": "#0f172a",
           "titlePadding": 15,
           "labelAlign": "right",
-          "labelBaseline": "middle"
+          "labelBaseline": "middle",
+          "domain": true,
+          "ticks": true
         }
       },
       "y": {
@@ -273,7 +275,7 @@
     },
     
     "layer": [
-      // Pre-crisis baseline shading (green - showing "normal" range)
+      // Pre-crisis baseline shading
       {
         "mark": {
           "type": "rect",
@@ -288,12 +290,10 @@
         }
       },
       
-      // Crisis period shading (red - peaks)
+      // Crisis period shading
       {
         "data": {
-          "values": [
-            {"x1": "2024 Q2", "x2": "2025 Q4"}
-          ]
+          "values": [{"x1": "2024 Q2", "x2": "2025 Q4"}]
         },
         "mark": {
           "type": "rect",
@@ -308,7 +308,7 @@
         }
       },
       
-      // Reference line at pre-crisis average (~£1,070)
+      // Reference line at £1,070
       {
         "mark": {
           "type": "rule",
@@ -351,7 +351,7 @@
             "legend": {
               "title": "Bill Amount (£)",
               "format": ",.0f",
-              "orient": "bottom-left",
+              "orient": "top-left",
               "direction": "horizontal",
               "labelFontSize": 11,
               "titleFontSize": 12,
@@ -364,17 +364,8 @@
             }
           },
           "tooltip": [
-            {
-              "field": "period_label",
-              "type": "nominal",
-              "title": "Quarter"
-            },
-            {
-              "field": "typical_annual_bill_gbp",
-              "type": "quantitative",
-              "title": "Annual Bill",
-              "format": ",.0f"
-            }
+            {"field": "period_label", "type": "nominal", "title": "Quarter"},
+            {"field": "typical_annual_bill_gbp", "type": "quantitative", "title": "Annual Bill", "format": ",.0f"}
           ]
         }
       },
@@ -400,7 +391,7 @@
         }
       },
       
-      // "Pre-crisis Period" label (adjusted position)
+      // "Pre-crisis Period" label
       {
         "data": {
           "values": [{"x": "2022 Q1", "y": 2210, "text": "Pre-crisis Period"}]
@@ -419,7 +410,7 @@
         }
       },
       
-      // "Crisis Peak Period" label (adjusted position)
+      // "Crisis Peak Period" label
       {
         "data": {
           "values": [{"x": "2025 Q1", "y": 2210, "text": "Crisis Peak Period"}]
@@ -438,7 +429,7 @@
         }
       },
       
-      // "Pre-crisis low" annotation (bottom)
+      // "Pre-crisis low" annotation
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950" }
@@ -470,15 +461,13 @@
     ],
     
     "config": {
-      "view": { 
-        "stroke": null
-      },
+      "view": { "stroke": null },
       "background": "#ffffff"
     }
   };
-  
+
 // ======================================
-// 4) Weekly fuel prices (FIXED - No undefined, clean)
+// 4) Weekly fuel prices (COMPLETE FIX - Professional with context)
 // ======================================
 const vis4 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -495,7 +484,7 @@ const vis4 = {
 
   "data": { "url": "data/vis4_fuel_weekly.json" },
   "width": "container",
-  "height": 420,
+  "height": 450,
   "padding": {"top": 10},
 
   "transform": [
@@ -509,64 +498,70 @@ const vis4 = {
     }
   ],
 
-  "encoding": {
-    "x": {
-      "field": "d",
-      "type": "temporal",
-      "title": "Date",
-      "axis": { 
-        "format": "%Y", 
-        "tickCount": 7, 
-        "labelFontSize": 11, 
-        "titleFontSize": 13,
-        "labelColor": "#475569",
-        "titleColor": "#0f172a",
-        "domainColor": "#cbd5e1",
-        "tickColor": "#cbd5e1"
-      }
-    },
-    "y": {
-      "field": "ppl",
-      "type": "quantitative",
-      "title": "Pence per litre",
-      "axis": { 
-        "labelFontSize": 12, 
-        "titleFontSize": 14,
-        "labelColor": "#475569",
-        "titleColor": "#0f172a",
-        "grid": true, 
-        "gridOpacity": 0.12,
-        "gridColor": "#cbd5e1",
-        "domainColor": "#cbd5e1",
-        "tickColor": "#cbd5e1"
-      }
-    },
-    "color": {
-      "field": "fuel",
-      "type": "nominal",
-      "title": "Fuel Type",
-      "scale": { "range": ["#3b82f6", "#f59e0b"] },
-      "legend": { 
-        "orient": "top-left", 
-        "direction": "horizontal", 
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "titleColor": "#0f172a",
-        "labelColor": "#475569",
-        "symbolSize": 200,
-        "symbolStrokeWidth": 2,
-        "offset": 10
-      }
-    }
-  },
-
   "layer": [
-    // Raw weekly line (context, subtle)
+    // Crisis period shading
     {
-      "mark": { "type": "line", "strokeWidth": 1.5, "opacity": 0.25 }
+      "data": {
+        "values": [{"start": {"year": 2022, "month": 3, "date": 1}, "end": {"year": 2022, "month": 8, "date": 1}}]
+      },
+      "mark": {
+        "type": "rect",
+        "color": "#fee2e2",
+        "opacity": 0.3
+      },
+      "encoding": {
+        "x": {"field": "start", "type": "temporal"},
+        "x2": {"field": "end", "type": "temporal"}
+      }
     },
 
-    // Smoothed line (5-week moving average, prominent)
+    // Raw weekly line
+    {
+      "mark": { "type": "line", "strokeWidth": 1.5, "opacity": 0.25 },
+      "encoding": {
+        "x": {
+          "field": "d",
+          "type": "temporal",
+          "title": "Date",
+          "axis": { 
+            "format": "%Y", 
+            "tickCount": 7, 
+            "labelFontSize": 11, 
+            "titleFontSize": 13,
+            "labelColor": "#475569",
+            "titleColor": "#0f172a",
+            "domainColor": "#cbd5e1",
+            "tickColor": "#cbd5e1",
+            "domain": true,
+            "ticks": true
+          }
+        },
+        "y": {
+          "field": "ppl",
+          "type": "quantitative",
+          "title": "Pence per litre",
+          "axis": { 
+            "labelFontSize": 12, 
+            "titleFontSize": 14,
+            "labelColor": "#475569",
+            "titleColor": "#0f172a",
+            "grid": true, 
+            "gridOpacity": 0.12,
+            "gridColor": "#cbd5e1",
+            "domainColor": "#cbd5e1",
+            "tickColor": "#cbd5e1"
+          }
+        },
+        "color": {
+          "field": "fuel",
+          "type": "nominal",
+          "scale": { "range": ["#3b82f6", "#f59e0b"] },
+          "legend": null
+        }
+      }
+    },
+
+    // Smoothed line (5-week MA)
     {
       "transform": [
         {
@@ -578,11 +573,29 @@ const vis4 = {
       ],
       "mark": { "type": "line", "strokeWidth": 3.5 },
       "encoding": {
-        "y": { "field": "ppl_ma", "type": "quantitative" }
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "ppl_ma", "type": "quantitative" },
+        "color": {
+          "field": "fuel",
+          "type": "nominal",
+          "scale": { "range": ["#3b82f6", "#f59e0b"] },
+          "legend": {
+            "title": "Fuel Type",
+            "orient": "top-left",
+            "direction": "horizontal",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "titleColor": "#0f172a",
+            "labelColor": "#475569",
+            "symbolSize": 200,
+            "symbolStrokeWidth": 2,
+            "offset": 10
+          }
+        }
       }
     },
 
-    // Hover points for tooltips
+    // Hover points
     {
       "transform": [
         {
@@ -594,7 +607,13 @@ const vis4 = {
       ],
       "mark": { "type": "point", "filled": true, "size": 50, "opacity": 0.85 },
       "encoding": {
+        "x": { "field": "d", "type": "temporal" },
         "y": { "field": "ppl_ma", "type": "quantitative" },
+        "color": {
+          "field": "fuel",
+          "type": "nominal",
+          "scale": { "range": ["#3b82f6", "#f59e0b"] }
+        },
         "tooltip": [
           { "field": "d", "type": "temporal", "title": "Week", "format": "%b %Y" },
           { "field": "fuel", "type": "nominal", "title": "Fuel Type" },
@@ -622,7 +641,28 @@ const vis4 = {
         "color": "#0f172a"
       },
       "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "ppl", "type": "quantitative" },
         "text": { "field": "ppl", "type": "quantitative", "format": ".1f" }
+      }
+    },
+
+    // Crisis label
+    {
+      "data": {
+        "values": [{"x": {"year": 2022, "month": 5, "date": 15}, "y": 195, "text": "2022 Crisis Peak"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "600",
+        "fontStyle": "italic",
+        "color": "#dc2626"
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "temporal"},
+        "y": {"field": "y", "type": "quantitative"},
+        "text": {"field": "text"}
       }
     }
   ],
@@ -634,7 +674,7 @@ const vis4 = {
 };
 
 // ======================================
-// 5) Rent vs house price inflation (FIXED - Labels visible)
+// 5) Rent vs house price (COMPLETE FIX - Labels inside)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -651,8 +691,8 @@ const vis5 = {
 
   "data": { "url": "data/vis5_rent_vs_house.json" },
   "width": "container",
-  "height": 420,
-  "padding": {"top": 10, "right": 100},
+  "height": 450,
+  "padding": {"top": 10},
 
   "transform": [
     { "calculate": "toDate(datum.date)", "as": "d" },
@@ -672,7 +712,7 @@ const vis5 = {
       "encoding": { "y": { "datum": 0 } }
     },
 
-    // Raw monthly lines (subtle background)
+    // Raw monthly lines
     {
       "mark": { "type": "line", "strokeWidth": 1.2, "opacity": 0.2 },
       "encoding": {
@@ -688,7 +728,9 @@ const vis5 = {
             "titleFontSize": 13,
             "titleColor": "#0f172a",
             "domainColor": "#cbd5e1",
-            "tickColor": "#cbd5e1"
+            "tickColor": "#cbd5e1",
+            "domain": true,
+            "ticks": true
           }
         },
         "y": {
@@ -717,7 +759,7 @@ const vis5 = {
       }
     },
 
-    // Smoothed lines (5-month MA, prominent)
+    // Smoothed lines (5-month MA)
     {
       "transform": [
         {
@@ -740,7 +782,7 @@ const vis5 = {
       }
     },
 
-    // Invisible hover points for tooltips
+    // Invisible hover points
     {
       "transform": [
         {
@@ -763,7 +805,7 @@ const vis5 = {
       }
     },
 
-    // Series labels (end of line, outside plot area)
+    // Series labels (inside plot area, positioned left from end)
     {
       "transform": [
         {
@@ -786,8 +828,8 @@ const vis5 = {
       ],
       "mark": {
         "type": "text",
-        "align": "left",
-        "dx": 8,
+        "align": "right",
+        "dx": -25,
         "fontSize": 12,
         "fontWeight": "bold"
       },
@@ -811,14 +853,14 @@ const vis5 = {
 };
 
 // ======================================
-// 6) Map: Rent inflation by region (FIXED - Legend visible)
+// 6) England regional map (COMPLETE FIX - Centered, professional)
 // ======================================
 const vis6 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   
   "title": {
     "text": "Regional Rent Inflation Across England",
-    "subtitle": "Latest year-on-year percentage change by English region | London shows highest rates",
+    "subtitle": "Latest year-on-year percentage change by English region | Darker colors indicate higher inflation rates",
     "fontSize": 20,
     "subtitleFontSize": 12,
     "anchor": "start",
@@ -828,7 +870,7 @@ const vis6 = {
   },
   
   "width": "container",
-  "height": 500,
+  "height": 520,
   "padding": {"top": 10, "bottom": 60},
   
   "data": {
@@ -848,38 +890,193 @@ const vis6 = {
   ],
   
   "projection": { 
-    "type": "mercator"
+    "type": "mercator",
+    "center": [-2, 53],
+    "scale": 2400
   },
   
-  "mark": { 
-    "type": "geoshape", 
-    "stroke": "white", 
-    "strokeWidth": 1.5
-  },
-  
-  "encoding": {
-    "color": {
-      "field": "rent_inflation_yoy_pct",
-      "type": "quantitative",
-      "title": "Rent Inflation (% y/y)",
-      "scale": {
-        "scheme": "oranges",
-        "domain": [2, 10]
+  "layer": [
+    // Main map
+    {
+      "mark": { 
+        "type": "geoshape", 
+        "stroke": "white", 
+        "strokeWidth": 2
       },
-      "legend": { 
-        "orient": "bottom",
-        "direction": "horizontal",
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "titleColor": "#0f172a",
-        "labelColor": "#475569",
-        "gradientLength": 300,
-        "gradientThickness": 15,
-        "format": ".1f"
+      "encoding": {
+        "color": {
+          "field": "rent_inflation_yoy_pct",
+          "type": "quantitative",
+          "title": "Rent Inflation (% y/y)",
+          "scale": {
+            "scheme": "oranges",
+            "domain": [3, 10]
+          },
+          "legend": { 
+            "orient": "bottom",
+            "direction": "horizontal",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "titleColor": "#0f172a",
+            "labelColor": "#475569",
+            "gradientLength": 320,
+            "gradientThickness": 16,
+            "format": ".1f"
+          }
+        },
+        "tooltip": [
+          { "field": "areanm", "type": "nominal", "title": "Region" },
+          { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
+        ]
       }
     },
+    
+    // Region labels
+    {
+      "transform": [
+        {
+          "calculate": "if(datum.areanm === 'London', 'LON', if(datum.areanm === 'South East', 'SE', if(datum.areanm === 'North West', 'NW', '')))",
+          "as": "label"
+        },
+        { "filter": "datum.label !== ''" }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#ffffff",
+        "opacity": 0.9
+      },
+      "encoding": {
+        "longitude": {
+          "field": "properties.long",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "properties.lat",
+          "type": "quantitative"
+        },
+        "text": {"field": "label", "type": "nominal"}
+      }
+    }
+  ],
+  
+  "config": {
+    "view": { "stroke": null },
+    "background": "#ffffff"
+  }
+};
+
+// ======================================
+// 7) Interactive regional trend (COMPLETE FIX)
+// ======================================
+const vis7 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  
+  "title": {
+    "text": "Regional Rent Inflation Trends Over Time",
+    "subtitle": "Select a region to compare with England average | Interactive dropdown selector",
+    "fontSize": 20,
+    "subtitleFontSize": 12,
+    "anchor": "start",
+    "color": "#0f172a",
+    "subtitleColor": "#64748b"
+  },
+  
+  "data": { "url": "data/vis7_rent_trend_regions.json" },
+  "width": "container",
+  "height": 420,
+  "padding": {"top": 10},
+  
+  "params": [
+    {
+      "name": "Region",
+      "value": "London",
+      "bind": {
+        "input": "select",
+        "name": "Select Region: ",
+        "options": [
+          "North East",
+          "North West",
+          "Yorkshire and The Humber",
+          "East Midlands",
+          "West Midlands",
+          "East of England",
+          "London",
+          "South East",
+          "South West"
+        ]
+      }
+    }
+  ],
+  
+  "transform": [
+    {
+      "calculate":
+        "datum.areanm === Region ? 'Selected region' : (datum.areanm === 'England' ? 'England' : 'Other')",
+      "as": "group"
+    }
+  ],
+  
+  "mark": { "type": "line" },
+  
+  "encoding": {
+    "x": { 
+      "field": "date", 
+      "type": "temporal", 
+      "title": "Date",
+      "axis": {
+        "format": "%Y",
+        "labelFontSize": 11,
+        "titleFontSize": 13,
+        "labelColor": "#475569",
+        "titleColor": "#0f172a",
+        "domainColor": "#cbd5e1",
+        "tickColor": "#cbd5e1",
+        "domain": true,
+        "ticks": true
+      }
+    },
+    "y": { 
+      "field": "rent_inflation_yoy_pct", 
+      "type": "quantitative", 
+      "title": "Rent Inflation (% y/y)",
+      "axis": {
+        "labelFontSize": 12,
+        "titleFontSize": 14,
+        "labelColor": "#475569",
+        "titleColor": "#0f172a",
+        "grid": true,
+        "gridOpacity": 0.12,
+        "gridColor": "#cbd5e1",
+        "domainColor": "#cbd5e1",
+        "tickColor": "#cbd5e1"
+      }
+    },
+    "detail": { "field": "areanm", "type": "nominal" },
+    "opacity": {
+      "condition": [
+        { "test": "datum.group === 'Selected region' || datum.group === 'England'", "value": 1 }
+      ],
+      "value": 0.15
+    },
+    "size": {
+      "condition": [
+        { "test": "datum.group === 'Selected region'", "value": 4 },
+        { "test": "datum.group === 'England'", "value": 2.5 }
+      ],
+      "value": 1.2
+    },
+    "color": {
+      "condition": [
+        { "test": "datum.group === 'Selected region'", "value": "#f59e0b" },
+        { "test": "datum.group === 'England'", "value": "#3b82f6" }
+      ],
+      "value": "#cbd5e1"
+    },
     "tooltip": [
-      { "field": "areanm", "type": "nominal", "title": "Region" },
+      { "field": "date", "type": "temporal", "title": "Date", "format": "%b %Y" },
+      { "field": "areanm", "type": "nominal", "title": "Area" },
       { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
     ]
   },
@@ -891,14 +1088,14 @@ const vis6 = {
 };
 
 // ======================================
-// 8) Map: UK countries (FIXED - Color variation)
+// 8) UK nations map (COMPLETE FIX - Centered, professional)
 // ======================================
 const vis8 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   
   "title": {
     "text": "Rent Inflation Across UK Nations",
-    "subtitle": "Latest year-on-year percentage change | Comparing England, Wales, Scotland, and Northern Ireland",
+    "subtitle": "Latest year-on-year percentage change | Darker blues indicate higher inflation rates",
     "fontSize": 20,
     "subtitleFontSize": 12,
     "anchor": "start",
@@ -908,7 +1105,7 @@ const vis8 = {
   },
   
   "width": "container",
-  "height": 540,
+  "height": 560,
   "padding": {"top": 10, "bottom": 60},
   
   "data": {
@@ -928,41 +1125,75 @@ const vis8 = {
   ],
   
   "projection": { 
-    "type": "mercator"
+    "type": "mercator",
+    "center": [-3, 54.5],
+    "scale": 1200
   },
   
-  "mark": { 
-    "type": "geoshape", 
-    "stroke": "white", 
-    "strokeWidth": 2
-  },
-  
-  "encoding": {
-    "color": {
-      "field": "rent_inflation_yoy_pct",
-      "type": "quantitative",
-      "title": "Rent Inflation (% y/y)",
-      "scale": {
-        "scheme": "blues",
-        "domain": [3, 9]
+  "layer": [
+    // Main map
+    {
+      "mark": { 
+        "type": "geoshape", 
+        "stroke": "white", 
+        "strokeWidth": 2.5
       },
-      "legend": { 
-        "orient": "bottom",
-        "direction": "horizontal",
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "titleColor": "#0f172a",
-        "labelColor": "#475569",
-        "gradientLength": 300,
-        "gradientThickness": 15,
-        "format": ".1f"
+      "encoding": {
+        "color": {
+          "field": "rent_inflation_yoy_pct",
+          "type": "quantitative",
+          "title": "Rent Inflation (% y/y)",
+          "scale": {
+            "scheme": "blues",
+            "domain": [3, 9]
+          },
+          "legend": { 
+            "orient": "bottom",
+            "direction": "horizontal",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "titleColor": "#0f172a",
+            "labelColor": "#475569",
+            "gradientLength": 320,
+            "gradientThickness": 16,
+            "format": ".1f"
+          }
+        },
+        "tooltip": [
+          { "field": "areanm", "type": "nominal", "title": "Country" },
+          { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
+        ]
       }
     },
-    "tooltip": [
-      { "field": "areanm", "type": "nominal", "title": "Country" },
-      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Inflation (% y/y)", "format": ".1f" }
-    ]
-  },
+    
+    // Country labels
+    {
+      "transform": [
+        {
+          "calculate": "if(datum.areanm === 'England', 'ENG', if(datum.areanm === 'Scotland', 'SCO', if(datum.areanm === 'Wales', 'WAL', if(datum.areanm === 'Northern Ireland', 'NI', ''))))",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#ffffff",
+        "opacity": 0.9
+      },
+      "encoding": {
+        "longitude": {
+          "field": "properties.long",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "properties.lat",
+          "type": "quantitative"
+        },
+        "text": {"field": "label", "type": "nominal"}
+      }
+    }
+  ],
   
   "config": {
     "view": { "stroke": null },
