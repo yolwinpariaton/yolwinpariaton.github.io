@@ -477,7 +477,7 @@
 
     config: THEME
   };
-  
+
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
@@ -557,7 +557,7 @@
   };
 
 // --------------------------------------
-// 6) England regional map — fix bottom clipping + better balance
+// 6) England regional map — NO clipping, balanced in frame
 // --------------------------------------
 const vis6 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -573,8 +573,8 @@ const vis6 = {
   width: "container",
   height: 360,
 
-  // Legend needs its own band; do not make the map taller
-  padding: { top: 6, bottom: 88, left: 0, right: 0 },
+  // Reserve a clean legend band at the bottom, without making the map "huge"
+  padding: { top: 6, bottom: 92, left: 0, right: 0 },
 
   data: {
     url: UK_TOPO_URL,
@@ -594,9 +594,17 @@ const vis6 = {
   ],
 
   // KEY FIX:
-  // - slightly LOWER center latitude => map moves UP (prevents south-coast clipping)
-  // - slightly LOWER scale => ensures full outline fits inside view
-  projection: { type: "mercator", center: [-2.6, 53.35], scale: 1700 },
+  // - scale reduced to avoid clipping
+  // - translate centers the map in the "map area" (height minus legend band)
+  projection: {
+    type: "mercator",
+    center: [-2.6, 53.55],
+    scale: 1500,
+    translate: [
+      { signal: "width/2" },
+      { signal: "(height - 92)/2" } // 92 matches padding.bottom (legend band)
+    ]
+  },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -609,12 +617,12 @@ const vis6 = {
       legend: {
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 320,
+        gradientLength: 360,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
         format: ".1f",
-        offset: 14
+        offset: 16
       }
     },
     tooltip: [
@@ -712,7 +720,7 @@ const vis6 = {
   };
 
 // --------------------------------------
-// 8) UK nations map — fix bottom clipping + better balance
+// 8) UK nations map — NO clipping, balanced in frame
 // --------------------------------------
 const vis8 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -728,8 +736,8 @@ const vis8 = {
   width: "container",
   height: 380,
 
-  // Keep maps compact; give legend a comfortable band
-  padding: { top: 6, bottom: 88, left: 0, right: 0 },
+  // Reserve a consistent legend band
+  padding: { top: 6, bottom: 92, left: 0, right: 0 },
 
   data: {
     url: UK_TOPO_URL,
@@ -749,9 +757,17 @@ const vis8 = {
   ],
 
   // KEY FIX:
-  // - lower center latitude => map moves UP (prevents clipping at the bottom)
-  // - lower scale => ensures full geometry fits in the view
-  projection: { type: "mercator", center: [-4.3, 55.15], scale: 900 },
+  // - scale reduced to avoid clipping
+  // - translate centers the map above the legend band
+  projection: {
+    type: "mercator",
+    center: [-4.3, 55.75],
+    scale: 820,
+    translate: [
+      { signal: "width/2" },
+      { signal: "(height - 92)/2" } // 92 matches padding.bottom
+    ]
+  },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 
@@ -764,12 +780,12 @@ const vis8 = {
       legend: {
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 320,
+        gradientLength: 360,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
         format: ".1f",
-        offset: 14
+        offset: 16
       }
     },
     tooltip: [
