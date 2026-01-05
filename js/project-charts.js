@@ -29,97 +29,160 @@
   }
 
   // ======================================
-  // 1) Prices vs pay (indexed) — size reduced
-  // ======================================
-  const vis1 = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+// 1) Prices vs pay (indexed) — corrected + more robust layout
+// ======================================
+const vis1 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-    "title": {
-      "text": "Prices vs pay (indexed to 2019 = 100)",
-      "subtitle":
-        "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings.",
-      "offset": 15
+  "title": {
+    "text": "Prices vs pay (indexed to 2019 = 100)",
+    "subtitle":
+      "Shaded area shows the purchasing-power gap when consumer prices rise faster than real earnings.",
+    "anchor": "start",
+    "fontSize": 20,
+    "subtitleFontSize": 12,
+    "color": "#0f172a",
+    "subtitleColor": "#64748b",
+    "offset": 10
+  },
+
+  "data": { "url": "data/vis1_prices_vs_pay.json" },
+
+  "width": "container",
+  "height": 300,
+
+  /* Key fix: Give Vega internal room for title/subtitle + axes */
+  "padding": { "top": 16, "right": 12, "bottom": 10, "left": 52 },
+
+  "transform": [
+    { "calculate": "toDate(datum.date)", "as": "d" },
+    { "calculate": "toNumber(datum.value)", "as": "v" },
+    { "pivot": "series", "value": "v", "groupby": ["d"] },
+
+    /* Make these robust to slight naming differences */
+    {
+      "calculate":
+        "isValid(datum['CPIH (prices)']) ? datum['CPIH (prices)'] : datum['CPIH']",
+      "as": "prices"
+    },
+    {
+      "calculate":
+        "isValid(datum['Real earnings']) ? datum['Real earnings'] : datum['Real pay']",
+      "as": "earnings"
+    },
+    { "calculate": "datum.prices - datum.earnings", "as": "gap" }
+  ],
+
+  "layer": [
+    /* Baseline at 100 */
+    {
+      "mark": { "type": "rule", "strokeDash": [4, 6], "opacity": 0.7 },
+      "encoding": {
+        "y": { "datum": 100 },
+        "color": { "value": "#94a3b8" }
+      }
     },
 
-    "data": { "url": "data/vis1_prices_vs_pay.json" },
-    "width": "container",
-    "height": 300,
-
-    "transform": [
-      { "calculate": "toDate(datum.date)", "as": "d" },
-      { "calculate": "toNumber(datum.value)", "as": "v" },
-      { "pivot": "series", "value": "v", "groupby": ["d"] },
-      { "calculate": "datum['CPIH (prices)']", "as": "prices" },
-      { "calculate": "datum['Real earnings']", "as": "earnings" },
-      { "calculate": "datum.prices - datum.earnings", "as": "gap" }
-    ],
-
-    "layer": [
-      // Baseline at 100 (dotted, subtle)
-      {
-        "mark": { "type": "rule", "strokeDash": [4, 6] },
-        "encoding": {
-          "y": { "datum": 100 },
-          "color": { "value": "#6b778d" },
-          "opacity": { "value": 0.7 }
-        }
-      },
-
-      // Gap shading (between earnings and prices)
-      {
-        "mark": { "type": "area", "opacity": 0.18 },
-        "encoding": {
-          "x": {
-            "field": "d",
-            "type": "temporal",
-            "title": "Date",
-            "axis": { "format": "%Y", "tickCount": 7 }
-          },
-          "y": {
-            "field": "earnings",
-            "type": "quantitative",
-            "title": "Index (2019 = 100)",
-            "scale": { "zero": false, "domain": [98, 114] },
-            "axis": { "tickCount": 6, "grid": true }
-          },
-          "y2": { "field": "prices" }
-        }
-      },
-
-      // Prices line
-      {
-        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal", "title": "Date" },
-          "y": { "field": "prices", "type": "quantitative" },
-          "color": { "value": "#4c72b0" },
-          "tooltip": [
-            { "field": "d", "type": "temporal", "title": "Date" },
-            { "field": "prices", "type": "quantitative", "title": "CPIH (prices)", "format": ".1f" },
-            { "field": "earnings", "type": "quantitative", "title": "Real earnings", "format": ".1f" },
-            { "field": "gap", "type": "quantitative", "title": "Gap (prices − pay)", "format": ".1f" }
-          ]
-        }
-      },
-
-      // Earnings line
-      {
-        "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
-        "encoding": {
-          "x": { "field": "d", "type": "temporal", "title": "Date" },
-          "y": { "field": "earnings", "type": "quantitative" },
-          "color": { "value": "#e1812c" }
-        }
+    /* Gap shading between earnings and prices */
+    {
+      "mark": { "type": "area", "opacity": 0.18 },
+      "encoding": {
+        "x": {
+          "field": "d",
+          "type": "temporal",
+          "title": "Date",
+          "axis": { "format": "%Y", "tickCount": 7 }
+        },
+        "y": {
+          "field": "earnings",
+          "type": "quantitative",
+          "title": "Index (2019 = 100)",
+          "scale": { "zero": false, "domain": [98, 114] },
+          "axis": { "tickCount": 6, "grid": true, "gridOpacity": 0.12 }
+        },
+        "y2": { "field": "prices" },
+        "color": { "value": "#64748b" }
       }
-    ],
+    },
 
-    "config": {
-      "legend": { "disable": true },
-      "axis": { "labelFontSize": 12, "titleFontSize": 12 },
-      "title": { "fontSize": 22, "subtitleFontSize": 14 },
-      "view": { "stroke": null }
+    /* Prices line */
+    {
+      "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "prices", "type": "quantitative" },
+        "color": { "value": "#3b82f6" }
+      }
+    },
+
+    /* Earnings line */
+    {
+      "mark": { "type": "line", "strokeWidth": 3, "point": { "filled": true, "size": 40 } },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "earnings", "type": "quantitative" },
+        "color": { "value": "#f59e0b" }
+      }
+    },
+
+    /* End labels (subtle, professional) */
+    {
+      "transform": [
+        { "window": [{ "op": "rank", "as": "r" }], "sort": [{ "field": "d", "order": "descending" }] },
+        { "filter": "datum.r === 1" }
+      ],
+      "layer": [
+        {
+          "mark": { "type": "text", "align": "left", "dx": 8, "dy": -10, "fontSize": 12, "fontWeight": "600" },
+          "encoding": {
+            "x": { "field": "d", "type": "temporal" },
+            "y": { "field": "prices", "type": "quantitative" },
+            "text": { "value": "Prices" },
+            "color": { "value": "#3b82f6" }
+          }
+        },
+        {
+          "mark": { "type": "text", "align": "left", "dx": 8, "dy": 12, "fontSize": 12, "fontWeight": "600" },
+          "encoding": {
+            "x": { "field": "d", "type": "temporal" },
+            "y": { "field": "earnings", "type": "quantitative" },
+            "text": { "value": "Real earnings" },
+            "color": { "value": "#f59e0b" }
+          }
+        }
+      ]
+    },
+
+    /* Tooltip layer: invisible points for clean hover */
+    {
+      "mark": { "type": "point", "opacity": 0, "size": 80 },
+      "encoding": {
+        "x": { "field": "d", "type": "temporal" },
+        "y": { "field": "prices", "type": "quantitative" },
+        "tooltip": [
+          { "field": "d", "type": "temporal", "title": "Date", "format": "%b %Y" },
+          { "field": "prices", "type": "quantitative", "title": "CPIH (prices)", "format": ".1f" },
+          { "field": "earnings", "type": "quantitative", "title": "Real earnings", "format": ".1f" },
+          { "field": "gap", "type": "quantitative", "title": "Gap (prices − pay)", "format": ".1f" }
+        ]
+      }
     }
-  };
+  ],
+
+  "config": {
+    /* IMPORTANT: no legend.disable here */
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12,
+      "labelColor": "#475569",
+      "titleColor": "#0f172a",
+      "domainColor": "#cbd5e1",
+      "tickColor": "#cbd5e1"
+    },
+    "view": { "stroke": null },
+    "background": "#ffffff"
+  }
+};
 
   // ======================================
   // 2) Food inflation vs headline — size reduced

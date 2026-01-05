@@ -1,6 +1,6 @@
 /* Project-specific styles */
 
-/* Landing-style hero with background image (like portfolio) */
+/* Hero */
 .hero--project{
   position: relative;
   min-height: 70vh;
@@ -9,15 +9,14 @@
   background: url("../images/living_cost.jpg") center/cover no-repeat;
 }
 
+/* Optional: if used elsewhere */
 .project-container{
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-.project-intro{
-  margin: 40px 0;
-}
+.project-intro{ margin: 40px 0; }
 
 .key-metrics{
   display: grid;
@@ -48,9 +47,7 @@
   color: var(--muted);
 }
 
-.project-section{
-  margin: 50px 0;
-}
+.project-section{ margin: 50px 0; }
 
 .project-section h2{
   color: var(--navy);
@@ -64,19 +61,23 @@
   margin-bottom: 15px;
 }
 
-/* Task sections - AGGRESSIVE spacing to prevent overlap */
+/* ------------------------------------------------------------ */
+/* Section spacing: prevents any “collision” with chart blocks   */
+/* ------------------------------------------------------------ */
+.task{
+  margin: 44px 0; /* gives each section breathing room */
+}
+
 .task h2{
-  margin-bottom: 15px;
-  margin-top: 50px; /* Much more space above */
+  margin: 0 0 12px 0;
 }
 
 .task > p{
-  margin-bottom: 40px; /* Much more space below description */
+  margin: 0 0 18px 0;
 }
 
 /* ------------------------------------------------------------------ */
-/* IMPORTANT: override any card styling coming from css/style.css that
-   is being applied to .chart-wrapper                                  */
+/* Override any card styling from css/style.css that might hit wrapper */
 .chart-wrapper{
   background: transparent !important;
   border: none !important;
@@ -86,42 +87,39 @@
 
   width: 100%;
   max-width: 980px;
-  margin: 50px auto 0 auto; /* MUCH larger top margin */
+  margin: 0 auto;         /* no big top margin: spacing is on .task */
   overflow: visible;
 }
 /* ------------------------------------------------------------------ */
 
-/* The chart "card" must contain ONLY the visualization */
+/* The chart card */
 .chart-frame{
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
-  padding: 30px 18px 16px; /* MUCH more top padding */
+  padding: 14px 14px 12px;  /* keep modest */
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
   overflow: visible;
   width: 100%;
 }
 
-/* Default chart container height */
+/* Base chart container size */
 .vega-container{
   width: 100%;
   min-height: 340px;
   display: block;
   margin: 0;
-  padding-top: 20px; /* MUCH more padding */
 }
 
-/* --- Map containers (vis6 & vis8) --- */
+/* Maps: centre reliably without affecting non-map charts */
 .vega-map{
   min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  padding-top: 20px;
+  overflow: hidden; /* avoid scrollbars from internal bounds */
 }
 
-/* Center Vega-Embed wrappers */
 .vega-map .vega-embed{
   width: 100%;
   display: flex;
@@ -129,7 +127,6 @@
   justify-content: center;
 }
 
-/* The inner div is where Vega injects the SVG/canvas */
 .vega-map .vega-embed > div{
   width: 100%;
   display: flex;
@@ -137,7 +134,6 @@
   justify-content: center;
 }
 
-/* Ensure SVG/canvas scales nicely and stays centered */
 .vega-map svg,
 .vega-map canvas{
   display: block;
@@ -146,27 +142,21 @@
   max-height: 430px;
 }
 
-/* Slightly improve legend readability in maps */
-.vega-map .vega-embed .mark-group .role-legend,
-.vega-map .vega-embed .role-legend{
-  font-size: 12px;
-}
-
-/* --- Source/notes typography (outside the chart card) --- */
+/* Sources/notes */
 .chart-source{
-  margin: 16px 2px 0;
+  margin: 10px 2px 0;
   color: #2b2f36;
   font-size: 0.95rem;
 }
 
 .chart-note{
-  margin: 8px 2px 0;
+  margin: 6px 2px 0;
   color: #555;
   font-style: italic;
   font-size: 0.95rem;
 }
 
-/* ===== Vega-Embed hardening ===== */
+/* Vega-Embed sizing */
 .vega-embed{
   width: 100%;
 }
@@ -183,13 +173,7 @@
   display: block;
 }
 
-/* NUCLEAR OPTION - Force space above ALL Vega titles */
-.vega-embed .vega-title{
-  margin-top: 20px !important;
-  padding-top: 20px !important;
-}
-/* =============================== */
-
+/* Links block (if used) */
 .project-links{
   margin: 50px 0;
   padding: 30px;
