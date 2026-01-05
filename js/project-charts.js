@@ -205,7 +205,7 @@
   };
 
 // ======================================
-  // 3) Energy cap (COMPLETE - ALL 17 QUARTERS VISIBLE)
+  // 3) Energy cap (COMPLETE - ALL DATA VISIBLE)
   // ======================================
   const vis3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -226,7 +226,7 @@
     },
     "width": "container",
     "height": 550,
-    "padding": {"bottom": 50},
+    "padding": {"bottom": 60},
     
     "encoding": {
       "x": {
@@ -252,7 +252,10 @@
         "field": "typical_annual_bill_gbp",
         "type": "quantitative",
         "title": "Annual Bill (£)",
-        "scale": { "domain": [850, 2150] },
+        "scale": { 
+          "domain": [0, 2200],
+          "nice": false
+        },
         "axis": {
           "format": ",.0f",
           "labelFontSize": 12,
@@ -327,7 +330,7 @@
         }
       },
       
-      // Value labels for key points (highs and lows)
+      // Value labels for extremes
       {
         "transform": [
           { "filter": "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070 || datum.typical_annual_bill_gbp === 1850 || datum.typical_annual_bill_gbp === 1856" }
@@ -508,7 +511,7 @@ const vis4 = {
 };
 
 // ======================================
-// 5) Rent vs house price inflation (FINAL — STRONGER X-AXIS TITLE)
+// 5) Rent vs house price inflation (FINAL — FIX YEAR LABEL VISIBILITY + LABELS INSIDE)
 // ======================================
 const vis5 = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -522,16 +525,13 @@ const vis5 = {
   "width": "container",
   "height": 360,
 
-  // Give the x-axis title more breathing room
-  "padding": { "top": 5, "left": 5, "right": 10, "bottom": 55 },
-
   "transform": [
     { "calculate": "toDate(datum.date)", "as": "d" },
     { "calculate": "toNumber(datum.value)", "as": "v" }
   ],
 
   "layer": [
-    // Explicit x-axis baseline
+    // Explicit x-axis baseline (always visible)
     {
       "mark": { "type": "rule", "strokeWidth": 1.8, "color": "#2f2f2f" },
       "encoding": { "y": { "datum": 0 } }
@@ -548,22 +548,23 @@ const vis5 = {
           "axis": {
             "format": "%Y",
             "tickCount": 7,
-            "labelFontSize": 11,
-            "labelColor": "#1f2937",
-            "labelPadding": 8,
 
-            // Make the axis title clearly visible
-            "titleFontSize": 14,
-            "titleFontWeight": "bold",
-            "titleColor": "#111827",
-            "titlePadding": 22,
+            // KEY: make year labels readable
+            "labelFontSize": 12,
+            "labelColor": "#111827",
+            "labelPadding": 6,
 
-            // Keep baseline/ticks strong
+            // Keep baseline/ticks visible
             "domain": true,
             "domainColor": "#2f2f2f",
             "domainWidth": 1.8,
             "tickColor": "#2f2f2f",
-            "tickWidth": 1.2
+            "tickWidth": 1.2,
+
+            // Keep title subtle (do NOT push it down)
+            "titleFontSize": 12,
+            "titleColor": "#111827",
+            "titlePadding": 8
           }
         },
         "y": {
@@ -574,9 +575,8 @@ const vis5 = {
           "axis": {
             "labelFontSize": 11,
             "titleFontSize": 12,
-            "titleFontWeight": "bold",
+            "labelColor": "#111827",
             "titleColor": "#111827",
-            "labelColor": "#1f2937",
             "grid": true,
             "gridOpacity": 0.08
           }
@@ -636,7 +636,7 @@ const vis5 = {
       }
     },
 
-    // Series labels inside plotting area
+    // Series labels inside plotting area (shift left from last date)
     {
       "transform": [
         {
@@ -660,7 +660,7 @@ const vis5 = {
       "mark": {
         "type": "text",
         "align": "right",
-        "dx": -12,
+        "dx": -14,
         "dy": -2,
         "fontSize": 11,
         "fontWeight": "bold"
@@ -683,7 +683,6 @@ const vis5 = {
     "view": { "stroke": null }
   }
 };
-
   
   // 6) Map: rent inflation by region (choropleth)
   const vis6 = {
