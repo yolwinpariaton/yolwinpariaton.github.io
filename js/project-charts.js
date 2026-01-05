@@ -308,7 +308,7 @@
     config: THEME
   };
 
-// --------------------------------------
+  // --------------------------------------
   // 4) Weekly fuel prices - ACCURATE TO YOUR DATA (2023-2025)
   // --------------------------------------
   const vis4 = {
@@ -450,7 +450,7 @@
 
     config: THEME
   };
-  
+
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
@@ -469,7 +469,6 @@
     width: "container",
     height: 360,
 
-    // Extra bottom breathing room for x-axis labels
     padding: { top: 6, right: 6, bottom: 22, left: 6 },
 
     transform: [
@@ -529,75 +528,77 @@
     config: THEME
   };
 
-// --------------------------------------
-// 6) England regional map — compact + visually centered
-// --------------------------------------
-const vis6 = {
-  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-  ...FIT,
+  // --------------------------------------
+  // 6) England regional map (FIXED)
+  // --------------------------------------
+  const vis6 = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
-  title: {
-    text: "Regional rent inflation across England",
-    subtitle: "Latest year-on-year percentage change by English region | Darker colours indicate higher inflation",
-    anchor: "start",
-    offset: 14
-  },
-
-  width: "container",
-  height: 360,
-
-  // Legend needs space, but not a big empty band
-  padding: { top: 6, bottom: 50, left: 0, right: 0 },
-
-  data: {
-    url: UK_TOPO_URL,
-    format: { type: "topojson", feature: "rgn" }
-  },
-
-  transform: [
-    {
-      lookup: "properties.areacd",
-      from: {
-        data: { url: "data/vis6_rent_map_regions.json" },
-        key: "areacd",
-        fields: ["areanm", "rent_inflation_yoy_pct"]
-      }
+    title: {
+      text: "Regional rent inflation across England",
+      subtitle: "Latest year-on-year percentage change by English region | Darker colours indicate higher inflation",
+      anchor: "start",
+      offset: 14
     },
-    { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
-  ],
 
-  // Key: slightly larger scale + slightly LOWER latitude to shift map down
-  projection: { type: "mercator", center: [-2.6, 52.9], scale: 2550 },
+    width: "container",
+    height: 360,
 
-  mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
+    // FIX: reduce bottom padding (was pushing map up) + add side padding for better frame balance
+    padding: { top: 6, right: 10, bottom: 46, left: 10 },
 
-  encoding: {
-    color: {
-      field: "rent_yoy",
-      type: "quantitative",
-      title: "Rent inflation (% y/y)",
-      scale: { domain: [3, 10], scheme: { name: "oranges", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
-      legend: {
-        orient: "bottom",
-        direction: "horizontal",
-        // shorter bar = less need for padding
-        gradientLength: 420,
-        gradientThickness: 14,
-        titleFontSize: 12,
-        labelFontSize: 11,
-        format: ".1f",
-        offset: 6
-      }
+    data: {
+      url: UK_TOPO_URL,
+      format: { type: "topojson", feature: "rgn" }
     },
-    tooltip: [
-      { field: "areanm", type: "nominal", title: "Region" },
-      { field: "rent_yoy", type: "quantitative", title: "Inflation (% y/y)", format: ".1f" }
-    ]
-  },
 
-  config: THEME
-};
+    transform: [
+      {
+        lookup: "properties.areacd",
+        from: {
+          data: { url: "data/vis6_rent_map_regions.json" },
+          key: "areacd",
+          fields: ["areanm", "rent_inflation_yoy_pct"]
+        }
+      },
+      { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
+    ],
 
+    // FIX: scale up to fill the available view (without increasing chart height)
+    // and adjust center slightly so the geography sits more naturally above the legend
+    projection: { type: "mercator", center: [-2.6, 53.4], scale: 2350 },
+
+    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
+
+    encoding: {
+      color: {
+        field: "rent_yoy",
+        type: "quantitative",
+        title: "Rent inflation (% y/y)",
+        scale: { domain: [3, 10], scheme: { name: "oranges", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
+        legend: {
+          orient: "bottom",
+          direction: "horizontal",
+          // FIX: shorter legend so it fits responsive frames (no need for huge padding)
+          gradientLength: 280,
+          gradientThickness: 12,
+          titleFontSize: 12,
+          labelFontSize: 11,
+          format: ".1f",
+          offset: 6,
+          labelOffset: 4,
+          titlePadding: 6
+        }
+      },
+      tooltip: [
+        { field: "areanm", type: "nominal", title: "Region" },
+        { field: "rent_yoy", type: "quantitative", title: "Inflation (% y/y)", format: ".1f" }
+      ]
+    },
+
+    config: THEME
+  };
 
   // --------------------------------------
   // 7) Interactive regional trend
@@ -617,7 +618,6 @@ const vis6 = {
     width: "container",
     height: 340,
 
-    // Slight bottom breathing room
     padding: { top: 6, right: 6, bottom: 18, left: 6 },
 
     params: [
@@ -684,72 +684,75 @@ const vis6 = {
     config: THEME
   };
 
-// --------------------------------------
-// 8) UK nations map — compact + visually centered
-// --------------------------------------
-const vis8 = {
-  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-  ...FIT,
+  // --------------------------------------
+  // 8) UK nations map (FIXED)
+  // --------------------------------------
+  const vis8 = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
-  title: {
-    text: "Rent inflation across UK nations",
-    subtitle: "Latest year-on-year percentage change | Darker blues indicate higher inflation",
-    anchor: "start",
-    offset: 14
-  },
-
-  width: "container",
-  height: 380,
-
-  padding: { top: 6, bottom: 50, left: 0, right: 0 },
-
-  data: {
-    url: UK_TOPO_URL,
-    format: { type: "topojson", feature: "ctry" }
-  },
-
-  transform: [
-    {
-      lookup: "properties.areacd",
-      from: {
-        data: { url: "data/vis8_rent_map_countries.json" },
-        key: "areacd",
-        fields: ["areanm", "rent_inflation_yoy_pct"]
-      }
+    title: {
+      text: "Rent inflation across UK nations",
+      subtitle: "Latest year-on-year percentage change | Darker blues indicate higher inflation",
+      anchor: "start",
+      offset: 14
     },
-    { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
-  ],
 
-  // Key: slightly larger scale + slightly LOWER latitude to shift map down
-  projection: { type: "mercator", center: [-4.3, 54.7], scale: 1500 },
+    width: "container",
+    height: 380,
 
-  mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
+    // FIX: reduce bottom padding + add side padding for balance
+    padding: { top: 6, right: 10, bottom: 46, left: 10 },
 
-  encoding: {
-    color: {
-      field: "rent_yoy",
-      type: "quantitative",
-      title: "Rent inflation (% y/y)",
-      scale: { domain: [3, 9], scheme: { name: "blues", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
-      legend: {
-        orient: "bottom",
-        direction: "horizontal",
-        gradientLength: 420,
-        gradientThickness: 14,
-        titleFontSize: 12,
-        labelFontSize: 11,
-        format: ".1f",
-        offset: 6
-      }
+    data: {
+      url: UK_TOPO_URL,
+      format: { type: "topojson", feature: "ctry" }
     },
-    tooltip: [
-      { field: "areanm", type: "nominal", title: "Nation" },
-      { field: "rent_yoy", type: "quantitative", title: "Inflation (% y/y)", format: ".1f" }
-    ]
-  },
 
-  config: THEME
-};
+    transform: [
+      {
+        lookup: "properties.areacd",
+        from: {
+          data: { url: "data/vis8_rent_map_countries.json" },
+          key: "areacd",
+          fields: ["areanm", "rent_inflation_yoy_pct"]
+        }
+      },
+      { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
+    ],
+
+    // FIX: increase scale so the UK fills the view more; small center tweak for better vertical placement
+    projection: { type: "mercator", center: [-3.8, 55.2], scale: 1280 },
+
+    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
+
+    encoding: {
+      color: {
+        field: "rent_yoy",
+        type: "quantitative",
+        title: "Rent inflation (% y/y)",
+        scale: { domain: [3, 9], scheme: { name: "blues", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
+        legend: {
+          orient: "bottom",
+          direction: "horizontal",
+          gradientLength: 280,
+          gradientThickness: 12,
+          titleFontSize: 12,
+          labelFontSize: 11,
+          format: ".1f",
+          offset: 6,
+          labelOffset: 4,
+          titlePadding: 6
+        }
+      },
+      tooltip: [
+        { field: "areanm", type: "nominal", title: "Nation" },
+        { field: "rent_yoy", type: "quantitative", title: "Inflation (% y/y)", format: ".1f" }
+      ]
+    },
+
+    config: THEME
+  };
 
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
