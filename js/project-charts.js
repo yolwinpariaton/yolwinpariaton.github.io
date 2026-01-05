@@ -309,15 +309,15 @@
   };
 
 // --------------------------------------
-  // 4) Weekly fuel prices - FINAL CORRECTED
+  // 4) Weekly fuel prices - ACCURATE TO YOUR DATA (2023-2025)
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
 
     title: {
-      text: "UK Fuel Prices: The 2022 Energy Crisis in Sharp Relief",
-      subtitle: "Weekly pump prices (2019–2024) with 5-week moving average | Unprecedented volatility during the Russia-Ukraine conflict",
+      text: "UK Fuel Prices: Post-Crisis Recovery (2023-2025)",
+      subtitle: "Weekly pump prices with 5-week moving average | Gradual decline from 2023 peak of 160p",
       anchor: "start",
       offset: 14
     },
@@ -338,24 +338,13 @@
     ],
 
     layer: [
-      // BACKGROUND: Crisis period highlight - FIXED
+      // Reference line at 150p (mid-point)
       {
-        mark: { type: "rect", color: "#fef3c7", opacity: 0.45 },
-        encoding: {
-          x: { datum: "2022-03-01", type: "temporal" },
-          x2: { datum: "2022-08-01", type: "temporal" }
-        }
+        mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.6 },
+        encoding: { y: { datum: 150 } }
       },
 
-      // REFERENCE: Pre-pandemic baseline at 125p
-      {
-        mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
-        encoding: {
-          y: { datum: 125 }
-        }
-      },
-
-      // ANNOTATION: Baseline label
+      // Reference label
       {
         mark: { 
           type: "text", 
@@ -365,15 +354,15 @@
           fontSize: 10.5, 
           color: "#64748b",
           fontWeight: 600,
-          text: "Pre-pandemic baseline (~125p)"
+          text: "150p reference level"
         },
         encoding: {
-          x: { datum: "2019-02-01", type: "temporal" },
-          y: { datum: 125, type: "quantitative" }
+          x: { datum: "2023-01-01", type: "temporal" },
+          y: { datum: 150, type: "quantitative" }
         }
       },
 
-      // DATA: Raw weekly prices (subtle)
+      // Raw weekly data (subtle)
       {
         mark: { type: "line", strokeWidth: 1.2, opacity: 0.15 },
         encoding: {
@@ -381,7 +370,7 @@
             field: "d", 
             type: "temporal", 
             title: "Date",
-            axis: { format: "%Y", tickCount: 7, labelFontSize: 11 }
+            axis: { format: "%Y", tickCount: 4, labelFontSize: 11 }
           },
           y: { 
             field: "ppl", 
@@ -398,7 +387,7 @@
         }
       },
 
-      // DATA: 5-week moving average (bold)
+      // 5-week moving average (bold)
       {
         transform: [
           {
@@ -429,36 +418,7 @@
         }
       },
 
-      // ANNOTATION: Crisis period label - POSITIONED DYNAMICALLY
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["fuel"]
-          },
-          {
-            aggregate: [{ op: "max", field: "ppl_ma", as: "max_val" }]
-          },
-          { calculate: "datum.max_val + 5", as: "label_y" },
-          { calculate: "'2022-05-15'", as: "label_x" }
-        ],
-        mark: { 
-          type: "text", 
-          align: "center",
-          fontSize: 11.5, 
-          color: "#92400e",
-          fontWeight: 700,
-          text: "Russia-Ukraine Crisis"
-        },
-        encoding: {
-          x: { field: "label_x", type: "temporal" },
-          y: { field: "label_y", type: "quantitative" }
-        }
-      },
-
-      // INTERACTION: Hover points with tooltips
+      // Tooltips
       {
         transform: [
           {
@@ -490,6 +450,7 @@
 
     config: THEME
   };
+  
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
