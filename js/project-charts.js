@@ -546,7 +546,7 @@
 
     config: THEME
   };
-  
+
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
@@ -625,8 +625,8 @@
     config: THEME
   };
 
-  // --------------------------------------
-// 6) England regional map — tuned vertical balance
+// --------------------------------------
+// 6) England regional map — fix bottom clipping + better balance
 // --------------------------------------
 const vis6 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -642,8 +642,8 @@ const vis6 = {
   width: "container",
   height: 360,
 
-  /* Give the legend a defined “band” and keep it off the rounded border */
-  padding: { top: 6, bottom: 84, left: 0, right: 0 },
+  // Legend needs its own band; do not make the map taller
+  padding: { top: 6, bottom: 88, left: 0, right: 0 },
 
   data: {
     url: UK_TOPO_URL,
@@ -662,9 +662,10 @@ const vis6 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  /* Shift the map down slightly (higher center latitude => geometry sits lower),
-     and reduce scale a touch to avoid crowding */
-  projection: { type: "mercator", center: [-2.6, 54.25], scale: 1750 },
+  // KEY FIX:
+  // - slightly LOWER center latitude => map moves UP (prevents south-coast clipping)
+  // - slightly LOWER scale => ensures full outline fits inside view
+  projection: { type: "mercator", center: [-2.6, 53.35], scale: 1700 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -693,7 +694,6 @@ const vis6 = {
 
   config: THEME
 };
-
 
   // --------------------------------------
   // 7) Interactive regional trend
@@ -780,8 +780,8 @@ const vis6 = {
     config: THEME
   };
 
-  // --------------------------------------
-// 8) UK nations map — tuned vertical balance
+// --------------------------------------
+// 8) UK nations map — fix bottom clipping + better balance
 // --------------------------------------
 const vis8 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -797,8 +797,8 @@ const vis8 = {
   width: "container",
   height: 380,
 
-  /* More dedicated space for the legend and separation from the border */
-  padding: { top: 6, bottom: 84, left: 0, right: 0 },
+  // Keep maps compact; give legend a comfortable band
+  padding: { top: 6, bottom: 88, left: 0, right: 0 },
 
   data: {
     url: UK_TOPO_URL,
@@ -817,8 +817,10 @@ const vis8 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  /* Push geometry down slightly + modest scale reduction */
-  projection: { type: "mercator", center: [-4.3, 56.35], scale: 950 },
+  // KEY FIX:
+  // - lower center latitude => map moves UP (prevents clipping at the bottom)
+  // - lower scale => ensures full geometry fits in the view
+  projection: { type: "mercator", center: [-4.3, 55.15], scale: 900 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 
