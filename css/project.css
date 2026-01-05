@@ -64,14 +64,14 @@
   margin-bottom: 15px;
 }
 
-/* Task sections - CRITICAL spacing fixes to prevent overlap */
+/* Task sections - AGGRESSIVE spacing to prevent overlap */
 .task h2{
-  margin-bottom: 12px;
-  margin-top: 40px; /* Space above each section heading */
+  margin-bottom: 15px;
+  margin-top: 50px; /* Much more space above */
 }
 
 .task > p{
-  margin-bottom: 30px; /* More space between description and chart */
+  margin-bottom: 40px; /* Much more space below description */
 }
 
 /* ------------------------------------------------------------------ */
@@ -86,7 +86,7 @@
 
   width: 100%;
   max-width: 980px;
-  margin: 35px auto 0 auto; /* Increased top margin to 35px */
+  margin: 50px auto 0 auto; /* MUCH larger top margin */
   overflow: visible;
 }
 /* ------------------------------------------------------------------ */
@@ -96,7 +96,7 @@
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
-  padding: 24px 18px 16px; /* Increased top padding to 24px */
+  padding: 30px 18px 16px; /* MUCH more top padding */
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
   overflow: visible;
   width: 100%;
@@ -108,7 +108,7 @@
   min-height: 340px;
   display: block;
   margin: 0;
-  padding-top: 12px; /* Increased to 12px for chart title breathing room */
+  padding-top: 20px; /* MUCH more padding */
 }
 
 /* --- Map containers (vis6 & vis8) --- */
@@ -118,7 +118,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding-top: 12px; /* Consistent with other containers */
+  padding-top: 20px;
 }
 
 /* Center Vega-Embed wrappers */
@@ -154,13 +154,13 @@
 
 /* --- Source/notes typography (outside the chart card) --- */
 .chart-source{
-  margin: 14px 2px 0;
+  margin: 16px 2px 0;
   color: #2b2f36;
   font-size: 0.95rem;
 }
 
 .chart-note{
-  margin: 6px 2px 0;
+  margin: 8px 2px 0;
   color: #555;
   font-style: italic;
   font-size: 0.95rem;
@@ -181,6 +181,12 @@
 .vega-embed canvas,
 .vega-embed svg{
   display: block;
+}
+
+/* NUCLEAR OPTION - Force space above ALL Vega titles */
+.vega-embed .vega-title{
+  margin-top: 20px !important;
+  padding-top: 20px !important;
 }
 /* =============================== */
 
