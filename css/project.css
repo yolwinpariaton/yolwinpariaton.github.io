@@ -64,13 +64,14 @@
   margin-bottom: 15px;
 }
 
-/* Task sections - spacing fixes */
+/* Task sections - CRITICAL spacing fixes to prevent overlap */
 .task h2{
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  margin-top: 40px; /* Space above each section heading */
 }
 
 .task > p{
-  margin-bottom: 25px;
+  margin-bottom: 30px; /* More space between description and chart */
 }
 
 /* ------------------------------------------------------------------ */
@@ -85,7 +86,7 @@
 
   width: 100%;
   max-width: 980px;
-  margin: 30px auto 0 auto; /* Added top margin */
+  margin: 35px auto 0 auto; /* Increased top margin to 35px */
   overflow: visible;
 }
 /* ------------------------------------------------------------------ */
@@ -95,7 +96,7 @@
   background: #fff;
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
-  padding: 20px 18px 16px; /* Increased top padding from 14px to 20px */
+  padding: 24px 18px 16px; /* Increased top padding to 24px */
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
   overflow: visible;
   width: 100%;
@@ -107,7 +108,7 @@
   min-height: 340px;
   display: block;
   margin: 0;
-  padding-top: 10px; /* Extra space for chart title */
+  padding-top: 12px; /* Increased to 12px for chart title breathing room */
 }
 
 /* --- Map containers (vis6 & vis8) --- */
@@ -117,7 +118,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding-top: 10px; /* Consistent with other containers */
+  padding-top: 12px; /* Consistent with other containers */
 }
 
 /* Center Vega-Embed wrappers */
@@ -153,7 +154,7 @@
 
 /* --- Source/notes typography (outside the chart card) --- */
 .chart-source{
-  margin: 12px 2px 0;
+  margin: 14px 2px 0;
   color: #2b2f36;
   font-size: 0.95rem;
 }
