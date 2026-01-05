@@ -86,38 +86,58 @@
   border: 2px solid rgba(120, 150, 210, 0.25);
   border-radius: 22px;
 
-  /* Extra breathing room so Vega titles/legends are never clipped */
-  padding: 20px 22px 26px;
+  /* Slightly more breathing room so titles/legends never feel cramped */
+  padding: 20px 22px 18px;
 
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 
-  /* Keep rounded corners; padding above ensures titles/legends fit */
+  /* Keep the rounded frame clean, but do not clip Vega legends */
   overflow: hidden;
-
-  /* Critical: center the visualization inside the frame */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-/* Reserve more vertical space; maps need more height than line charts */
+/* Reserve consistent space so charts don't jump between pages */
 .vega-container{
   width: 100%;
-  min-height: 560px;
-  display: flex;                 /* enables true centering */
-  justify-content: center;       /* horizontal centering */
-  align-items: center;           /* vertical centering */
+  min-height: 520px; /* maps + legends need more vertical space */
+  display: block;
   margin: 0;
-  padding: 0;
 }
 
-/* If you later want different heights, you can optionally add:
-   class="vega-container vega-map" on map holders and override here. */
-/*
-.vega-container.vega-map{ min-height: 600px; }
-.vega-container.vega-chart{ min-height: 420px; }
-*/
+/* -------------------- */
+/* Vega-Embed alignment */
+/* -------------------- */
+/* Center the Vega view inside your frame reliably */
+.vega-embed{
+  width: 100%;
+  display: flex;
+  justify-content: center; /* horizontal centering */
+}
 
+/* Vega-Embed places the actual view inside a child div */
+.vega-embed > div{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure SVG/canvas don't cause odd left alignment */
+.vega-embed canvas,
+.vega-embed svg{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent any internal overflow from pushing the view */
+.vega-embed,
+.vega-embed > div{
+  max-width: 100%;
+}
+
+/* -------------------- */
+/* Typography polish    */
+/* -------------------- */
 .chart-source{
   margin: 14px 0 0;
   color: #2b2f36;
@@ -129,50 +149,15 @@
   font-style: italic;
 }
 
-/* ===== Vega-Embed hardening + centering ===== */
-.vega-embed{
-  width: 100%;
-  display: flex;               /* make embed itself centerable */
-  justify-content: center;     /* center the inner view */
-  align-items: center;
+/* Make Vega text look consistent with your site */
+.vega-embed .mark-text text,
+.vega-embed text{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Vega-Embed creates a nested div that holds the canvas/svg */
-.vega-embed > div{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* Avoid odd left offsets from inherited styles */
-  margin: 0 auto;
-}
-
-/* Ensure rendered view never overflows the frame */
-.vega-embed,
-.vega-embed > div,
-.vega-embed canvas,
-.vega-embed svg{
-  max-width: 100%;
-}
-
-/* Make the actual drawing surface centered in its parent */
-.vega-embed canvas,
-.vega-embed svg{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Vega action links (if enabled) should not push layout around */
-.vega-embed .vega-actions{
-  position: absolute;
-  right: 16px;
-  top: 14px;
-  z-index: 2;
-}
-/* =============================== */
-
+/* -------------------- */
+/* Links section        */
+/* -------------------- */
 .project-links{
   margin: 50px 0;
   padding: 30px;
