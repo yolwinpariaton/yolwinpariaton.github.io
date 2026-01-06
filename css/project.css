@@ -51,7 +51,7 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 
   width: 100%;
-  overflow: hidden; /* default: keeps rounded-corner clipping clean */
+  overflow: hidden; /* keeps rounded-corner clipping clean */
 }
 
 /* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
@@ -59,8 +59,6 @@
   width: 100%;
   display: block;
   margin: 0;
-
-  /* allow Vega to size within a real box */
   position: relative;
 }
 
@@ -77,10 +75,7 @@
   max-width: 100%;
 }
 
-/* IMPORTANT DEFAULT:
-   For normal charts, do NOT force height:100%.
-   Let Vega control the SVG height.
-*/
+/* Default: let Vega control height; keep SVG responsive */
 .vega-embed svg{
   width: 100% !important;
   height: auto !important;
@@ -104,35 +99,26 @@
   margin-right: auto;
 }
 
-/* CRITICAL FIX:
-   Legends can sit very close to the bottom edge of the SVG.
-   Because .chart-frame uses overflow:hidden by default, the legend gradient
-   can get clipped. For map cards only, allow overflow.
+/* IMPORTANT:
+   Keep overflow hidden (prevents overlap with next section),
+   and give maps extra bottom padding so legend fits INSIDE the card.
 */
 .chart-wrapper--map .chart-frame{
-  overflow: visible;     /* prevents legend clipping */
-  padding-bottom: 22px;  /* keep consistent with other cards */
+  overflow: hidden;
+  padding-bottom: 56px; /* enough room for horizontal legend inside the card */
 }
 
-/* Map container behaves like a normal chart container (no flex-centering). */
+/* Do NOT force a fixed height box for maps (that caused centering/spacing issues) */
 .vega-map{
   width: 100%;
   display: block;
 }
 
-/* Ensure vega-embed wrappers don't do anything odd for maps */
+/* Maps behave like normal charts */
 .vega-map .vega-embed,
 .vega-map .vega-embed > div{
   width: 100%;
   height: auto;
-  display: block;
-}
-
-/* Maps: fill the available width; height determined by Vega spec */
-.vega-map .vega-embed svg{
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100%;
   display: block;
 }
 
@@ -178,7 +164,7 @@
   }
 }
 
-/* Mobile: reduce map height a bit so it doesn't dominate */
+/* Mobile tweaks */
 @media (max-width: 600px){
   .chart-frame{
     padding: 14px 12px 18px;
@@ -187,5 +173,10 @@
 
   .task{
     margin: 36px 0;
+  }
+
+  /* still reserve space for legend on mobile */
+  .chart-wrapper--map .chart-frame{
+    padding-bottom: 52px;
   }
 }
