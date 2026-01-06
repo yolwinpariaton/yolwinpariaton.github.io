@@ -17,7 +17,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <!-- Your charts script -->
-  <script defer src="js/project-charts.js?v=2026-01-06-v2"></script>
+  <script defer src="js/project-charts.js?v=2026-01-06-v3"></script>
 </head>
 
 <body>
@@ -40,7 +40,9 @@
     </nav>
 
     <section class="hero hero--project" aria-label="Project intro">
-      <div class="hero__overlay"></div>
+      <!-- keep overlay, but it is now safely constrained by CSS -->
+      <div class="hero__overlay" aria-hidden="true"></div>
+
       <div class="hero__center">
         <h1 class="hero__title">UK Cost of Living Crisis</h1>
         <p class="hero__subtitle">Automated data pipeline and interactive visualisations</p>
@@ -146,7 +148,7 @@
           </div>
         </section>
 
-        <!-- 6 - MAP WITH NARROWER FRAME -->
+        <!-- 6 -->
         <section class="task">
           <h2>6) Map: Rent inflation across English regions</h2>
           <p>The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.</p>
@@ -172,7 +174,7 @@
           </div>
         </section>
 
-        <!-- 8 - MAP WITH NARROWER FRAME -->
+        <!-- 8 -->
         <section class="task">
           <h2>8) Map: Rent inflation across UK countries</h2>
           <p>This map compares rent inflation across the four nations of the UK.</p>
