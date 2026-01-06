@@ -68,7 +68,7 @@ console.log("LOADED project-charts v3-fixed");
   }
 
 // ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) - CLEAN X-AXIS VERSION
+  // 1) Prices vs Pay (Indexed) - FIXED LABELS & X-AXIS TITLE
   // ------------------------------------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -92,8 +92,8 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 400,
 
-    // Padding tuned to give legend and labels breathing room
-    padding: { top: 60, right: 30, bottom: 20, left: 20 },
+    // Increased padding to ensure legend labels and axis titles don't clip
+    padding: { top: 70, right: 30, bottom: 40, left: 30 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -105,23 +105,23 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      // 1. Custom Legend: Prices
+      // 1. Custom Legend: Prices (Positioned far left)
       {
         data: { values: [{ label: "■ Prices (CPIH)" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#e11d48" },
         encoding: {
-          x: { datum: "2019-02-01", type: "temporal" }, 
-          y: { value: -35 },
+          x: { datum: "2019-01-15", type: "temporal" }, 
+          y: { value: -40 },
           text: { field: "label" }
         }
       },
-      // 2. Custom Legend: Earnings
+      // 2. Custom Legend: Earnings (Moved significantly right to 2021 to prevent overlap)
       {
         data: { values: [{ label: "■ Real Earnings" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#0f172a" },
         encoding: {
-          x: { datum: "2020-02-01", type: "temporal" }, 
-          y: { value: -35 },
+          x: { datum: "2021-06-01", type: "temporal" }, 
+          y: { value: -40 },
           text: { field: "label" }
         }
       },
@@ -150,13 +150,14 @@ console.log("LOADED project-charts v3-fixed");
           x: {
             field: "d",
             type: "temporal",
-            title: null, // REMOVED X-AXIS TITLE
+            title: "Year", // DISPLAYING THE X-AXIS NAME
             axis: { 
               format: "%Y", 
               tickCount: 6, 
               grid: false, 
               labelFlush: true,
-              labelColor: "#64748b"
+              labelPadding: 10,
+              titlePadding: 15
             }
           },
           y: {
@@ -199,7 +200,7 @@ console.log("LOADED project-charts v3-fixed");
         mark: { 
           type: "text", 
           dy: -20, 
-          dx: 45, 
+          dx: 50, // Shifted further right to avoid Y-axis labels
           fontSize: 11, 
           fontWeight: "600", 
           color: "#475569",
