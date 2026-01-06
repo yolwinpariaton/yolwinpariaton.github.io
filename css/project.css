@@ -56,7 +56,7 @@
 
 /* Extra bottom padding for map charts to accommodate legends */
 .chart-wrapper--map .chart-frame{
-  padding-bottom: 32px;
+  padding-bottom: 28px;
 }
 
 /* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
@@ -197,7 +197,7 @@
 
   /* Maintain extra bottom padding for maps on mobile */
   .chart-wrapper--map .chart-frame{
-    padding-bottom: 30px;
+    padding-bottom: 28px;
   }
 
   .task{
