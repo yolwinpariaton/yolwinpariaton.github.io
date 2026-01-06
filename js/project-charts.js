@@ -18,9 +18,10 @@ console.log("LOADED project-charts v3-fixed");
     config: { legend: { disable: false } }
   };
 
-  // Stable TopoJSON from ONSdigital/uk-topojson (contains layers: uk, ctry, rgn, ...)
+    // Stable TopoJSON from ONSdigital/uk-topojson (layers include: ctry, rgn, etc.)
   const UK_TOPO_URL =
-    "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json";
+    "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json";
+
 
   // Consistent visual theme
   const THEME = {
@@ -680,6 +681,7 @@ const vis1 = {
     ...FIT,
     width: "container",
     height: 500,
+
     title: {
       text: "Rent Inflation: English Regions",
       subtitle: "Annual percentage change by region",
@@ -692,25 +694,26 @@ const vis1 = {
     },
 
     transform: [
-      // Vega expressions don't support startsWith(); use substring instead.
-      // English regions have codes like E12000001, E12000002, ...
+      // Vega expressions don't support startsWith(); use substring.
+      // English regions codes: E12000001 ... E12000009
       { filter: "substring(datum.properties.areacd, 0, 3) == 'E12'" },
 
-      // Join rent inflation values onto the topo shapes
+      // Pull multiple possible field names from your JSON (in case your key/field names differ)
       {
         lookup: "properties.areanm",
         from: {
           data: { url: "data/vis6_rent_map_regions.json" },
           key: "region",
-          fields: ["value"]
+          fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
         }
       },
 
-      // Handle values like "5.2%" AND numeric values safely
-      { calculate: "toNumber(replace('' + datum.value, '%', ''))", as: "rent_growth" },
-
-      // Drop records that still don't have a valid number (prevents Infinity/NaN scales)
-      { filter: "isValid(datum.rent_growth)" }
+      // Choose the first available value and coerce to number, stripping a trailing "%" if present
+      {
+        calculate:
+          "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
+        as: "rent_growth_num"
+      }
     ],
 
     projection: { type: "mercator" },
@@ -718,20 +721,32 @@ const vis1 = {
     mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
 
     encoding: {
+      // IMPORTANT: do NOT drop shapes when data is missing.
+      // Instead, show light grey for missing values so the map still appears.
       color: {
-        field: "rent_growth",
-        type: "quantitative",
-        scale: { scheme: "blues" },
+        condition: {
+          test: "isValid(datum.rent_growth_num)",
+          field: "rent_growth_num",
+          type: "quantitative",
+          scale: { scheme: "blues", domain: [0, 12] }
+        },
+        value: "#e5e7eb",
         title: "Growth (%)"
       },
       tooltip: [
         { field: "properties.areanm", type: "nominal", title: "Region" },
-        { field: "rent_growth", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
+        {
+          field: "rent_growth_num",
+          type: "quantitative",
+          title: "Rent growth (%)",
+          format: ".1f"
+        }
       ]
     },
 
     config: THEME
   };
+
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -854,7 +869,7 @@ const vis1 = {
     config: THEME
   };
 
-  // ------------------------------------------------------------------
+    // ------------------------------------------------------------------
   // 8) MAP: Rent inflation across UK countries
   // ------------------------------------------------------------------
   const vis8 = {
@@ -862,6 +877,7 @@ const vis1 = {
     ...FIT,
     width: "container",
     height: 500,
+
     title: {
       text: "Rent Inflation: UK Nations",
       subtitle: "Annual percentage change by country",
@@ -879,15 +895,14 @@ const vis1 = {
         from: {
           data: { url: "data/vis8_rent_map_countries.json" },
           key: "country",
-          fields: ["value"]
+          fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
         }
       },
-
-      // Handle "x%" strings and numeric values
-      { calculate: "toNumber(replace('' + datum.value, '%', ''))", as: "rent_growth" },
-
-      // Prevent Infinity/NaN scales
-      { filter: "isValid(datum.rent_growth)" }
+      {
+        calculate:
+          "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
+        as: "rent_growth_num"
+      }
     ],
 
     projection: { type: "mercator" },
@@ -896,19 +911,29 @@ const vis1 = {
 
     encoding: {
       color: {
-        field: "rent_growth",
-        type: "quantitative",
-        scale: { scheme: "oranges" },
+        condition: {
+          test: "isValid(datum.rent_growth_num)",
+          field: "rent_growth_num",
+          type: "quantitative",
+          scale: { scheme: "oranges", domain: [0, 12] }
+        },
+        value: "#e5e7eb",
         title: "Growth (%)"
       },
       tooltip: [
         { field: "properties.areanm", type: "nominal", title: "Country" },
-        { field: "rent_growth", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
+        {
+          field: "rent_growth_num",
+          type: "quantitative",
+          title: "Rent growth (%)",
+          format: ".1f"
+        }
       ]
     },
 
     config: THEME
   };
+
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);

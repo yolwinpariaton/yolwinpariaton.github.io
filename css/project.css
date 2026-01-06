@@ -94,10 +94,6 @@
    MAP-SPECIFIC FIXES
    ===================== */
 
-/* =====================
-   MAP-SPECIFIC FIXES
-   ===================== */
-
 .chart-wrapper--map {
   max-width: 850px;
   margin-left: auto;
@@ -106,8 +102,8 @@
 
 .chart-wrapper--map .chart-frame {
   display: flex;
-  justify-content: center;   /* center the map horizontally */
-  align-items: center;       /* center the map vertically */
+  justify-content: center;
+  align-items: center;
 }
 
 .chart-wrapper--map .vega-container {
@@ -115,7 +111,6 @@
   margin: 0 auto;
 }
 
-/* Make sure the embedded SVG/canvas sits centered */
 .chart-wrapper--map .vega-embed {
   width: 100% !important;
   display: flex;
@@ -123,7 +118,6 @@
   align-items: center;
 }
 
-/* Keep a stable minimum height so the map always has room */
 .vega-map {
   width: 100%;
   min-height: 450px;
