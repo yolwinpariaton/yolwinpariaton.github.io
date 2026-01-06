@@ -312,13 +312,13 @@
   };
 
 // --------------------------------------
-// 4) Weekly fuel prices — FINAL FIX PASS
+// 4) Weekly fuel prices — CLEAN + PUBLISH-READY (FIXED)
 // Fixes implemented:
-//  - X-axis reliably appears (x encoding defined ONCE at top-level; no axis conflicts)
-//  - Peak label moved right (near peak) + clipped inside plot
-//  - "Weird lines" reduced (raw weekly line made subtler + monotone interpolation)
-//  - Baseline text moved to avoid overlapping series
-//  - Removes legend disable warnings (color/legend defined ONCE at top-level; no conflicts)
+//  - Remove striped bands under 120 (rect layers no longer inherit y/color)
+//  - Remove "Infinite extent..." warning (no invalid inherited encodings)
+//  - Remove "Conflicting legend disable" warning (legend defined once)
+//  - Move "Russia-Ukraine Crisis" + "Peak" labels to better positions
+//  - Reduce excess space below the x-axis (less bottom padding; tune CSS height)
 // --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -336,8 +336,8 @@ const vis4 = {
   width: "container",
   height: "container",
 
-  // Enough bottom room for x-axis title + labels; top room for legend/annotations
-  padding: { top: 42, right: 16, bottom: 130, left: 62 },
+  // Reduced bottom padding (you had too much empty space)
+  padding: { top: 42, right: 16, bottom: 78, left: 62 },
 
   transform: [
     { calculate: "toDate(datum.date)", as: "d" },
@@ -349,7 +349,7 @@ const vis4 = {
     }
   ],
 
-  // IMPORTANT: define shared encodings ONCE to avoid axis/legend conflicts
+  // Define x and y ONCE so axis always shows. Do NOT define color here.
   encoding: {
     x: {
       field: "d",
@@ -360,7 +360,7 @@ const vis4 = {
         format: "%Y",
         tickCount: 7,
         labelPadding: 10,
-        titlePadding: 18,
+        titlePadding: 14,
         labelOverlap: "greedy"
       }
     },
@@ -368,115 +368,106 @@ const vis4 = {
       field: "ppl",
       type: "quantitative",
       title: "Pence per litre",
-      // Keep the chart in a clean, publication-style window
       scale: { domain: [60, 220] },
       axis: { labelFontSize: 11, titleFontSize: 12 }
-    },
-    color: {
-      field: "fuel",
-      type: "nominal",
-      scale: { range: ["#1e40af", "#d97706"] },
-      legend: {
-        orient: "top",
-        direction: "horizontal",
-        title: null,
-        labelFontSize: 13,
-        symbolSize: 240,
-        symbolStrokeWidth: 3.8,
-        // ensure legend never looks "transparent"
-        symbolOpacity: 1,
-        labelOpacity: 1,
-        offset: -10,
-        padding: 0
-      }
     }
   },
 
   layer: [
-    // Period backgrounds
+    // Background: Pandemic window (explicit y/y2 so it does NOT inherit y field)
     {
-      mark: { type: "rect", color: "#dbeafe", opacity: 0.30 },
+      mark: { type: "rect", opacity: 0.30 },
       encoding: {
         x: { datum: "2020-03-01" },
-        x2: { datum: "2020-12-31" }
-      }
-    },
-    {
-      mark: { type: "rect", color: "#fef3c7", opacity: 0.40 },
-      encoding: {
-        x: { datum: "2022-03-01" },
-        x2: { datum: "2022-08-01" }
+        x2: { datum: "2020-12-31" },
+        y: { datum: 60 },
+        y2: { datum: 220 },
+        color: { value: "#dbeafe" }
       }
     },
 
-    // Baseline reference line (keep within same scale system)
+    // Background: Russia-Ukraine shock window
+    {
+      mark: { type: "rect", opacity: 0.40 },
+      encoding: {
+        x: { datum: "2022-03-01" },
+        x2: { datum: "2022-08-01" },
+        y: { datum: 60 },
+        y2: { datum: 220 },
+        color: { value: "#fef3c7" }
+      }
+    },
+
+    // Baseline reference line (explicit color so it does not inherit anything)
     {
       mark: {
         type: "rule",
         strokeDash: [6, 4],
-        color: "#64748b",
         strokeWidth: 1.8,
         opacity: 0.70
       },
-      encoding: { y: { datum: 120 } }
+      encoding: {
+        y: { datum: 120 },
+        color: { value: "#64748b" }
+      }
     },
 
-    // Baseline label (moved up so it does NOT overlap series)
+    // Baseline label (moved up and right to avoid overlapping series)
     {
       mark: {
         type: "text",
         clip: true,
         align: "left",
-        dx: 6,
+        dx: 8,
         dy: -6,
         fontSize: 10,
-        color: "#64748b",
         fontWeight: 600,
         text: "Pre-pandemic baseline (120p)"
       },
       encoding: {
-        x: { datum: "2019-04-01" },
-        y: { datum: 136 }
+        x: { datum: "2019-06-01" },
+        y: { datum: 136 },
+        color: { value: "#64748b" }
       }
     },
 
-    // Pandemic label
+    // COVID label (kept safely inside plot)
     {
       mark: {
         type: "text",
         clip: true,
         align: "left",
-        dx: 6,
+        dx: 8,
         fontSize: 10.5,
-        color: "#1e40af",
         fontWeight: 700,
         text: "COVID-19 Pandemic"
       },
       encoding: {
-        x: { datum: "2020-03-15" },
-        y: { datum: 78 }
+        x: { datum: "2020-03-20" },
+        y: { datum: 78 },
+        color: { value: "#1e40af" }
       }
     },
 
-    // Crisis label
+    // Crisis label (moved closer to the highlighted period and away from legend)
     {
       mark: {
         type: "text",
         clip: true,
         align: "left",
-        dx: 6,
+        dx: 8,
         fontSize: 10.5,
-        color: "#92400e",
         fontWeight: 700,
         text: "Russia-Ukraine Crisis"
       },
       encoding: {
-        x: { datum: "2022-03-10" },
-        y: { datum: 206 }
+        x: { datum: "2022-03-20" },
+        y: { datum: 214 },
+        color: { value: "#92400e" }
       }
     },
 
-    // Peak label — moved RIGHT to sit near the peak
+    // Peak label (moved right, near the actual peak)
     {
       mark: {
         type: "text",
@@ -485,24 +476,30 @@ const vis4 = {
         dx: 10,
         dy: -8,
         fontSize: 10.5,
-        color: "#dc2626",
         fontWeight: 700,
         text: "Peak: 191p (+60%)"
       },
       encoding: {
-        // this places it just before/around the peak; adjust ± a few weeks if desired
-        x: { datum: "2022-06-25" },
-        y: { datum: 196 }
+        x: { datum: "2022-07-10" },
+        y: { datum: 198 },
+        color: { value: "#dc2626" }
       }
     },
 
-    // Raw weekly line (very subtle) — this is the "weird" volatility you noticed
-    // Keep it, but make it MUCH softer + monotone smoothing
+    // Raw weekly line (very subtle; no legend)
     {
-      mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" }
+      mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" },
+      encoding: {
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: null
+        }
+      }
     },
 
-    // Moving average (bold) — smoother and publication-like
+    // Moving average (bold) — OWNS the legend (only legend in the whole chart)
     {
       transform: [
         {
@@ -514,11 +511,28 @@ const vis4 = {
       ],
       mark: { type: "line", strokeWidth: 3.8, interpolate: "monotone" },
       encoding: {
-        y: { field: "ppl_ma" }
+        y: { field: "ppl_ma" },
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: {
+            orient: "top",
+            direction: "horizontal",
+            title: null,
+            labelFontSize: 13,
+            symbolSize: 240,
+            symbolStrokeWidth: 3.8,
+            symbolOpacity: 1,
+            labelOpacity: 1,
+            offset: -10,
+            padding: 0
+          }
+        }
       }
     },
 
-    // Peak period emphasis points (optional but clean)
+    // Peak period emphasis points
     {
       transform: [
         {
@@ -530,7 +544,15 @@ const vis4 = {
         { filter: "year(datum.d) === 2022 && month(datum.d) >= 6 && month(datum.d) <= 7" }
       ],
       mark: { type: "point", filled: true, size: 85, stroke: "white", strokeWidth: 2.5 },
-      encoding: { y: { field: "ppl_ma" } }
+      encoding: {
+        y: { field: "ppl_ma" },
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: null
+        }
+      }
     },
 
     // Tooltips (invisible points)
@@ -547,6 +569,12 @@ const vis4 = {
       mark: { type: "point", filled: true, size: 60, opacity: 0 },
       encoding: {
         y: { field: "ppl_ma" },
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: null
+        },
         tooltip: [
           { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
           { field: "fuel", type: "nominal", title: "Fuel type" },
@@ -655,8 +683,8 @@ const vis4 = {
     width: "container",
     height: 480,
     
-    // Top padding helps vertical centering; reduced bottom for legend integration
-    padding: { top: 12, bottom: 4, left: 0, right: 0 },
+    // Minimal top padding; more bottom space to push legend down
+    padding: { top: 8, bottom: 16, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -691,7 +719,7 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: -6,
+          offset: 2,
           padding: 4
         }
       },
@@ -805,8 +833,8 @@ const vis4 = {
     width: "container",
     height: 500,
     
-    // Top padding helps vertical centering; reduced bottom for legend integration
-    padding: { top: 12, bottom: 4, left: 0, right: 0 },
+    // Minimal top padding; more bottom space to push legend down
+    padding: { top: 8, bottom: 16, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -841,7 +869,7 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: -6,
+          offset: 2,
           padding: 4
         }
       },
