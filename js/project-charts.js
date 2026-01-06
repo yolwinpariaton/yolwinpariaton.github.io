@@ -68,7 +68,7 @@ console.log("LOADED project-charts v3-fixed");
   }
 
 // ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) - STABLE PUBLICATION VERSION
+  // 1) Prices vs Pay (Indexed) - CLEAN X-AXIS VERSION
   // ------------------------------------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -92,7 +92,8 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 400,
 
-    padding: { top: 50, right: 20, bottom: 20, left: 10 },
+    // Padding tuned to give legend and labels breathing room
+    padding: { top: 60, right: 30, bottom: 20, left: 20 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -104,23 +105,23 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      // 1. Custom Legend: Prices (CPIH)
+      // 1. Custom Legend: Prices
       {
         data: { values: [{ label: "■ Prices (CPIH)" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#e11d48" },
         encoding: {
-          x: { datum: "2019-01-01", type: "temporal" },
-          y: { value: -25 },
+          x: { datum: "2019-02-01", type: "temporal" }, 
+          y: { value: -35 },
           text: { field: "label" }
         }
       },
-      // 2. Custom Legend: Real Earnings
+      // 2. Custom Legend: Earnings
       {
         data: { values: [{ label: "■ Real Earnings" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#0f172a" },
         encoding: {
-          x: { datum: "2020-09-01", type: "temporal" }, // Offset manually via date for stability
-          y: { value: -25 },
+          x: { datum: "2020-02-01", type: "temporal" }, 
+          y: { value: -35 },
           text: { field: "label" }
         }
       },
@@ -131,7 +132,7 @@ console.log("LOADED project-charts v3-fixed");
           type: "rule",
           strokeDash: [4, 4],
           color: "#94a3b8",
-          opacity: 0.8,
+          opacity: 0.6,
           strokeWidth: 1
         },
         encoding: { y: { datum: 100 } }
@@ -149,8 +150,14 @@ console.log("LOADED project-charts v3-fixed");
           x: {
             field: "d",
             type: "temporal",
-            title: null,
-            axis: { format: "%Y", tickCount: 6, grid: false, labelFlush: true }
+            title: null, // REMOVED X-AXIS TITLE
+            axis: { 
+              format: "%Y", 
+              tickCount: 6, 
+              grid: false, 
+              labelFlush: true,
+              labelColor: "#64748b"
+            }
           },
           y: {
             field: "earnings",
@@ -186,13 +193,13 @@ console.log("LOADED project-charts v3-fixed");
         transform: [
           { window: [{ op: "max", field: "gap", as: "max_gap" }] },
           { filter: "datum.gap === datum.max_gap" },
-          // Rank ensures only the first month of the peak gap is labeled
           { window: [{ op: "rank", as: "r" }], sort: [{ field: "d", order: "ascending" }] },
           { filter: "datum.r === 1" }
         ],
         mark: { 
           type: "text", 
-          dy: -18, 
+          dy: -20, 
+          dx: 45, 
           fontSize: 11, 
           fontWeight: "600", 
           color: "#475569",
