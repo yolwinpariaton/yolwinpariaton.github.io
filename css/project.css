@@ -1,8 +1,9 @@
 /* ===========================
    project.css (FULL REPLACEMENT)
+   Fixes: grey/shaded overlay, “second frame”, responsive charts
    =========================== */
 
-/* Basic reset */
+/* ---------- Reset ---------- */
 *,
 *::before,
 *::after {
@@ -20,44 +21,91 @@ body {
   color: #0f172a;
   background: #ffffff;
   line-height: 1.5;
+
+  /* CRITICAL: prevent global dimming */
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-/* IMPORTANT:
-   Prevent any accidental “overlay shade” from pseudo-elements
-   (this fixes the black/grey tint issue you showed). */
+/* ---------- KILL ANY PAGE OVERLAY (most common cause of “grey film”) ---------- */
+/* 1) Stop pseudo-element overlays */
+html::before,
+html::after,
 body::before,
 body::after,
 main::before,
 main::after,
+header::before,
+header::after,
 .container::before,
 .container::after {
   content: none !important;
+  display: none !important;
 }
 
-/* Header (your hero area) */
-header {
-  background: #0b1a33; /* keep your dark banner */
-  color: #ffffff;
-  padding: 48px 0 32px;
+/* 2) If you have an overlay/backdrop element, force it off */
+.overlay,
+.backdrop,
+.modal-backdrop,
+.dim,
+.shade,
+.scrim,
+.screen,
+.page-overlay,
+#overlay,
+#backdrop {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-/* Make sure header is not “shading” the rest */
-header * {
-  opacity: 1 !important;
+/* 3) In case some overlay is implemented as a fixed layer */
+.overlay,
+.backdrop,
+.modal-backdrop,
+.dim,
+.shade,
+.scrim,
+.screen,
+.page-overlay,
+#overlay,
+#backdrop {
+  position: static !important;
+  inset: auto !important;
 }
 
-/* Main container */
+/* ---------- Layout ---------- */
 .container {
   width: min(1100px, 92vw);
   margin: 0 auto;
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-/* Section spacing */
 section {
   padding: 28px 0;
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-/* Headings */
+/* ---------- Header (hero) ---------- */
+header {
+  background: #0b1a33;
+  color: #ffffff;
+  padding: 48px 0 32px;
+
+  /* Make sure header doesn't create an overlay or stacking issue */
+  position: relative;
+  z-index: 0;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+header * {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
 h1 {
   font-size: clamp(2.2rem, 3.2vw, 3.6rem);
   line-height: 1.05;
@@ -71,7 +119,7 @@ header p {
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* Content typography */
+/* ---------- Typography ---------- */
 h2 {
   font-size: 2rem;
   margin: 22px 0 10px;
@@ -88,25 +136,26 @@ p {
   color: #1f2937;
 }
 
-/* ===========================
-   Chart layout
-   =========================== */
-
+/* ---------- Chart layout ---------- */
 .chart-block {
   margin: 20px 0 34px;
 }
 
-/* The framed card around each Vega chart */
 .chart-frame {
   border: 3px solid #d9def0;
   border-radius: 36px;
   padding: 18px 18px 16px;
   background: #ffffff;
   box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
-  overflow: hidden; /* prevents SVG from spilling */
+
+  /* Prevent charts spilling outside the rounded card */
+  overflow: hidden;
+
+  /* CRITICAL: prevent “dimming wrappers” */
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-/* Chart container (the div you embed into, e.g., #vis6) */
 .chart {
   width: 100%;
   display: block;
@@ -125,7 +174,7 @@ p {
   display: block;
 }
 
-/* Prevent legend clipping */
+/* Hide Vega action links */
 .chart-frame .vega-embed .vega-actions {
   display: none !important;
 }
@@ -137,15 +186,7 @@ p {
   color: #475569;
 }
 
-/* Make sure no section wrapper is unintentionally transparent */
-section,
-.container,
-.chart-block,
-.chart-frame {
-  opacity: 1 !important;
-}
-
-/* Responsive tweaks */
+/* ---------- Responsive tweaks ---------- */
 @media (max-width: 640px) {
   .chart-frame {
     border-radius: 26px;
