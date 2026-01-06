@@ -3,34 +3,78 @@
   "features": [
     {
       "type": "Feature",
-      "properties": { "CTRY12NM": "England", "CTRY12CD": "E92000001" },
+      "properties": {
+        "CTRY12NM": "England",
+        "CTRY12CD": "E92000001"
+      },
       "geometry": {
         "type": "Polygon",
-        "coordinates": [[[-5.5, 55.8], [-5.5, 50.0], [1.8, 50.0], [1.8, 55.8], [-5.5, 55.8]]]
+        "coordinates": [
+          [
+            [-5.5, 55.8],
+            [-5.5, 50.0],
+            [1.8, 50.0],
+            [1.8, 55.8],
+            [-5.5, 55.8]
+          ]
+        ]
       }
     },
     {
       "type": "Feature",
-      "properties": { "CTRY12NM": "Wales", "CTRY12CD": "W92000004" },
+      "properties": {
+        "CTRY12NM": "Wales",
+        "CTRY12CD": "W92000004"
+      },
       "geometry": {
         "type": "Polygon",
-        "coordinates": [[[-5.3, 53.4], [-5.3, 51.4], [-2.7, 51.4], [-2.7, 53.4], [-5.3, 53.4]]]
+        "coordinates": [
+          [
+            [-5.3, 53.4],
+            [-5.3, 51.4],
+            [-2.7, 51.4],
+            [-2.7, 53.4],
+            [-5.3, 53.4]
+          ]
+        ]
       }
     },
     {
       "type": "Feature",
-      "properties": { "CTRY12NM": "Scotland", "CTRY12CD": "S92000003" },
+      "properties": {
+        "CTRY12NM": "Scotland",
+        "CTRY12CD": "S92000003"
+      },
       "geometry": {
         "type": "Polygon",
-        "coordinates": [[[-7.5, 60.8], [-7.5, 54.6], [-0.7, 54.6], [-0.7, 60.8], [-7.5, 60.8]]]
+        "coordinates": [
+          [
+            [-7.5, 60.8],
+            [-7.5, 54.6],
+            [-0.7, 54.6],
+            [-0.7, 60.8],
+            [-7.5, 60.8]
+          ]
+        ]
       }
     },
     {
       "type": "Feature",
-      "properties": { "CTRY12NM": "Northern Ireland", "CTRY12CD": "N92000002" },
+      "properties": {
+        "CTRY12NM": "Northern Ireland",
+        "CTRY12CD": "N92000002"
+      },
       "geometry": {
         "type": "Polygon",
-        "coordinates": [[[-8.2, 55.3], [-8.2, 54.0], [-5.4, 54.0], [-5.4, 55.3], [-8.2, 55.3]]]
+        "coordinates": [
+          [
+            [-8.2, 55.3],
+            [-8.2, 54.0],
+            [-5.4, 54.0],
+            [-5.4, 55.3],
+            [-8.2, 55.3]
+          ]
+        ]
       }
     }
   ]
