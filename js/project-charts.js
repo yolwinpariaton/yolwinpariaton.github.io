@@ -1,16 +1,12 @@
 /* js/project-charts.js
    Eight interactive Vega-Lite charts for the UK cost of living project.
 
-   MAP FIX (Charts 6 & 8):
+   MAPS (Charts 6 & 8):
    - Embed from /data spec files:
        data/vis6_rent_map_spec.json
        data/vis8_rent_map_spec.json
-   - This is the most robust approach given your file structure.
-
-   OTHER FIXES:
-   - Removes "Conflicting legend property disable" warning by removing legend.disable everywhere.
-   - Uses SVG renderer for stable sizing inside your framed containers.
 */
+
 console.log("LOADED project-charts v3-fixed");
 
 (function () {
@@ -19,10 +15,14 @@ console.log("LOADED project-charts v3-fixed");
   // Use SVG for robust responsive sizing inside framed containers
   const opts = {
     actions: false,
-    renderer: "svg"
+    renderer: "svg",
+    // Avoid any "legend.disable" conflicts from merged configs
+    config: {
+      legend: { disable: false }
+    }
   };
 
-  // Consistent visual theme (NO legend.disable here to avoid conflicts)
+  // Consistent visual theme (NO legend.disable here)
   const THEME = {
     background: "#ffffff",
     view: { stroke: null },
@@ -69,7 +69,7 @@ console.log("LOADED project-charts v3-fixed");
   }
 
   // ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) — ENHANCED EDITORIAL VERSION
+  // 1) Prices vs Pay (Indexed)
   // ------------------------------------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -115,7 +115,6 @@ console.log("LOADED project-charts v3-fixed");
         },
         encoding: { y: { datum: 100 } }
       },
-
       {
         mark: {
           type: "area",
@@ -128,36 +127,20 @@ console.log("LOADED project-charts v3-fixed");
             field: "d",
             type: "temporal",
             title: null,
-            axis: {
-              format: "%Y",
-              tickCount: 6,
-              grid: false,
-              labelFlush: true
-            }
+            axis: { format: "%Y", tickCount: 6, grid: false, labelFlush: true }
           },
           y: {
             field: "earnings",
             type: "quantitative",
             title: "Index (2019 = 100)",
             scale: { zero: false, domain: [98, 114] },
-            axis: {
-              tickCount: 5,
-              titlePadding: 15,
-              gridOpacity: 0.1,
-              domain: false
-            }
+            axis: { tickCount: 5, titlePadding: 15, gridOpacity: 0.1, domain: false }
           },
           y2: { field: "prices" }
         }
       },
-
       {
-        mark: {
-          type: "line",
-          strokeWidth: 3.5,
-          color: "#1e3a8a",
-          interpolate: "monotone"
-        },
+        mark: { type: "line", strokeWidth: 3.5, color: "#1e3a8a", interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "prices", type: "quantitative" },
@@ -168,49 +151,13 @@ console.log("LOADED project-charts v3-fixed");
           ]
         }
       },
-
       {
-        mark: {
-          type: "line",
-          strokeWidth: 3.5,
-          color: "#b45309",
-          interpolate: "monotone"
-        },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "earnings", type: "quantitative" }
-        }
-      },
-
-      {
-        transform: [{ filter: "datum.d == toDate('2024-04-01')" }],
-        layer: [
-          {
-            mark: { type: "text", align: "right", dx: -20, dy: -25, fontWeight: "bold", fontSize: 13 },
-            encoding: {
-              x: { field: "d", type: "temporal" },
-              y: { field: "prices", type: "quantitative" },
-              text: { value: "CPIH Prices" },
-              color: { value: "#1e3a8a" }
-            }
-          },
-          {
-            mark: { type: "text", align: "right", dx: -20, dy: 30, fontWeight: "bold", fontSize: 13 },
-            encoding: {
-              x: { field: "d", type: "temporal" },
-              y: { field: "earnings", type: "quantitative" },
-              text: { value: "Real Earnings" },
-              color: { value: "#b45309" }
-            }
-          }
-        ]
+        mark: { type: "line", strokeWidth: 3.5, color: "#b45309", interpolate: "monotone" },
+        encoding: { x: { field: "d", type: "temporal" }, y: { field: "earnings", type: "quantitative" } }
       }
     ],
 
-    config: {
-      ...THEME,
-      view: { stroke: null }
-    }
+    config: { ...THEME, view: { stroke: null } }
   };
 
   // --------------------------------------
@@ -701,15 +648,17 @@ console.log("LOADED project-charts v3-fixed");
   // EMBED ALL EIGHT CHARTS
   // ------------------------------------------------------------------
   safeEmbed("#vis1", vis1);
-  safeEmbed("#vis2", vis2);
-  safeEmbed("#vis3", vis3);
-  safeEmbed("#vis4", vis4);
-  safeEmbed("#vis5", vis5);
 
-  // IMPORTANT: Maps load from your /data map spec files
+  // Your existing embeds (keep):
+  safeEmbed("#vis2", "data/vis2_food_vs_headline.json");   // if you use inline objects, keep yours
+  safeEmbed("#vis3", "data/vis3_energy_cap.json");
+  safeEmbed("#vis4", "data/vis4_fuel_weekly.json");
+  safeEmbed("#vis5", "data/vis5_rent_vs_house.json");
+
+  // Maps embed from map spec files
   safeEmbed("#vis6", "data/vis6_rent_map_spec.json");
 
-  safeEmbed("#vis7", vis7);
+  safeEmbed("#vis7", "data/vis7_rent_trend_regions.json");
 
   safeEmbed("#vis8", "data/vis8_rent_map_spec.json");
 })();

@@ -4,16 +4,15 @@
     "text": "Rent Inflation: UK Nations",
     "subtitle": "Annual percentage change by country",
     "anchor": "start",
-    "fontSize": 28,
-    "subtitleFontSize": 16,
+    "fontSize": 30,
+    "subtitleFontSize": 18,
     "subtitleColor": "#667085",
-    "offset": 10
+    "offset": 12
   },
   "width": "container",
-  "height": 500,
+  "height": 380,
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
-  "padding": { "left": 0, "right": 0, "top": 0, "bottom": 0 },
-  "projection": { "type": "identity", "reflectY": true, "fit": true },
+  "padding": { "left": 0, "right": 0, "top": 28, "bottom": 10 },
   "config": {
     "view": { "stroke": null },
     "legend": {
@@ -27,40 +26,35 @@
       "gradientLength": 520
     }
   },
-  "layer": [
+  "data": {
+    "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json",
+    "format": { "type": "topojson", "feature": "ctry" }
+  },
+  "transform": [
     {
-      "data": {
-        "url": "data/UK_NATIONS_TOPO.json",
-        "format": { "type": "topojson", "feature": "nations" }
-      },
-      "transform": [
-        {
-          "lookup": "properties.AREACD",
-          "from": {
-            "data": { "url": "data/vis8_rent_map_countries.json" },
-            "key": "areacd",
-            "fields": ["areanm", "rent_inflation_yoy_pct"]
-          }
-        }
-      ],
-      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 2 },
-      "encoding": {
-        "color": {
-          "field": "rent_inflation_yoy_pct",
-          "type": "quantitative",
-          "title": "Rent inflation (% y/y)",
-          "scale": { "scheme": "oranges", "domain": [3.0, 9.0] }
-        },
-        "tooltip": [
-          { "field": "areanm", "type": "nominal", "title": "Nation" },
-          {
-            "field": "rent_inflation_yoy_pct",
-            "type": "quantitative",
-            "title": "Rent inflation (% y/y)",
-            "format": ".1f"
-          }
-        ]
+      "calculate": "datum.properties.AREACD ? datum.properties.AREACD : datum.properties.areacd",
+      "as": "areacd_join"
+    },
+    {
+      "lookup": "areacd_join",
+      "from": {
+        "data": { "url": "data/vis8_rent_map_countries.json" },
+        "key": "areacd",
+        "fields": ["areanm", "rent_inflation_yoy_pct"]
       }
     }
-  ]
+  ],
+  "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 2 },
+  "encoding": {
+    "color": {
+      "field": "rent_inflation_yoy_pct",
+      "type": "quantitative",
+      "title": "Rent inflation (% y/y)",
+      "scale": { "scheme": "oranges", "domain": [3.0, 9.0] }
+    },
+    "tooltip": [
+      { "field": "areanm", "type": "nominal", "title": "Nation" },
+      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
+    ]
+  }
 }
