@@ -5,7 +5,6 @@
   "height": 500,
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
   "padding": { "left": 10, "right": 10, "top": 10, "bottom": 10 },
-
   "title": {
     "text": "Rent Inflation: English Regions",
     "subtitle": "Annual percentage change by region",
@@ -13,15 +12,14 @@
     "fontSize": 20,
     "subtitleFontSize": 12
   },
-
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/eng/rgn.json",
-    "format": { "type": "json", "property": "features" }
+    "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json",
+    "format": { "type": "topojson", "feature": "rgn" }
   },
-
   "transform": [
+    { "filter": "startsWith(datum.properties.areacd, 'E12')" },
     {
-      "lookup": "properties.EER13NM",
+      "lookup": "properties.areanm",
       "from": {
         "data": { "url": "data/vis6_rent_map_regions.csv" },
         "key": "areanm",
@@ -30,29 +28,14 @@
     },
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "infl" }
   ],
-
-  "projection": {
-    "type": "mercator",
-    "center": [-2, 53],
-    "scale": 2400
-  },
-
-  "mark": {
-    "type": "geoshape",
-    "stroke": "white",
-    "strokeWidth": 1.5
-  },
-
+  "projection": { "type": "mercator", "center": [-2, 53], "scale": 2400 },
+  "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1.5 },
   "encoding": {
     "color": {
-      "condition": {
-        "test": "isValid(datum.infl)",
-        "field": "infl",
-        "type": "quantitative",
-        "title": "Rent inflation (% y/y)",
-        "scale": { "scheme": "blues", "domain": [3, 10] }
-      },
-      "value": "#e5e7eb",
+      "field": "infl",
+      "type": "quantitative",
+      "title": "Rent inflation (% y/y)",
+      "scale": { "scheme": "blues", "domain": [3, 10] },
       "legend": {
         "orient": "bottom",
         "direction": "horizontal",
@@ -61,13 +44,14 @@
       }
     },
     "tooltip": [
-      { "field": "properties.EER13NM", "type": "nominal", "title": "Region" },
-      { "field": "infl", "type": "quantitative", "title": "Rent inflation (%)", "format": ".1f" }
+      { "field": "properties.areanm", "type": "nominal", "title": "Region" },
+      {
+        "field": "infl",
+        "type": "quantitative",
+        "title": "Rent inflation (%)",
+        "format": ".1f"
+      }
     ]
   },
-
-  "config": {
-    "background": "#ffffff",
-    "view": { "stroke": null }
-  }
+  "config": { "background": "#ffffff", "view": { "stroke": null } }
 }
