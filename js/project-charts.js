@@ -1,7 +1,8 @@
 /* js/project-charts.js
    Eight interactive Vega-Lite charts for the UK cost of living project.
+   Chart 7 ENHANCED with professional publication-ready styling
 */
-console.log("LOADED project-charts v2");
+console.log("LOADED project-charts v3-enhanced");
 
 (function () {
   "use strict";
@@ -577,25 +578,26 @@ console.log("LOADED project-charts v2");
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
+
   // --------------------------------------
-  // 7) Interactive regional trend
+  // 7) Interactive regional trend — PROFESSIONAL PUBLICATION VERSION
   // --------------------------------------
   const vis7 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
 
     title: {
-      text: "Regional rent inflation trends over time",
-      subtitle: "Select a region to compare with England average",
+      text: "Regional Rent Inflation Dynamics",
+      subtitle: "Compare any English region against the national benchmark (2016–2024) | Interactive selector below",
       anchor: "start",
       offset: 14
     },
 
     data: { url: "data/vis7_rent_trend_regions.json" },
     width: "container",
-    height: 340,
+    height: 380,
 
-    padding: { top: 6, right: 6, bottom: 18, left: 6 },
+    padding: { top: 12, right: 12, bottom: 28, left: 8 },
 
     params: [
       {
@@ -603,7 +605,7 @@ console.log("LOADED project-charts v2");
         value: "London",
         bind: {
           input: "select",
-          name: "Select Region: ",
+          name: "Select region to highlight: ",
           options: [
             "North East",
             "North West",
@@ -620,43 +622,196 @@ console.log("LOADED project-charts v2");
     ],
 
     transform: [
+      { calculate: "toDate(datum.date)", as: "d" },
+      { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "inflation" },
       {
         calculate:
-          "datum.areanm === Region ? 'Selected region' : (datum.areanm === 'England' ? 'England' : 'Other')",
+          "datum.areanm === Region ? 'Selected Region' : (datum.areanm === 'England' ? 'England Average' : 'Other Regions')",
         as: "group"
       }
     ],
 
-    mark: { type: "line" },
+    layer: [
+      // Zero baseline
+      {
+        mark: { type: "rule", strokeDash: [5, 5], color: "#94a3b8", strokeWidth: 1, opacity: 0.5 },
+        encoding: { y: { datum: 0 } }
+      },
 
-    encoding: {
-      x: { field: "date", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
-      y: { field: "rent_inflation_yoy_pct", type: "quantitative", title: "Rent inflation (% y/y)" },
-      detail: { field: "areanm", type: "nominal" },
-      opacity: {
-        condition: [{ test: "datum.group === 'Selected region' || datum.group === 'England'", value: 1 }],
-        value: 0.15
+      // Background regions (all other regions, very subtle)
+      {
+        transform: [{ filter: "datum.group === 'Other Regions'" }],
+        mark: { 
+          type: "line", 
+          strokeWidth: 1.2, 
+          opacity: 0.12,
+          interpolate: "monotone"
+        },
+        encoding: {
+          x: { 
+            field: "d", 
+            type: "temporal", 
+            title: "Year",
+            axis: { 
+              format: "%Y", 
+              tickCount: 8,
+              labelFontSize: 11,
+              titleFontSize: 12,
+              labelPadding: 8,
+              titlePadding: 12
+            }
+          },
+          y: { 
+            field: "inflation", 
+            type: "quantitative", 
+            title: "Annual rent inflation (%)",
+            scale: { domain: [0, 11], nice: true },
+            axis: { 
+              labelFontSize: 11, 
+              titleFontSize: 12,
+              gridOpacity: 0.08
+            }
+          },
+          detail: { field: "areanm", type: "nominal" },
+          color: { value: "#cbd5e1" }
+        }
       },
-      size: {
-        condition: [
-          { test: "datum.group === 'Selected region'", value: 3.8 },
-          { test: "datum.group === 'England'", value: 2.6 }
-        ],
-        value: 1.2
+
+      // England average (prominent reference line)
+      {
+        transform: [{ filter: "datum.group === 'England Average'" }],
+        mark: { 
+          type: "line", 
+          strokeWidth: 3.2,
+          interpolate: "monotone",
+          strokeDash: [0]
+        },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "inflation", type: "quantitative" },
+          color: { value: "#1e40af" }  // Professional deep blue
+        }
       },
-      color: {
-        condition: [
-          { test: "datum.group === 'Selected region'", value: "#f59e0b" },
-          { test: "datum.group === 'England'", value: "#2563eb" }
-        ],
-        value: "#cbd5e1"
+
+      // Selected region (bold highlight)
+      {
+        transform: [{ filter: "datum.group === 'Selected Region'" }],
+        mark: { 
+          type: "line", 
+          strokeWidth: 4.2,
+          interpolate: "monotone"
+        },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "inflation", type: "quantitative" },
+          color: { value: "#dc2626" }  // Professional strong red
+        }
       },
-      tooltip: [
-        { field: "date", type: "temporal", title: "Date", format: "%b %Y" },
-        { field: "areanm", type: "nominal", title: "Area" },
-        { field: "rent_inflation_yoy_pct", type: "quantitative", title: "Inflation (% y/y)", format: ".1f" }
-      ]
-    },
+
+      // Points for England average (for tooltips)
+      {
+        transform: [{ filter: "datum.group === 'England Average'" }],
+        mark: { 
+          type: "point", 
+          filled: true, 
+          size: 48,
+          opacity: 0
+        },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "inflation", type: "quantitative" },
+          tooltip: [
+            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
+            { field: "areanm", type: "nominal", title: "Area" },
+            { field: "inflation", type: "quantitative", title: "Inflation (%)", format: ".2f" }
+          ]
+        }
+      },
+
+      // Points for selected region (for tooltips)
+      {
+        transform: [{ filter: "datum.group === 'Selected Region'" }],
+        mark: { 
+          type: "point", 
+          filled: true, 
+          size: 56,
+          opacity: 0
+        },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "inflation", type: "quantitative" },
+          tooltip: [
+            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
+            { field: "areanm", type: "nominal", title: "Region" },
+            { field: "inflation", type: "quantitative", title: "Inflation (%)", format: ".2f" }
+          ]
+        }
+      },
+
+      // Custom legend using text marks
+      {
+        data: { values: [{ label: "England Average", y: 10.3, color: "#1e40af" }] },
+        mark: { type: "text", fontSize: 12, fontWeight: 600, align: "left", dx: 28 },
+        encoding: {
+          x: { value: 10 },
+          y: { field: "y", type: "quantitative" },
+          text: { field: "label" },
+          color: { field: "color", type: "nominal", scale: null }
+        }
+      },
+      {
+        data: { values: [{ x: 10, y: 10.3, color: "#1e40af" }] },
+        mark: { type: "rule", strokeWidth: 3.2, size: 20 },
+        encoding: {
+          x: { value: 10 },
+          x2: { value: 30 },
+          y: { field: "y", type: "quantitative" },
+          color: { field: "color", type: "nominal", scale: null }
+        }
+      },
+
+      {
+        data: { values: [{ label: "Selected Region", y: 9.5, color: "#dc2626" }] },
+        mark: { type: "text", fontSize: 12, fontWeight: 600, align: "left", dx: 28 },
+        encoding: {
+          x: { value: 10 },
+          y: { field: "y", type: "quantitative" },
+          text: { field: "label" },
+          color: { field: "color", type: "nominal", scale: null }
+        }
+      },
+      {
+        data: { values: [{ x: 10, y: 9.5, color: "#dc2626" }] },
+        mark: { type: "rule", strokeWidth: 4.2, size: 20 },
+        encoding: {
+          x: { value: 10 },
+          x2: { value: 30 },
+          y: { field: "y", type: "quantitative" },
+          color: { field: "color", type: "nominal", scale: null }
+        }
+      },
+
+      {
+        data: { values: [{ label: "Other Regions", y: 8.7, color: "#cbd5e1" }] },
+        mark: { type: "text", fontSize: 11, fontWeight: 400, align: "left", dx: 28, opacity: 0.7 },
+        encoding: {
+          x: { value: 10 },
+          y: { field: "y", type: "quantitative" },
+          text: { field: "label" },
+          color: { field: "color", type: "nominal", scale: null }
+        }
+      },
+      {
+        data: { values: [{ x: 10, y: 8.7, color: "#cbd5e1" }] },
+        mark: { type: "rule", strokeWidth: 1.2, size: 20, opacity: 0.3 },
+        encoding: {
+          x: { value: 10 },
+          x2: { value: 30 },
+          y: { field: "y", type: "quantitative" },
+          color: { field: "color", type: "nominal", scale: null }
+        }
+      }
+    ],
 
     config: THEME
   };
@@ -726,6 +881,7 @@ console.log("LOADED project-charts v2");
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
+  
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
