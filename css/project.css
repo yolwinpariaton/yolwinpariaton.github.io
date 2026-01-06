@@ -1,195 +1,184 @@
-/* ===========================
-   project.css (FULL REPLACEMENT)
-   Fixes: grey/shaded overlay, “second frame”, responsive charts
-   =========================== */
+/* ================================
+   project.css (FULL FILE)
+   ================================ */
 
-/* ---------- Reset ---------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* ---- Base / Reset ---- */
+* { box-sizing: border-box; }
 
-html,
-body {
-  height: 100%;
-}
-
-body {
+html, body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   color: #0f172a;
   background: #ffffff;
-  line-height: 1.5;
-
-  /* CRITICAL: prevent global dimming */
-  opacity: 1 !important;
-  filter: none !important;
+  line-height: 1.55;
 }
 
-/* ---------- KILL ANY PAGE OVERLAY (most common cause of “grey film”) ---------- */
-/* 1) Stop pseudo-element overlays */
-html::before,
-html::after,
-body::before,
-body::after,
-main::before,
-main::after,
-header::before,
-header::after,
-.container::before,
-.container::after {
+/* If you previously created a dark overlay using body::before, kill it */
+body::before {
   content: none !important;
-  display: none !important;
 }
 
-/* 2) If you have an overlay/backdrop element, force it off */
-.overlay,
-.backdrop,
-.modal-backdrop,
-.dim,
-.shade,
-.scrim,
-.screen,
-.page-overlay,
-#overlay,
-#backdrop {
-  display: none !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* 3) In case some overlay is implemented as a fixed layer */
-.overlay,
-.backdrop,
-.modal-backdrop,
-.dim,
-.shade,
-.scrim,
-.screen,
-.page-overlay,
-#overlay,
-#backdrop {
-  position: static !important;
-  inset: auto !important;
-}
-
-/* ---------- Layout ---------- */
+/* ---- Page Layout ---- */
 .container {
-  width: min(1100px, 92vw);
+  width: min(1100px, calc(100% - 32px));
   margin: 0 auto;
-  opacity: 1 !important;
-  filter: none !important;
 }
 
-section {
-  padding: 28px 0;
-  opacity: 1 !important;
-  filter: none !important;
-}
-
-/* ---------- Header (hero) ---------- */
-header {
-  background: #0b1a33;
-  color: #ffffff;
-  padding: 48px 0 32px;
-
-  /* Make sure header doesn't create an overlay or stacking issue */
+/* ---- HERO / HEADER (background photo) ---- */
+/* IMPORTANT: put your real image path below (the one you had before). */
+.hero {
   position: relative;
-  z-index: 0;
-  opacity: 1 !important;
-  filter: none !important;
+  padding: 56px 0 42px 0;
+
+  /* Restore the background image */
+  background-image: url("images/hero.jpg"); /* <-- CHANGE to your actual path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Ensure the hero itself is not “darkened” by accident */
+  background-color: transparent;
 }
 
-header * {
-  opacity: 1 !important;
-  filter: none !important;
+/* Subtle readable overlay ONLY inside hero (not across whole page) */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 6, 23, 0.65) 0%,
+    rgba(2, 6, 23, 0.35) 55%,
+    rgba(2, 6, 23, 0.10) 100%
+  );
+  pointer-events: none;
 }
 
-h1 {
-  font-size: clamp(2.2rem, 3.2vw, 3.6rem);
-  line-height: 1.05;
-  margin: 0 0 10px 0;
+/* Ensure hero content sits above overlay */
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  margin: 0 0 8px 0;
+  color: #ffffff;
+  font-size: clamp(34px, 4vw, 56px);
   letter-spacing: -0.02em;
 }
 
-header p {
+.hero p {
   margin: 0;
-  font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255,255,255,0.88);
+  font-size: 18px;
+  max-width: 70ch;
 }
 
-/* ---------- Typography ---------- */
+/* ---- Section Headings ---- */
 h2 {
-  font-size: 2rem;
-  margin: 22px 0 10px;
+  margin: 34px 0 10px 0;
+  font-size: 28px;
   letter-spacing: -0.01em;
 }
 
-h3 {
-  font-size: 1.35rem;
-  margin: 18px 0 8px;
-}
-
 p {
-  margin: 0 0 12px;
-  color: #1f2937;
+  margin: 10px 0;
+  max-width: 85ch;
 }
 
-/* ---------- Chart layout ---------- */
-.chart-block {
-  margin: 20px 0 34px;
-}
-
-.chart-frame {
-  border: 3px solid #d9def0;
-  border-radius: 36px;
-  padding: 18px 18px 16px;
+/* ---- Chart Cards / Frames ---- */
+.chart-card {
+  margin: 18px 0 26px 0;
+  padding: 18px 18px 14px 18px;
+  border: 2px solid #dbe3f3;
+  border-radius: 22px;
   background: #ffffff;
-  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
-
-  /* Prevent charts spilling outside the rounded card */
-  overflow: hidden;
-
-  /* CRITICAL: prevent “dimming wrappers” */
-  opacity: 1 !important;
-  filter: none !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
-.chart {
+/* Inner “soft frame” like your screenshots */
+.chart-frame {
+  border: 4px solid #d6dbef;
+  border-radius: 44px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+/* Chart container where Vega embeds */
+.vis {
   width: 100%;
-  display: block;
+  max-width: 100%;
 }
 
-/* Vega-Embed wrapper should fill the available width */
-.chart .vega-embed {
+/* Prevent “double frame” or weird inner borders from Vega-Embed */
+.vega-embed,
+.vega-embed * {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Vega-Embed sometimes inserts a wrapper with inline sizing */
+.vega-embed {
   width: 100% !important;
-  max-width: 100% !important;
 }
 
-/* Ensure embedded SVG scales responsively */
-.chart .vega-embed svg {
+/* Make sure the SVG can use full width (responsive) */
+.vega-embed svg {
   width: 100% !important;
   height: auto !important;
   display: block;
 }
 
-/* Hide Vega action links */
-.chart-frame .vega-embed .vega-actions {
-  display: none !important;
+/* If any parent is cutting the legend off, do NOT hide overflow */
+.chart-card,
+.chart-frame,
+.vis,
+.vega-embed {
+  overflow: visible !important;
 }
 
-/* Source line under charts */
-.source {
+/* Source / Notes styling under each chart */
+.chart-meta {
   margin-top: 10px;
-  font-size: 0.95rem;
-  color: #475569;
+  font-size: 18px;
+  color: #0f172a;
 }
 
-/* ---------- Responsive tweaks ---------- */
-@media (max-width: 640px) {
-  .chart-frame {
-    border-radius: 26px;
+.chart-meta .source {
+  margin: 8px 0 0 0;
+  color: #0f172a;
+}
+
+.chart-meta .note {
+  margin: 10px 0 0 0;
+  color: #0f172a;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+
+  .chart-card {
     padding: 14px;
+  }
+
+  .chart-frame {
+    padding: 12px;
+    border-radius: 30px;
+  }
+
+  .hero {
+    padding: 44px 0 34px 0;
+  }
+
+  .hero p {
+    font-size: 16px;
   }
 }
