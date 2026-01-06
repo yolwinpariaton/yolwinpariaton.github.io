@@ -21,7 +21,7 @@
 
   "transform": [
     {
-      "filter": "datum.properties.areacd != null && datum.properties.areacd.substring(0,3) === 'E12'"
+      "filter": "datum.properties && datum.properties.areacd && indexof(datum.properties.areacd, 'E12') == 0"
     },
     {
       "lookup": "properties.areanm",

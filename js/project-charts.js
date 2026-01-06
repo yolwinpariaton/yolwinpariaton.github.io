@@ -67,8 +67,8 @@ console.log("LOADED project-charts v3-fixed");
     });
   }
 
-  // ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) - FINAL PUBLICATION VERSION
+// ------------------------------------------------------------------
+  // 1) Prices vs Pay (Indexed) - STABLE PUBLICATION VERSION
   // ------------------------------------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -92,7 +92,6 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 400,
 
-    // Increased top padding to accommodate the custom legend labels
     padding: { top: 50, right: 20, bottom: 20, left: 10 },
 
     transform: [
@@ -105,24 +104,28 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      // 1. Fixed Legend Labels (Using 'datum' to fix position independent of time axis)
+      // 1. Custom Legend: Prices (CPIH)
       {
-        data: { values: [
-          { label: "■ Prices (CPIH)", color: "#e11d48", x_pos: 0 },
-          { label: "■ Real Earnings", color: "#0f172a", x_pos: 130 }
-        ]},
-        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, baseline: "bottom" },
+        data: { values: [{ label: "■ Prices (CPIH)" }] },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#e11d48" },
         encoding: {
-          x: { datum: 0 }, // Using 0 coordinate for alignment
-          y: { value: -25 }, 
-          text: { field: "label" },
-          color: { field: "color", type: "nominal", scale: null },
-          // Offset x using the data value
-          xOffset: { field: "x_pos" }
+          x: { datum: "2019-01-01", type: "temporal" },
+          y: { value: -25 },
+          text: { field: "label" }
+        }
+      },
+      // 2. Custom Legend: Real Earnings
+      {
+        data: { values: [{ label: "■ Real Earnings" }] },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#0f172a" },
+        encoding: {
+          x: { datum: "2020-09-01", type: "temporal" }, // Offset manually via date for stability
+          y: { value: -25 },
+          text: { field: "label" }
         }
       },
 
-      // 2. Baseline Reference Line (100)
+      // 3. Baseline Reference Line
       {
         mark: {
           type: "rule",
@@ -134,7 +137,7 @@ console.log("LOADED project-charts v3-fixed");
         encoding: { y: { datum: 100 } }
       },
       
-      // 3. Shaded Gap Area
+      // 4. Shaded Gap Area
       {
         mark: {
           type: "area",
@@ -147,31 +150,20 @@ console.log("LOADED project-charts v3-fixed");
             field: "d",
             type: "temporal",
             title: null,
-            axis: { 
-              format: "%Y", 
-              tickCount: 6, 
-              grid: false, 
-              labelFlush: true,
-              domainColor: "#cbd5e1"
-            }
+            axis: { format: "%Y", tickCount: 6, grid: false, labelFlush: true }
           },
           y: {
             field: "earnings",
             type: "quantitative",
             title: "Index (Jan 2019 = 100)",
             scale: { zero: false, domain: [98, 116] },
-            axis: { 
-              tickCount: 5, 
-              titlePadding: 15, 
-              gridOpacity: 0.1, 
-              domain: false
-            }
+            axis: { tickCount: 5, titlePadding: 15, gridOpacity: 0.1, domain: false }
           },
           y2: { field: "prices" }
         }
       },
 
-      // 4. Price Line (CPIH)
+      // 5. Price Line
       {
         mark: { type: "line", strokeWidth: 3.5, color: "#e11d48", interpolate: "monotone" },
         encoding: {
@@ -180,7 +172,7 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
-      // 5. Earnings Line
+      // 6. Earnings Line
       {
         mark: { type: "line", strokeWidth: 3.5, color: "#0f172a", interpolate: "monotone" },
         encoding: {
@@ -189,18 +181,18 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
-      // 6. SINGLE Annotation for Maximum Gap
-      // Added rank transform to ensure only ONE point (the very first instance of the max gap) gets the label
+      // 7. SINGLE Annotation for Peak Pressure
       {
         transform: [
           { window: [{ op: "max", field: "gap", as: "max_gap" }] },
           { filter: "datum.gap === datum.max_gap" },
-          { window: [{ op: "rank", as: "ranking" }], sort: [{ field: "d", order: "ascending" }] },
-          { filter: "datum.ranking === 1" }
+          // Rank ensures only the first month of the peak gap is labeled
+          { window: [{ op: "rank", as: "r" }], sort: [{ field: "d", order: "ascending" }] },
+          { filter: "datum.r === 1" }
         ],
         mark: { 
           type: "text", 
-          dy: -15, 
+          dy: -18, 
           fontSize: 11, 
           fontWeight: "600", 
           color: "#475569",
@@ -212,7 +204,7 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
-      // 7. Tooltip Layer
+      // 8. Tooltip
       {
         mark: { type: "point", size: 100, opacity: 0 },
         encoding: {
@@ -221,8 +213,7 @@ console.log("LOADED project-charts v3-fixed");
           tooltip: [
             { field: "d", type: "temporal", title: "Month", format: "%B %Y" },
             { field: "prices", type: "quantitative", title: "Price Index", format: ".1f" },
-            { field: "earnings", type: "quantitative", title: "Earnings Index", format: ".1f" },
-            { field: "gap", type: "quantitative", title: "Difference", format: ".1f" }
+            { field: "earnings", type: "quantitative", title: "Earnings Index", format: ".1f" }
           ]
         }
       }

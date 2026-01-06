@@ -4,7 +4,7 @@
   "width": "container",
   "height": 500,
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
-  "padding": { "left": 10, "right": 10, "top": 10, "bottom": 10 },
+  "padding": { "left": 60, "right": 60, "top": 10, "bottom": 10 },
 
   "title": {
     "text": "Rent Inflation: UK Nations",
