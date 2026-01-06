@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
   "title": {
-    "text": "Rent Inflation Across UK Nations",
-    "subtitle": "Latest year-on-year percentage change | Darker blues indicate higher inflation",
+    "text": "Rent Inflation: UK Nations",
+    "subtitle": "Annual percentage change by country",
     "anchor": "start",
     "fontSize": 30,
     "subtitleFontSize": 18,
@@ -31,7 +31,7 @@
 
   "data": {
     "url": "data/UK_NATIONS_TOPO.json",
-    "format": { "type": "topojson", "feature": "FEATURE_NAME_HERE" }
+    "format": { "type": "topojson", "feature": "ctry" }
   },
 
   "transform": [
@@ -58,16 +58,11 @@
       "field": "rent_inflation_yoy_pct",
       "type": "quantitative",
       "title": "Rent inflation (% y/y)",
-      "scale": { "scheme": "blues", "domain": [3.0, 9.0] }
+      "scale": { "scheme": "oranges", "domain": [3.0, 9.0] }
     },
     "tooltip": [
       { "field": "areanm", "type": "nominal", "title": "Nation" },
-      {
-        "field": "rent_inflation_yoy_pct",
-        "type": "quantitative",
-        "title": "Rent inflation (% y/y)",
-        "format": ".1f"
-      }
+      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
     ]
   }
 }

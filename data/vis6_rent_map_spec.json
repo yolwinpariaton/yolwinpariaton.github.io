@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
   "title": {
-    "text": "Regional Rent Inflation Across England",
-    "subtitle": "Latest year-on-year percentage change by English region | Darker colours indicate higher inflation",
+    "text": "Rent Inflation: English Regions",
+    "subtitle": "Annual percentage change by region",
     "anchor": "start",
     "fontSize": 30,
     "subtitleFontSize": 18,
@@ -31,7 +31,7 @@
 
   "data": {
     "url": "data/ENG_REGIONS_TOPO.json",
-    "format": { "type": "topojson", "feature": "FEATURE_NAME_HERE" }
+    "format": { "type": "topojson", "feature": "rgn" }
   },
 
   "transform": [
@@ -58,16 +58,11 @@
       "field": "rent_inflation_yoy_pct",
       "type": "quantitative",
       "title": "Rent inflation (% y/y)",
-      "scale": { "scheme": "oranges", "domain": [3.0, 10.0] }
+      "scale": { "scheme": "blues", "domain": [3.0, 10.0] }
     },
     "tooltip": [
       { "field": "areanm", "type": "nominal", "title": "Region" },
-      {
-        "field": "rent_inflation_yoy_pct",
-        "type": "quantitative",
-        "title": "Rent inflation (% y/y)",
-        "format": ".1f"
-      }
+      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
     ]
   }
 }

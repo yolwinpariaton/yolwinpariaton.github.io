@@ -1,9 +1,15 @@
 /* js/project-charts.js
    Eight interactive Vega-Lite charts for the UK cost of living project.
-   FIXES:
-   - Forces legends enabled (removes disable true/false conflict)
-   - Fixes vis1 end-label logic (removes "Infinite extent for field d")
-   - Keeps maps wide and stable
+
+   MAP FIX (Charts 6 & 8):
+   - Embed from /data spec files:
+       data/vis6_rent_map_spec.json
+       data/vis8_rent_map_spec.json
+   - This is the most robust approach given your file structure.
+
+   OTHER FIXES:
+   - Removes "Conflicting legend property disable" warning by removing legend.disable everywhere.
+   - Uses SVG renderer for stable sizing inside your framed containers.
 */
 console.log("LOADED project-charts v3-fixed");
 
@@ -11,19 +17,12 @@ console.log("LOADED project-charts v3-fixed");
   "use strict";
 
   // Use SVG for robust responsive sizing inside framed containers
-  // Force legends enabled at embed level to prevent "disable" conflicts.
   const opts = {
     actions: false,
-    renderer: "svg",
-    config: { legend: { disable: false } }
+    renderer: "svg"
   };
 
-    // Stable TopoJSON from ONSdigital/uk-topojson (layers include: ctry, rgn, etc.)
-  const UK_TOPO_URL =
-    "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json";
-
-
-  // Consistent visual theme
+  // Consistent visual theme (NO legend.disable here to avoid conflicts)
   const THEME = {
     background: "#ffffff",
     view: { stroke: null },
@@ -45,7 +44,6 @@ console.log("LOADED project-charts v3-fixed");
       subtitleColor: "#64748b"
     },
     legend: {
-      disable: false,
       titleFontSize: 12,
       labelFontSize: 11
     }
@@ -54,7 +52,7 @@ console.log("LOADED project-charts v3-fixed");
   // Better responsive behaviour
   const FIT = { autosize: { type: "fit", contains: "padding", resize: true } };
 
-  function safeEmbed(selector, spec) {
+  function safeEmbed(selector, specOrUrl) {
     const el = document.querySelector(selector);
     if (!el) return;
 
@@ -64,168 +62,157 @@ console.log("LOADED project-charts v3-fixed");
       return;
     }
 
-    vegaEmbed(selector, spec, opts).catch((err) => {
+    vegaEmbed(selector, specOrUrl, opts).catch((err) => {
       console.error("Vega embed error for", selector, err);
       el.innerHTML = "<p>Chart failed to load. Check console and JSON paths.</p>";
     });
   }
 
   // ------------------------------------------------------------------
-// 1) Prices vs Pay (Indexed) — ENHANCED EDITORIAL VERSION
-// ------------------------------------------------------------------
-const vis1 = {
-  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-  ...FIT,
+  // 1) Prices vs Pay (Indexed) — ENHANCED EDITORIAL VERSION
+  // ------------------------------------------------------------------
+  const vis1 = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
 
-  title: {
-    text: "Prices vs Pay (Indexed to 2019 = 100)",
-    subtitle: [
-      "The purchasing-power gap widened significantly from 2022 onwards",
-      "as consumer prices (CPIH) outpaced real earnings growth."
+    title: {
+      text: "Prices vs Pay (Indexed to 2019 = 100)",
+      subtitle: [
+        "The purchasing-power gap widened significantly from 2022 onwards",
+        "as consumer prices (CPIH) outpaced real earnings growth."
+      ],
+      anchor: "start",
+      offset: 25,
+      fontSize: 20,
+      subtitleFontSize: 13,
+      subtitleColor: "#64748b",
+      font: "Inter, sans-serif"
+    },
+
+    data: { url: "data/vis1_prices_vs_pay.json" },
+    width: "container",
+    height: 380,
+
+    padding: { top: 20, right: 20, bottom: 20, left: 10 },
+
+    transform: [
+      { calculate: "toDate(datum.date)", as: "d" },
+      { calculate: "toNumber(datum.value)", as: "v" },
+      { pivot: "series", value: "v", groupby: ["d"] },
+      { calculate: "datum['CPIH (prices)']", as: "prices" },
+      { calculate: "datum['Real earnings']", as: "earnings" },
+      { calculate: "datum.prices - datum.earnings", as: "gap" }
     ],
-    anchor: "start",
-    offset: 25,
-    fontSize: 20,
-    subtitleFontSize: 13,
-    subtitleColor: "#64748b",
-    font: "Inter, sans-serif"
-  },
 
-  data: { url: "data/vis1_prices_vs_pay.json" },
-  width: "container",
-  height: 380,
-
-  padding: { top: 20, right: 20, bottom: 20, left: 10 },
-
-  transform: [
-    { calculate: "toDate(datum.date)", as: "d" },
-    { calculate: "toNumber(datum.value)", as: "v" },
-    { pivot: "series", value: "v", groupby: ["d"] },
-    { calculate: "datum['CPIH (prices)']", as: "prices" },
-    { calculate: "datum['Real earnings']", as: "earnings" },
-    { calculate: "datum.prices - datum.earnings", as: "gap" }
-  ],
-
-  layer: [
-    // 1. Reference Baseline
-    {
-      mark: { 
-        type: "rule", 
-        strokeDash: [4, 4], 
-        color: "#475569", 
-        opacity: 0.4, 
-        strokeWidth: 1.5 
-      },
-      encoding: { y: { datum: 100 } }
-    },
-    
-    // 2. The Purchasing Power Gap (Shaded Area)
-    {
-      mark: { 
-        type: "area", 
-        opacity: 0.12, 
-        color: "#1e3a8a",
-        interpolate: "monotone" 
-      },
-      encoding: {
-        x: { 
-          field: "d", 
-          type: "temporal", 
-          title: null, 
-          axis: { 
-            format: "%Y", 
-            tickCount: 6, 
-            grid: false,
-            labelFlush: true
-          } 
+    layer: [
+      {
+        mark: {
+          type: "rule",
+          strokeDash: [4, 4],
+          color: "#475569",
+          opacity: 0.4,
+          strokeWidth: 1.5
         },
-        y: {
-          field: "earnings",
-          type: "quantitative",
-          title: "Index (2019 = 100)",
-          scale: { zero: false, domain: [98, 114] },
-          axis: { 
-            tickCount: 5, 
-            titlePadding: 15,
-            gridOpacity: 0.1,
-            domain: false
+        encoding: { y: { datum: 100 } }
+      },
+
+      {
+        mark: {
+          type: "area",
+          opacity: 0.12,
+          color: "#1e3a8a",
+          interpolate: "monotone"
+        },
+        encoding: {
+          x: {
+            field: "d",
+            type: "temporal",
+            title: null,
+            axis: {
+              format: "%Y",
+              tickCount: 6,
+              grid: false,
+              labelFlush: true
+            }
+          },
+          y: {
+            field: "earnings",
+            type: "quantitative",
+            title: "Index (2019 = 100)",
+            scale: { zero: false, domain: [98, 114] },
+            axis: {
+              tickCount: 5,
+              titlePadding: 15,
+              gridOpacity: 0.1,
+              domain: false
+            }
+          },
+          y2: { field: "prices" }
+        }
+      },
+
+      {
+        mark: {
+          type: "line",
+          strokeWidth: 3.5,
+          color: "#1e3a8a",
+          interpolate: "monotone"
+        },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "prices", type: "quantitative" },
+          tooltip: [
+            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
+            { field: "prices", type: "quantitative", title: "CPIH (prices)", format: ".1f" },
+            { field: "earnings", type: "quantitative", title: "Real earnings", format: ".1f" }
+          ]
+        }
+      },
+
+      {
+        mark: {
+          type: "line",
+          strokeWidth: 3.5,
+          color: "#b45309",
+          interpolate: "monotone"
+        },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "earnings", type: "quantitative" }
+        }
+      },
+
+      {
+        transform: [{ filter: "datum.d == toDate('2024-04-01')" }],
+        layer: [
+          {
+            mark: { type: "text", align: "right", dx: -20, dy: -25, fontWeight: "bold", fontSize: 13 },
+            encoding: {
+              x: { field: "d", type: "temporal" },
+              y: { field: "prices", type: "quantitative" },
+              text: { value: "CPIH Prices" },
+              color: { value: "#1e3a8a" }
+            }
+          },
+          {
+            mark: { type: "text", align: "right", dx: -20, dy: 30, fontWeight: "bold", fontSize: 13 },
+            encoding: {
+              x: { field: "d", type: "temporal" },
+              y: { field: "earnings", type: "quantitative" },
+              text: { value: "Real Earnings" },
+              color: { value: "#b45309" }
+            }
           }
-        },
-        y2: { field: "prices" }
-      }
-    },
-
-    // 3. Prices Line
-    {
-      mark: { 
-        type: "line", 
-        strokeWidth: 3.5, 
-        color: "#1e3a8a", 
-        interpolate: "monotone"
-      },
-      encoding: {
-        x: { field: "d", type: "temporal" },
-        y: { field: "prices", type: "quantitative" },
-        tooltip: [
-          { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
-          { field: "prices", type: "quantitative", title: "CPIH (prices)", format: ".1f" },
-          { field: "earnings", type: "quantitative", title: "Real earnings", format: ".1f" }
         ]
       }
-    },
+    ],
 
-    // 4. Earnings Line
-    {
-      mark: { 
-        type: "line", 
-        strokeWidth: 3.5, 
-        color: "#b45309", 
-        interpolate: "monotone"
-      },
-      encoding: {
-        x: { field: "d", type: "temporal" },
-        y: { field: "earnings", type: "quantitative" }
-      }
-    },
-
-    // 5. INTERNAL LABELS (Plotted inside the graph area)
-    {
-      transform: [
-        { filter: "datum.d == toDate('2024-04-01')" } 
-      ],
-      layer: [
-        {
-          mark: { type: "text", align: "right", dx: -20, dy: -25, fontWeight: "bold", fontSize: 13 },
-          encoding: {
-            x: { field: "d", type: "temporal" },
-            y: { field: "prices", type: "quantitative" },
-            text: { value: "CPIH Prices" },
-            color: { value: "#1e3a8a" }
-          }
-        },
-        {
-          mark: { type: "text", align: "right", dx: -20, dy: 30, fontWeight: "bold", fontSize: 13 },
-          encoding: {
-            x: { field: "d", type: "temporal" },
-            y: { field: "earnings", type: "quantitative" },
-            text: { value: "Real Earnings" },
-            color: { value: "#b45309" }
-          }
-        }
-      ]
+    config: {
+      ...THEME,
+      view: { stroke: null }
     }
-  ],
+  };
 
-  // 6. Professional Footer (Informative items)
-  config: {
-    ...THEME,
-    view: { stroke: null }
-  }
-};
-
-// Note: Add these lines to your HTML or Footer section for full professionalism:
-// Source: ONS Consumer price inflation & Average Weekly Earnings (AWE).
-// Note: Y-axis is clipped to 98-114 to highlight the relative divergence between series.
   // --------------------------------------
   // 2) Food inflation vs headline — unify color scale to avoid range warnings
   // --------------------------------------
@@ -260,7 +247,6 @@ const vis1 = {
         encoding: { y: { datum: 2 } }
       },
 
-      // Raw lines (subtle) — SAME scale range, legend removed
       {
         mark: { type: "line", strokeWidth: 1.5, opacity: 0.2, interpolate: "monotone" },
         encoding: {
@@ -276,7 +262,6 @@ const vis1 = {
         }
       },
 
-      // Moving average (bold) — SAME scale range, legend shown
       {
         transform: [
           {
@@ -348,18 +333,12 @@ const vis1 = {
       {
         data: { values: [{ period_label: "2021 Q4" }, { period_label: "2022 Q1" }, { period_label: "2022 Q2" }] },
         mark: { type: "bar", color: "#dbeafe", opacity: 0.28 },
-        encoding: {
-          x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
-          y: { datum: 2200 }
-        }
+        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
       },
       {
         data: { values: [{ period_label: "2024 Q2" }, { period_label: "2024 Q3" }, { period_label: "2024 Q4" }] },
         mark: { type: "bar", color: "#fef3c7", opacity: 0.32 },
-        encoding: {
-          x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
-          y: { datum: 2200 }
-        }
+        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
       },
       {
         mark: { type: "rule", strokeDash: [4, 4], color: "#0891b2", strokeWidth: 1.5, opacity: 0.5 },
@@ -506,69 +485,30 @@ const vis1 = {
         encoding: { y: { datum: 120 } }
       },
       {
-        mark: {
-          type: "text",
-          align: "left",
-          dx: 10,
-          dy: -25,
-          fontSize: 12,
-          color: "#1e293b",
-          fontWeight: "bold"
-        },
-        encoding: {
-          x: { value: 0 },
-          y: { datum: 120 },
-          text: { value: "Pre-pandemic baseline (120p)" }
-        }
+        mark: { type: "text", align: "left", dx: 10, dy: -25, fontSize: 12, color: "#1e293b", fontWeight: "bold" },
+        encoding: { x: { value: 0 }, y: { datum: 120 }, text: { value: "Pre-pandemic baseline (120p)" } }
       },
 
       {
         transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            groupby: ["fuel"]
-          }
+          { window: [{ op: "mean", field: "ppl", as: "ppl_ma" }], frame: [-2, 2], groupby: ["fuel"] }
         ],
         mark: { type: "line", strokeWidth: 4, interpolate: "monotone" },
         encoding: {
-          x: {
-            field: "d",
-            type: "temporal",
-            title: "Year",
-            axis: { format: "%Y", tickCount: 7, grid: false, labelPadding: 10 }
-          },
-          y: {
-            field: "ppl_ma",
-            type: "quantitative",
-            title: "Pence per litre",
-            scale: { domain: [80, 210] },
-            axis: { titlePadding: 15 }
-          },
+          x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 7, grid: false, labelPadding: 10 } },
+          y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre", scale: { domain: [80, 210] }, axis: { titlePadding: 15 } },
           color: {
             field: "fuel",
             type: "nominal",
             scale: { range: ["#2563eb", "#d97706"] },
-            legend: {
-              orient: "top",
-              direction: "horizontal",
-              title: null,
-              labelFontSize: 13,
-              symbolType: "circle",
-              symbolSize: 160,
-              offset: 25
-            }
+            legend: { orient: "top", direction: "horizontal", title: null, labelFontSize: 13, symbolType: "circle", symbolSize: 160, offset: 25 }
           }
         }
       },
 
       {
         transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            groupby: ["fuel"]
-          }
+          { window: [{ op: "mean", field: "ppl", as: "ppl_ma" }], frame: [-2, 2], groupby: ["fuel"] }
         ],
         mark: { type: "point", size: 100, opacity: 0 },
         encoding: {
@@ -611,26 +551,15 @@ const vis1 = {
     ],
 
     layer: [
-      {
-        mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.6 },
-        encoding: { y: { datum: 0 } }
-      },
-      {
-        mark: { type: "rule", strokeDash: [3, 3], color: "#10b981", opacity: 0.35 },
-        encoding: { y: { datum: 2 } }
-      },
+      { mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.6 }, encoding: { y: { datum: 0 } } },
+      { mark: { type: "rule", strokeDash: [3, 3], color: "#10b981", opacity: 0.35 }, encoding: { y: { datum: 2 } } },
 
       {
         mark: { type: "line", strokeWidth: 1.5, opacity: 0.2, interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 8 } },
           y: { field: "v", type: "quantitative", title: "Annual inflation rate (%)" },
-          color: {
-            field: "series",
-            type: "nominal",
-            scale: { range: ["#dc2626", "#1e40af"] },
-            legend: null
-          },
+          color: { field: "series", type: "nominal", scale: { range: ["#dc2626", "#1e40af"] }, legend: null },
           detail: { field: "series" }
         }
       },
@@ -652,14 +581,7 @@ const vis1 = {
             field: "series",
             type: "nominal",
             scale: { range: ["#dc2626", "#1e40af"] },
-            legend: {
-              orient: "top",
-              direction: "horizontal",
-              title: null,
-              labelFontSize: 12,
-              symbolSize: 200,
-              symbolStrokeWidth: 4
-            }
+            legend: { orient: "top", direction: "horizontal", title: null, labelFontSize: 12, symbolSize: 200, symbolStrokeWidth: 4 }
           },
           tooltip: [
             { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
@@ -673,69 +595,6 @@ const vis1 = {
     config: THEME
   };
 
-  // ------------------------------------------------------------------
-// 6) MAP: Rent inflation across English regions
-// ------------------------------------------------------------------
-const vis6 = {
-  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-  ...FIT,
-  width: "container",
-  height: 500,
-
-  title: {
-    text: "Rent Inflation: English Regions",
-    subtitle: "Annual percentage change by region",
-    anchor: "start"
-  },
-
-  data: {
-    url: UK_TOPO_URL,
-    format: { type: "topojson", feature: "rgn" }
-  },
-
-  // IMPORTANT: no geographic filter here (your previous filter likely removed everything)
-  transform: [
-    {
-      lookup: "properties.areanm",
-      from: {
-        data: { url: "data/vis6_rent_map_regions.json" },
-        key: "region",
-        fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
-      }
-    },
-    {
-      calculate:
-        "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
-      as: "rent_growth_num"
-    }
-  ],
-
-  // Identity + fit makes the (already-projected) topo render in your frame
-  projection: { type: "identity", reflectY: true, fit: true },
-
-  mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
-
-  encoding: {
-    color: {
-      condition: {
-        test: "isValid(datum.rent_growth_num)",
-        field: "rent_growth_num",
-        type: "quantitative",
-        scale: { scheme: "blues", domain: [0, 12] },
-        legend: { title: "Growth (%)" }
-      },
-      value: "#e5e7eb",
-      legend: { title: "Growth (%)" }
-    },
-    tooltip: [
-      { field: "properties.areanm", type: "nominal", title: "Region" },
-      { field: "rent_growth_num", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
-    ]
-  },
-
-  config: THEME
-};
-
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -745,8 +604,7 @@ const vis6 = {
 
     title: {
       text: "Regional Rent Inflation Dynamics",
-      subtitle:
-        "Compare any English region against the national benchmark (2016–2024) | Interactive selector below",
+      subtitle: "Compare any English region against the national benchmark (2016–2024) | Interactive selector below",
       anchor: "start",
       offset: 14
     },
@@ -793,28 +651,17 @@ const vis6 = {
       {
         data: { values: [{ start: "2020-03-01", end: "2021-06-01" }] },
         mark: { type: "rect", color: "#fef3c7", opacity: 0.30 },
-        encoding: {
-          x: { field: "start", type: "temporal" },
-          x2: { field: "end", type: "temporal" }
-        }
+        encoding: { x: { field: "start", type: "temporal" }, x2: { field: "end", type: "temporal" } }
       },
 
-      {
-        mark: { type: "rule", strokeDash: [5, 5], color: "#94a3b8", strokeWidth: 1, opacity: 0.5 },
-        encoding: { y: { datum: 0 } }
-      },
+      { mark: { type: "rule", strokeDash: [5, 5], color: "#94a3b8", strokeWidth: 1, opacity: 0.5 }, encoding: { y: { datum: 0 } } },
 
       {
         transform: [{ filter: "datum.group === 'Other Regions'" }],
         mark: { type: "line", strokeWidth: 1.3, opacity: 0.24, interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 8 } },
-          y: {
-            field: "inflation",
-            type: "quantitative",
-            title: "Annual rent inflation (%)",
-            scale: { domain: [0, 11], nice: true }
-          },
+          y: { field: "inflation", type: "quantitative", title: "Annual rent inflation (%)", scale: { domain: [0, 11], nice: true } },
           detail: { field: "areanm", type: "nominal" },
           color: { value: "#94a3b8" }
         }
@@ -823,21 +670,13 @@ const vis6 = {
       {
         transform: [{ filter: "datum.group === 'England Average'" }],
         mark: { type: "line", strokeWidth: 3.2, interpolate: "monotone" },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "inflation", type: "quantitative" },
-          color: { value: "#1e40af" }
-        }
+        encoding: { x: { field: "d", type: "temporal" }, y: { field: "inflation", type: "quantitative" }, color: { value: "#1e40af" } }
       },
 
       {
         transform: [{ filter: "datum.group === 'Selected Region'" }],
         mark: { type: "line", strokeWidth: 4.2, interpolate: "monotone" },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "inflation", type: "quantitative" },
-          color: { value: "#dc2626" }
-        }
+        encoding: { x: { field: "d", type: "temporal" }, y: { field: "inflation", type: "quantitative" }, color: { value: "#dc2626" } }
       },
 
       {
@@ -859,73 +698,18 @@ const vis6 = {
   };
 
   // ------------------------------------------------------------------
-// 8) MAP: Rent inflation across UK countries
-// ------------------------------------------------------------------
-const vis8 = {
-  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-  ...FIT,
-  width: "container",
-  height: 500,
-
-  title: {
-    text: "Rent Inflation: UK Nations",
-    subtitle: "Annual percentage change by country",
-    anchor: "start"
-  },
-
-  data: {
-    url: UK_TOPO_URL,
-    format: { type: "topojson", feature: "ctry" }
-  },
-
-  transform: [
-    {
-      lookup: "properties.areanm",
-      from: {
-        data: { url: "data/vis8_rent_map_countries.json" },
-        key: "country",
-        fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
-      }
-    },
-    {
-      calculate:
-        "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
-      as: "rent_growth_num"
-    }
-  ],
-
-  projection: { type: "identity", reflectY: true, fit: true },
-
-  mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
-
-  encoding: {
-    color: {
-      condition: {
-        test: "isValid(datum.rent_growth_num)",
-        field: "rent_growth_num",
-        type: "quantitative",
-        scale: { scheme: "oranges", domain: [0, 12] },
-        legend: { title: "Growth (%)" }
-      },
-      value: "#e5e7eb",
-      legend: { title: "Growth (%)" }
-    },
-    tooltip: [
-      { field: "properties.areanm", type: "nominal", title: "Country" },
-      { field: "rent_growth_num", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
-    ]
-  },
-
-  config: THEME
-};
-
-  // Embed all eight charts
+  // EMBED ALL EIGHT CHARTS
+  // ------------------------------------------------------------------
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
   safeEmbed("#vis3", vis3);
   safeEmbed("#vis4", vis4);
   safeEmbed("#vis5", vis5);
-  safeEmbed("#vis6", vis6);
+
+  // IMPORTANT: Maps load from your /data map spec files
+  safeEmbed("#vis6", "data/vis6_rent_map_spec.json");
+
   safeEmbed("#vis7", vis7);
-  safeEmbed("#vis8", vis8);
+
+  safeEmbed("#vis8", "data/vis8_rent_map_spec.json");
 })();

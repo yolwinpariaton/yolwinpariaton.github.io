@@ -100,6 +100,7 @@
   margin-right: auto;
 }
 
+/* Center the Vega embed inside the framed box */
 .chart-wrapper--map .chart-frame {
   display: flex;
   justify-content: center;
@@ -111,6 +112,7 @@
   margin: 0 auto;
 }
 
+/* Make sure Vega’s internal wrapper centers too */
 .chart-wrapper--map .vega-embed {
   width: 100% !important;
   display: flex;
@@ -118,10 +120,17 @@
   align-items: center;
 }
 
+/* Stable vertical space so the map has room */
 .vega-map {
   width: 100%;
   min-height: 450px;
   margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .vega-map {
+    min-height: 350px;
+  }
 }
 
 
