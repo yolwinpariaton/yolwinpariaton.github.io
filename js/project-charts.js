@@ -310,14 +310,15 @@
 
     config: THEME
   };
-
 // --------------------------------------
-// 4) Weekly fuel prices — CLEAN FINAL
-// Fixes:
-//  - Removes barcode marks (annotation layers draw once via data: {values:[{}]})
-//  - Moves Peak label to the right (near peak)
-//  - Removes white "bubble" peak points (deleted emphasis-point layer)
-//  - Reduces space below x-axis (smaller padding.bottom)
+// 4) Weekly fuel prices — FINAL (with professional shading + labels)
+// Adds:
+//  - Subtle shaded periods (COVID + Russia-Ukraine shock)
+//  - Clean in-chart labels (COVID, Ukraine shock, baseline, peak)
+// Keeps:
+//  - No banding artifacts (annotation layers draw once via data: {values:[{}]})
+//  - No “bubble” points
+//  - Tight frame spacing
 // --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -335,8 +336,7 @@ const vis4 = {
   width: "container",
   height: "container",
 
-  // Reduced bottom padding (less empty space under x-axis)
-  padding: { top: 42, right: 16, bottom: 54, left: 62 },
+  padding: { top: 44, right: 16, bottom: 54, left: 62 },
 
   transform: [
     { calculate: "toDate(datum.date)", as: "d" },
@@ -348,7 +348,7 @@ const vis4 = {
     }
   ],
 
-  // Keep axis stable: define x/y once. Do NOT define color here.
+  // Keep axis stable
   encoding: {
     x: {
       field: "d",
@@ -373,33 +373,39 @@ const vis4 = {
   },
 
   layer: [
-    // Pandemic background — draw ONCE (no banding)
+    // ----------------------------
+    // Professional shaded periods
+    // ----------------------------
+
+    // COVID period shading (draw ONCE)
     {
       data: { values: [{}] },
-      mark: { type: "rect", opacity: 0.30 },
+      mark: { type: "rect", opacity: 0.22 },
       encoding: {
         x: { datum: "2020-03-01" },
-        x2: { datum: "2020-12-31" },
+        x2: { datum: "2021-03-01" },
         y: { datum: 60 },
         y2: { datum: 220 },
         color: { value: "#dbeafe" }
       }
     },
 
-    // Russia-Ukraine shock background — draw ONCE
+    // Russia-Ukraine shock shading (draw ONCE)
     {
       data: { values: [{}] },
-      mark: { type: "rect", opacity: 0.40 },
+      mark: { type: "rect", opacity: 0.22 },
       encoding: {
-        x: { datum: "2022-03-01" },
-        x2: { datum: "2022-08-01" },
+        x: { datum: "2022-02-24" },
+        x2: { datum: "2022-10-01" },
         y: { datum: 60 },
         y2: { datum: 220 },
         color: { value: "#fef3c7" }
       }
     },
 
-    // Baseline line — draw ONCE (prevents tick-like artifacts)
+    // ----------------------------
+    // Reference baseline + label
+    // ----------------------------
     {
       data: { values: [{}] },
       mark: { type: "rule", strokeDash: [6, 4], strokeWidth: 1.8, opacity: 0.70 },
@@ -408,8 +414,6 @@ const vis4 = {
         color: { value: "#64748b" }
       }
     },
-
-    // Baseline label — draw ONCE
     {
       data: { values: [{}] },
       mark: {
@@ -429,7 +433,11 @@ const vis4 = {
       }
     },
 
-    // COVID label — draw ONCE
+    // ----------------------------
+    // Period labels (clean + subtle)
+    // ----------------------------
+
+    // COVID label
     {
       data: { values: [{}] },
       mark: {
@@ -439,16 +447,16 @@ const vis4 = {
         dx: 8,
         fontSize: 10.5,
         fontWeight: 700,
-        text: "COVID-19 Pandemic"
+        text: "COVID-19 disruption"
       },
       encoding: {
-        x: { datum: "2020-03-20" },
-        y: { datum: 78 },
+        x: { datum: "2020-04-01" },
+        y: { datum: 76 },
         color: { value: "#1e40af" }
       }
     },
 
-    // Crisis label — draw ONCE
+    // Ukraine shock label
     {
       data: { values: [{}] },
       mark: {
@@ -458,16 +466,16 @@ const vis4 = {
         dx: 8,
         fontSize: 10.5,
         fontWeight: 700,
-        text: "Russia-Ukraine Crisis"
+        text: "Russia–Ukraine shock"
       },
       encoding: {
-        x: { datum: "2022-03-20" },
+        x: { datum: "2022-03-15" },
         y: { datum: 214 },
         color: { value: "#92400e" }
       }
     },
 
-    // Peak label — moved RIGHT (near the peak)
+    // Peak label (kept near peak, not intrusive)
     {
       data: { values: [{}] },
       mark: {
@@ -478,7 +486,7 @@ const vis4 = {
         dy: -8,
         fontSize: 10.5,
         fontWeight: 700,
-        text: "Peak: 191p (+60%)"
+        text: "Peak (≈191p)"
       },
       encoding: {
         x: { datum: "2022-08-05" },
@@ -487,7 +495,11 @@ const vis4 = {
       }
     },
 
-    // Raw weekly lines (very subtle; no legend)
+    // ----------------------------
+    // Lines
+    // ----------------------------
+
+    // Raw weekly (very subtle; no legend)
     {
       mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" },
       encoding: {
@@ -500,7 +512,7 @@ const vis4 = {
       }
     },
 
-    // Moving average (bold) — only legend in the chart
+    // 5-week moving average (bold) — owns legend
     {
       transform: [
         {
@@ -565,8 +577,6 @@ const vis4 = {
 
   config: THEME
 };
-
-
 
   // --------------------------------------
   // 5) Rent vs house price
