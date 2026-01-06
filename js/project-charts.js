@@ -12,17 +12,13 @@ console.log("LOADED project-charts v3-fixed");
 (function () {
   "use strict";
 
-  // Use SVG for robust responsive sizing inside framed containers
+  // Vega-Embed options
   const opts = {
     actions: false,
-    renderer: "svg",
-    // Avoid any "legend.disable" conflicts from merged configs
-    config: {
-      legend: { disable: false }
-    }
+    renderer: "svg"
   };
 
-  // Consistent visual theme (NO legend.disable here)
+  // Consistent visual theme (do NOT set legend.disable anywhere)
   const THEME = {
     background: "#ffffff",
     view: { stroke: null },
@@ -106,29 +102,13 @@ console.log("LOADED project-charts v3-fixed");
 
     layer: [
       {
-        mark: {
-          type: "rule",
-          strokeDash: [4, 4],
-          color: "#475569",
-          opacity: 0.4,
-          strokeWidth: 1.5
-        },
+        mark: { type: "rule", strokeDash: [4, 4], color: "#475569", opacity: 0.4, strokeWidth: 1.5 },
         encoding: { y: { datum: 100 } }
       },
       {
-        mark: {
-          type: "area",
-          opacity: 0.12,
-          color: "#1e3a8a",
-          interpolate: "monotone"
-        },
+        mark: { type: "area", opacity: 0.12, color: "#1e3a8a", interpolate: "monotone" },
         encoding: {
-          x: {
-            field: "d",
-            type: "temporal",
-            title: null,
-            axis: { format: "%Y", tickCount: 6, grid: false, labelFlush: true }
-          },
+          x: { field: "d", type: "temporal", title: null, axis: { format: "%Y", tickCount: 6, grid: false, labelFlush: true } },
           y: {
             field: "earnings",
             type: "quantitative",
@@ -160,9 +140,9 @@ console.log("LOADED project-charts v3-fixed");
     config: { ...THEME, view: { stroke: null } }
   };
 
-  // --------------------------------------
-  // 2) Food inflation vs headline — unify color scale to avoid range warnings
-  // --------------------------------------
+  // ------------------------------------------------------------------
+  // 2) Food inflation vs headline
+  // ------------------------------------------------------------------
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -185,321 +165,8 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      {
-        mark: { type: "rule", strokeDash: [4, 6], color: "#94a3b8", opacity: 0.6 },
-        encoding: { y: { datum: 0 } }
-      },
-      {
-        mark: { type: "rule", strokeDash: [3, 3], color: "#10b981", opacity: 0.4 },
-        encoding: { y: { datum: 2 } }
-      },
-
-      {
-        mark: { type: "line", strokeWidth: 1.5, opacity: 0.2, interpolate: "monotone" },
-        encoding: {
-          x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 8 } },
-          y: { field: "v", type: "quantitative", title: "Annual inflation rate (%)" },
-          color: {
-            field: "series",
-            type: "nominal",
-            scale: { range: ["#dc2626", "#1e40af"] },
-            legend: null
-          },
-          detail: { field: "series" }
-        }
-      },
-
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "v", as: "v_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["series"]
-          }
-        ],
-        mark: { type: "line", strokeWidth: 4, interpolate: "monotone" },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "v_ma", type: "quantitative" },
-          color: {
-            field: "series",
-            type: "nominal",
-            scale: { range: ["#dc2626", "#1e40af"] },
-            legend: {
-              orient: "top",
-              direction: "horizontal",
-              title: null,
-              labelFontSize: 12,
-              symbolSize: 200,
-              symbolStrokeWidth: 4
-            }
-          },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
-            { field: "series", type: "nominal", title: "Series" },
-            { field: "v_ma", type: "quantitative", title: "Rate (%)", format: ".1f" }
-          ]
-        }
-      }
-    ],
-
-    config: THEME
-  };
-
-  // --------------------------------------
-  // 3) Energy cap
-  // --------------------------------------
-  const QUARTER_SORT = [
-    "2021 Q4",
-    "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4",
-    "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4",
-    "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4",
-    "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"
-  ];
-
-  const vis3 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
-
-    title: {
-      text: "UK Energy Price Cap: The Crisis in Context",
-      subtitle:
-        "Quarterly typical household bills (2021–2025) | Peak of £2,070 represents a 118% increase from £950 baseline",
-      anchor: "start",
-      offset: 14
-    },
-
-    data: { url: "data/vis3_energy_cap.json" },
-    width: "container",
-    height: 360,
-
-    padding: { top: 6, right: 18, bottom: 28, left: 6 },
-
-    layer: [
-      {
-        data: { values: [{ period_label: "2021 Q4" }, { period_label: "2022 Q1" }, { period_label: "2022 Q2" }] },
-        mark: { type: "bar", color: "#dbeafe", opacity: 0.28 },
-        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
-      },
-      {
-        data: { values: [{ period_label: "2024 Q2" }, { period_label: "2024 Q3" }, { period_label: "2024 Q4" }] },
-        mark: { type: "bar", color: "#fef3c7", opacity: 0.32 },
-        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
-      },
-      {
-        mark: { type: "rule", strokeDash: [4, 4], color: "#0891b2", strokeWidth: 1.5, opacity: 0.5 },
-        encoding: { y: { datum: 1070 } }
-      },
-      {
-        layer: [
-          { mark: { type: "line", strokeWidth: 2.5, color: "#64748b" } },
-          {
-            mark: { type: "point", filled: true, size: 190, stroke: "white", strokeWidth: 2.2 },
-            encoding: {
-              color: {
-                field: "typical_annual_bill_gbp",
-                type: "quantitative",
-                scale: {
-                  domain: [950, 1300, 1700, 2070],
-                  range: ["#06b6d4", "#3b82f6", "#f59e0b", "#dc2626"]
-                },
-                legend: {
-                  title: "Bill amount (£)",
-                  orient: "right",
-                  format: ",.0f",
-                  titleFontSize: 11,
-                  labelFontSize: 10
-                }
-              },
-              tooltip: [
-                { field: "period_label", title: "Quarter", type: "nominal" },
-                { field: "typical_annual_bill_gbp", title: "Bill (£)", type: "quantitative", format: ",.0f" }
-              ]
-            }
-          }
-        ],
-        encoding: {
-          x: {
-            field: "period_label",
-            type: "ordinal",
-            sort: QUARTER_SORT,
-            axis: {
-              title: "Quarter",
-              labelAngle: -45,
-              labelAlign: "right",
-              labelFontSize: 10,
-              titleFontSize: 12
-            }
-          },
-          y: {
-            field: "typical_annual_bill_gbp",
-            type: "quantitative",
-            scale: { domain: [0, 2200] },
-            axis: { title: "Annual bill (£)", format: ",.0f" }
-          }
-        }
-      },
-      {
-        transform: [{ filter: "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: -16, fontSize: 12, fontWeight: "bold", color: "#0f172a" },
-        encoding: {
-          x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
-          y: { field: "typical_annual_bill_gbp", type: "quantitative" },
-          text: { field: "typical_annual_bill_gbp", type: "quantitative", format: ",.0f" }
-        }
-      },
-      {
-        transform: [{ filter: "datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: 26, fontSize: 11, fontWeight: "bold", color: "#dc2626" },
-        encoding: {
-          x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
-          y: { field: "typical_annual_bill_gbp", type: "quantitative" },
-          text: { value: "+118%" }
-        }
-      }
-    ],
-
-    config: THEME
-  };
-
-  // --------------------------------------
-  // 4) Weekly fuel prices
-  // --------------------------------------
-  const vis4 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
-    title: {
-      text: "UK Fuel Prices: From Pandemic Crash to Energy Crisis",
-      subtitle: [
-        "Weekly pump prices (2019–2025) | Data: Department for Energy Security and Net Zero",
-        "Shaded areas indicate major global events impacting supply and demand."
-      ]
-    },
-    data: { url: "data/vis4_fuel_weekly.json" },
-    width: "container",
-    height: 500,
-    padding: { top: 50, right: 30, bottom: 50, left: 60 },
-
-    transform: [
-      { calculate: "toDate(datum.date)", as: "d" },
-      { fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel_raw", "ppl_raw"] },
-      { calculate: "toNumber(datum.ppl_raw)", as: "ppl" },
-      {
-        calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
-        as: "fuel"
-      }
-    ],
-
-    layer: [
-      {
-        data: {
-          values: [
-            { start: "2020-03-23", end: "2021-07-19", event: "COVID Lockdown Period", color: "#cbd5e1" },
-            { start: "2022-02-24", end: "2023-01-01", event: "Initial Ukraine Energy Shock", color: "#fca5a5" }
-          ]
-        },
-        layer: [
-          {
-            mark: { type: "rect", opacity: 0.4 },
-            encoding: {
-              x: { field: "start", type: "temporal" },
-              x2: { field: "end" },
-              color: { field: "color", type: "nominal", scale: null }
-            }
-          },
-          {
-            mark: {
-              type: "text",
-              align: "left",
-              baseline: "top",
-              dy: -15,
-              fontSize: 11,
-              fontWeight: 700,
-              color: "#475569"
-            },
-            encoding: {
-              x: { field: "start", type: "temporal" },
-              y: { value: 0 },
-              text: { field: "event" }
-            }
-          }
-        ]
-      },
-
-      {
-        mark: { type: "rule", strokeDash: [4, 4], color: "#475569", opacity: 0.8, strokeWidth: 1.5 },
-        encoding: { y: { datum: 120 } }
-      },
-      {
-        mark: { type: "text", align: "left", dx: 10, dy: -25, fontSize: 12, color: "#1e293b", fontWeight: "bold" },
-        encoding: { x: { value: 0 }, y: { datum: 120 }, text: { value: "Pre-pandemic baseline (120p)" } }
-      },
-
-      {
-        transform: [
-          { window: [{ op: "mean", field: "ppl", as: "ppl_ma" }], frame: [-2, 2], groupby: ["fuel"] }
-        ],
-        mark: { type: "line", strokeWidth: 4, interpolate: "monotone" },
-        encoding: {
-          x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 7, grid: false, labelPadding: 10 } },
-          y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre", scale: { domain: [80, 210] }, axis: { titlePadding: 15 } },
-          color: {
-            field: "fuel",
-            type: "nominal",
-            scale: { range: ["#2563eb", "#d97706"] },
-            legend: { orient: "top", direction: "horizontal", title: null, labelFontSize: 13, symbolType: "circle", symbolSize: 160, offset: 25 }
-          }
-        }
-      },
-
-      {
-        transform: [
-          { window: [{ op: "mean", field: "ppl", as: "ppl_ma" }], frame: [-2, 2], groupby: ["fuel"] }
-        ],
-        mark: { type: "point", size: 100, opacity: 0 },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "ppl_ma", type: "quantitative" },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Date", format: "%d %b %Y" },
-            { field: "fuel", type: "nominal", title: "Fuel" },
-            { field: "ppl_ma", type: "quantitative", title: "Price (p)", format: ".1f" }
-          ]
-        }
-      }
-    ],
-    config: THEME
-  };
-
-  // --------------------------------------
-  // 5) Rent vs house price — unify scale range
-  // --------------------------------------
-  const vis5 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
-
-    title: {
-      text: "Housing Cost Dynamics: Rents vs House Prices",
-      subtitle: "Annual inflation rates (2016–2024) | Bold lines show 5-month moving average",
-      anchor: "start",
-      offset: 14
-    },
-
-    data: { url: "data/vis5_rent_vs_house.json" },
-    width: "container",
-    height: 380,
-
-    padding: { top: 12, right: 12, bottom: 22, left: 8 },
-
-    transform: [
-      { calculate: "toDate(datum.date)", as: "d" },
-      { calculate: "toNumber(datum.value)", as: "v" }
-    ],
-
-    layer: [
-      { mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.6 }, encoding: { y: { datum: 0 } } },
-      { mark: { type: "rule", strokeDash: [3, 3], color: "#10b981", opacity: 0.35 }, encoding: { y: { datum: 2 } } },
+      { mark: { type: "rule", strokeDash: [4, 6], color: "#94a3b8", opacity: 0.6 }, encoding: { y: { datum: 0 } } },
+      { mark: { type: "rule", strokeDash: [3, 3], color: "#10b981", opacity: 0.4 }, encoding: { y: { datum: 2 } } },
 
       {
         mark: { type: "line", strokeWidth: 1.5, opacity: 0.2, interpolate: "monotone" },
@@ -542,9 +209,165 @@ console.log("LOADED project-charts v3-fixed");
     config: THEME
   };
 
-  // --------------------------------------
+  // ------------------------------------------------------------------
+  // 3) Energy cap
+  // ------------------------------------------------------------------
+  const QUARTER_SORT = [
+    "2021 Q4",
+    "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4",
+    "2023 Q1", "2023 Q2", "2023 Q3", "2023 Q4",
+    "2024 Q1", "2024 Q2", "2024 Q3", "2024 Q4",
+    "2025 Q1", "2025 Q2", "2025 Q3", "2025 Q4"
+  ];
+
+  const vis3 = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
+
+    title: {
+      text: "UK Energy Price Cap: The Crisis in Context",
+      subtitle: "Quarterly typical household bills (2021–2025) | Peak of £2,070 represents a 118% increase from £950 baseline",
+      anchor: "start",
+      offset: 14
+    },
+
+    data: { url: "data/vis3_energy_cap.json" },
+    width: "container",
+    height: 360,
+
+    padding: { top: 6, right: 18, bottom: 28, left: 6 },
+
+    layer: [
+      {
+        data: { values: [{ period_label: "2021 Q4" }, { period_label: "2022 Q1" }, { period_label: "2022 Q2" }] },
+        mark: { type: "bar", color: "#dbeafe", opacity: 0.28 },
+        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
+      },
+      {
+        data: { values: [{ period_label: "2024 Q2" }, { period_label: "2024 Q3" }, { period_label: "2024 Q4" }] },
+        mark: { type: "bar", color: "#fef3c7", opacity: 0.32 },
+        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
+      },
+      {
+        mark: { type: "rule", strokeDash: [4, 4], color: "#0891b2", strokeWidth: 1.5, opacity: 0.5 },
+        encoding: { y: { datum: 1070 } }
+      },
+      {
+        layer: [
+          { mark: { type: "line", strokeWidth: 2.5, color: "#64748b" } },
+          {
+            mark: { type: "point", filled: true, size: 190, stroke: "white", strokeWidth: 2.2 },
+            encoding: {
+              color: {
+                field: "typical_annual_bill_gbp",
+                type: "quantitative",
+                scale: { domain: [950, 1300, 1700, 2070], range: ["#06b6d4", "#3b82f6", "#f59e0b", "#dc2626"] },
+                legend: { title: "Bill amount (£)", orient: "right", format: ",.0f", titleFontSize: 11, labelFontSize: 10 }
+              },
+              tooltip: [
+                { field: "period_label", title: "Quarter", type: "nominal" },
+                { field: "typical_annual_bill_gbp", title: "Bill (£)", type: "quantitative", format: ",.0f" }
+              ]
+            }
+          }
+        ],
+        encoding: {
+          x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT, axis: { title: "Quarter", labelAngle: -45, labelAlign: "right", labelFontSize: 10, titleFontSize: 12 } },
+          y: { field: "typical_annual_bill_gbp", type: "quantitative", scale: { domain: [0, 2200] }, axis: { title: "Annual bill (£)", format: ",.0f" } }
+        }
+      }
+    ],
+
+    config: THEME
+  };
+
+  // ------------------------------------------------------------------
+  // 4) Weekly fuel prices
+  // ------------------------------------------------------------------
+  const vis4 = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
+
+    title: {
+      text: "UK Fuel Prices: From Pandemic Crash to Energy Crisis",
+      subtitle: [
+        "Weekly pump prices (2019–2025) | Data: Department for Energy Security and Net Zero",
+        "Shaded areas indicate major global events impacting supply and demand."
+      ]
+    },
+
+    data: { url: "data/vis4_fuel_weekly.json" },
+    width: "container",
+    height: 500,
+    padding: { top: 50, right: 30, bottom: 50, left: 60 },
+
+    transform: [
+      { calculate: "toDate(datum.date)", as: "d" },
+      { fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel_raw", "ppl_raw"] },
+      { calculate: "toNumber(datum.ppl_raw)", as: "ppl" },
+      { calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'", as: "fuel" }
+    ],
+
+    layer: [
+      {
+        transform: [{ window: [{ op: "mean", field: "ppl", as: "ppl_ma" }], frame: [-2, 2], groupby: ["fuel"] }],
+        mark: { type: "line", strokeWidth: 4, interpolate: "monotone" },
+        encoding: {
+          x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 7, grid: false, labelPadding: 10 } },
+          y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre", scale: { domain: [80, 210] }, axis: { titlePadding: 15 } },
+          color: { field: "fuel", type: "nominal", scale: { range: ["#2563eb", "#d97706"] }, legend: { orient: "top", direction: "horizontal", title: null, labelFontSize: 13, symbolSize: 160, offset: 25 } }
+        }
+      }
+    ],
+
+    config: THEME
+  };
+
+  // ------------------------------------------------------------------
+  // 5) Rent vs house price
+  // ------------------------------------------------------------------
+  const vis5 = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    ...FIT,
+
+    title: {
+      text: "Housing Cost Dynamics: Rents vs House Prices",
+      subtitle: "Annual inflation rates (2016–2024) | Bold lines show 5-month moving average",
+      anchor: "start",
+      offset: 14
+    },
+
+    data: { url: "data/vis5_rent_vs_house.json" },
+    width: "container",
+    height: 380,
+    padding: { top: 12, right: 12, bottom: 22, left: 8 },
+
+    transform: [
+      { calculate: "toDate(datum.date)", as: "d" },
+      { calculate: "toNumber(datum.value)", as: "v" }
+    ],
+
+    layer: [
+      { mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.6 }, encoding: { y: { datum: 0 } } },
+      {
+        transform: [
+          { window: [{ op: "mean", field: "v", as: "v_ma" }], frame: [-2, 2], sort: [{ field: "d", order: "ascending" }], groupby: ["series"] }
+        ],
+        mark: { type: "line", strokeWidth: 4, interpolate: "monotone" },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "v_ma", type: "quantitative", title: "Annual inflation rate (%)" },
+          color: { field: "series", type: "nominal", scale: { range: ["#dc2626", "#1e40af"] }, legend: { orient: "top", direction: "horizontal", title: null, labelFontSize: 12, symbolSize: 200, symbolStrokeWidth: 4 } }
+        }
+      }
+    ],
+
+    config: THEME
+  };
+
+  // ------------------------------------------------------------------
   // 7) Interactive regional trend
-  // --------------------------------------
+  // ------------------------------------------------------------------
   const vis7 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -559,7 +382,6 @@ console.log("LOADED project-charts v3-fixed");
     data: { url: "data/vis7_rent_trend_regions.json" },
     width: "container",
     height: 380,
-
     padding: { top: 12, right: 12, bottom: 28, left: 8 },
 
     params: [
@@ -570,15 +392,9 @@ console.log("LOADED project-charts v3-fixed");
           input: "select",
           name: "Select region to highlight: ",
           options: [
-            "North East",
-            "North West",
-            "Yorkshire and The Humber",
-            "East Midlands",
-            "West Midlands",
-            "East of England",
-            "London",
-            "South East",
-            "South West"
+            "North East", "North West", "Yorkshire and The Humber",
+            "East Midlands", "West Midlands", "East of England",
+            "London", "South East", "South West"
           ]
         }
       }
@@ -587,22 +403,10 @@ console.log("LOADED project-charts v3-fixed");
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "inflation" },
-      {
-        calculate:
-          "datum.areanm === Region ? 'Selected Region' : (datum.areanm === 'England' ? 'England Average' : 'Other Regions')",
-        as: "group"
-      }
+      { calculate: "datum.areanm === Region ? 'Selected Region' : (datum.areanm === 'England' ? 'England Average' : 'Other Regions')", as: "group" }
     ],
 
     layer: [
-      {
-        data: { values: [{ start: "2020-03-01", end: "2021-06-01" }] },
-        mark: { type: "rect", color: "#fef3c7", opacity: 0.30 },
-        encoding: { x: { field: "start", type: "temporal" }, x2: { field: "end", type: "temporal" } }
-      },
-
-      { mark: { type: "rule", strokeDash: [5, 5], color: "#94a3b8", strokeWidth: 1, opacity: 0.5 }, encoding: { y: { datum: 0 } } },
-
       {
         transform: [{ filter: "datum.group === 'Other Regions'" }],
         mark: { type: "line", strokeWidth: 1.3, opacity: 0.24, interpolate: "monotone" },
@@ -613,31 +417,15 @@ console.log("LOADED project-charts v3-fixed");
           color: { value: "#94a3b8" }
         }
       },
-
       {
         transform: [{ filter: "datum.group === 'England Average'" }],
         mark: { type: "line", strokeWidth: 3.2, interpolate: "monotone" },
         encoding: { x: { field: "d", type: "temporal" }, y: { field: "inflation", type: "quantitative" }, color: { value: "#1e40af" } }
       },
-
       {
         transform: [{ filter: "datum.group === 'Selected Region'" }],
         mark: { type: "line", strokeWidth: 4.2, interpolate: "monotone" },
         encoding: { x: { field: "d", type: "temporal" }, y: { field: "inflation", type: "quantitative" }, color: { value: "#dc2626" } }
-      },
-
-      {
-        transform: [{ filter: "datum.group === 'Selected Region'" }],
-        mark: { type: "point", filled: true, size: 56, opacity: 0 },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "inflation", type: "quantitative" },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
-            { field: "areanm", type: "nominal", title: "Region" },
-            { field: "inflation", type: "quantitative", title: "Inflation (%)", format: ".2f" }
-          ]
-        }
       }
     ],
 
@@ -645,20 +433,18 @@ console.log("LOADED project-charts v3-fixed");
   };
 
   // ------------------------------------------------------------------
-  // EMBED ALL EIGHT CHARTS
+  // EMBED ALL EIGHT CHARTS (IMPORTANT FIX: embed SPECS, not DATA)
   // ------------------------------------------------------------------
   safeEmbed("#vis1", vis1);
+  safeEmbed("#vis2", vis2);
+  safeEmbed("#vis3", vis3);
+  safeEmbed("#vis4", vis4);
+  safeEmbed("#vis5", vis5);
 
-  // Your existing embeds (keep):
-  safeEmbed("#vis2", "data/vis2_food_vs_headline.json");   // if you use inline objects, keep yours
-  safeEmbed("#vis3", "data/vis3_energy_cap.json");
-  safeEmbed("#vis4", "data/vis4_fuel_weekly.json");
-  safeEmbed("#vis5", "data/vis5_rent_vs_house.json");
-
-  // Maps embed from map spec files
+  // Maps: embed spec files
   safeEmbed("#vis6", "data/vis6_rent_map_spec.json");
 
-  safeEmbed("#vis7", "data/vis7_rent_trend_regions.json");
+  safeEmbed("#vis7", vis7);
 
   safeEmbed("#vis8", "data/vis8_rent_map_spec.json");
 })();
