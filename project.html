@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project | Yolwin Pariaton</title>
+
+    <!-- Vega Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #0f172a;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(180deg, #0b1f3a, #102a4b);
+            padding: 14px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: #0b1f3a;
+        }
+
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 40px 20px;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Introduction Section */
+        .intro {
+            margin-bottom: 60px;
+        }
+
+        .intro h2 {
+            font-size: 1.8rem;
+            color: #0b1f3a;
+            margin-bottom: 15px;
+        }
+
+        .intro p {
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        /* Chart Sections */
+        .chart-section {
+            margin-bottom: 80px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 60px;
+        }
+
+        .chart-section:last-child {
+            border-bottom: none;
+        }
+
+        .chart-section h2 {
+            font-size: 1.6rem;
+            color: #0b1f3a;
+            margin-bottom: 15px;
+        }
+
+        .chart-section p {
+            color: #475569;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        /* Chart Wrapper */
+        .chart-wrapper {
+            background: #f8f9fa;
+            border: 2px solid rgba(29, 78, 216, 0.15);
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+            margin: 25px 0;
+        }
+
+        .chart-wrapper-map {
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Source & Notes */
+        .chart-source {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .chart-note {
+            font-size: 0.9rem;
+            color: #475569;
+            margin-top: 10px;
+            font-style: italic;
+            background: #fef3c7;
+            padding: 12px;
+            border-left: 3px solid #f59e0b;
+            border-radius: 4px;
+        }
+
+        .chart-source a {
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
+        .chart-source a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: #0b1f3a;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 40px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="project.html">Project</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <img src="project/living_cost.jpg" alt="UK Cost of Living Crisis">
+        <div class="hero-content">
+            <h1>UK Cost of Living Crisis</h1>
+            <p>Automated data pipeline and interactive visualisations</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Introduction -->
+        <section class="intro">
+            <h2>Aims</h2>
+            <p>
+                This project examines whether household resources kept pace with rising living costs in the UK, focusing on the inflation surge and the distribution of pressure across energy, food, transport, and housing. The aim is to connect a clear empirical question ("did pay keep up with prices?") to transparent data sources and reproducible outputs.
+            </p>
+
+            <h2>Data</h2>
+            <p>
+                Data are sourced from open UK statistics (ONS) and public administrative releases. The workflow is replicable: cleaned CSV and JSON outputs are stored in <code>/data</code>. Visualisations use the JSON outputs directly.
+            </p>
+
+            <h2>Tools & Methods</h2>
+            <p>
+                Data processing is performed in Python with automated downloads and cleaning steps. Visualisations are produced using Vega-Lite and embedded as interactive charts.
+            </p>
+
+            <h2>Conclusions</h2>
+            <p>
+                The indicators show a consistent purchasing-power squeeze during the inflation surge, with energy and housing contributing strongly to pressure on household budgets.
+            </p>
+        </section>
+
+        <!-- Chart 1 -->
+        <section class="chart-section">
+            <h2>1) Prices vs pay: CPIH and real earnings (indexed)</h2>
+            <p>
+                A core test of "cost of living" is whether pay keeps up with prices. This chart indexes CPIH and real earnings to a common baseline to show the relative path.
+            </p>
+
+            <div class="chart-wrapper">
+                <div id="vis1"></div>
+            </div>
+
+            <p class="chart-source">Source: ONS CPIH and ONS AWE real pay. File(s): data/vis1_prices_vs_pay.json.</p>
+            <p class="chart-note"><strong>Note:</strong> The y-axis is zoomed (98–114) rather than starting at zero to make differences between prices and pay visible.</p>
+        </section>
+
+        <!-- Chart 2 -->
+        <section class="chart-section">
+            <h2>2) Food inflation vs headline inflation</h2>
+            <p>Food is a high-salience component of household budgets. This chart compares food inflation with headline inflation over time.</p>
+
+            <div class="chart-wrapper">
+                <div id="vis2"></div>
+            </div>
+
+            <p class="chart-source">Source: ONS CPI food component and CPIH. File(s): data/vis2_food_vs_headline.json.</p>
+        </section>
+
+        <!-- Chart 3 -->
+        <section class="chart-section">
+            <h2>3) Energy price cap (typical annual bill)</h2>
+            <p>Energy bills were a major driver of the crisis. The energy price cap indicates typical annual costs faced by households.</p>
+
+            <div class="chart-wrapper">
+                <div id="vis3"></div>
+            </div>
+
+            <p class="chart-source">Source: Ofgem (typical annual bill). File(s): data/vis3_energy_cap.json.</p>
+        </section>
+
+        <!-- Chart 4 -->
+        <section class="chart-section">
+            <h2>4) Weekly fuel prices</h2>
+            <p>Transport costs rose sharply during the post-pandemic recovery and global energy shock. Weekly fuel prices show the timing of these peaks.</p>
+
+            <div class="chart-wrapper">
+                <div id="vis4"></div>
+            </div>
+
+            <p class="chart-source">Source: UK weekly fuel price series. File(s): data/vis4_fuel_weekly.json.</p>
+        </section>
+
+        <!-- Chart 5 -->
+        <section class="chart-section">
+            <h2>5) Rent vs house price inflation</h2>
+            <p>Housing costs are persistent and unevenly distributed. This chart compares rent inflation with house price inflation.</p>
+
+            <div class="chart-wrapper">
+                <div id="vis5"></div>
+            </div>
+
+            <p class="chart-source">Source: ONS private rents and house prices. File(s): data/vis5_rent_vs_house.json.</p>
+        </section>
+
+        <!-- Chart 6 - MAP -->
+        <section class="chart-section">
+            <h2>6) Map: Rent inflation across English regions</h2>
+            <p>The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.</p>
+
+            <div class="chart-wrapper chart-wrapper-map">
+                <div id="vis6"></div>
+            </div>
+
+            <p class="chart-source">Source: ONS regional rents. File(s): data/vis6_rent_map_regions.json.</p>
+        </section>
+
+        <!-- Chart 7 -->
+        <section class="chart-section">
+            <h2>7) Rent inflation over time (interactive)</h2>
+            <p>Use the selector to examine how rent inflation evolved across regions compared with England overall.</p>
+
+            <div class="chart-wrapper">
+                <div id="vis7"></div>
+            </div>
+
+            <p class="chart-source">Source: ONS regional rent inflation. File(s): data/vis7_rent_trend_regions.json.</p>
+        </section>
+
+        <!-- Chart 8 - MAP -->
+        <section class="chart-section">
+            <h2>8) Map: Rent inflation across UK countries</h2>
+            <p>This map compares rent inflation across the four nations of the UK.</p>
+
+            <div class="chart-wrapper chart-wrapper-map">
+                <div id="vis8"></div>
+            </div>
+
+            <p class="chart-source">Source: ONS country-level rent inflation. File(s): data/vis8_rent_map_countries.json.</p>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Contact:</strong> <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+        <p style="margin-top: 10px;">
+            <a href="https://github.com/yolwinpariaton" target="_blank">GitHub</a> | 
+            <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+            Built for the LSE Automated Data Visualisation Course<br>
+            © 2025 Yolwin Pariaton
+        </p>
+    </footer>
+
+    <!-- Vega-Lite Chart Embeddings -->
+    <script>
+        const embedOpts = { actions: false, renderer: "svg" };
+
+        // All 8 project charts
+        vegaEmbed('#vis1', 'project/vis1_prices_vs_pay.json', embedOpts);
+        vegaEmbed('#vis2', 'project/vis2_food_vs_headline.json', embedOpts);
+        vegaEmbed('#vis3', 'project/vis3_energy_cap.json', embedOpts);
+        vegaEmbed('#vis4', 'project/vis4_fuel_weekly.json', embedOpts);
+        vegaEmbed('#vis5', 'project/vis5_rent_vs_house.json', embedOpts);
+        vegaEmbed('#vis6', 'project/vis6_rent_map_regions.json', embedOpts);
+        vegaEmbed('#vis7', 'project/vis7_rent_trend_regions.json', embedOpts);
+        vegaEmbed('#vis8', 'project/vis8_rent_map_countries.json', embedOpts);
+    </script>
+
+</body>
+</html>
