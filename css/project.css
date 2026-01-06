@@ -54,6 +54,11 @@
   overflow: hidden; /* keeps rounded-corner clipping clean */
 }
 
+/* Extra bottom padding for map charts to accommodate legends */
+.chart-wrapper--map .chart-frame{
+  padding-bottom: 52px;
+}
+
 /* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
 .vega-container{
   width: 100%;
@@ -171,6 +176,12 @@
     padding: 14px 12px 18px;
     border-radius: 18px;
   }
+  
+  /* Maintain extra bottom padding for maps on mobile */
+  .chart-wrapper--map .chart-frame{
+    padding-bottom: 42px;
+  }
+  
   .task{
     margin: 36px 0;
   }
