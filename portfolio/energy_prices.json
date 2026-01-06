@@ -11,7 +11,7 @@
     "subtitleColor": "#666"
   },
   "data": {
-    "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/portfolio/levelized-cost-of-energy.csv"
+    "url": ":portfolio/levelized-cost-of-energy.csv"
   },
   "width": 600,
   "height": 400,
