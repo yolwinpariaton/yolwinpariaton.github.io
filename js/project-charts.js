@@ -312,12 +312,13 @@
   };
 
 // --------------------------------------
-// 4) Weekly fuel prices — PUBLISH-READY
-// Fixes:
-//  - Avoid label overlap (safer y-domain + adjusted annotation positions)
-//  - Ensure x-axis is visible (more bottom padding + labelOverlap)
-//  - Responsive height (height: "container" + CSS sets #vis4 height)
-//  - Does not alter other charts
+// 4) Weekly fuel prices — PUBLISH-READY (FIXED)
+// Fixes implemented:
+//  - Baseline label kept INSIDE plot (clip + safer anchor)
+//  - Peak label repositioned near peak, inside plot (clip + better coordinates)
+//  - Legend no longer transparent (legend symbolOpacity/labelOpacity forced to 1;
+//    legend owned by a non-transparent layer)
+//  - X-axis explicitly shown with title and labels (and enough bottom padding)
 // --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -333,12 +334,10 @@ const vis4 = {
 
   data: { url: "data/vis4_fuel_weekly.json" },
   width: "container",
-
-  // Responsive: Vega-Lite will fit the container height (set via CSS on #vis4)
   height: "container",
 
-  // More breathing room so x-axis never clips and nothing spills into the source text
-  padding: { top: 38, right: 14, bottom: 112, left: 62 },
+  // More bottom space so x-axis never clips; top space for legend + annotations
+  padding: { top: 42, right: 16, bottom: 130, left: 62 },
 
   transform: [
     { calculate: "toDate(datum.date)", as: "d" },
@@ -353,14 +352,14 @@ const vis4 = {
   layer: [
     // Period backgrounds
     {
-      mark: { type: "rect", color: "#dbeafe", opacity: 0.3 },
+      mark: { type: "rect", color: "#dbeafe", opacity: 0.30 },
       encoding: {
         x: { datum: "2020-03-01", type: "temporal" },
         x2: { datum: "2020-12-31", type: "temporal" }
       }
     },
     {
-      mark: { type: "rect", color: "#fef3c7", opacity: 0.4 },
+      mark: { type: "rect", color: "#fef3c7", opacity: 0.40 },
       encoding: {
         x: { datum: "2022-03-01", type: "temporal" },
         x2: { datum: "2022-08-01", type: "temporal" }
@@ -374,17 +373,18 @@ const vis4 = {
         strokeDash: [6, 4],
         color: "#64748b",
         strokeWidth: 1.8,
-        opacity: 0.65
+        opacity: 0.70
       },
       encoding: { y: { datum: 120 } }
     },
 
-    // Baseline label
+    // Baseline label (kept inside plot)
     {
       mark: {
         type: "text",
-        align: "right",
-        dx: -8,
+        clip: true,
+        align: "left",
+        dx: 6,
         dy: -10,
         fontSize: 10,
         color: "#64748b",
@@ -392,7 +392,8 @@ const vis4 = {
         text: "Pre-pandemic baseline (120p)"
       },
       encoding: {
-        x: { datum: "2025-11-30", type: "temporal" },
+        // Anchor clearly inside the time domain (left side, not outside y-axis)
+        x: { datum: "2019-04-01", type: "temporal" },
         y: { datum: 126, type: "quantitative" }
       }
     },
@@ -401,8 +402,9 @@ const vis4 = {
     {
       mark: {
         type: "text",
+        clip: true,
         align: "left",
-        dx: 5,
+        dx: 6,
         fontSize: 10.5,
         color: "#1e40af",
         fontWeight: 700,
@@ -414,13 +416,14 @@ const vis4 = {
       }
     },
 
-    // Crisis label (nudged slightly downward to avoid any top crowding)
+    // Crisis label
     {
       mark: {
         type: "text",
+        clip: true,
         align: "left",
-        dx: 5,
-        fontSize: 10,
+        dx: 6,
+        fontSize: 10.5,
         color: "#92400e",
         fontWeight: 700,
         text: "Russia-Ukraine Crisis"
@@ -431,67 +434,27 @@ const vis4 = {
       }
     },
 
-    // Peak label
+    // Peak label (repositioned near the peak, not floating at the top-left)
     {
       mark: {
         type: "text",
+        clip: true,
         align: "left",
-        dx: 12,
-        fontSize: 10,
+        dx: 10,
+        dy: -8,
+        fontSize: 10.5,
         color: "#dc2626",
         fontWeight: 700,
         text: "Peak: 191p (+60%)"
       },
       encoding: {
-        x: { datum: "2022-08-01", type: "temporal" },
-        y: { datum: 192, type: "quantitative" }
+        // Place near the peak period
+        x: { datum: "2022-06-20", type: "temporal" },
+        y: { datum: 191, type: "quantitative" }
       }
     },
 
-    // Raw weekly data (subtle) — OWNS axis + legend (defined only once)
-    {
-      mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
-      encoding: {
-        x: {
-          field: "d",
-          type: "temporal",
-          title: "Date",
-          axis: {
-            orient: "bottom",
-            format: "%Y",
-            tickCount: { interval: "year", step: 1 },
-            labelPadding: 10,
-            titlePadding: 18,
-            labelOverlap: "greedy"
-          }
-        },
-        y: {
-          field: "ppl",
-          type: "quantitative",
-          title: "Pence per litre",
-          scale: { domain: [60, 220] },
-          axis: { labelFontSize: 11, titleFontSize: 12 }
-        },
-        // Legend placed under subtitle, inside chart area
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: {
-            orient: "top",
-            direction: "horizontal",
-            title: null,
-            labelFontSize: 13,
-            symbolSize: 240,
-            symbolStrokeWidth: 3.8,
-            offset: -10,
-            padding: 0
-          }
-        }
-      }
-    },
-
-    // 5-week moving average (bold) — NO legend here
+    // Moving average (bold) — ALSO OWNS THE LEGEND (so legend isn't transparent)
     {
       transform: [
         {
@@ -503,8 +466,53 @@ const vis4 = {
       ],
       mark: { type: "line", strokeWidth: 3.8 },
       encoding: {
+        x: {
+          field: "d",
+          type: "temporal",
+          title: "Year",
+          axis: {
+            orient: "bottom",
+            format: "%Y",
+            tickCount: 7,
+            labelPadding: 10,
+            titlePadding: 18,
+            labelOverlap: "greedy"
+          }
+        },
+        y: {
+          field: "ppl_ma",
+          type: "quantitative",
+          title: "Pence per litre",
+          scale: { domain: [60, 220] },
+          axis: { labelFontSize: 11, titleFontSize: 12 }
+        },
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: {
+            orient: "top",
+            direction: "horizontal",
+            title: null,
+            labelFontSize: 13,
+            symbolSize: 240,
+            symbolStrokeWidth: 3.8,
+            // Force legend to be fully opaque (fixes your transparency issue)
+            symbolOpacity: 1,
+            labelOpacity: 1,
+            offset: -10,
+            padding: 0
+          }
+        }
+      }
+    },
+
+    // Raw weekly data (subtle, no legend/axis here)
+    {
+      mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
+      encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
-        y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre" },
+        y: { field: "ppl", type: "quantitative" },
         color: {
           field: "fuel",
           type: "nominal",
@@ -650,7 +658,7 @@ const vis4 = {
   };
 
   // --------------------------------------
-  // 6) England regional map
+  // 6) England regional map — IMPROVED LEGEND INTEGRATION
   // --------------------------------------
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -665,7 +673,9 @@ const vis4 = {
 
     width: "container",
     height: 360,
-    padding: { top: 6, bottom: 18, left: 0, right: 0 },
+    
+    // Reduced bottom padding so legend feels more connected
+    padding: { top: 6, bottom: 4, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -699,7 +709,8 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 0
+          offset: -6,
+          padding: 4
         }
       },
       tooltip: [
@@ -796,7 +807,7 @@ const vis4 = {
   };
 
   // --------------------------------------
-  // 8) UK nations map
+  // 8) UK nations map — IMPROVED LEGEND INTEGRATION
   // --------------------------------------
   const vis8 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -811,7 +822,9 @@ const vis4 = {
 
     width: "container",
     height: 380,
-    padding: { top: 6, bottom: 18, left: 0, right: 0 },
+    
+    // Reduced bottom padding so legend feels more connected
+    padding: { top: 6, bottom: 4, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -845,7 +858,8 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 0
+          offset: -6,
+          padding: 4
         }
       },
       tooltip: [
