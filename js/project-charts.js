@@ -672,56 +672,63 @@ const vis1 = {
     config: THEME
   };
 
-  // ------------------------------------------------------------------
+    // ------------------------------------------------------------------
   // 6) MAP: Rent inflation across English regions
   // ------------------------------------------------------------------
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
     width: "container",
-    height: 500, // Sufficient height for the UK/England shape
+    height: 500,
     title: {
       text: "Rent Inflation: English Regions",
       subtitle: "Annual percentage change by region",
       anchor: "start"
     },
+
     data: {
       url: UK_TOPO_URL,
-      format: { type: "topojson", feature: "rgn" } // Regions layer
+      format: { type: "topojson", feature: "rgn" }
     },
+
     transform: [
+      // Keep English regions only (GSS codes for English regions start with E12)
+      { filter: "startsWith(datum.properties.areacd, 'E12')" },
+
+      // Lookup rent inflation values by region name
       {
-        lookup: "properties.AREANM", // Matches "North West", "London", etc.
+        lookup: "properties.areanm",
         from: {
           data: { url: "data/vis6_rent_map_regions.json" },
           key: "region",
           fields: ["value"]
         }
-      }
+      },
+
+      // Ensure numeric values (prevents scale/legend issues if JSON values are strings)
+      { calculate: "toNumber(datum.value)", as: "rent_growth" }
     ],
-    projection: { 
-      type: "identity", 
-      reflectY: true 
-    },
-    mark: { 
-      type: "geoshape", 
-      stroke: "#ffffff", 
-      strokeWidth: 1 
-    },
+
+    projection: { type: "mercator" },
+
+    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
+
     encoding: {
       color: {
-        field: "value",
+        field: "rent_growth",
         type: "quantitative",
         scale: { scheme: "blues" },
         title: "Growth (%)"
       },
       tooltip: [
-        { field: "properties.AREANM", type: "nominal", title: "Region" },
-        { field: "value", type: "quantitative", title: "Rent Growth %", format: ".1f" }
+        { field: "properties.areanm", type: "nominal", title: "Region" },
+        { field: "rent_growth", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
       ]
     },
+
     config: THEME
   };
+
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -857,41 +864,41 @@ const vis1 = {
       subtitle: "Annual percentage change by country",
       anchor: "start"
     },
+
     data: {
       url: UK_TOPO_URL,
-      format: { type: "topojson", feature: "ctry" } // Countries layer
+      format: { type: "topojson", feature: "ctry" }
     },
+
     transform: [
       {
-        lookup: "properties.AREANM", // Matches "England", "Scotland", etc.
+        lookup: "properties.areanm",
         from: {
           data: { url: "data/vis8_rent_map_countries.json" },
           key: "country",
           fields: ["value"]
         }
-      }
+      },
+      { calculate: "toNumber(datum.value)", as: "rent_growth" }
     ],
-    projection: { 
-      type: "identity", 
-      reflectY: true 
-    },
-    mark: { 
-      type: "geoshape", 
-      stroke: "#ffffff", 
-      strokeWidth: 1 
-    },
+
+    projection: { type: "mercator" },
+
+    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
+
     encoding: {
       color: {
-        field: "value",
+        field: "rent_growth",
         type: "quantitative",
         scale: { scheme: "oranges" },
         title: "Growth (%)"
       },
       tooltip: [
-        { field: "properties.AREANM", type: "nominal", title: "Country" },
-        { field: "value", type: "quantitative", title: "Rent Growth %", format: ".1f" }
+        { field: "properties.areanm", type: "nominal", title: "Country" },
+        { field: "rent_growth", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
       ]
     },
+
     config: THEME
   };
   // Embed all eight charts
