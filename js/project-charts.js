@@ -215,7 +215,6 @@
     width: "container",
     height: 360,
 
-    // Extra bottom breathing room for rotated x labels (key fix)
     padding: { top: 6, right: 18, bottom: 28, left: 6 },
 
     layer: [
@@ -310,17 +309,11 @@
 
     config: THEME
   };
-// --------------------------------------
-// 4) Weekly fuel prices — FINAL (with professional shading + labels)
-// Adds:
-//  - Subtle shaded periods (COVID + Russia-Ukraine shock)
-//  - Clean in-chart labels (COVID, Ukraine shock, baseline, peak)
-// Keeps:
-//  - No banding artifacts (annotation layers draw once via data: {values:[{}]})
-//  - No “bubble” points
-//  - Tight frame spacing
-// --------------------------------------
-const vis4 = {
+
+  // --------------------------------------
+  // 4) Weekly fuel prices
+  // --------------------------------------
+  const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   ...FIT,
 
@@ -348,7 +341,7 @@ const vis4 = {
   ],
 
   layer: [
-    // --- Shaded periods (draw once; never repeats) ---
+    // Shaded periods (draw once)
     {
       data: { values: [{ x1: "2020-03-01", x2: "2021-03-01" }] },
       mark: { type: "rect", opacity: 0.18, color: "#dbeafe" },
@@ -370,12 +363,12 @@ const vis4 = {
       }
     },
 
-    // --- Raw weekly series (very subtle) ---
+    // Raw weekly series (subtle, no axis, no legend)
     {
       mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" },
       encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
-        y: { field: "ppl", type: "quantitative", scale: { domain: [60, 220] } },
+        y: { field: "ppl", type: "quantitative", scale: { domain: [60, 220] }, axis: null, title: null },
         color: {
           field: "fuel",
           type: "nominal",
@@ -385,7 +378,7 @@ const vis4 = {
       }
     },
 
-    // --- 5-week moving average (bold) — OWNS axis + legend ---
+    // Moving average (bold) — OWNS axis + legend (only once)
     {
       transform: [
         {
@@ -404,7 +397,7 @@ const vis4 = {
           axis: {
             orient: "bottom",
             format: "%Y",
-            tickCount: 7,
+            tickCount: { interval: "year", step: 1 },  // <- IMPORTANT FIX
             labelPadding: 10,
             titlePadding: 10,
             labelOverlap: "greedy"
@@ -437,7 +430,7 @@ const vis4 = {
       }
     },
 
-    // --- Tooltips (invisible points) ---
+    // Tooltips (invisible points, no legend)
     {
       transform: [
         {
@@ -451,8 +444,13 @@ const vis4 = {
       mark: { type: "point", filled: true, size: 60, opacity: 0 },
       encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
-        y: { field: "ppl_ma", type: "quantitative" },
-        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null },
+        y: { field: "ppl_ma", type: "quantitative", axis: null, title: null },
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: null
+        },
         tooltip: [
           { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
           { field: "fuel", type: "nominal", title: "Fuel type" },
@@ -465,7 +463,6 @@ const vis4 = {
 
   config: THEME
 };
-
 
   // --------------------------------------
   // 5) Rent vs house price
@@ -545,7 +542,7 @@ const vis4 = {
   };
 
   // --------------------------------------
-  // 6) England regional map — LARGER & CENTERED
+  // 6) England regional map — FINAL PERFECTED
   // --------------------------------------
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -561,7 +558,6 @@ const vis4 = {
     width: "container",
     height: 500,
     
-    // Even more bottom padding to push legend to the very bottom
     padding: { top: 6, bottom: 40, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
@@ -608,6 +604,7 @@ const vis4 = {
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
+
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -693,7 +690,7 @@ const vis4 = {
   };
 
   // --------------------------------------
-  // 8) UK nations map — LARGER & CENTERED
+  // 8) UK nations map — FINAL PERFECTED
   // --------------------------------------
   const vis8 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -709,7 +706,6 @@ const vis4 = {
     width: "container",
     height: 520,
     
-    // More bottom padding to push legend lower
     padding: { top: 6, bottom: 32, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
