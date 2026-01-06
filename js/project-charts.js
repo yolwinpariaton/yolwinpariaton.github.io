@@ -335,7 +335,6 @@ const vis4 = {
   data: { url: "data/vis4_fuel_weekly.json" },
   width: "container",
   height: "container",
-
   padding: { top: 44, right: 16, bottom: 54, left: 62 },
 
   transform: [
@@ -348,161 +347,35 @@ const vis4 = {
     }
   ],
 
-  // Keep axis stable
-  encoding: {
-    x: {
-      field: "d",
-      type: "temporal",
-      title: "Year",
-      axis: {
-        orient: "bottom",
-        format: "%Y",
-        tickCount: 7,
-        labelPadding: 10,
-        titlePadding: 10,
-        labelOverlap: "greedy"
-      }
-    },
-    y: {
-      field: "ppl",
-      type: "quantitative",
-      title: "Pence per litre",
-      scale: { domain: [60, 220] },
-      axis: { labelFontSize: 11, titleFontSize: 12 }
-    }
-  },
-
   layer: [
-    // ----------------------------
-    // Professional shaded periods
-    // ----------------------------
-
-    // COVID period shading (draw ONCE)
+    // --- Shaded periods (draw once; never repeats) ---
     {
-      data: { values: [{}] },
-      mark: { type: "rect", opacity: 0.22 },
+      data: { values: [{ x1: "2020-03-01", x2: "2021-03-01" }] },
+      mark: { type: "rect", opacity: 0.18, color: "#dbeafe" },
       encoding: {
-        x: { datum: "2020-03-01" },
-        x2: { datum: "2021-03-01" },
+        x: { field: "x1", type: "temporal" },
+        x2: { field: "x2" },
         y: { datum: 60 },
-        y2: { datum: 220 },
-        color: { value: "#dbeafe" }
+        y2: { datum: 220 }
       }
     },
-
-    // Russia-Ukraine shock shading (draw ONCE)
     {
-      data: { values: [{}] },
-      mark: { type: "rect", opacity: 0.22 },
+      data: { values: [{ x1: "2022-02-24", x2: "2022-10-01" }] },
+      mark: { type: "rect", opacity: 0.18, color: "#fef3c7" },
       encoding: {
-        x: { datum: "2022-02-24" },
-        x2: { datum: "2022-10-01" },
+        x: { field: "x1", type: "temporal" },
+        x2: { field: "x2" },
         y: { datum: 60 },
-        y2: { datum: 220 },
-        color: { value: "#fef3c7" }
+        y2: { datum: 220 }
       }
     },
 
-    // ----------------------------
-    // Reference baseline + label
-    // ----------------------------
-    {
-      data: { values: [{}] },
-      mark: { type: "rule", strokeDash: [6, 4], strokeWidth: 1.8, opacity: 0.70 },
-      encoding: {
-        y: { datum: 120 },
-        color: { value: "#64748b" }
-      }
-    },
-    {
-      data: { values: [{}] },
-      mark: {
-        type: "text",
-        clip: true,
-        align: "left",
-        dx: 8,
-        dy: -6,
-        fontSize: 10,
-        fontWeight: 600,
-        text: "Pre-pandemic baseline (120p)"
-      },
-      encoding: {
-        x: { datum: "2019-07-01" },
-        y: { datum: 136 },
-        color: { value: "#64748b" }
-      }
-    },
-
-    // ----------------------------
-    // Period labels (clean + subtle)
-    // ----------------------------
-
-    // COVID label
-    {
-      data: { values: [{}] },
-      mark: {
-        type: "text",
-        clip: true,
-        align: "left",
-        dx: 8,
-        fontSize: 10.5,
-        fontWeight: 700,
-        text: "COVID-19 disruption"
-      },
-      encoding: {
-        x: { datum: "2020-04-01" },
-        y: { datum: 76 },
-        color: { value: "#1e40af" }
-      }
-    },
-
-    // Ukraine shock label
-    {
-      data: { values: [{}] },
-      mark: {
-        type: "text",
-        clip: true,
-        align: "left",
-        dx: 8,
-        fontSize: 10.5,
-        fontWeight: 700,
-        text: "Russia–Ukraine shock"
-      },
-      encoding: {
-        x: { datum: "2022-03-15" },
-        y: { datum: 214 },
-        color: { value: "#92400e" }
-      }
-    },
-
-    // Peak label (kept near peak, not intrusive)
-    {
-      data: { values: [{}] },
-      mark: {
-        type: "text",
-        clip: true,
-        align: "left",
-        dx: 10,
-        dy: -8,
-        fontSize: 10.5,
-        fontWeight: 700,
-        text: "Peak (≈191p)"
-      },
-      encoding: {
-        x: { datum: "2022-08-05" },
-        y: { datum: 197 },
-        color: { value: "#dc2626" }
-      }
-    },
-
-    // ----------------------------
-    // Lines
-    // ----------------------------
-
-    // Raw weekly (very subtle; no legend)
+    // --- Raw weekly series (very subtle) ---
     {
       mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" },
       encoding: {
+        x: { field: "d", type: "temporal", axis: null, title: null },
+        y: { field: "ppl", type: "quantitative", scale: { domain: [60, 220] } },
         color: {
           field: "fuel",
           type: "nominal",
@@ -512,7 +385,7 @@ const vis4 = {
       }
     },
 
-    // 5-week moving average (bold) — owns legend
+    // --- 5-week moving average (bold) — OWNS axis + legend ---
     {
       transform: [
         {
@@ -524,7 +397,26 @@ const vis4 = {
       ],
       mark: { type: "line", strokeWidth: 3.8, interpolate: "monotone" },
       encoding: {
-        y: { field: "ppl_ma" },
+        x: {
+          field: "d",
+          type: "temporal",
+          title: "Year",
+          axis: {
+            orient: "bottom",
+            format: "%Y",
+            tickCount: 7,
+            labelPadding: 10,
+            titlePadding: 10,
+            labelOverlap: "greedy"
+          }
+        },
+        y: {
+          field: "ppl_ma",
+          type: "quantitative",
+          title: "Pence per litre",
+          scale: { domain: [60, 220] },
+          axis: { labelFontSize: 11, titleFontSize: 12 }
+        },
         color: {
           field: "fuel",
           type: "nominal",
@@ -545,7 +437,7 @@ const vis4 = {
       }
     },
 
-    // Tooltips (invisible points)
+    // --- Tooltips (invisible points) ---
     {
       transform: [
         {
@@ -558,13 +450,9 @@ const vis4 = {
       ],
       mark: { type: "point", filled: true, size: 60, opacity: 0 },
       encoding: {
-        y: { field: "ppl_ma" },
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: null
-        },
+        x: { field: "d", type: "temporal", axis: null, title: null },
+        y: { field: "ppl_ma", type: "quantitative" },
+        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null },
         tooltip: [
           { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
           { field: "fuel", type: "nominal", title: "Fuel type" },
@@ -577,6 +465,7 @@ const vis4 = {
 
   config: THEME
 };
+
 
   // --------------------------------------
   // 5) Rent vs house price
@@ -672,8 +561,8 @@ const vis4 = {
     width: "container",
     height: 500,
     
-    // More bottom padding to push legend further down
-    padding: { top: 6, bottom: 32, left: 0, right: 0 },
+    // Even more bottom padding to push legend to the very bottom
+    padding: { top: 6, bottom: 40, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -707,7 +596,7 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 14,
+          offset: 18,
           padding: 2
         }
       },
@@ -719,7 +608,6 @@ const vis4 = {
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
-
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -821,7 +709,8 @@ const vis4 = {
     width: "container",
     height: 520,
     
-    padding: { top: 6, bottom: 24, left: 0, right: 0 },
+    // More bottom padding to push legend lower
+    padding: { top: 6, bottom: 32, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -855,7 +744,7 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 8,
+          offset: 12,
           padding: 2
         }
       },
