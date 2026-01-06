@@ -662,8 +662,8 @@ const vis4 = {
     width: "container",
     height: 500,
     
-    // Minimal padding - legend pushed to very bottom
-    padding: { top: 6, bottom: 24, left: 0, right: 0 },
+    // More bottom padding to push legend further down
+    padding: { top: 6, bottom: 32, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -697,7 +697,7 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 8,
+          offset: 14,
           padding: 2
         }
       },
@@ -709,6 +709,7 @@ const vis4 = {
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
+
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -810,7 +811,6 @@ const vis4 = {
     width: "container",
     height: 520,
     
-    // Minimal padding - legend pushed to very bottom
     padding: { top: 6, bottom: 24, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
