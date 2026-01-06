@@ -67,8 +67,8 @@ console.log("LOADED project-charts v3-fixed");
     });
   }
 
-  // ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) - FINAL STABLE VERSION
+// ------------------------------------------------------------------
+  // 1) Prices vs Pay (Indexed) - OPTIMIZED FOR NEW CSS FRAME
   // ------------------------------------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -81,19 +81,19 @@ console.log("LOADED project-charts v3-fixed");
         "purchasing power as inflation outpaced real earnings growth."
       ],
       anchor: "start",
-      offset: 25,
-      fontSize: 20,
-      subtitleFontSize: 13,
+      offset: 30, // Increased offset to breathe with .chart-frame padding
+      fontSize: 22,
+      subtitleFontSize: 14,
       subtitleColor: "#475569",
       font: "Inter, sans-serif"
     },
 
     data: { url: "data/vis1_prices_vs_pay.json" },
     width: "container",
-    height: 400,
+    height: 520, // Increased height to match your .vega-map min-height spec
 
-    // Increased top padding to 80 to prevent legend clipping
-    padding: { top: 80, right: 30, bottom: 40, left: 30 },
+    // Padding calibrated for the new .chart-frame {padding: 45px 35px}
+    padding: { top: 80, right: 40, bottom: 40, left: 20 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -105,35 +105,35 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      // 1. Custom Legend: Prices (Fixed Pixel Position)
+      // 1. Custom Legend: Prices (Fixed Pixel Positions for stability)
       {
         data: { values: [{ label: "■ Prices (CPIH)" }] },
-        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#e11d48" },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#e11d48" },
         encoding: {
-          x: { value: 20 }, // Fixed pixels from left
-          y: { value: -45 }, // Fixed pixels above chart
+          x: { value: 0 }, 
+          y: { value: -50 },
           text: { field: "label" }
         }
       },
-      // 2. Custom Legend: Earnings (Fixed Pixel Position - No Overlap)
+      // 2. Custom Legend: Earnings
       {
         data: { values: [{ label: "■ Real Earnings" }] },
-        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#0f172a" },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#0f172a" },
         encoding: {
-          x: { value: 150 }, // 130px gap from the first label
-          y: { value: -45 },
+          x: { value: 160 }, // Fixed spacing regardless of screen width
+          y: { value: -50 },
           text: { field: "label" }
         }
       },
 
-      // 3. Baseline Reference Line
+      // 3. Reference Line at 100
       {
         mark: {
           type: "rule",
           strokeDash: [4, 4],
           color: "#94a3b8",
-          opacity: 0.6,
-          strokeWidth: 1
+          opacity: 0.5,
+          strokeWidth: 1.5
         },
         encoding: { y: { datum: 100 } }
       },
@@ -142,8 +142,8 @@ console.log("LOADED project-charts v3-fixed");
       {
         mark: {
           type: "area",
-          opacity: 0.12,
-          color: "#475569",
+          opacity: 0.15,
+          color: "#64748b",
           interpolate: "monotone"
         },
         encoding: {
@@ -156,7 +156,9 @@ console.log("LOADED project-charts v3-fixed");
               tickCount: 6, 
               grid: false, 
               labelFlush: true,
-              titlePadding: 15
+              titlePadding: 20,
+              titleFontSize: 13,
+              titleColor: "#1e293b"
             }
           },
           y: {
@@ -164,31 +166,31 @@ console.log("LOADED project-charts v3-fixed");
             type: "quantitative",
             title: "Index (Jan 2019 = 100)",
             scale: { zero: false, domain: [98, 116] },
-            axis: { tickCount: 5, titlePadding: 15, gridOpacity: 0.1, domain: false }
+            axis: { tickCount: 5, titlePadding: 20, gridOpacity: 0.1, domain: false }
           },
           y2: { field: "prices" }
         }
       },
 
-      // 5. Price Line
+      // 5. Price Line (Red)
       {
-        mark: { type: "line", strokeWidth: 3.5, color: "#e11d48", interpolate: "monotone" },
+        mark: { type: "line", strokeWidth: 4, color: "#e11d48", interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "prices", type: "quantitative" }
         }
       },
 
-      // 6. Earnings Line
+      // 6. Earnings Line (Black)
       {
-        mark: { type: "line", strokeWidth: 3.5, color: "#0f172a", interpolate: "monotone" },
+        mark: { type: "line", strokeWidth: 4, color: "#0f172a", interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "earnings", type: "quantitative" }
         }
       },
 
-      // 7. SINGLE Annotation for Peak Pressure
+      // 7. FIXED: Maximum Pressure Point (Only 1 instance, moved right)
       {
         transform: [
           { window: [{ op: "max", field: "gap", as: "max_gap" }] },
@@ -198,10 +200,10 @@ console.log("LOADED project-charts v3-fixed");
         ],
         mark: { 
           type: "text", 
-          dy: -20, 
-          dx: 80, // Moved far right to clear the Y-axis entirely
-          fontSize: 11, 
-          fontWeight: "600", 
+          dy: -25, 
+          dx: 90, // Significant shift to ensure it clears the Y-axis labels
+          fontSize: 12, 
+          fontWeight: "700", 
           color: "#475569",
           text: "Maximum Pressure Point"
         },
@@ -218,7 +220,7 @@ console.log("LOADED project-charts v3-fixed");
           x: { field: "d", type: "temporal" },
           y: { field: "prices", type: "quantitative" },
           tooltip: [
-            { field: "d", type: "temporal", title: "Month", format: "%B %Y" },
+            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
             { field: "prices", type: "quantitative", title: "Price Index", format: ".1f" },
             { field: "earnings", type: "quantitative", title: "Earnings Index", format: ".1f" }
           ]
@@ -542,7 +544,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
   // --------------------------------------
-// 5) Rent vs house price - ENHANCED
+// 5) Rent vs house price - ENHANCED & FIXED
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -721,7 +723,7 @@ const vis5 = {
       }
     },
 
-    // Enhanced tooltip layer
+    // Enhanced tooltip layer - FIXED FORMAT
     {
       transform: [
         {
@@ -739,8 +741,8 @@ const vis5 = {
         tooltip: [
           { field: "d", type: "temporal", title: "Month", format: "%B %Y" },
           { field: "series", type: "nominal", title: "Housing Type" },
-          { field: "v_ma", type: "quantitative", title: "Inflation Rate", format: ".2f%" },
-          { field: "v", type: "quantitative", title: "Raw Rate", format: ".2f%" }
+          { field: "v_ma", type: "quantitative", title: "Inflation Rate (%)", format: ".2f" },
+          { field: "v", type: "quantitative", title: "Raw Rate (%)", format: ".2f" }
         ]
       }
     }
@@ -748,6 +750,7 @@ const vis5 = {
 
   config: THEME
 };
+
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
