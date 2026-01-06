@@ -5,6 +5,7 @@
   "height": 500,
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
   "padding": { "left": 10, "right": 10, "top": 10, "bottom": 10 },
+
   "title": {
     "text": "Rent Inflation: English Regions",
     "subtitle": "Annual percentage change by region",
@@ -12,12 +13,16 @@
     "fontSize": 20,
     "subtitleFontSize": 12
   },
+
   "data": {
     "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/refs/heads/main/output/topo.json",
     "format": { "type": "topojson", "feature": "rgn" }
   },
+
   "transform": [
-    { "filter": "startsWith(datum.properties.areacd, 'E12')" },
+    {
+      "filter": "datum.properties.areacd != null && datum.properties.areacd.substring(0,3) === 'E12'"
+    },
     {
       "lookup": "properties.areanm",
       "from": {
@@ -28,8 +33,11 @@
     },
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "infl" }
   ],
-  "projection": { "type": "mercator", "center": [-2, 53], "scale": 2400 },
+
+  "projection": { "type": "mercator" },
+
   "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1.5 },
+
   "encoding": {
     "color": {
       "field": "infl",
@@ -45,13 +53,9 @@
     },
     "tooltip": [
       { "field": "properties.areanm", "type": "nominal", "title": "Region" },
-      {
-        "field": "infl",
-        "type": "quantitative",
-        "title": "Rent inflation (%)",
-        "format": ".1f"
-      }
+      { "field": "infl", "type": "quantitative", "title": "Rent inflation (%)", "format": ".1f" }
     ]
   },
+
   "config": { "background": "#ffffff", "view": { "stroke": null } }
 }
