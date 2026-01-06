@@ -1,6 +1,8 @@
 /* js/project-charts.js
    Eight interactive Vega-Lite charts for the UK cost of living project.
 */
+console.log("LOADED project-charts v2");
+
 (function () {
   "use strict";
 
