@@ -1,5 +1,5 @@
 /* =========================================================
-   Project page: Clean chart presentation with proper spacing
+   Project page: Professional chart presentation
    ========================================================= */
 
 .white-space {
@@ -15,7 +15,7 @@
   display: flex;
   align-items: flex-end;
 
-  background-image: url('../images/living_cost.jpg');
+  background-image: url('../images/living_cost.jpg');  /* CORRECTED: underscore not hyphen */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -63,32 +63,35 @@ footer {
    ===================== */
 
 .chart-wrapper {
-  margin: 32px 0 12px;
+  margin: 36px 0 16px;
 }
 
-/* Single clean frame with generous padding for legends */
+/* Single clean frame with EXTRA generous padding for legends/axes */
 .chart-frame {
   background: #ffffff;
   border: 2px solid rgba(203, 210, 227, 0.85);
   border-radius: 28px;
   box-shadow: 0 10px 24px rgba(11, 18, 32, 0.08);
-  padding: 32px 28px 28px 28px; /* Extra top padding for legends */
-  overflow: visible; /* Allow legends to breathe */
+  padding: 45px 35px 35px 35px; /* Much more top padding */
+  overflow: visible; /* Critical: allows legends to extend naturally */
+  position: relative;
 }
 
-/* Kill all vega-embed internal styling */
+/* Completely neutralize vega-embed's internal styling */
 .chart-frame .vega-embed,
 .chart-frame .vega-embed > div,
 .chart-frame .vega-embed details,
-.chart-frame .vega-embed summary {
+.chart-frame .vega-embed summary,
+.chart-frame .vega-embed .vega-actions {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
   margin: 0 !important;
+  outline: none !important;
 }
 
-/* Vega container fills width but maintains aspect ratio */
+/* Vega container fills available width */
 .vega-container {
   width: 100%;
   max-width: 100%;
@@ -100,6 +103,7 @@ footer {
   max-width: 100% !important;
   height: auto !important;
   display: block;
+  background: transparent !important;
 }
 
 /* Ensure transparent backgrounds throughout */
@@ -108,40 +112,42 @@ footer {
   background: transparent !important;
 }
 
-/* Hide action buttons */
-.vega-actions {
+/* Hide action buttons completely */
+.vega-actions,
+.vega-embed .vega-actions {
   display: none !important;
+  visibility: hidden !important;
 }
 
 /* =====================
    MAP-SPECIFIC STYLING
    ===================== */
 
-/* Maps get narrower, centered container */
+/* Maps get MUCH narrower, centered container */
 .chart-wrapper--map {
-  max-width: 900px; /* Narrower than regular charts */
+  max-width: 800px; /* Significantly narrower than regular charts */
   margin-left: auto;
   margin-right: auto;
 }
 
 .chart-wrapper--map .chart-frame {
-  padding: 32px 24px 85px 24px; /* Extra bottom space for horizontal legend */
+  padding: 40px 30px 95px 30px; /* Extra bottom space for horizontal legend */
 }
 
 /* Map container with controlled dimensions */
 .vega-map {
   width: 100%;
   max-width: 100%;
-  min-height: 450px;
-  max-height: 550px;
+  min-height: 400px;
+  max-height: 500px;
   overflow: visible;
 }
 
-/* Prevent maps from becoming giants */
+/* Prevent maps from becoming too large */
 .vega-map .vega-embed,
 .vega-map .vega-embed > svg,
 .vega-map .vega-embed > canvas {
-  max-height: 550px !important;
+  max-height: 500px !important;
   width: auto !important;
   margin: 0 auto;
 }
@@ -152,7 +158,7 @@ footer {
 
 .chart-source,
 .chart-note {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   font-size: 17px;
   line-height: 1.6;
   color: rgba(27, 42, 70, 0.85);
@@ -174,36 +180,36 @@ footer {
   }
 
   .chart-frame {
-    padding: 24px 18px 24px 18px;
+    padding: 32px 22px 26px 22px;
     border-radius: 22px;
-  }
-
-  .chart-wrapper--map .chart-frame {
-    padding: 24px 18px 75px 18px;
   }
 
   .chart-wrapper--map {
     max-width: 100%;
   }
 
+  .chart-wrapper--map .chart-frame {
+    padding: 32px 22px 85px 22px;
+  }
+
   .vega-map {
-    min-height: 350px;
-    max-height: 450px;
+    min-height: 340px;
+    max-height: 440px;
   }
 
   .vega-map .vega-embed,
   .vega-map .vega-embed > svg,
   .vega-map .vega-embed > canvas {
-    max-height: 450px !important;
+    max-height: 440px !important;
   }
 }
 
 @media (max-width: 480px) {
   .chart-frame {
-    padding: 20px 14px 20px 14px;
+    padding: 28px 18px 22px 18px;
   }
 
   .chart-wrapper--map .chart-frame {
-    padding: 20px 14px 70px 14px;
+    padding: 28px 18px 80px 18px;
   }
 }
