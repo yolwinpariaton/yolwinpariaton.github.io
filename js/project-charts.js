@@ -68,7 +68,7 @@ console.log("LOADED project-charts v3-fixed");
   }
 
   // ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) - ENHANCED FOR PUBLICATION
+  // 1) Prices vs Pay (Indexed) - PUBLICATION READY
   // ------------------------------------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -77,14 +77,14 @@ console.log("LOADED project-charts v3-fixed");
     title: {
       text: "The Real Wage Squeeze: Prices vs Pay",
       subtitle: [
-        "Indices (January 2019 = 100). Consumer prices (CPIH) have significantly decoupled",
-        "from real earnings growth, creating a persistent purchasing power gap."
+        "Indices (January 2019 = 100). Red = Prices (CPIH) | Black = Real Earnings.",
+        "The gap represents the significant loss in consumer purchasing power since 2022."
       ],
       anchor: "start",
       offset: 25,
       fontSize: 20,
       subtitleFontSize: 13,
-      subtitleColor: "#64748b",
+      subtitleColor: "#475569",
       font: "Inter, sans-serif"
     },
 
@@ -92,7 +92,7 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 400,
 
-    padding: { top: 20, right: 100, bottom: 20, left: 10 },
+    padding: { top: 20, right: 80, bottom: 20, left: 10 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -100,15 +100,11 @@ console.log("LOADED project-charts v3-fixed");
       { pivot: "series", value: "v", groupby: ["d"] },
       { calculate: "datum['CPIH (prices)']", as: "prices" },
       { calculate: "datum['Real earnings']", as: "earnings" },
-      // Create labels for end of lines
-      {
-        window: [{ op: "last_value", field: "prices", as: "final_prices" }, { op: "last_value", field: "earnings", as: "final_earnings" }],
-        sort: [{ field: "d", order: "ascending" }]
-      }
+      { calculate: "datum.prices - datum.earnings", as: "gap" }
     ],
 
     layer: [
-      // 1. Baseline Reference Line
+      // 1. Baseline Reference Line (2019 level)
       {
         mark: {
           type: "rule",
@@ -124,8 +120,8 @@ console.log("LOADED project-charts v3-fixed");
       {
         mark: {
           type: "area",
-          opacity: 0.15,
-          color: "#64748b",
+          opacity: 0.12,
+          color: "#475569",
           interpolate: "monotone"
         },
         encoding: {
@@ -150,8 +146,7 @@ console.log("LOADED project-charts v3-fixed");
               tickCount: 5, 
               titlePadding: 15, 
               gridOpacity: 0.1, 
-              domain: false,
-              labelExpr: "datum.value == 100 ? '100 (Base)' : datum.label"
+              domain: false
             }
           },
           y2: { field: "prices" }
@@ -160,7 +155,7 @@ console.log("LOADED project-charts v3-fixed");
 
       // 3. Price Line (CPIH)
       {
-        mark: { type: "line", strokeWidth: 3, color: "#e11d48", interpolate: "monotone" },
+        mark: { type: "line", strokeWidth: 3.5, color: "#e11d48", interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "prices", type: "quantitative" }
@@ -169,14 +164,14 @@ console.log("LOADED project-charts v3-fixed");
 
       // 4. Earnings Line
       {
-        mark: { type: "line", strokeWidth: 3, color: "#0f172a", interpolate: "monotone" },
+        mark: { type: "line", strokeWidth: 3.5, color: "#0f172a", interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "earnings", type: "quantitative" }
         }
       },
 
-      // 5. Tooltip Hit Area (Invisible points)
+      // 5. Tooltip Hit Area (Transparent points for easier hovering)
       {
         mark: { type: "point", size: 100, opacity: 0 },
         encoding: {
@@ -185,48 +180,62 @@ console.log("LOADED project-charts v3-fixed");
           tooltip: [
             { field: "d", type: "temporal", title: "Month", format: "%B %Y" },
             { field: "prices", type: "quantitative", title: "Price Index", format: ".1f" },
-            { field: "earnings", type: "quantitative", title: "Earnings Index", format: ".1f" }
+            { field: "earnings", type: "quantitative", title: "Earnings Index", format: ".1f" },
+            { field: "gap", type: "quantitative", title: "Index Point Gap", format: ".1f" }
           ]
         }
       },
 
-      // 6. Direct Labels at the end of lines
+      // 6. Direct Label: Prices
       {
-        transform: [{ filter: "datum.d == datetime(2024, 9, 1) || datum.d == datum.final_date" }], // Adjust to match your last data point
-        mark: { type: "text", align: "left", dx: 8, fontWeight: "bold", fontSize: 12 },
+        transform: [{ window: [{ op: "rank", as: "rank" }], sort: [{ field: "d", order: "descending" }] }, { filter: "datum.rank === 1" }],
+        mark: { type: "text", align: "left", dx: 10, fontWeight: "bold", fontSize: 12, color: "#e11d48" },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "prices", type: "quantitative" },
-          text: { value: "Prices (CPIH)" },
-          color: { value: "#e11d48" }
-        }
-      },
-      {
-        transform: [{ filter: "datum.d == datetime(2024, 9, 1) || datum.d == datum.final_date" }],
-        mark: { type: "text", align: "left", dx: 8, fontWeight: "bold", fontSize: 12 },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "earnings", type: "quantitative" },
-          text: { value: "Real Earnings" },
-          color: { value: "#0f172a" }
+          text: { value: "PRICES" }
         }
       },
 
-      // 7. Contextual Annotation
+      // 7. Direct Label: Pay
       {
-        data: { values: [{ d: "2023-01-01", v: 114, text: "Peak Gap" }] },
-        mark: { type: "text", dy: -15, fontStyle: "italic", fontSize: 11, color: "#64748b" },
+        transform: [{ window: [{ op: "rank", as: "rank" }], sort: [{ field: "d", order: "descending" }] }, { filter: "datum.rank === 1" }],
+        mark: { type: "text", align: "left", dx: 10, fontWeight: "bold", fontSize: 12, color: "#0f172a" },
         encoding: {
           x: { field: "d", type: "temporal" },
-          y: { field: "v", type: "quantitative" },
-          text: { field: "text" }
+          y: { field: "earnings", type: "quantitative" },
+          text: { value: "PAY" }
         }
+      },
+
+      // 8. Annotation for Peak Gap (Circa Late 2022/Early 2023)
+      {
+        transform: [
+          { window: [{ op: "max", field: "gap", as: "max_gap" }] },
+          { filter: "datum.gap === datum.max_gap" }
+        ],
+        layer: [
+          {
+            mark: { type: "text", dy: -25, fontSize: 11, fontWeight: "600", color: "#475569" },
+            encoding: {
+              x: { field: "d", type: "temporal" },
+              y: { field: "prices", type: "quantitative" },
+              text: { value: "Maximum Pressure Point" }
+            }
+          },
+          {
+            mark: { type: "point", shape: "arrow", angle: 0, size: 40, color: "#475569" },
+            encoding: {
+              x: { field: "d", type: "temporal" },
+              y: { field: "prices", type: "quantitative" }
+            }
+          }
+        ]
       }
     ],
 
     config: { ...THEME, view: { stroke: null } }
-  };
-  
+  };  
   // --------------------------------------
   // 2) Food inflation vs headline
   // --------------------------------------
