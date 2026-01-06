@@ -542,75 +542,212 @@ console.log("LOADED project-charts v3-fixed");
   };
 
   // --------------------------------------
-  // 5) Rent vs house price
-  // --------------------------------------
-  const vis5 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
+// 5) Rent vs house price - ENHANCED
+// --------------------------------------
+const vis5 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  ...FIT,
 
-    title: {
-      text: "Housing Cost Dynamics: Rents vs House Prices",
-      subtitle: "Annual inflation rates (2016–2024) | Bold lines show 5-month moving average",
-      anchor: "start",
-      offset: 14
+  title: {
+    text: "Housing Cost Dynamics: Rents vs House Prices",
+    subtitle: [
+      "Annual inflation rates (2016–2024) | Bold lines show 5-month moving average",
+      "Rents sustained elevated inflation while house prices cooled sharply in 2023"
+    ],
+    anchor: "start",
+    offset: 14
+  },
+
+  data: { url: "data/vis5_rent_vs_house.json" },
+  width: "container",
+  height: 400,
+
+  padding: { top: 60, right: 12, bottom: 22, left: 8 },
+
+  transform: [
+    { calculate: "toDate(datum.date)", as: "d" },
+    { calculate: "toNumber(datum.value)", as: "v" }
+  ],
+
+  layer: [
+    // Pandemic period shading
+    {
+      data: {
+        values: [{ start: "2020-03-01", end: "2021-06-01" }]
+      },
+      mark: { type: "rect", color: "#fef3c7", opacity: 0.25 },
+      encoding: {
+        x: { field: "start", type: "temporal" },
+        x2: { field: "end", type: "temporal" }
+      }
     },
 
-    data: { url: "data/vis5_rent_vs_house.json" },
-    width: "container",
-    height: 380,
-
-    padding: { top: 12, right: 12, bottom: 22, left: 8 },
-
-    transform: [
-      { calculate: "toDate(datum.date)", as: "d" },
-      { calculate: "toNumber(datum.value)", as: "v" }
-    ],
-
-    layer: [
-      { mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.6 }, encoding: { y: { datum: 0 } } },
-      { mark: { type: "rule", strokeDash: [3, 3], color: "#10b981", opacity: 0.35 }, encoding: { y: { datum: 2 } } },
-
-      {
-        mark: { type: "line", strokeWidth: 1.5, opacity: 0.2, interpolate: "monotone" },
-        encoding: {
-          x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 8 } },
-          y: { field: "v", type: "quantitative", title: "Annual inflation rate (%)" },
-          color: { field: "series", type: "nominal", scale: { range: ["#dc2626", "#1e40af"] }, legend: null },
-          detail: { field: "series" }
-        }
+    // Custom Legend: Private Rents (positioned top-left)
+    {
+      data: { values: [{ label: "■ Private Rents" }] },
+      mark: { 
+        type: "text", 
+        align: "left", 
+        fontWeight: "bold", 
+        fontSize: 13, 
+        color: "#dc2626" 
       },
+      encoding: {
+        x: { datum: "2016-06-01", type: "temporal" },
+        y: { value: -45 },
+        text: { field: "label" }
+      }
+    },
 
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "v", as: "v_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["series"]
-          }
-        ],
-        mark: { type: "line", strokeWidth: 4, interpolate: "monotone" },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "v_ma", type: "quantitative" },
-          color: {
-            field: "series",
-            type: "nominal",
-            scale: { range: ["#dc2626", "#1e40af"] },
-            legend: { orient: "top", direction: "horizontal", title: null, labelFontSize: 12, symbolSize: 200, symbolStrokeWidth: 4 }
-          },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
-            { field: "series", type: "nominal", title: "Series" },
-            { field: "v_ma", type: "quantitative", title: "Rate (%)", format: ".1f" }
-          ]
+    // Custom Legend: House Prices
+    {
+      data: { values: [{ label: "■ House Prices" }] },
+      mark: { 
+        type: "text", 
+        align: "left", 
+        fontWeight: "bold", 
+        fontSize: 13, 
+        color: "#1e40af" 
+      },
+      encoding: {
+        x: { datum: "2018-03-01", type: "temporal" },
+        y: { value: -45 },
+        text: { field: "label" }
+      }
+    },
+
+    // Zero baseline
+    { 
+      mark: { 
+        type: "rule", 
+        strokeDash: [4, 4], 
+        color: "#94a3b8", 
+        opacity: 0.6 
+      }, 
+      encoding: { y: { datum: 0 } } 
+    },
+
+    // 2% reference line
+    { 
+      mark: { 
+        type: "rule", 
+        strokeDash: [3, 3], 
+        color: "#10b981", 
+        opacity: 0.35 
+      }, 
+      encoding: { y: { datum: 2 } } 
+    },
+
+    // Thin background lines (raw data)
+    {
+      mark: { 
+        type: "line", 
+        strokeWidth: 1.5, 
+        opacity: 0.2, 
+        interpolate: "monotone" 
+      },
+      encoding: {
+        x: { 
+          field: "d", 
+          type: "temporal", 
+          title: "Year", 
+          axis: { format: "%Y", tickCount: 8 } 
+        },
+        y: { 
+          field: "v", 
+          type: "quantitative", 
+          title: "Annual inflation rate (%)",
+          scale: { domain: [-2, 10] }
+        },
+        color: { 
+          field: "series", 
+          type: "nominal", 
+          scale: { range: ["#dc2626", "#1e40af"] }, 
+          legend: null 
+        },
+        detail: { field: "series" }
+      }
+    },
+
+    // Bold moving average lines
+    {
+      transform: [
+        {
+          window: [{ op: "mean", field: "v", as: "v_ma" }],
+          frame: [-2, 2],
+          sort: [{ field: "d", order: "ascending" }],
+          groupby: ["series"]
+        }
+      ],
+      mark: { type: "line", strokeWidth: 4, interpolate: "monotone" },
+      encoding: {
+        x: { field: "d", type: "temporal" },
+        y: { field: "v_ma", type: "quantitative" },
+        color: {
+          field: "series",
+          type: "nominal",
+          scale: { range: ["#dc2626", "#1e40af"] },
+          legend: null
         }
       }
-    ],
+    },
 
-    config: THEME
-  };
+    // Peak rent inflation annotation
+    {
+      transform: [
+        { filter: "datum.series === 'Private rents'" },
+        {
+          window: [{ op: "mean", field: "v", as: "v_ma" }],
+          frame: [-2, 2],
+          sort: [{ field: "d", order: "ascending" }]
+        },
+        { window: [{ op: "max", field: "v_ma", as: "max_v" }] },
+        { filter: "datum.v_ma === datum.max_v" },
+        { window: [{ op: "rank", as: "r" }] },
+        { filter: "datum.r === 1" }
+      ],
+      mark: { 
+        type: "text", 
+        dy: -15, 
+        dx: 0,
+        fontSize: 11, 
+        fontWeight: "600", 
+        color: "#dc2626",
+        text: "Peak Rent Inflation"
+      },
+      encoding: {
+        x: { field: "d", type: "temporal" },
+        y: { field: "v_ma", type: "quantitative" }
+      }
+    },
 
+    // Enhanced tooltip layer
+    {
+      transform: [
+        {
+          window: [{ op: "mean", field: "v", as: "v_ma" }],
+          frame: [-2, 2],
+          sort: [{ field: "d", order: "ascending" }],
+          groupby: ["series"]
+        }
+      ],
+      mark: { type: "point", size: 100, opacity: 0 },
+      encoding: {
+        x: { field: "d", type: "temporal" },
+        y: { field: "v_ma", type: "quantitative" },
+        color: { field: "series", type: "nominal" },
+        tooltip: [
+          { field: "d", type: "temporal", title: "Month", format: "%B %Y" },
+          { field: "series", type: "nominal", title: "Housing Type" },
+          { field: "v_ma", type: "quantitative", title: "Inflation Rate", format: ".2f%" },
+          { field: "v", type: "quantitative", title: "Raw Rate", format: ".2f%" }
+        ]
+      }
+    }
+  ],
+
+  config: THEME
+};
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
