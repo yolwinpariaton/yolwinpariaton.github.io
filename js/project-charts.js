@@ -309,7 +309,7 @@
   };
 
 // --------------------------------------
-  // 4) Weekly fuel prices - PUBLICATION READY
+  // 4) Weekly fuel prices - FINAL POLISHED VERSION
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -325,7 +325,7 @@
     data: { url: "data/vis4_fuel_weekly.json" },
     width: "container",
     height: 420,
-    padding: { top: 6, right: 6, bottom: 22, left: 6 },
+    padding: { top: 6, right: 6, bottom: 28, left: 6 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -338,7 +338,7 @@
     ],
 
     layer: [
-      // ENHANCEMENT 1: Pandemic period background
+      // Period backgrounds
       {
         mark: { type: "rect", color: "#dbeafe", opacity: 0.3 },
         encoding: {
@@ -346,8 +346,6 @@
           x2: { datum: "2020-12-31", type: "temporal" }
         }
       },
-
-      // ENHANCEMENT 2: Crisis period background
       {
         mark: { type: "rect", color: "#fef3c7", opacity: 0.4 },
         encoding: {
@@ -356,18 +354,18 @@
         }
       },
 
-      // ENHANCEMENT 3: Pre-pandemic baseline reference
+      // Baseline reference
       {
         mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
         encoding: { y: { datum: 120 } }
       },
 
-      // ENHANCEMENT 4: Baseline label
+      // REPOSITIONED: Baseline label (right side, clear)
       {
         mark: { 
           type: "text", 
-          align: "left", 
-          dx: 5, 
+          align: "right", 
+          dx: -5, 
           dy: -10, 
           fontSize: 10.5, 
           color: "#64748b",
@@ -375,12 +373,12 @@
           text: "Pre-pandemic baseline (120p)"
         },
         encoding: {
-          x: { datum: "2019-02-01", type: "temporal" },
+          x: { datum: "2025-11-15", type: "temporal" },
           y: { datum: 120, type: "quantitative" }
         }
       },
 
-      // ENHANCEMENT 5: Pandemic annotation
+      // REPOSITIONED: Pandemic label (centered, lowered)
       {
         mark: { 
           type: "text", 
@@ -392,11 +390,11 @@
         },
         encoding: {
           x: { datum: "2020-07-15", type: "temporal" },
-          y: { datum: 95, type: "quantitative" }
+          y: { datum: 90, type: "quantitative" }
         }
       },
 
-      // ENHANCEMENT 6: Crisis annotation
+      // REPOSITIONED: Crisis label (centered, raised)
       {
         mark: { 
           type: "text", 
@@ -408,38 +406,58 @@
         },
         encoding: {
           x: { datum: "2022-05-15", type: "temporal" },
-          y: { datum: 200, type: "quantitative" }
+          y: { datum: 203, type: "quantitative" }
         }
       },
 
-      // ENHANCEMENT 7: Peak label
+      // REPOSITIONED: Peak label (right side of peak)
       {
         mark: { 
           type: "text", 
           align: "left",
-          dx: 8,
+          dx: 10,
           fontSize: 10.5, 
           color: "#dc2626",
           fontWeight: 700,
           text: "Peak: 191p (+60%)"
         },
         encoding: {
-          x: { datum: "2022-07-17", type: "temporal" },
-          y: { datum: 191, type: "quantitative" }
+          x: { datum: "2022-07-20", type: "temporal" },
+          y: { datum: 188, type: "quantitative" }
         }
       },
 
-      // BASE: Raw weekly data (subtle)
+      // Raw weekly data (subtle)
       {
         mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
         encoding: {
-          x: { field: "d", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
-          y: { field: "ppl", type: "quantitative", title: "Pence per litre" },
+          x: { 
+            field: "d", 
+            type: "temporal", 
+            title: "Date",
+            axis: { 
+              format: "%Y", 
+              tickCount: 7,
+              labelFontSize: 11,
+              titleFontSize: 12,
+              labelPadding: 8,
+              titlePadding: 12
+            }
+          },
+          y: { 
+            field: "ppl", 
+            type: "quantitative", 
+            title: "Pence per litre",
+            axis: {
+              labelFontSize: 11,
+              titleFontSize: 12
+            }
+          },
           color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
         }
       },
       
-      // BASE: 5-week moving average (main lines)
+      // 5-week moving average with legend
       {
         transform: [
           {
@@ -461,16 +479,17 @@
               orient: "top", 
               direction: "horizontal", 
               title: null, 
-              padding: 13,
-              symbolSize: 220,
-              labelFontSize: 12.5,
-              symbolStrokeWidth: 3.8
+              padding: 15,
+              symbolSize: 240,
+              labelFontSize: 13,
+              symbolStrokeWidth: 3.8,
+              offset: 5
             }
           }
         }
       },
 
-      // ENHANCEMENT 8: Peak period emphasis
+      // Peak period emphasis
       {
         transform: [
           {
@@ -489,7 +508,7 @@
         }
       },
       
-      // BASE: Interactive tooltips
+      // Interactive tooltips
       {
         transform: [
           {
@@ -517,7 +536,6 @@
 
     config: THEME
   };
-
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
