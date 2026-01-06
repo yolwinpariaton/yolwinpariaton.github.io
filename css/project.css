@@ -1,146 +1,154 @@
-/* =========================
-   GLOBAL / PAGE
-========================= */
+/* ===========================
+   project.css (FULL REPLACEMENT)
+   =========================== */
 
-:root{
-  --bg: #ffffff;
-  --text: #0f172a;
-  --muted: #64748b;
-  --border: #d9e1f2;
-  --card: #ffffff;
-  --shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-  --radius: 28px;
+/* Basic reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-*{ box-sizing: border-box; }
-
-html, body{
+html,
+body {
   height: 100%;
 }
 
-body{
+body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #0f172a;
+  background: #ffffff;
   line-height: 1.5;
 }
 
-/* If you previously added a dark overlay using pseudo-elements, this disables it */
+/* IMPORTANT:
+   Prevent any accidental “overlay shade” from pseudo-elements
+   (this fixes the black/grey tint issue you showed). */
 body::before,
-body::after{
+body::after,
+main::before,
+main::after,
+.container::before,
+.container::after {
   content: none !important;
 }
 
-/* Do NOT use opacity on big wrappers (this is a common cause of “grey overlays”). */
-main, header, section, .container, .content{
+/* Header (your hero area) */
+header {
+  background: #0b1a33; /* keep your dark banner */
+  color: #ffffff;
+  padding: 48px 0 32px;
+}
+
+/* Make sure header is not “shading” the rest */
+header * {
   opacity: 1 !important;
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
-.container{
-  width: min(1100px, calc(100% - 32px));
+/* Main container */
+.container {
+  width: min(1100px, 92vw);
   margin: 0 auto;
 }
 
-.section{
+/* Section spacing */
+section {
   padding: 28px 0;
 }
 
-.section h2{
+/* Headings */
+h1 {
+  font-size: clamp(2.2rem, 3.2vw, 3.6rem);
+  line-height: 1.05;
   margin: 0 0 10px 0;
-  font-size: 32px;
+  letter-spacing: -0.02em;
 }
 
-.section p{
-  margin: 0 0 16px 0;
-  color: var(--muted);
+header p {
+  margin: 0;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* =========================
-   CHART CARD / FRAME
-========================= */
-
-.chart-card{
-  background: var(--card);
-  border: 3px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 22px 22px 18px 22px;
-  margin: 18px auto 34px auto; /* IMPORTANT: prevents overlap with next topic */
+/* Content typography */
+h2 {
+  font-size: 2rem;
+  margin: 22px 0 10px;
+  letter-spacing: -0.01em;
 }
 
-/* This is the div you embed into, e.g. <div id="vis6" class="vis"></div> */
-.vis{
+h3 {
+  font-size: 1.35rem;
+  margin: 18px 0 8px;
+}
+
+p {
+  margin: 0 0 12px;
+  color: #1f2937;
+}
+
+/* ===========================
+   Chart layout
+   =========================== */
+
+.chart-block {
+  margin: 20px 0 34px;
+}
+
+/* The framed card around each Vega chart */
+.chart-frame {
+  border: 3px solid #d9def0;
+  border-radius: 36px;
+  padding: 18px 18px 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
+  overflow: hidden; /* prevents SVG from spilling */
+}
+
+/* Chart container (the div you embed into, e.g., #vis6) */
+.chart {
   width: 100%;
   display: block;
-  position: relative;
-  /* IMPORTANT: do not set fixed height here; Vega will size itself */
 }
 
-/* =========================
-   VEGA EMBED RESPONSIVE + CENTER
-========================= */
+/* Vega-Embed wrapper should fill the available width */
+.chart .vega-embed {
+  width: 100% !important;
+  max-width: 100% !important;
+}
 
-/* vega-embed wrapper */
-.vega-embed{
-  width: 100%;
+/* Ensure embedded SVG scales responsively */
+.chart .vega-embed svg {
+  width: 100% !important;
+  height: auto !important;
   display: block;
 }
 
-/* Center the actual rendered SVG/canvas */
-.vega-embed > svg,
-.vega-embed > canvas{
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
-}
-
-/* Sometimes vega-embed inserts a div wrapper; ensure it doesn't break layout */
-.vega-embed > div{
-  width: 100%;
-}
-
-/* Hide the "Open in Vega Editor" etc (you already set actions:false, but keep safe) */
-.vega-actions{
+/* Prevent legend clipping */
+.chart-frame .vega-embed .vega-actions {
   display: none !important;
 }
 
-/* IMPORTANT:
-   Do NOT clip content. If you set overflow:hidden on the chart container,
-   Vega legends can appear to “disappear” when they sit near the bottom.
-*/
-.chart-card,
-.vis,
-.vega-embed{
-  overflow: visible !important;
-}
-
-/* =========================
-   OPTIONAL: FOOTNOTES / SOURCES
-========================= */
-
-.source{
+/* Source line under charts */
+.source {
   margin-top: 10px;
-  color: var(--muted);
-  font-size: 14px;
+  font-size: 0.95rem;
+  color: #475569;
 }
 
-/* =========================
-   RESPONSIVE TWEAKS
-========================= */
+/* Make sure no section wrapper is unintentionally transparent */
+section,
+.container,
+.chart-block,
+.chart-frame {
+  opacity: 1 !important;
+}
 
-@media (max-width: 700px){
-  .chart-card{
-    padding: 18px 16px 14px 16px;
-    border-radius: 22px;
-  }
-
-  .section h2{
-    font-size: 26px;
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .chart-frame {
+    border-radius: 26px;
+    padding: 14px;
   }
 }

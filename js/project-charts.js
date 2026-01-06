@@ -893,7 +893,7 @@ const vis4 = {
     config: THEME
   };
 // --------------------------------------
-// 6) England regional map — centered + legend forced ON + smaller
+// 6) England regional map — FIXED (legend + sizing)
 // --------------------------------------
 const vis6 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -908,10 +908,10 @@ const vis6 = {
   },
 
   width: "container",
-  height: 360,
+  height: 420,
 
-  /* Enough space for legend; avoids overlap with next section */
-  padding: { top: 18, bottom: 62, left: 0, right: 0 },
+  /* Enough room for legend; avoids clipping and overlap */
+  padding: { top: 10, bottom: 70, left: 0, right: 0 },
 
   data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -927,8 +927,8 @@ const vis6 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  /* Slightly smaller scale so it doesn’t dominate */
-  projection: { type: "mercator", center: [-2.6, 53.5], scale: 2000 },
+  /* Slightly smaller scale so map is not oversized */
+  projection: { type: "mercator", center: [-2.6, 53.5], scale: 2050 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -945,7 +945,7 @@ const vis6 = {
       legend: {
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 420,
+        gradientLength: 360,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
@@ -959,13 +959,9 @@ const vis6 = {
     ]
   },
 
-  /* FORCE legends ON to defeat the global disable conflict */
-  config: {
-    ...THEME,
-    axis: { ...THEME.axis, grid: false },
-    legend: { disable: false }
-  }
+  config: { ...THEME, axis: { ...THEME.axis, grid: false } }
 };
+
 
 
 // --------------------------------------
@@ -1298,7 +1294,7 @@ const vis6 = {
   };
 
 // --------------------------------------
-// 8) UK nations map — centered + legend forced ON + smaller
+// 8) UK nations map — FIXED (legend + sizing)
 // --------------------------------------
 const vis8 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1312,10 +1308,10 @@ const vis8 = {
   },
 
   width: "container",
-  height: 380,
+  height: 440,
 
-  /* Enough room for the legend */
-  padding: { top: 18, bottom: 62, left: 0, right: 0 },
+  /* Enough room for legend; avoids clipping and overlap */
+  padding: { top: 10, bottom: 70, left: 0, right: 0 },
 
   data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -1331,7 +1327,7 @@ const vis8 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  /* Slightly smaller scale than before */
+  /* Slightly smaller scale so it fits nicely and is not “too huge” */
   projection: { type: "mercator", center: [-3.2, 55.2], scale: 1200 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
@@ -1349,7 +1345,7 @@ const vis8 = {
       legend: {
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 420,
+        gradientLength: 360,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
@@ -1363,13 +1359,9 @@ const vis8 = {
     ]
   },
 
-  /* FORCE legends ON to defeat the global disable conflict */
-  config: {
-    ...THEME,
-    axis: { ...THEME.axis, grid: false },
-    legend: { disable: false }
-  }
+  config: { ...THEME, axis: { ...THEME.axis, grid: false } }
 };
+
 
   
   // Embed all eight charts
