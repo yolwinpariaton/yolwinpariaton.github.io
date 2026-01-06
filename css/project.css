@@ -1,28 +1,26 @@
 /* =========================================================
-   Project page fixes:
-   - Prevent overlay from covering entire page
-   - One clean chart frame (no double-frame illusion)
-   - Maps wide like other charts
+   Project page: Clean chart presentation with proper spacing
    ========================================================= */
 
 .white-space {
   background: #ffffff;
 }
 
-/* HERO: background image + proper sizing/position */
+/* =====================
+   HERO SECTION
+   ===================== */
 .hero--project {
   position: relative;
   min-height: 380px;
   display: flex;
   align-items: flex-end;
 
-  background-image: url('../images/living_cost.jpg');
+  background-image: url('../images/living-cost.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-/* This overlay must be absolute inside hero only (NOT fixed) */
 .hero__overlay {
   position: absolute;
   inset: 0;
@@ -53,7 +51,6 @@
   font-size: 20px;
 }
 
-/* Ensure no global overlay element is visually sitting above content */
 .site-header,
 main,
 footer {
@@ -61,25 +58,25 @@ footer {
   z-index: 1;
 }
 
-/* =========================
-   Chart framing
-   ========================= */
+/* =====================
+   CHART CONTAINERS
+   ===================== */
 
 .chart-wrapper {
-  margin: 18px 0 6px;
+  margin: 32px 0 12px;
 }
 
-/* Single frame only */
+/* Single clean frame with generous padding for legends */
 .chart-frame {
   background: #ffffff;
   border: 2px solid rgba(203, 210, 227, 0.85);
   border-radius: 28px;
   box-shadow: 0 10px 24px rgba(11, 18, 32, 0.08);
-  padding: 26px;
-  overflow: hidden;
+  padding: 32px 28px 28px 28px; /* Extra top padding for legends */
+  overflow: visible; /* Allow legends to breathe */
 }
 
-/* IMPORTANT: kill any nested frame styling from vega-embed */
+/* Kill all vega-embed internal styling */
 .chart-frame .vega-embed,
 .chart-frame .vega-embed > div,
 .chart-frame .vega-embed details,
@@ -91,18 +88,11 @@ footer {
   margin: 0 !important;
 }
 
-/* Vega container should fill available width */
+/* Vega container fills width but maintains aspect ratio */
 .vega-container {
   width: 100%;
   max-width: 100%;
-}
-
-/* Make Vega embed not introduce its own background/frame */
-.vega-embed,
-.vega-embed * {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  overflow: visible;
 }
 
 .vega-embed svg,
@@ -112,44 +102,71 @@ footer {
   display: block;
 }
 
-/* Hide vega action buttons if they ever appear */
+/* Ensure transparent backgrounds throughout */
+.vega-embed,
+.vega-embed * {
+  background: transparent !important;
+}
+
+/* Hide action buttons */
 .vega-actions {
   display: none !important;
 }
 
-/* =========================
-   Maps: wide like other charts, controlled height
-   ========================= */
+/* =====================
+   MAP-SPECIFIC STYLING
+   ===================== */
 
-.chart-wrapper--map .chart-frame {
-  /* same width as any other chart frame */
-  width: 100%;
+/* Maps get narrower, centered container */
+.chart-wrapper--map {
+  max-width: 900px; /* Narrower than regular charts */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* The map container itself */
+.chart-wrapper--map .chart-frame {
+  padding: 32px 24px 85px 24px; /* Extra bottom space for horizontal legend */
+}
+
+/* Map container with controlled dimensions */
 .vega-map {
   width: 100%;
   max-width: 100%;
-  max-height: 520px;
+  min-height: 450px;
+  max-height: 550px;
+  overflow: visible;
 }
 
-/* Cap internal svg/canvas height so the map doesn't become "giant" */
+/* Prevent maps from becoming giants */
 .vega-map .vega-embed,
 .vega-map .vega-embed > svg,
 .vega-map .vega-embed > canvas {
-  max-height: 520px !important;
+  max-height: 550px !important;
+  width: auto !important;
+  margin: 0 auto;
 }
 
-/* Source + notes */
+/* =====================
+   CHART METADATA
+   ===================== */
+
 .chart-source,
 .chart-note {
-  margin: 10px 0 0;
-  font-size: 18px;
-  line-height: 1.55;
-  color: rgba(27, 42, 70, 0.9);
+  margin: 12px 0 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(27, 42, 70, 0.85);
 }
 
-/* Mobile tweaks */
+.chart-note {
+  font-style: italic;
+  color: rgba(27, 42, 70, 0.7);
+}
+
+/* =====================
+   RESPONSIVE TWEAKS
+   ===================== */
+
 @media (max-width: 768px) {
   .hero__center {
     width: calc(100% - 28px);
@@ -157,14 +174,36 @@ footer {
   }
 
   .chart-frame {
-    padding: 20px;
+    padding: 24px 18px 24px 18px;
     border-radius: 22px;
   }
 
-  .vega-map,
+  .chart-wrapper--map .chart-frame {
+    padding: 24px 18px 75px 18px;
+  }
+
+  .chart-wrapper--map {
+    max-width: 100%;
+  }
+
+  .vega-map {
+    min-height: 350px;
+    max-height: 450px;
+  }
+
   .vega-map .vega-embed,
   .vega-map .vega-embed > svg,
   .vega-map .vega-embed > canvas {
-    max-height: 440px !important;
+    max-height: 450px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-frame {
+    padding: 20px 14px 20px 14px;
+  }
+
+  .chart-wrapper--map .chart-frame {
+    padding: 20px 14px 70px 14px;
   }
 }
