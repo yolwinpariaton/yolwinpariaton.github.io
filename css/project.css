@@ -1,195 +1,101 @@
-/* Project-specific styles */
+/* ================================
+   styles.css (FULL - corrected)
+   ================================ */
 
-/* Landing-style hero with background image */
-.hero--project{
-  position: relative;
-  min-height: 70vh;
-  display: grid;
-  place-items: center;
-  background: url("../images/living_cost.jpg") center/cover no-repeat;
+/* Basic reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* --- Overall page typography spacing --- */
-.task{
-  margin: 48px 0;
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
-.task h2{
-  margin: 0 0 12px 0;
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #0f172a;
+  background: #ffffff;
+  line-height: 1.4;
 }
 
-.task > p{
-  margin: 0 0 18px 0;
-  line-height: 1.6;
+/* Page layout (adjust if you already have a container system) */
+main {
+  width: min(1100px, 92vw);
+  margin: 24px auto 56px auto;
 }
 
-/* ------------------------------------------------------------------ */
-/* Chart wrapper                                                       */
-/* ------------------------------------------------------------------ */
-.chart-wrapper{
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
+/* Section spacing so charts never overlap next headings */
+section {
+  margin: 0 0 34px 0;
+}
 
-  width: 100%;
-  max-width: 980px;
-  margin: 16px auto 0 auto;
+/* Your framed chart cards */
+.chart-frame {
+  background: #ffffff;
+  border: 3px solid #d9deef;
+  border-radius: 38px;
+  padding: 26px 28px 26px 28px;
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
+  margin: 18px 0 26px 0;
+
+  /* CRITICAL: do not clip Vega content (legends can be near edges) */
   overflow: visible;
 }
 
-/* Chart "card" contains ONLY the visualization */
-.chart-frame{
-  background: #fff;
-  border: 2px solid rgba(120, 150, 210, 0.22);
-  border-radius: 22px;
-
-  /* Card padding */
-  padding: 18px 16px 22px;
-
-  box-shadow: 0 6px 16px rgba(0,0,0,0.04);
-
+/* The div where Vega gets embedded (e.g. <div id="vis6"></div>) */
+.chart-frame .vis,
+.chart-frame .chart,
+.chart-frame [id^="vis"] {
   width: 100%;
-  overflow: hidden; /* keeps rounded-corner clipping clean */
+  overflow: visible;
 }
 
-/* Map charts: keep enough space for legend INSIDE the frame */
-.chart-wrapper--map .chart-frame{
-  /* extra bottom padding so bottom legend never touches border */
-  padding-bottom: 34px;
-}
-
-/* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
-.vega-container{
-  width: 100%;
-  display: block;
-  margin: 0;
-  position: relative;
-}
-
-/* Vega-Embed wrapper must fill the target box */
-.vega-embed{
-  width: 100%;
-  max-width: 100%;
-  display: block;
-}
-
-/* Vega-Embed inserts nested divs — keep responsive */
-.vega-embed > div{
-  width: 100%;
-  max-width: 100%;
-}
-
-/* Default: let Vega control the height; keep SVG responsive */
-.vega-embed svg{
+/* Vega embed wrapper */
+.vega-embed {
   width: 100% !important;
-  height: auto !important;
-  display: block;
-}
-
-/* Keep canvases well-behaved if any chart uses canvas */
-.vega-embed canvas{
   max-width: 100% !important;
-  display: block;
+  overflow: visible !important;
 }
 
-/* ------------------------------------------------------------------ */
-/* Map-specific layout                                                  */
-/* ------------------------------------------------------------------ */
-
-/* Narrower container specifically for maps */
-.chart-wrapper--map{
-  max-width: 720px !important;   /* a bit wider than 600 so legend fits comfortably */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/*
-  IMPORTANT CHANGE:
-  Do NOT force maps into a fixed-height flex box.
-  That was the reason legends were clipped/vanishing.
-  Let Vega-Lite manage map + legend layout via its own height/padding.
-*/
-.vega-map{
-  height: auto;
-  min-height: 0;
-}
-
-/* Remove the “fill the box” behaviour for maps */
-.vega-map .vega-embed,
-.vega-map .vega-embed > div{
-  height: auto;
-  display: block;
-}
-
-/* Ensure map SVG remains responsive like other charts */
-.vega-map .vega-embed svg{
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100%;
-  max-height: none;
-  margin: 0 auto;
-}
-
-/* If a map ever renders to canvas, keep it responsive */
-.vega-map .vega-embed canvas{
+/* Ensure SVG scales nicely */
+.vega-embed svg {
   width: 100% !important;
   height: auto !important;
   display: block;
 }
 
-/* ------------------------------------------------------------------ */
-/* Chart 4 only: responsive height for Vega-Lite "height: container"   */
-/* ------------------------------------------------------------------ */
-
-#vis4{ height: 430px; }
-
-@media (max-width: 900px){
-  #vis4{ height: 410px; }
+/* If Vega outputs a canvas, keep it responsive too */
+.vega-embed canvas {
+  max-width: 100% !important;
+  height: auto !important;
 }
 
-@media (max-width: 600px){
-  #vis4{ height: 390px; }
+/* Remove Vega action menu spacing if it ever appears */
+.vega-embed .vega-actions {
+  display: none !important;
 }
 
-/* --- Source/notes typography (outside the chart card) --- */
-.chart-source{
-  margin: 12px 2px 0;
-  color: #2b2f36;
-  font-size: 0.95rem;
+/* Headings / typography (optional but safe) */
+h1, h2, h3 {
+  margin: 18px 0 10px 0;
+  line-height: 1.15;
 }
 
-.chart-note{
-  margin: 6px 2px 0;
-  color: #555;
-  font-style: italic;
-  font-size: 0.95rem;
+p {
+  margin: 10px 0;
 }
 
-/* Optional: keep the page from feeling "giant" on large screens */
-@media (min-width: 1100px){
-  .container{
-    max-width: 1040px;
-  }
-}
-
-/* Mobile tweaks */
-@media (max-width: 600px){
-  .chart-frame{
-    padding: 14px 12px 18px;
-    border-radius: 18px;
+/* Mobile adjustments */
+@media (max-width: 720px) {
+  main {
+    width: min(980px, 94vw);
   }
 
-  .chart-wrapper--map .chart-frame{
-    padding-bottom: 30px;
-  }
-
-  .task{
-    margin: 36px 0;
-  }
-
-  .chart-wrapper--map{
-    max-width: 100% !important;
+  .chart-frame {
+    border-radius: 26px;
+    padding: 18px 16px 18px 16px;
   }
 }
