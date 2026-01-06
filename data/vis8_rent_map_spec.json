@@ -49,7 +49,7 @@
     }
   ],
 
-  "projection": { "type": "identity", "reflectY": true, "fit": true },
+  "projection": { "type": "mercator" },
 
   "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 2 },
 
