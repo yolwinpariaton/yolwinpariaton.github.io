@@ -17,7 +17,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <!-- Your charts script -->
-  <script defer src="js/project-charts.js?v=2025-03-01-v4"></script>
+  <script defer src="js/project-charts.js?v=2025-03-01-v5"></script>
 </head>
 
 <body>
@@ -57,7 +57,7 @@
           <p>
             This project examines whether household resources kept pace with rising living costs in the UK, focusing on the inflation surge
             and the distribution of pressure across energy, food, transport, and housing. The aim is to connect a clear empirical question
-            (“did pay keep up with prices?”) to transparent data sources and reproducible outputs.
+            ("did pay keep up with prices?") to transparent data sources and reproducible outputs.
           </p>
 
           <h2>Data</h2>
@@ -82,7 +82,7 @@
         <section class="task">
           <h2>1) Prices vs pay: CPIH and real earnings (indexed)</h2>
           <p>
-            A core test of “cost of living” is whether pay keeps up with prices. This chart indexes CPIH and real earnings to a common baseline to show the relative path.
+            A core test of "cost of living" is whether pay keeps up with prices. This chart indexes CPIH and real earnings to a common baseline to show the relative path.
           </p>
 
           <div class="chart-wrapper">
@@ -146,12 +146,12 @@
           </div>
         </section>
 
-        <!-- 6 -->
+        <!-- 6 - MAP WITH NARROWER FRAME -->
         <section class="task">
           <h2>6) Map: Rent inflation across English regions</h2>
           <p>The crisis was not uniform across space. This choropleth highlights regional variation in rent inflation.</p>
 
-          <div class="chart-wrapper">
+          <div class="chart-wrapper chart-wrapper--map">
             <div class="chart-frame">
               <div id="vis6" class="vega-container vega-map"></div>
             </div>
@@ -172,12 +172,12 @@
           </div>
         </section>
 
-        <!-- 8 -->
+        <!-- 8 - MAP WITH NARROWER FRAME -->
         <section class="task">
           <h2>8) Map: Rent inflation across UK countries</h2>
           <p>This map compares rent inflation across the four nations of the UK.</p>
 
-          <div class="chart-wrapper">
+          <div class="chart-wrapper chart-wrapper--map">
             <div class="chart-frame">
               <div id="vis8" class="vega-container vega-map"></div>
             </div>

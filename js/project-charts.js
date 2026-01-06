@@ -34,10 +34,6 @@
     }
   };
 
-  // FIX: define LEGEND_POLICY so the file does not crash
-  // Also: do NOT set legend.disable in multiple places (causes warning).
-  const LEGEND_POLICY = { legend: { disable: false } };
-
   // Better responsive behaviour
   const FIT = { autosize: { type: "fit", contains: "padding", resize: true } };
 
@@ -319,7 +315,7 @@
 // 4) Weekly fuel prices — UPDATED FIXES
 //  - Bigger frame (height + padding)
 //  - Force x-axis to bottom
-//  - Stop “source” overlap by keeping all chart content inside padding
+//  - Stop "source" overlap by keeping all chart content inside padding
 //  - Coloured labels (legend) below subtitle, inside plotting area
 //  - Remove legend disable conflict (legend defined ONCE)
 // --------------------------------------
@@ -686,7 +682,7 @@ const vis4 = {
       ]
     },
 
-    config: { ...THEME, ...LEGEND_POLICY, axis: { ...THEME.axis, grid: false } }
+    config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
 
   // --------------------------------------
@@ -832,7 +828,7 @@ const vis4 = {
       ]
     },
 
-    config: { ...THEME, ...LEGEND_POLICY, axis: { ...THEME.axis, grid: false } }
+    config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
 
   // Embed all eight charts

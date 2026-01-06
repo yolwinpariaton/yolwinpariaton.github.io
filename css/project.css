@@ -73,6 +73,13 @@
   align-items: center;
 }
 
+/* Narrower container specifically for maps */
+.chart-wrapper--map {
+  max-width: 600px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Vega-Embed wrapper must fill the target box */
 .vega-embed{
   width: 100%;
