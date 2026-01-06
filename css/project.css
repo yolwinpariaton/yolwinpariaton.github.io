@@ -54,7 +54,6 @@
   overflow: hidden; /* keeps rounded-corner clipping clean */
 }
 
-
 /* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
 .vega-container{
   width: 100%;
@@ -95,15 +94,8 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Map-specific sizing                                                 */
+/* Map-specific sizing (responsive + centered + fills frame)           */
 /* ------------------------------------------------------------------ */
-
-/* Let Vega-Lite control the map height via the spec (height: 480/500) */
-.vega-map{
-  height: auto;
-  min-height: 0;
-  display: block;   /* NOT flex */
-}
 
 /* Narrower container specifically for maps */
 .chart-wrapper--map{
@@ -112,64 +104,37 @@
   margin-right: auto;
 }
 
-/* Remove extra card padding that was creating blank space under legend */
+/* Do NOT add extra bottom padding for maps (legend is inside SVG) */
 .chart-wrapper--map .chart-frame{
-  padding-bottom: 22px; /* match normal card bottom padding; tweak if desired */
+  padding-bottom: 22px; /* keep consistent with normal cards */
 }
 
-/* For maps, do NOT force nested wrappers to flex-center */
+/* Responsive map viewport: height scales with screen; centered */
+.vega-map{
+  width: 100%;
+  height: clamp(380px, 60vh, 560px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force Vega wrapper to fill the map viewport */
 .vega-map .vega-embed,
 .vega-map .vega-embed > div{
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
 }
 
-/* For maps, let the SVG fill width and keep natural height from Vega */
+/* Force SVG to fill available map viewport */
 .vega-map .vega-embed svg{
   width: 100% !important;
-  height: auto !important;
+  height: 100% !important;
   max-width: 100%;
-  display: block;
-}
-
-/* If a map ever renders to canvas, keep it responsive too */
-.vega-map .vega-embed canvas{
-  width: 100% !important;
-  height: auto !important;
-  display: block;
-}
-
-
-/* MAP OVERRIDE ONLY:
-   For maps inside a fixed-height box, fill the box and center.
-*/
-.vega-map .vega-embed{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.vega-map .vega-embed > div{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.vega-map .vega-embed svg{
-  width: auto !important;
-  height: 90% !important;
-  max-width: 90%;
   max-height: 100%;
   display: block;
-  margin: 0 auto;
 }
 
-/* If a map ever renders to canvas, also fill the map box */
+/* If a map ever renders to canvas, also fill the map viewport */
 .vega-map .vega-embed canvas{
   width: 100% !important;
   height: 100% !important;
@@ -211,24 +176,14 @@
   }
 }
 
-/* Mobile: reduce map height a bit so it doesn't dominate */
-  .vega-map{
-    height: auto;
-    min-height: 0;
-  }
-
-
-  /* Maintain extra bottom padding for maps on mobile */
-  .chart-wrapper--map .chart-frame{
-    padding-bottom: 28px;
+/* Mobile: reduce padding a bit */
+@media (max-width: 600px){
+  .chart-frame{
+    padding: 14px 12px 18px;
+    border-radius: 18px;
   }
 
   .task{
     margin: 36px 0;
-  }
-
-  .vega-map{
-    height: 420px;
-    min-height: 420px;
   }
 }
