@@ -2,6 +2,8 @@
    Eight interactive Vega-Lite charts for the UK cost of living project.
 */
 (function () {
+  "use strict";
+
   // Use SVG for robust responsive sizing inside framed containers
   const opts = { actions: false, renderer: "svg" };
 
@@ -24,15 +26,30 @@
       domainColor: "#cbd5e1",
       tickColor: "#cbd5e1"
     },
-    title: { fontSize: 20, subtitleFontSize: 12, color: "#0f172a", subtitleColor: "#64748b" }
+    title: {
+      fontSize: 20,
+      subtitleFontSize: 12,
+      color: "#0f172a",
+      subtitleColor: "#64748b"
+    }
   };
 
-  // A shared autosize policy to prevent “frame clashes”
-  const FIT = { autosize: { type: "fit", contains: "padding" } };
+  // FIX: define LEGEND_POLICY so the file does not crash
+  // Also: do NOT set legend.disable in multiple places (causes warning).
+  const LEGEND_POLICY = { legend: { disable: false } };
+
+  // Better responsive behaviour
+  const FIT = { autosize: { type: "fit", contains: "padding", resize: true } };
 
   function safeEmbed(selector, spec) {
     const el = document.querySelector(selector);
     if (!el) return;
+
+    if (typeof vegaEmbed !== "function") {
+      console.error("vegaEmbed is not available. Check script tags for vega/vega-lite/vega-embed.");
+      el.innerHTML = "<p>Chart failed to load: vegaEmbed not found.</p>";
+      return;
+    }
 
     vegaEmbed(selector, spec, opts).catch((err) => {
       console.error("Vega embed error for", selector, err);
@@ -137,21 +154,11 @@
         encoding: { y: { datum: 0 } }
       },
       {
-        mark: {
-          type: "line",
-          strokeWidth: 2,
-          opacity: 0.25,
-          point: { filled: true, size: 26, opacity: 0.25 }
-        },
+        mark: { type: "line", strokeWidth: 2, opacity: 0.25, point: { filled: true, size: 26, opacity: 0.25 } },
         encoding: {
           x: { field: "d", type: "temporal", title: "Date" },
           y: { field: "v", type: "quantitative", title: "Percent" },
-          color: {
-            field: "series",
-            type: "nominal",
-            scale: { range: ["#2563eb", "#f59e0b"] },
-            legend: null
-          },
+          color: { field: "series", type: "nominal", scale: { range: ["#2563eb", "#f59e0b"] }, legend: null },
           tooltip: [
             { field: "d", type: "temporal", title: "Date" },
             { field: "series", type: "nominal", title: "Series" },
@@ -634,14 +641,9 @@
 
     width: "container",
     height: 360,
-
-    // IMPORTANT: do NOT use huge bottom padding. The CSS fix will center the SVG.
     padding: { top: 6, bottom: 18, left: 0, right: 0 },
 
-    data: {
-      url: UK_TOPO_URL,
-      format: { type: "topojson", feature: "rgn" }
-    },
+    data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
     transform: [
       {
@@ -682,7 +684,6 @@
       ]
     },
 
-    // Turn off axis gridlines for maps (cleaner)
     config: { ...THEME, ...LEGEND_POLICY, axis: { ...THEME.axis, grid: false } }
   };
 
@@ -770,7 +771,7 @@
     config: THEME
   };
 
-  // --------------------------------------
+    // --------------------------------------
   // 8) UK nations map
   // --------------------------------------
   const vis8 = {
@@ -786,13 +787,9 @@
 
     width: "container",
     height: 380,
-
     padding: { top: 6, bottom: 18, left: 0, right: 0 },
 
-    data: {
-      url: UK_TOPO_URL,
-      format: { type: "topojson", feature: "ctry" }
-    },
+    data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
     transform: [
       {
