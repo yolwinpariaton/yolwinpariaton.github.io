@@ -543,8 +543,8 @@ console.log("LOADED project-charts v3-fixed");
     config: THEME
   };
 
-  // --------------------------------------
-// 5) Rent vs house price - ENHANCED & FIXED
+// --------------------------------------
+// 5) Rent vs house price - FULLY FIXED
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -580,11 +580,12 @@ const vis5 = {
       mark: { type: "rect", color: "#fef3c7", opacity: 0.25 },
       encoding: {
         x: { field: "start", type: "temporal" },
-        x2: { field: "end", type: "temporal" }
+        x2: { field: "end", type: "temporal" },
+        y: { datum: 10 }
       }
     },
 
-    // Custom Legend: Private Rents (positioned top-left)
+    // Custom Legend: Private Rents
     {
       data: { values: [{ label: "■ Private Rents" }] },
       mark: { 
@@ -653,7 +654,7 @@ const vis5 = {
           field: "d", 
           type: "temporal", 
           title: "Year", 
-          axis: { format: "%Y", tickCount: 8 } 
+          axis: { format: "%Y", tickCount: 8 }
         },
         y: { 
           field: "v", 
@@ -664,8 +665,7 @@ const vis5 = {
         color: { 
           field: "series", 
           type: "nominal", 
-          scale: { range: ["#dc2626", "#1e40af"] }, 
-          legend: null 
+          scale: { range: ["#dc2626", "#1e40af"] }
         },
         detail: { field: "series" }
       }
@@ -688,8 +688,7 @@ const vis5 = {
         color: {
           field: "series",
           type: "nominal",
-          scale: { range: ["#dc2626", "#1e40af"] },
-          legend: null
+          scale: { range: ["#dc2626", "#1e40af"] }
         }
       }
     },
@@ -723,7 +722,7 @@ const vis5 = {
       }
     },
 
-    // Enhanced tooltip layer - FIXED FORMAT
+    // Enhanced tooltip layer
     {
       transform: [
         {
@@ -748,7 +747,10 @@ const vis5 = {
     }
   ],
 
-  config: THEME
+  config: {
+    ...THEME,
+    legend: { disable: false }
+  }
 };
 
   // --------------------------------------
