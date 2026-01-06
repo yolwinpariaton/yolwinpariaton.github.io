@@ -316,244 +316,232 @@
   };
 
   // --------------------------------------
-  // 4) Weekly fuel prices - CORRECTED VERSION
-  // --------------------------------------
-  const vis4 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
+// 4) Weekly fuel prices - CORRECTED (clean x-axis + coloured key under subtitle)
+// --------------------------------------
+const vis4 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  ...FIT,
 
-    title: {
-      text: "UK Fuel Prices: From Pandemic Crash to Energy Crisis",
-      subtitle: "Weekly pump prices (2019–2025) | Russia-Ukraine conflict drove prices 60% above pre-pandemic levels",
-      anchor: "start",
-      offset: 14
+  title: {
+    text: "UK Fuel Prices: From Pandemic Crash to Energy Crisis",
+    subtitle: "Weekly pump prices (2019–2025) | Russia-Ukraine conflict drove prices 60% above pre-pandemic levels",
+    anchor: "start",
+    offset: 14
+  },
+
+  data: { url: "data/vis4_fuel_weekly.json" },
+  width: "container",
+  height: 440,
+
+  // Space for bottom axis + keep top compact (legend sits under subtitle)
+  padding: { top: 10, right: 12, bottom: 64, left: 56 },
+
+  transform: [
+    { calculate: "toDate(datum.date)", as: "d" },
+    { fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel_raw", "ppl_raw"] },
+    { calculate: "toNumber(datum.ppl_raw)", as: "ppl" },
+    {
+      calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
+      as: "fuel"
+    }
+  ],
+
+  layer: [
+    // Period backgrounds
+    {
+      mark: { type: "rect", color: "#dbeafe", opacity: 0.3 },
+      encoding: {
+        x: { datum: "2020-03-01", type: "temporal" },
+        x2: { datum: "2020-12-31", type: "temporal" }
+      }
+    },
+    {
+      mark: { type: "rect", color: "#fef3c7", opacity: 0.4 },
+      encoding: {
+        x: { datum: "2022-03-01", type: "temporal" },
+        x2: { datum: "2022-08-01", type: "temporal" }
+      }
     },
 
-    data: { url: "data/vis4_fuel_weekly.json" },
-    width: "container",
-    height: 440,
+    // Baseline reference line
+    {
+      mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
+      encoding: { y: { datum: 120 } }
+    },
 
-    // FIX: give axes/labels space + reserve top space for coloured label under subtitle
-    padding: { top: 34, right: 12, bottom: 62, left: 56 },
-
-    transform: [
-      { calculate: "toDate(datum.date)", as: "d" },
-      { fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel_raw", "ppl_raw"] },
-      { calculate: "toNumber(datum.ppl_raw)", as: "ppl" },
-      {
-        calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
-        as: "fuel"
+    // Baseline label (slightly above the line)
+    {
+      mark: {
+        type: "text",
+        align: "right",
+        dx: -8,
+        dy: -10,
+        fontSize: 10,
+        color: "#64748b",
+        fontWeight: 600,
+        text: "Pre-pandemic baseline (120p)"
+      },
+      encoding: {
+        x: { datum: "2025-11-30", type: "temporal" },
+        y: { datum: 126, type: "quantitative" }
       }
-    ],
+    },
 
-    layer: [
-      // ----- COLOURED LABELS just under subtitle (acts as a key) -----
-      {
-        data: { values: [{ x: 90, y: -18, t: "Unleaded (petrol)" }] },
-        mark: { type: "text", fontSize: 12, fontWeight: 700, align: "left", baseline: "top", color: "#1e40af" },
-        encoding: {
-          x: { field: "x", type: "quantitative", axis: null },
-          y: { field: "y", type: "quantitative", axis: null },
-          text: { field: "t" }
-        }
+    // Pandemic label (lower)
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 5,
+        fontSize: 10.5,
+        color: "#1e40af",
+        fontWeight: 700,
+        text: "COVID-19 Pandemic"
       },
-      {
-        data: { values: [{ x: 260, y: -18, t: "Diesel" }] },
-        mark: { type: "text", fontSize: 12, fontWeight: 700, align: "left", baseline: "top", color: "#d97706" },
-        encoding: {
-          x: { field: "x", type: "quantitative", axis: null },
-          y: { field: "y", type: "quantitative", axis: null },
-          text: { field: "t" }
-        }
-      },
+      encoding: {
+        x: { datum: "2020-03-15", type: "temporal" },
+        y: { datum: 78, type: "quantitative" }
+      }
+    },
 
-      // Period backgrounds
-      {
-        mark: { type: "rect", color: "#dbeafe", opacity: 0.3 },
-        encoding: {
-          x: { datum: "2020-03-01", type: "temporal" },
-          x2: { datum: "2020-12-31", type: "temporal" }
-        }
+    // Crisis label (higher)
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 5,
+        fontSize: 10.5,
+        color: "#92400e",
+        fontWeight: 700,
+        text: "Russia-Ukraine Crisis"
       },
-      {
-        mark: { type: "rect", color: "#fef3c7", opacity: 0.4 },
-        encoding: {
-          x: { datum: "2022-03-01", type: "temporal" },
-          x2: { datum: "2022-08-01", type: "temporal" }
-        }
-      },
+      encoding: {
+        x: { datum: "2022-03-10", type: "temporal" },
+        y: { datum: 212, type: "quantitative" }
+      }
+    },
 
-      // Baseline reference line
-      {
-        mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
-        encoding: { y: { datum: 120 } }
+    // Peak label
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 12,
+        fontSize: 10,
+        color: "#dc2626",
+        fontWeight: 700,
+        text: "Peak: 191p (+60%)"
       },
+      encoding: {
+        x: { datum: "2022-08-01", type: "temporal" },
+        y: { datum: 192, type: "quantitative" }
+      }
+    },
 
-      // Baseline label (moved slightly above the line to reduce overlap)
-      {
-        mark: {
-          type: "text",
-          align: "right",
-          dx: -8,
-          dy: -10,
-          fontSize: 10,
-          color: "#64748b",
-          fontWeight: 600,
-          text: "Pre-pandemic baseline (120p)"
-        },
-        encoding: {
-          x: { datum: "2025-11-30", type: "temporal" },
-          y: { datum: 126, type: "quantitative" }
-        }
-      },
-
-      // Pandemic label (lower to avoid crossing the series)
-      {
-        mark: {
-          type: "text",
-          align: "left",
-          dx: 5,
-          fontSize: 10.5,
-          color: "#1e40af",
-          fontWeight: 700,
-          text: "COVID-19 Pandemic"
-        },
-        encoding: {
-          x: { datum: "2020-03-15", type: "temporal" },
-          y: { datum: 78, type: "quantitative" }
-        }
-      },
-
-      // Crisis label (slightly higher)
-      {
-        mark: {
-          type: "text",
-          align: "left",
-          dx: 5,
-          fontSize: 10.5,
-          color: "#92400e",
-          fontWeight: 700,
-          text: "Russia-Ukraine Crisis"
-        },
-        encoding: {
-          x: { datum: "2022-03-10", type: "temporal" },
-          y: { datum: 212, type: "quantitative" }
-        }
-      },
-
-      // Peak label (adjusted position)
-      {
-        mark: {
-          type: "text",
-          align: "left",
-          dx: 12,
-          fontSize: 10,
-          color: "#dc2626",
-          fontWeight: 700,
-          text: "Peak: 191p (+60%)"
-        },
-        encoding: {
-          x: { datum: "2022-08-01", type: "temporal" },
-          y: { datum: 192, type: "quantitative" }
-        }
-      },
-
-      // Raw weekly data (subtle)
-      {
-        mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
-        encoding: {
-          x: {
-            field: "d",
-            type: "temporal",
-            title: "Date",
-            axis: {
-              format: "%Y",
-              tickCount: 7,
-              labelFontSize: 11,
-              titleFontSize: 12,
-              labelPadding: 10,
-              titlePadding: 16,
-              labelOverlap: "greedy"
-            }
-          },
-          y: {
-            field: "ppl",
-            type: "quantitative",
-            title: "Pence per litre",
-            axis: {
-              labelFontSize: 11,
-              titleFontSize: 12
-            }
-          },
-          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
-        }
-      },
-
-      // 5-week moving average (no legend: coloured subtitle labels act as the key)
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["fuel"]
+    // Raw weekly data (subtle) — this layer OWNS the x-axis (so no duplicated axes)
+    {
+      mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
+      encoding: {
+        x: {
+          field: "d",
+          type: "temporal",
+          title: "Date",
+          axis: {
+            format: "%Y",
+            tickCount: { interval: "year", step: 1 },
+            labelPadding: 10,
+            titlePadding: 16
           }
-        ],
-        mark: { type: "line", strokeWidth: 3.8 },
-        encoding: {
-          x: { field: "d", type: "temporal", title: "Date" },
-          y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre" },
-          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
-        }
-      },
+        },
+        y: {
+          field: "ppl",
+          type: "quantitative",
+          title: "Pence per litre",
+          axis: { labelFontSize: 11, titleFontSize: 12 }
+        },
+        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
+      }
+    },
 
-      // Peak period emphasis
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["fuel"]
-          },
-          { filter: "year(datum.d) === 2022 && month(datum.d) >= 6 && month(datum.d) <= 7" }
-        ],
-        mark: { type: "point", filled: true, size: 85, stroke: "white", strokeWidth: 2.5 },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "ppl_ma", type: "quantitative" },
-          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
+    // 5-week moving average (bold) + legend (coloured key under subtitle)
+    {
+      transform: [
+        {
+          window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
+          frame: [-2, 2],
+          sort: [{ field: "d", order: "ascending" }],
+          groupby: ["fuel"]
         }
-      },
-
-      // Interactive tooltips
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["fuel"]
-          },
-          { calculate: "((datum.ppl_ma - 120) / 120) * 100", as: "change_pct" }
-        ],
-        mark: { type: "point", filled: true, size: 60, opacity: 0 },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "ppl_ma", type: "quantitative" },
-          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
-            { field: "fuel", type: "nominal", title: "Fuel type" },
-            { field: "ppl_ma", type: "quantitative", title: "Price (5-week avg)", format: ".1f" },
-            { field: "change_pct", type: "quantitative", title: "Change from 2019 (%)", format: ".1f" }
-          ]
+      ],
+      mark: { type: "line", strokeWidth: 3.8 },
+      encoding: {
+        x: { field: "d", type: "temporal", axis: null, title: null },
+        y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre" },
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: {
+            orient: "top",
+            direction: "horizontal",
+            title: null,
+            symbolSize: 240,
+            symbolStrokeWidth: 3.8,
+            labelFontSize: 13,
+            padding: 6,
+            offset: -6
+          }
         }
       }
-    ],
+    },
 
-    config: THEME
-  };
+    // Peak period emphasis
+    {
+      transform: [
+        {
+          window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
+          frame: [-2, 2],
+          sort: [{ field: "d", order: "ascending" }],
+          groupby: ["fuel"]
+        },
+        { filter: "year(datum.d) === 2022 && month(datum.d) >= 6 && month(datum.d) <= 7" }
+      ],
+      mark: { type: "point", filled: true, size: 85, stroke: "white", strokeWidth: 2.5 },
+      encoding: {
+        x: { field: "d", type: "temporal", axis: null, title: null },
+        y: { field: "ppl_ma", type: "quantitative" },
+        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
+      }
+    },
+
+    // Interactive tooltips
+    {
+      transform: [
+        {
+          window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
+          frame: [-2, 2],
+          sort: [{ field: "d", order: "ascending" }],
+          groupby: ["fuel"]
+        },
+        { calculate: "((datum.ppl_ma - 120) / 120) * 100", as: "change_pct" }
+      ],
+      mark: { type: "point", filled: true, size: 60, opacity: 0 },
+      encoding: {
+        x: { field: "d", type: "temporal", axis: null, title: null },
+        y: { field: "ppl_ma", type: "quantitative" },
+        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null },
+        tooltip: [
+          { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
+          { field: "fuel", type: "nominal", title: "Fuel type" },
+          { field: "ppl_ma", type: "quantitative", title: "Price (5-week avg)", format: ".1f" },
+          { field: "change_pct", type: "quantitative", title: "Change from 2019 (%)", format: ".1f" }
+        ]
+      }
+    }
+  ],
+
+  config: THEME
+};
 
   // --------------------------------------
   // 5) Rent vs house price

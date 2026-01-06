@@ -97,10 +97,11 @@
 }
 
 /* MAP OVERRIDE ONLY:
-   For maps inside a fixed-height box, fill the box.
+   For maps inside a fixed-height box, fill the box and center.
 */
 .vega-map .vega-embed{
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,6 +109,7 @@
 
 .vega-map .vega-embed > div{
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,8 +117,9 @@
 
 .vega-map .vega-embed svg{
   width: auto !important;
-  height: 100% !important;
-  max-width: 100%;
+  height: 90% !important;
+  max-width: 90%;
+  max-height: 100%;
   display: block;
   margin: 0 auto;
 }
