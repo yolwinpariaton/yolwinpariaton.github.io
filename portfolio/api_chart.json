@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "UK inflation (consumer prices, annual %) from the World Bank API",
+  "data": {
+    "url": "https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200",
+    "format": { "type": "json", "property": "1" }
+  },
+  "transform": [
+    { "filter": "datum.value != null" },
+    { "calculate": "toNumber(datum.date)", "as": "Year" }
+  ],
+  "mark": { "type": "line", "point": true },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "quantitative",
+      "title": "Year",
+      "scale": { "nice": true }
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Inflation, consumer prices (annual %)",
+      "scale": { "nice": true }
+    },
+    "tooltip": [
+      { "field": "Year", "type": "quantitative", "title": "Year" },
+      { "field": "value", "type": "quantitative", "title": "Inflation (annual %)" }
+    ]
+  },
+  "width": 400,
+  "height": 300,
+  "config": {
+    "axis": { "labelFontSize": 12, "titleFontSize": 13 },
+    "view": { "stroke": "transparent" }
+  }
+}

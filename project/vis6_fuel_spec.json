@@ -1,0 +1,56 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Weekly road fuel pump prices (UK)"
+  },
+  "data": {
+    "url": "data/chart6_road_fuel_prices.json"
+  },
+  "width": "container",
+  "height": 300,
+  "transform": [
+    {
+      "fold": [
+        "unleaded_ppl",
+        "diesel_ppl"
+      ],
+      "as": [
+        "fuel",
+        "pence_per_litre"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "line"
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": "Date"
+    },
+    "y": {
+      "field": "pence_per_litre",
+      "type": "quantitative",
+      "title": "Pence per litre"
+    },
+    "color": {
+      "field": "fuel",
+      "type": "nominal",
+      "title": "Fuel type"
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal"
+      },
+      {
+        "field": "fuel"
+      },
+      {
+        "field": "pence_per_litre",
+        "type": "quantitative"
+      }
+    ]
+  }
+}

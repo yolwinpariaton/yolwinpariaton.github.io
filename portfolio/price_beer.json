@@ -1,0 +1,107 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Draught bitter price over time",
+  "data": {
+    "url": "data/price_beer.csv"
+  },
+  "transform": [
+    {
+      "calculate": "toDate(datum.dateISO)",
+      "as": "date"
+    }
+  ],
+  "title": {
+    "text": "Draught Bitter Price Trends",
+    "subtitle": "Monthly price per pint (£) | 1988-1990",
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 12
+  },
+  "width": "container",
+  "height": 360,
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.15,
+        "line": false
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative",
+          "scale": {
+            "zero": false
+          }
+        },
+        "y2": {
+          "value": 0
+        },
+        "color": {
+          "value": "#3498db"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "point": {
+          "filled": true,
+          "size": 70
+        },
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "format": "%b %Y",
+            "labelAngle": -45
+          }
+        },
+        "y": {
+          "field": "price",
+          "type": "quantitative",
+          "title": "Price (£)",
+          "scale": {
+            "zero": false
+          }
+        },
+        "color": {
+          "value": "#2980b9"
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "format": "%B %Y",
+            "title": "Month"
+          },
+          {
+            "field": "price",
+            "type": "quantitative",
+            "format": ".3f",
+            "title": "Price per Pint"
+          },
+          {
+            "field": "item_name",
+            "type": "nominal",
+            "title": "Product"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

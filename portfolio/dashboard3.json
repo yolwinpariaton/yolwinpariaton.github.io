@@ -1,0 +1,122 @@
+[
+  {
+    "date": "2023",
+    "value": 3.984,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2022",
+    "value": 3.73,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2021",
+    "value": 4.826,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2020",
+    "value": 4.472,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2019",
+    "value": 3.613,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2018",
+    "value": 4.12,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2017",
+    "value": 4.452,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2016",
+    "value": 4.867,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2015",
+    "value": 5.517,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2014",
+    "value": 6.363,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2013",
+    "value": 7.704,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2012",
+    "value": 8.25,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2011",
+    "value": 8.169,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2010",
+    "value": 7.924,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2009",
+    "value": 7.627,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2008",
+    "value": 5.705,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2007",
+    "value": 5.342,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2006",
+    "value": 5.411,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2005",
+    "value": 4.835,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2004",
+    "value": 4.594,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2003",
+    "value": 4.807,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2002",
+    "value": 5.037,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2001",
+    "value": 4.696,
+    "indicator": "Unemployment Rate"
+  },
+  {
+    "date": "2000",
+    "value": 5.558,
+    "indicator": "Unemployment Rate"
+  }
+]

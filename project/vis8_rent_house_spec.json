@@ -1,0 +1,56 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Rent vs house price inflation (UK)"
+  },
+  "data": {
+    "url": "data/chart8_rent_vs_house_inflation.json"
+  },
+  "width": "container",
+  "height": 300,
+  "transform": [
+    {
+      "fold": [
+        "rent_inflation_yoy_pct",
+        "house_price_inflation_yoy_pct"
+      ],
+      "as": [
+        "series",
+        "percent"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "line"
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": "Date"
+    },
+    "y": {
+      "field": "percent",
+      "type": "quantitative",
+      "title": "Annual inflation (%)"
+    },
+    "color": {
+      "field": "series",
+      "type": "nominal",
+      "title": ""
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal"
+      },
+      {
+        "field": "series"
+      },
+      {
+        "field": "percent",
+        "type": "quantitative"
+      }
+    ]
+  }
+}

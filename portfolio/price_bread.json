@@ -1,0 +1,131 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bread rolls price indexed to base 100",
+  "data": {
+    "url": "data/price_bread.csv"
+  },
+  "transform": [
+    {
+      "calculate": "toDate(datum.dateISO)",
+      "as": "date"
+    },
+    {
+      "joinaggregate": [{
+        "op": "min",
+        "field": "price",
+        "as": "minPrice"
+      }]
+    },
+    {
+      "calculate": "(datum.price / datum.minPrice) * 100",
+      "as": "index"
+    }
+  ],
+  "title": {
+    "text": "Six Bread Rolls Price Evolution",
+    "subtitle": "Indexed price (first observation = 100)",
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 12
+  },
+  "width": "container",
+  "height": 360,
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.2,
+        "line": false
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "index",
+          "type": "quantitative"
+        },
+        "y2": {
+          "datum": 100
+        },
+        "color": {
+          "value": "#D4A574"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "point": {
+          "filled": true,
+          "size": 60
+        },
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "title": null,
+          "axis": {
+            "format": "%b %Y",
+            "labelAngle": -45
+          }
+        },
+        "y": {
+          "field": "index",
+          "type": "quantitative",
+          "title": "Price Index",
+          "scale": {
+            "zero": false
+          }
+        },
+        "color": {
+          "value": "#8B6914"
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "format": "%B %Y",
+            "title": "Month"
+          },
+          {
+            "field": "price",
+            "type": "quantitative",
+            "format": ".3f",
+            "title": "Price (£)"
+          },
+          {
+            "field": "index",
+            "type": "quantitative",
+            "format": ".2f",
+            "title": "Price Index"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [4, 4],
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "y": {
+          "datum": 100
+        },
+        "color": {
+          "value": "#7f8c8d"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

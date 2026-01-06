@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Business Density in Wales",
+    "subtitle": "Active enterprises by local authority (2024)",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12
+  },
+  "width": 300,
+  "height": 450,
+  "padding": {"top": 10, "right": 10, "bottom": 10, "left": 10},
+  "autosize": {"type": "pad", "contains": "padding"},
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/jhellingsdata/RADataHub/refs/heads/main/MappingWorkshop/geo_data/LAD_WLS_2025_05.topojson",
+    "format": {"type": "topojson", "feature": "object_name"}
+  },
+
+  "projection": {
+    "type": "mercator",
+    "center": [-4.45, 52.3],
+    "scale": 5300,
+    "translate": [150, 215]
+  },
+
+  "transform": [
+    {
+      "lookup": "properties.LAD25CD",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/wales_business.csv"
+        },
+        "key": "geo_id",
+        "fields": ["Data values", "Area"]
+      }
+    }
+  ],
+
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 0.8,
+    "clip": false
+  },
+
+  "encoding": {
+    "color": {
+      "field": "Data values",
+      "type": "quantitative",
+      "scale": {"scheme": "blues"},
+      "legend": {
+        "title": "Active Enterprises",
+        "format": ".0s",
+        "orient": "none",
+        "legendX": 12,
+        "legendY": 420,
+        "direction": "horizontal",
+        "gradientLength": 240,
+        "labelFontSize": 10,
+        "titleFontSize": 12
+      }
+    },
+    "tooltip": [
+      {"field": "Area", "title": "Local Authority"},
+      {"field": "Data values", "title": "Enterprises", "format": ","}
+    ]
+  },
+
+  "config": {
+    "view": {"stroke": "transparent"},
+    "background": "transparent"
+  }
+}

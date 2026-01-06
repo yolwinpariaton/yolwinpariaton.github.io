@@ -1,0 +1,279 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Inflation eased across a range of measures in October",
+    "fontSize": 18,
+    "font": "Arial, sans-serif",
+    "fontWeight": "normal",
+    "anchor": "start",
+    "subtitle": "Annual inflation rates %",
+    "subtitleFontSize": 13,
+    "subtitleColor": "#66605C",
+    "subtitlePadding": 10
+  },
+  "width": 640,
+  "height": 330,
+  "background": "#FFF1E5",
+  "padding": { "top": 8, "right": 30, "bottom": 20, "left": 35 },
+
+  "data": {
+    "values": [
+      { "date": "Nov 2015", "CPI": 0.1, "Goods": -1.9, "Services": 2.4, "Core": 1.2 },
+      { "date": "Dec 2015", "CPI": 0.2, "Goods": -2.1, "Services": 2.9, "Core": 1.4 },
+      { "date": "Jan 2016", "CPI": 0.3, "Goods": -1.5, "Services": 2.3, "Core": 1.2 },
+      { "date": "Feb 2016", "CPI": 0.3, "Goods": -1.6, "Services": 2.4, "Core": 1.2 },
+      { "date": "Mar 2016", "CPI": 0.5, "Goods": -1.6, "Services": 2.8, "Core": 1.5 },
+      { "date": "Apr 2016", "CPI": 0.3, "Goods": -1.6, "Services": 2.4, "Core": 1.2 },
+      { "date": "May 2016", "CPI": 0.3, "Goods": -1.8, "Services": 2.6, "Core": 1.2 },
+      { "date": "Jun 2016", "CPI": 0.5, "Goods": -1.6, "Services": 2.8, "Core": 1.4 },
+      { "date": "Jul 2016", "CPI": 0.6, "Goods": -1.4, "Services": 2.7, "Core": 1.3 },
+      { "date": "Aug 2016", "CPI": 0.6, "Goods": -1.4, "Services": 2.8, "Core": 1.3 },
+      { "date": "Sep 2016", "CPI": 1.0, "Goods": -0.5, "Services": 2.6, "Core": 1.5 },
+      { "date": "Oct 2016", "CPI": 0.9, "Goods": -0.4, "Services": 2.4, "Core": 1.2 },
+      { "date": "Nov 2016", "CPI": 1.2, "Goods": 0.2, "Services": 2.2, "Core": 1.4 },
+      { "date": "Dec 2016", "CPI": 1.6, "Goods": 0.7, "Services": 2.5, "Core": 1.6 },
+      { "date": "Jan 2017", "CPI": 1.8, "Goods": 1.1, "Services": 2.6, "Core": 1.6 },
+      { "date": "Feb 2017", "CPI": 2.3, "Goods": 1.9, "Services": 2.8, "Core": 2.0 },
+      { "date": "Mar 2017", "CPI": 2.3, "Goods": 2.5, "Services": 2.1, "Core": 1.8 },
+      { "date": "Apr 2017", "CPI": 2.7, "Goods": 2.4, "Services": 3.0, "Core": 2.4 },
+      { "date": "May 2017", "CPI": 2.9, "Goods": 2.9, "Services": 2.8, "Core": 2.6 },
+      { "date": "Jun 2017", "CPI": 2.6, "Goods": 2.6, "Services": 2.7, "Core": 2.4 },
+      { "date": "Jul 2017", "CPI": 2.6, "Goods": 2.7, "Services": 2.6, "Core": 2.4 },
+      { "date": "Aug 2017", "CPI": 2.9, "Goods": 3.1, "Services": 2.7, "Core": 2.7 },
+      { "date": "Sep 2017", "CPI": 3.0, "Goods": 3.2, "Services": 2.7, "Core": 2.7 },
+      { "date": "Oct 2017", "CPI": 3.0, "Goods": 3.3, "Services": 2.7, "Core": 2.7 },
+      { "date": "Nov 2017", "CPI": 3.1, "Goods": 3.3, "Services": 2.8, "Core": 2.7 },
+      { "date": "Dec 2017", "CPI": 3.0, "Goods": 3.4, "Services": 2.5, "Core": 2.5 },
+      { "date": "Jan 2018", "CPI": 3.0, "Goods": 3.2, "Services": 2.8, "Core": 2.7 },
+      { "date": "Feb 2018", "CPI": 2.7, "Goods": 3.0, "Services": 2.4, "Core": 2.4 },
+      { "date": "Mar 2018", "CPI": 2.5, "Goods": 2.4, "Services": 2.5, "Core": 2.3 },
+      { "date": "Apr 2018", "CPI": 2.4, "Goods": 2.6, "Services": 2.1, "Core": 2.1 },
+      { "date": "May 2018", "CPI": 2.4, "Goods": 2.5, "Services": 2.3, "Core": 2.1 },
+      { "date": "Jun 2018", "CPI": 2.4, "Goods": 2.6, "Services": 2.3, "Core": 1.9 },
+      { "date": "Jul 2018", "CPI": 2.5, "Goods": 2.6, "Services": 2.3, "Core": 1.9 },
+      { "date": "Aug 2018", "CPI": 2.7, "Goods": 2.8, "Services": 2.5, "Core": 2.1 },
+      { "date": "Sep 2018", "CPI": 2.4, "Goods": 2.5, "Services": 2.3, "Core": 1.9 },
+      { "date": "Oct 2018", "CPI": 2.4, "Goods": 2.3, "Services": 2.5, "Core": 1.9 },
+      { "date": "Nov 2018", "CPI": 2.3, "Goods": 2.1, "Services": 2.5, "Core": 1.8 },
+      { "date": "Dec 2018", "CPI": 2.1, "Goods": 1.8, "Services": 2.4, "Core": 1.9 },
+      { "date": "Jan 2019", "CPI": 1.8, "Goods": 1.3, "Services": 2.5, "Core": 1.9 },
+      { "date": "Feb 2019", "CPI": 1.9, "Goods": 1.3, "Services": 2.5, "Core": 1.8 },
+      { "date": "Mar 2019", "CPI": 1.9, "Goods": 1.3, "Services": 2.5, "Core": 1.8 },
+      { "date": "Apr 2019", "CPI": 2.1, "Goods": 1.4, "Services": 2.9, "Core": 1.8 },
+      { "date": "May 2019", "CPI": 2.0, "Goods": 1.5, "Services": 2.6, "Core": 1.7 },
+      { "date": "Jun 2019", "CPI": 2.0, "Goods": 1.5, "Services": 2.5, "Core": 1.8 },
+      { "date": "Jul 2019", "CPI": 2.1, "Goods": 1.7, "Services": 2.5, "Core": 1.9 },
+      { "date": "Aug 2019", "CPI": 1.7, "Goods": 1.3, "Services": 2.2, "Core": 1.5 },
+      { "date": "Sep 2019", "CPI": 1.7, "Goods": 1.0, "Services": 2.5, "Core": 1.7 },
+      { "date": "Oct 2019", "CPI": 1.5, "Goods": 0.5, "Services": 2.6, "Core": 1.7 },
+      { "date": "Nov 2019", "CPI": 1.5, "Goods": 0.6, "Services": 2.5, "Core": 1.7 },
+      { "date": "Dec 2019", "CPI": 1.3, "Goods": 0.6, "Services": 2.1, "Core": 1.4 },
+      { "date": "Jan 2020", "CPI": 1.8, "Goods": 1.3, "Services": 2.3, "Core": 1.6 },
+      { "date": "Feb 2020", "CPI": 1.7, "Goods": 1.0, "Services": 2.5, "Core": 1.7 },
+      { "date": "Mar 2020", "CPI": 1.5, "Goods": 0.6, "Services": 2.5, "Core": 1.6 },
+      { "date": "Apr 2020", "CPI": 0.8, "Goods": -0.4, "Services": 2.0, "Core": 1.4 },
+      { "date": "May 2020", "CPI": 0.5, "Goods": -0.9, "Services": 1.9, "Core": 1.2 },
+      { "date": "Jun 2020", "CPI": 0.6, "Goods": -0.5, "Services": 1.8, "Core": 1.4 },
+      { "date": "Jul 2020", "CPI": 1.0, "Goods": 0.0, "Services": 2.1, "Core": 1.8 },
+      { "date": "Aug 2020", "CPI": 0.2, "Goods": -0.2, "Services": 0.6, "Core": 0.9 },
+      { "date": "Sep 2020", "CPI": 0.5, "Goods": -0.3, "Services": 1.4, "Core": 1.3 },
+      { "date": "Oct 2020", "CPI": 0.7, "Goods": 0.0, "Services": 1.4, "Core": 1.5 },
+      { "date": "Nov 2020", "CPI": 0.3, "Goods": -0.8, "Services": 1.4, "Core": 1.1 },
+      { "date": "Dec 2020", "CPI": 0.6, "Goods": -0.3, "Services": 1.5, "Core": 1.4 },
+      { "date": "Jan 2021", "CPI": 0.7, "Goods": -0.2, "Services": 1.7, "Core": 1.4 },
+      { "date": "Feb 2021", "CPI": 0.4, "Goods": -0.5, "Services": 1.5, "Core": 0.9 },
+      { "date": "Mar 2021", "CPI": 0.7, "Goods": 0.0, "Services": 1.5, "Core": 1.1 },
+      { "date": "Apr 2021", "CPI": 1.5, "Goods": 1.5, "Services": 1.6, "Core": 1.3 },
+      { "date": "May 2021", "CPI": 2.1, "Goods": 2.3, "Services": 1.9, "Core": 2.0 },
+      { "date": "Jun 2021", "CPI": 2.5, "Goods": 2.8, "Services": 2.1, "Core": 2.3 },
+      { "date": "Jul 2021", "CPI": 2.0, "Goods": 2.5, "Services": 1.6, "Core": 1.8 },
+      { "date": "Aug 2021", "CPI": 3.2, "Goods": 3.3, "Services": 3.0, "Core": 3.1 },
+      { "date": "Sep 2021", "CPI": 3.1, "Goods": 3.4, "Services": 2.6, "Core": 2.9 },
+      { "date": "Oct 2021", "CPI": 4.2, "Goods": 4.9, "Services": 3.2, "Core": 3.4 },
+      { "date": "Nov 2021", "CPI": 5.1, "Goods": 6.5, "Services": 3.3, "Core": 4.0 },
+      { "date": "Dec 2021", "CPI": 5.4, "Goods": 6.9, "Services": 3.4, "Core": 4.2 },
+      { "date": "Jan 2022", "CPI": 5.5, "Goods": 7.2, "Services": 3.2, "Core": 4.4 },
+      { "date": "Feb 2022", "CPI": 6.2, "Goods": 8.3, "Services": 3.5, "Core": 5.2 },
+      { "date": "Mar 2022", "CPI": 7.0, "Goods": 9.4, "Services": 4.0, "Core": 5.7 },
+      { "date": "Apr 2022", "CPI": 9.0, "Goods": 12.4, "Services": 4.7, "Core": 6.2 },
+      { "date": "May 2022", "CPI": 9.1, "Goods": 12.4, "Services": 4.9, "Core": 5.9 },
+      { "date": "Jun 2022", "CPI": 9.4, "Goods": 12.7, "Services": 5.2, "Core": 5.8 },
+      { "date": "Jul 2022", "CPI": 10.1, "Goods": 13.5, "Services": 5.7, "Core": 6.2 },
+      { "date": "Aug 2022", "CPI": 9.9, "Goods": 12.9, "Services": 5.9, "Core": 6.3 },
+      { "date": "Sep 2022", "CPI": 10.1, "Goods": 13.2, "Services": 6.1, "Core": 6.5 },
+      { "date": "Oct 2022", "CPI": 11.1, "Goods": 14.8, "Services": 6.3, "Core": 6.5 },
+      { "date": "Nov 2022", "CPI": 10.7, "Goods": 14.0, "Services": 6.3, "Core": 6.3 },
+      { "date": "Dec 2022", "CPI": 10.5, "Goods": 13.4, "Services": 6.8, "Core": 6.3 },
+      { "date": "Jan 2023", "CPI": 10.1, "Goods": 13.3, "Services": 6.0, "Core": 5.8 },
+      { "date": "Feb 2023", "CPI": 10.4, "Goods": 13.4, "Services": 6.6, "Core": 6.2 },
+      { "date": "Mar 2023", "CPI": 10.1, "Goods": 12.8, "Services": 6.6, "Core": 6.2 },
+      { "date": "Apr 2023", "CPI": 8.7, "Goods": 10.0, "Services": 6.9, "Core": 6.8 },
+      { "date": "May 2023", "CPI": 8.7, "Goods": 9.7, "Services": 7.4, "Core": 7.1 },
+      { "date": "Jun 2023", "CPI": 7.9, "Goods": 8.5, "Services": 7.2, "Core": 6.9 },
+      { "date": "Jul 2023", "CPI": 6.8, "Goods": 6.1, "Services": 7.4, "Core": 6.9 },
+      { "date": "Aug 2023", "CPI": 6.7, "Goods": 6.3, "Services": 6.8, "Core": 6.2 },
+      { "date": "Sep 2023", "CPI": 6.7, "Goods": 6.2, "Services": 6.9, "Core": 6.1 },
+      { "date": "Oct 2023", "CPI": 4.6, "Goods": 2.9, "Services": 6.6, "Core": 5.7 },
+      { "date": "Nov 2023", "CPI": 3.9, "Goods": 2.0, "Services": 6.3, "Core": 5.1 },
+      { "date": "Dec 2023", "CPI": 4.0, "Goods": 1.9, "Services": 6.4, "Core": 5.1 },
+      { "date": "Jan 2024", "CPI": 4.0, "Goods": 1.8, "Services": 6.5, "Core": 5.1 },
+      { "date": "Feb 2024", "CPI": 3.4, "Goods": 1.1, "Services": 6.1, "Core": 4.5 },
+      { "date": "Mar 2024", "CPI": 3.2, "Goods": 0.8, "Services": 6.0, "Core": 4.2 },
+      { "date": "Apr 2024", "CPI": 2.3, "Goods": -0.8, "Services": 5.9, "Core": 3.9 },
+      { "date": "May 2024", "CPI": 2.0, "Goods": -1.3, "Services": 5.7, "Core": 3.5 },
+      { "date": "Jun 2024", "CPI": 2.0, "Goods": -1.4, "Services": 5.7, "Core": 3.5 },
+      { "date": "Jul 2024", "CPI": 2.2, "Goods": -0.6, "Services": 5.2, "Core": 3.3 },
+      { "date": "Aug 2024", "CPI": 2.2, "Goods": -0.9, "Services": 5.6, "Core": 3.6 },
+      { "date": "Sep 2024", "CPI": 1.7, "Goods": -1.4, "Services": 4.9, "Core": 3.2 },
+      { "date": "Oct 2024", "CPI": 2.3, "Goods": -0.3, "Services": 5.0, "Core": 3.3 },
+      { "date": "Nov 2024", "CPI": 2.6, "Goods": 0.4, "Services": 5.0, "Core": 3.5 },
+      { "date": "Dec 2024", "CPI": 2.5, "Goods": 0.7, "Services": 4.4, "Core": 3.2 },
+      { "date": "Jan 2025", "CPI": 3.0, "Goods": 1.0, "Services": 5.0, "Core": 3.7 },
+      { "date": "Feb 2025", "CPI": 2.8, "Goods": 0.8, "Services": 5.0, "Core": 3.5 },
+      { "date": "Mar 2025", "CPI": 2.6, "Goods": 0.6, "Services": 4.7, "Core": 3.4 },
+      { "date": "Apr 2025", "CPI": 3.5, "Goods": 1.7, "Services": 5.4, "Core": 3.8 },
+      { "date": "May 2025", "CPI": 3.4, "Goods": 2.0, "Services": 4.7, "Core": 3.5 },
+      { "date": "Jun 2025", "CPI": 3.6, "Goods": 2.4, "Services": 4.7, "Core": 3.7 },
+      { "date": "Jul 2025", "CPI": 3.8, "Goods": 2.7, "Services": 5.0, "Core": 3.8 },
+      { "date": "Aug 2025", "CPI": 3.8, "Goods": 2.8, "Services": 4.7, "Core": 3.6 },
+      { "date": "Sep 2025", "CPI": 3.8, "Goods": 2.9, "Services": 4.7, "Core": 3.5 },
+      { "date": "Oct 2025", "CPI": 3.6, "Goods": 2.6, "Services": 4.5, "Core": 3.4 },
+      { "date": "Nov 2025", "CPI": 3.2, "Goods": 2.1, "Services": 4.4, "Core": 3.2 }
+    ]
+  },
+
+  "transform": [
+    { "fold": ["CPI", "Goods", "Services", "Core"], "as": ["Indicator", "Value"] },
+    {
+      "calculate": "replace(datum.Indicator, 'Core', 'CPI excl energy, food, alcohol & tobacco')",
+      "as": "Indicator"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "strokeJoin": "round",
+        "strokeCap": "round",
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "axis": {
+            "format": "%Y",
+            "labelAngle": 0,
+            "labelFontSize": 12,
+            "labelColor": "#66605C",
+            "labelPadding": 10,
+            "tickSize": 0,
+            "domain": true,
+            "domainColor": "#E6D9CE",
+            "domainWidth": 1,
+            "grid": false,
+            "values": [
+              { "year": 2015, "month": 11 },
+              { "year": 2017 },
+              { "year": 2018 },
+              { "year": 2019 },
+              { "year": 2020 },
+              { "year": 2021 },
+              { "year": 2022 },
+              { "year": 2023 },
+              { "year": 2024 },
+              { "year": 2025 }
+            ],
+            "title": "Source: ONS",
+            "titleFontSize": 12,
+            "titleColor": "#66605C",
+            "titlePadding": 22,
+            "titleAlign": "left",
+            "titleAnchor": "start"
+          }
+        },
+        "y": {
+          "field": "Value",
+          "type": "quantitative",
+          "scale": { "domain": [-2.5, 15], "nice": false },
+          "axis": {
+            "labelFontSize": 12,
+            "labelColor": "#66605C",
+            "tickSize": 0,
+            "domain": true,
+            "domainColor": "#E6D9CE",
+            "domainWidth": 1,
+            "gridColor": "#E6D9CE",
+            "gridOpacity": 0.6,
+            "title": null,
+            "values": [0, 5, 10, 15],
+            "labelPadding": 6
+          }
+        },
+        "color": {
+          "field": "Indicator",
+          "type": "nominal",
+          "scale": {
+            "domain": ["CPI", "Goods", "Services", "CPI excl energy, food, alcohol & tobacco"],
+            "range": ["#0F5499", "#C54A78", "#5EBED6", "#70BA6E"]
+          },
+          "legend": {
+            "orient": "top",
+            "direction": "horizontal",
+            "anchor": "start",
+            "title": null,
+            "labelFont": "Arial, sans-serif",
+            "labelFontSize": 12,
+            "labelColor": "#66605C",
+            "symbolType": "stroke",
+            "symbolStrokeWidth": 3,
+            "symbolSize": 80,
+            "padding": 6
+          }
+        }
+      }
+    },
+
+    {
+      "mark": { "type": "rule", "strokeWidth": 1, "color": "#E6D9CE" },
+      "encoding": { "y": { "datum": 0 } }
+    },
+
+    {
+      "mark": { "type": "rule", "strokeWidth": 1, "strokeDash": [4, 4], "color": "#888", "opacity": 0.7 },
+      "encoding": { "y": { "datum": 2 } }
+    },
+    {
+      "mark": { "type": "text", "align": "right", "dx": -6, "dy": -6, "fontSize": 10, "color": "#888", "fontWeight": "bold" },
+      "encoding": { "x": { "datum": "Nov 2015" }, "y": { "datum": 2 }, "text": { "value": "2% Target" } }
+    },
+
+    { "mark": { "type": "point", "size": 70, "filled": true, "color": "#C54A78", "opacity": 1 }, "encoding": { "x": { "datum": "Oct 2022" }, "y": { "datum": 14.8 } } },
+    {
+      "mark": { "type": "text", "align": "left", "dx": 12, "fontSize": 14, "fontWeight": "bold", "color": "#C54A78" },
+      "encoding": { "x": { "datum": "Oct 2022" }, "y": { "datum": 14.8 }, "text": { "value": "Peak: 14.8%" } }
+    },
+
+    {
+      "data": {
+        "values": [
+          { "date": "Nov 2025", "label": "Services: 4.4%", "y": 4.8, "color": "#5EBED6" },
+          { "date": "Nov 2025", "label": "Core: 3.2%", "y": 3.7, "color": "#70BA6E" },
+          { "date": "Nov 2025", "label": "CPI: 3.2%", "y": 3.2, "color": "#0F5499" },
+          { "date": "Nov 2025", "label": "Goods: 2.1%", "y": 2.1, "color": "#C54A78" }
+        ]
+      },
+      "mark": { "type": "text", "align": "left", "dx": 14, "fontSize": 11, "fontWeight": "bold" },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "y", "type": "quantitative" },
+        "text": { "field": "label" },
+        "color": { "field": "color", "type": "nominal", "scale": null }
+      }
+    }
+  ],
+
+  "config": { "font": "Arial, sans-serif", "view": { "stroke": "transparent" } }
+}
