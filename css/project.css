@@ -53,67 +53,42 @@
   overflow: hidden; /* keeps rounded-corner clipping clean */
 }
 
-/* Vega container */
+/* Vega container (the div you embed into) */
 .vega-container{
   width: 100%;
   display: block;
   margin: 0;
 }
 
-/* Map container (the element you embed into) */
+/* Optional: give maps a stable minimum height so "fit" has room */
 .vega-map{
-  /* keep a stable map area so the frame doesn't look empty */
   min-height: 360px;
-
-  /* Center the embed output INSIDE this block */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;  /* vertical centering */
-  align-items: center;      /* horizontal centering */
 }
 
-/* Vega-Embed wrapper */
+/* Vega-Embed wrapper should fill the frame */
 .vega-embed{
   width: 100%;
   max-width: 100%;
   display: block;
 }
 
-/* Vega-Embed sometimes inserts nested divs; keep responsive */
+/* Vega-Embed sometimes inserts nested divs; force them to behave responsively */
 .vega-embed > div{
   width: 100%;
   max-width: 100%;
 }
 
-/* -------------------------------------------------------------
-   CRITICAL CHANGE:
-   Do NOT force height:auto on ALL SVGs. Vega uses explicit viewBox
-   and internal sizing. Forcing height:auto makes maps float upward.
-   ------------------------------------------------------------- */
-
-/* Default (all charts): let Vega control svg sizing */
+/* IMPORTANT FIX:
+   Do NOT force SVG height to auto. Let Vega control height.
+   Only make width responsive. */
 .vega-embed svg{
   width: 100% !important;
-  height: 100% !important;   /* was: auto */
-  display: block;
-}
-
-/* But for maps, we want the SVG to scale inside the centered box
-   without breaking Vega's intended layout. */
-.vega-map .vega-embed{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Keep map SVG responsive but not "auto-height" */
-.vega-map .vega-embed svg{
   max-width: 100% !important;
-  height: auto !important;
+  height: initial !important;   /* restore Vega's explicit height */
   display: block;
 }
 
-/* Canvas safeguard (if any chart ever uses canvas) */
+/* Keep canvases from exceeding the container (if any chart ever uses canvas) */
 .vega-embed canvas{
   max-width: 100% !important;
   display: block;
@@ -148,9 +123,5 @@
   }
   .task{
     margin: 36px 0;
-  }
-
-  .vega-map{
-    min-height: 320px;
   }
 }
