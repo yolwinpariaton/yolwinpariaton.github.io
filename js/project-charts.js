@@ -673,79 +673,68 @@ const vis1 = {
     config: THEME
   };
 
-    // ------------------------------------------------------------------
-  // 6) MAP: Rent inflation across English regions
   // ------------------------------------------------------------------
-  const vis6 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
-    width: "container",
-    height: 500,
+// 6) MAP: Rent inflation across English regions
+// ------------------------------------------------------------------
+const vis6 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  ...FIT,
+  width: "container",
+  height: 500,
 
-    title: {
-      text: "Rent Inflation: English Regions",
-      subtitle: "Annual percentage change by region",
-      anchor: "start"
-    },
+  title: {
+    text: "Rent Inflation: English Regions",
+    subtitle: "Annual percentage change by region",
+    anchor: "start"
+  },
 
-    data: {
-      url: UK_TOPO_URL,
-      format: { type: "topojson", feature: "rgn" }
-    },
+  data: {
+    url: UK_TOPO_URL,
+    format: { type: "topojson", feature: "rgn" }
+  },
 
-    transform: [
-      // Vega expressions don't support startsWith(); use substring.
-      // English regions codes: E12000001 ... E12000009
-      { filter: "substring(datum.properties.areacd, 0, 3) == 'E12'" },
-
-      // Pull multiple possible field names from your JSON (in case your key/field names differ)
-      {
-        lookup: "properties.areanm",
-        from: {
-          data: { url: "data/vis6_rent_map_regions.json" },
-          key: "region",
-          fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
-        }
-      },
-
-      // Choose the first available value and coerce to number, stripping a trailing "%" if present
-      {
-        calculate:
-          "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
-        as: "rent_growth_num"
+  // IMPORTANT: no geographic filter here (your previous filter likely removed everything)
+  transform: [
+    {
+      lookup: "properties.areanm",
+      from: {
+        data: { url: "data/vis6_rent_map_regions.json" },
+        key: "region",
+        fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
       }
-    ],
-
-    projection: { type: "mercator" },
-
-    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
-
-    encoding: {
-      // IMPORTANT: do NOT drop shapes when data is missing.
-      // Instead, show light grey for missing values so the map still appears.
-      color: {
-        condition: {
-          test: "isValid(datum.rent_growth_num)",
-          field: "rent_growth_num",
-          type: "quantitative",
-          scale: { scheme: "blues", domain: [0, 12] }
-        },
-        value: "#e5e7eb",
-        title: "Growth (%)"
-      },
-      tooltip: [
-        { field: "properties.areanm", type: "nominal", title: "Region" },
-        {
-          field: "rent_growth_num",
-          type: "quantitative",
-          title: "Rent growth (%)",
-          format: ".1f"
-        }
-      ]
     },
+    {
+      calculate:
+        "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
+      as: "rent_growth_num"
+    }
+  ],
 
-    config: THEME
-  };
+  // Identity + fit makes the (already-projected) topo render in your frame
+  projection: { type: "identity", reflectY: true, fit: true },
+
+  mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
+
+  encoding: {
+    color: {
+      condition: {
+        test: "isValid(datum.rent_growth_num)",
+        field: "rent_growth_num",
+        type: "quantitative",
+        scale: { scheme: "blues", domain: [0, 12] },
+        legend: { title: "Growth (%)" }
+      },
+      value: "#e5e7eb",
+      legend: { title: "Growth (%)" }
+    },
+    tooltip: [
+      { field: "properties.areanm", type: "nominal", title: "Region" },
+      { field: "rent_growth_num", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
+    ]
+  },
+
+  config: THEME
+};
 
   // --------------------------------------
   // 7) Interactive regional trend
@@ -869,70 +858,66 @@ const vis1 = {
     config: THEME
   };
 
-    // ------------------------------------------------------------------
-  // 8) MAP: Rent inflation across UK countries
   // ------------------------------------------------------------------
-  const vis8 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
-    width: "container",
-    height: 500,
+// 8) MAP: Rent inflation across UK countries
+// ------------------------------------------------------------------
+const vis8 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  ...FIT,
+  width: "container",
+  height: 500,
 
-    title: {
-      text: "Rent Inflation: UK Nations",
-      subtitle: "Annual percentage change by country",
-      anchor: "start"
-    },
+  title: {
+    text: "Rent Inflation: UK Nations",
+    subtitle: "Annual percentage change by country",
+    anchor: "start"
+  },
 
-    data: {
-      url: UK_TOPO_URL,
-      format: { type: "topojson", feature: "ctry" }
-    },
+  data: {
+    url: UK_TOPO_URL,
+    format: { type: "topojson", feature: "ctry" }
+  },
 
-    transform: [
-      {
-        lookup: "properties.areanm",
-        from: {
-          data: { url: "data/vis8_rent_map_countries.json" },
-          key: "country",
-          fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
-        }
-      },
-      {
-        calculate:
-          "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
-        as: "rent_growth_num"
+  transform: [
+    {
+      lookup: "properties.areanm",
+      from: {
+        data: { url: "data/vis8_rent_map_countries.json" },
+        key: "country",
+        fields: ["value", "growth", "rent_growth", "rent_growth_pct"]
       }
-    ],
-
-    projection: { type: "mercator" },
-
-    mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
-
-    encoding: {
-      color: {
-        condition: {
-          test: "isValid(datum.rent_growth_num)",
-          field: "rent_growth_num",
-          type: "quantitative",
-          scale: { scheme: "oranges", domain: [0, 12] }
-        },
-        value: "#e5e7eb",
-        title: "Growth (%)"
-      },
-      tooltip: [
-        { field: "properties.areanm", type: "nominal", title: "Country" },
-        {
-          field: "rent_growth_num",
-          type: "quantitative",
-          title: "Rent growth (%)",
-          format: ".1f"
-        }
-      ]
     },
+    {
+      calculate:
+        "toNumber(replace('' + (datum.value != null ? datum.value : (datum.growth != null ? datum.growth : (datum.rent_growth != null ? datum.rent_growth : datum.rent_growth_pct))), '%', ''))",
+      as: "rent_growth_num"
+    }
+  ],
 
-    config: THEME
-  };
+  projection: { type: "identity", reflectY: true, fit: true },
+
+  mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 1 },
+
+  encoding: {
+    color: {
+      condition: {
+        test: "isValid(datum.rent_growth_num)",
+        field: "rent_growth_num",
+        type: "quantitative",
+        scale: { scheme: "oranges", domain: [0, 12] },
+        legend: { title: "Growth (%)" }
+      },
+      value: "#e5e7eb",
+      legend: { title: "Growth (%)" }
+    },
+    tooltip: [
+      { field: "properties.areanm", type: "nominal", title: "Country" },
+      { field: "rent_growth_num", type: "quantitative", title: "Rent growth (%)", format: ".1f" }
+    ]
+  },
+
+  config: THEME
+};
 
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
