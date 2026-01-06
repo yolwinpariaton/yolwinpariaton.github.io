@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Chart 4</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <h1>Chart 4 Test</h1>
+  <div id="vis"></div>
+
+  <script>
+    const spec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "title": "UK Fuel Prices Test",
+      "data": { "url": "data/vis4_fuel_weekly.json" },
+      "width": 800,
+      "height": 400,
+      
+      "transform": [
+        { "calculate": "toDate(datum.date)", "as": "d" },
+        { "fold": ["unleaded_ppl", "diesel_ppl"], "as": ["fuel_raw", "ppl_raw"] },
+        { "calculate": "toNumber(datum.ppl_raw)", "as": "ppl" },
+        { "calculate": "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded' : 'Diesel'", "as": "fuel" }
+      ],
+      
+      "mark": { "type": "line", "point": true, "strokeWidth": 2 },
+      
+      "encoding": {
+        "x": { "field": "d", "type": "temporal", "title": "Date" },
+        "y": { "field": "ppl", "type": "quantitative", "title": "Pence per litre" },
+        "color": { 
+          "field": "fuel", 
+          "type": "nominal",
+          "legend": { "orient": "top" }
+        },
+        "tooltip": [
+          { "field": "d", "type": "temporal", "title": "Date" },
+          { "field": "fuel", "type": "nominal" },
+          { "field": "ppl", "type": "quantitative", "format": ".1f" }
+        ]
+      }
+    };
+
+    vegaEmbed('#vis', spec, { actions: false }).catch(console.error);
+  </script>
+</body>
+</html>
