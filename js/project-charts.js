@@ -70,158 +70,161 @@ console.log("LOADED project-charts v3-fixed");
   }
 
   // ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) — FIXED end labels (no hard-coded date)
-  // ------------------------------------------------------------------
-  const vis1 = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    ...FIT,
+// 1) Prices vs Pay (Indexed) — ENHANCED EDITORIAL VERSION
+// ------------------------------------------------------------------
+const vis1 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  ...FIT,
 
-    title: {
-      text: "Prices vs Pay (Indexed to 2019 = 100)",
-      subtitle: [
-        "The purchasing-power gap widened significantly from 2022 onwards",
-        "as consumer prices (CPIH) outpaced real earnings growth."
-      ],
-      anchor: "start",
-      offset: 25,
-      fontSize: 20,
-      subtitleFontSize: 13,
-      subtitleColor: "#64748b",
-      font: "Inter, sans-serif"
+  title: {
+    text: "Prices vs Pay (Indexed to 2019 = 100)",
+    subtitle: [
+      "The purchasing-power gap widened significantly from 2022 onwards",
+      "as consumer prices (CPIH) outpaced real earnings growth."
+    ],
+    anchor: "start",
+    offset: 25,
+    fontSize: 20,
+    subtitleFontSize: 13,
+    subtitleColor: "#64748b",
+    font: "Inter, sans-serif"
+  },
+
+  data: { url: "data/vis1_prices_vs_pay.json" },
+  width: "container",
+  height: 380,
+
+  padding: { top: 20, right: 20, bottom: 20, left: 10 },
+
+  transform: [
+    { calculate: "toDate(datum.date)", as: "d" },
+    { calculate: "toNumber(datum.value)", as: "v" },
+    { pivot: "series", value: "v", groupby: ["d"] },
+    { calculate: "datum['CPIH (prices)']", as: "prices" },
+    { calculate: "datum['Real earnings']", as: "earnings" },
+    { calculate: "datum.prices - datum.earnings", as: "gap" }
+  ],
+
+  layer: [
+    // 1. Reference Baseline
+    {
+      mark: { 
+        type: "rule", 
+        strokeDash: [4, 4], 
+        color: "#475569", 
+        opacity: 0.4, 
+        strokeWidth: 1.5 
+      },
+      encoding: { y: { datum: 100 } }
+    },
+    
+    // 2. The Purchasing Power Gap (Shaded Area)
+    {
+      mark: { 
+        type: "area", 
+        opacity: 0.12, 
+        color: "#1e3a8a",
+        interpolate: "monotone" 
+      },
+      encoding: {
+        x: { 
+          field: "d", 
+          type: "temporal", 
+          title: null, 
+          axis: { 
+            format: "%Y", 
+            tickCount: 6, 
+            grid: false,
+            labelFlush: true
+          } 
+        },
+        y: {
+          field: "earnings",
+          type: "quantitative",
+          title: "Index (2019 = 100)",
+          scale: { zero: false, domain: [98, 114] },
+          axis: { 
+            tickCount: 5, 
+            titlePadding: 15,
+            gridOpacity: 0.1,
+            domain: false
+          }
+        },
+        y2: { field: "prices" }
+      }
     },
 
-    data: { url: "data/vis1_prices_vs_pay.json" },
-    width: "container",
-    height: 380,
-
-    padding: { top: 20, right: 90, bottom: 20, left: 10 },
-
-    transform: [
-      { calculate: "toDate(datum.date)", as: "d" },
-      { calculate: "toNumber(datum.value)", as: "v" },
-      { pivot: "series", value: "v", groupby: ["d"] },
-      { calculate: "datum['CPIH (prices)']", as: "prices" },
-      { calculate: "datum['Real earnings']", as: "earnings" },
-      { calculate: "datum.prices - datum.earnings", as: "gap" }
-    ],
-
-    layer: [
-      {
-        mark: {
-          type: "rule",
-          strokeDash: [4, 4],
-          color: "#475569",
-          opacity: 0.4,
-          strokeWidth: 1.5
-        },
-        encoding: { y: { datum: 100 } }
+    // 3. Prices Line
+    {
+      mark: { 
+        type: "line", 
+        strokeWidth: 3.5, 
+        color: "#1e3a8a", 
+        interpolate: "monotone"
       },
-
-      {
-        mark: {
-          type: "area",
-          opacity: 0.15,
-          color: "#94a3b8",
-          interpolate: "monotone"
-        },
-        encoding: {
-          x: {
-            field: "d",
-            type: "temporal",
-            title: null,
-            axis: {
-              format: "%Y",
-              tickCount: 6,
-              grid: false,
-              labelFlush: true,
-              labelPadding: 10
-            }
-          },
-          y: {
-            field: "earnings",
-            type: "quantitative",
-            title: "Index (2019 = 100)",
-            scale: { zero: false, domain: [98, 114] },
-            axis: {
-              tickCount: 5,
-              titlePadding: 15,
-              gridOpacity: 0.1,
-              domain: false
-            }
-          },
-          y2: { field: "prices" }
-        }
-      },
-
-      {
-        mark: {
-          type: "line",
-          strokeWidth: 3.5,
-          color: "#1e3a8a",
-          interpolate: "monotone",
-          point: { filled: true, size: 35, color: "#1e3a8a" }
-        },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "prices", type: "quantitative" },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
-            { field: "prices", type: "quantitative", title: "CPIH (prices)", format: ".1f" },
-            { field: "earnings", type: "quantitative", title: "Real earnings", format: ".1f" },
-            { field: "gap", type: "quantitative", title: "Gap", format: ".1f" }
-          ]
-        }
-      },
-
-      {
-        mark: {
-          type: "line",
-          strokeWidth: 3.5,
-          color: "#b45309",
-          interpolate: "monotone",
-          point: { filled: true, size: 35, color: "#b45309" }
-        },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "earnings", type: "quantitative" }
-        }
-      },
-
-      // End-of-line labels: select last row dynamically (no empty dataset)
-      {
-        transform: [
-          {
-            window: [{ op: "row_number", as: "rn" }],
-            sort: [{ field: "d", order: "descending" }]
-          },
-          { filter: "datum.rn === 1" }
-        ],
-        layer: [
-          {
-            mark: { type: "text", align: "left", dx: 12, dy: -5, fontWeight: "bold", fontSize: 12 },
-            encoding: {
-              x: { field: "d", type: "temporal" },
-              y: { field: "prices", type: "quantitative" },
-              text: { value: "CPIH Prices" },
-              color: { value: "#1e3a8a" }
-            }
-          },
-          {
-            mark: { type: "text", align: "left", dx: 12, dy: 5, fontWeight: "bold", fontSize: 12 },
-            encoding: {
-              x: { field: "d", type: "temporal" },
-              y: { field: "earnings", type: "quantitative" },
-              text: { value: "Real Earnings" },
-              color: { value: "#b45309" }
-            }
-          }
+      encoding: {
+        x: { field: "d", type: "temporal" },
+        y: { field: "prices", type: "quantitative" },
+        tooltip: [
+          { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
+          { field: "prices", type: "quantitative", title: "CPIH (prices)", format: ".1f" },
+          { field: "earnings", type: "quantitative", title: "Real earnings", format: ".1f" }
         ]
       }
-    ],
+    },
 
-    config: THEME
-  };
+    // 4. Earnings Line
+    {
+      mark: { 
+        type: "line", 
+        strokeWidth: 3.5, 
+        color: "#b45309", 
+        interpolate: "monotone"
+      },
+      encoding: {
+        x: { field: "d", type: "temporal" },
+        y: { field: "earnings", type: "quantitative" }
+      }
+    },
 
+    // 5. INTERNAL LABELS (Plotted inside the graph area)
+    {
+      transform: [
+        { filter: "datum.d == toDate('2024-04-01')" } 
+      ],
+      layer: [
+        {
+          mark: { type: "text", align: "right", dx: -20, dy: -25, fontWeight: "bold", fontSize: 13 },
+          encoding: {
+            x: { field: "d", type: "temporal" },
+            y: { field: "prices", type: "quantitative" },
+            text: { value: "CPIH Prices" },
+            color: { value: "#1e3a8a" }
+          }
+        },
+        {
+          mark: { type: "text", align: "right", dx: -20, dy: 30, fontWeight: "bold", fontSize: 13 },
+          encoding: {
+            x: { field: "d", type: "temporal" },
+            y: { field: "earnings", type: "quantitative" },
+            text: { value: "Real Earnings" },
+            color: { value: "#b45309" }
+          }
+        }
+      ]
+    }
+  ],
+
+  // 6. Professional Footer (Informative items)
+  config: {
+    ...THEME,
+    view: { stroke: null }
+  }
+};
+
+// Note: Add these lines to your HTML or Footer section for full professionalism:
+// Source: ONS Consumer price inflation & Average Weekly Earnings (AWE).
+// Note: Y-axis is clipped to 98-114 to highlight the relative divergence between series.
   // --------------------------------------
   // 2) Food inflation vs headline — unify color scale to avoid range warnings
   // --------------------------------------
