@@ -95,41 +95,48 @@
    ===================== */
 
 .chart-wrapper--map {
-  max-width: 850px;
+  max-width: 900px;          /* slightly wider for better balance */
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Center the Vega embed inside the framed box */
+/* Give maps a bit more symmetric breathing room */
 .chart-wrapper--map .chart-frame {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 36px 28px 26px 28px;   /* tighter top/bottom than other charts */
 }
 
-.chart-wrapper--map .vega-container {
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* Make sure Vega’s internal wrapper centers too */
+/* Center the Vega embed and its inner wrapper */
+.chart-wrapper--map .vega-container,
 .chart-wrapper--map .vega-embed {
   width: 100% !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto !important;
+  display: block;
+}
+
+/* Force SVG/canvas to be centered visually */
+.chart-wrapper--map .vega-embed svg,
+.chart-wrapper--map .vega-embed canvas {
+  display: block;
+  margin: 0 auto !important;
 }
 
 /* Stable vertical space so the map has room */
 .vega-map {
   width: 100%;
-  min-height: 450px;
+  min-height: 520px;     /* matches the new spec height better */
   margin: 0 auto;
 }
 
 @media (max-width: 768px) {
   .vega-map {
-    min-height: 350px;
+    min-height: 420px;
+  }
+
+  .chart-wrapper--map .chart-frame {
+    padding: 28px 18px 20px 18px;
   }
 }
 

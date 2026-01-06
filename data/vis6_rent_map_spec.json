@@ -1,80 +1,66 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-
   "title": {
     "text": "Rent Inflation: English Regions",
     "subtitle": "Annual percentage change by region",
     "anchor": "start",
-    "fontSize": 30,
-    "subtitleFontSize": 18,
+    "fontSize": 28,
+    "subtitleFontSize": 16,
     "subtitleColor": "#667085",
-    "offset": 12
+    "offset": 10
   },
-
   "width": "container",
-  "height": 400,
-  "padding": { "left": 40, "right": 40, "top": 10, "bottom": 20 },
-
+  "height": 500,
+  "autosize": { "type": "fit", "contains": "padding", "resize": true },
+  "padding": { "left": 0, "right": 0, "top": 0, "bottom": 0 },
+  "projection": { "type": "identity", "reflectY": true, "fit": true },
   "config": {
     "view": { "stroke": null },
     "legend": {
       "orient": "bottom",
       "direction": "horizontal",
-      "titleFontSize": 15,
-      "labelFontSize": 14,
-      "titlePadding": 6,
-      "labelPadding": 4,
-      "gradientThickness": 14,
-      "gradientLength": 420
+      "titleFontSize": 16,
+      "labelFontSize": 16,
+      "titlePadding": 10,
+      "labelPadding": 6,
+      "gradientThickness": 16,
+      "gradientLength": 520
     }
   },
-
-  "data": {
-    "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json",
-    "format": { "type": "topojson", "feature": "rgn" }
-  },
-
-  "transform": [
+  "layer": [
     {
-      "calculate": "datum.properties.AREACD ? datum.properties.AREACD : datum.properties.areacd",
-      "as": "areacd_join"
-    },
-    {
-      "lookup": "areacd_join",
-      "from": {
-        "data": { "url": "data/vis6_rent_map_regions.json" },
-        "key": "areacd",
-        "fields": ["areanm", "rent_inflation_yoy_pct"]
+      "data": {
+        "url": "data/ENG_REGIONS_TOPO.json",
+        "format": { "type": "topojson", "feature": "regions" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.AREACD",
+          "from": {
+            "data": { "url": "data/vis6_rent_map_regions.json" },
+            "key": "areacd",
+            "fields": ["areanm", "rent_inflation_yoy_pct"]
+          }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 2 },
+      "encoding": {
+        "color": {
+          "field": "rent_inflation_yoy_pct",
+          "type": "quantitative",
+          "title": "Rent inflation (% y/y)",
+          "scale": { "scheme": "blues", "domain": [3.0, 10.0] }
+        },
+        "tooltip": [
+          { "field": "areanm", "type": "nominal", "title": "Region" },
+          {
+            "field": "rent_inflation_yoy_pct",
+            "type": "quantitative",
+            "title": "Rent inflation (% y/y)",
+            "format": ".1f"
+          }
+        ]
       }
     }
-  ],
-
-  "projection": {
-    "type": "mercator",
-    "center": [-1.5, 53.5]
-  },
-
-  "mark": {
-    "type": "geoshape",
-    "stroke": "#ffffff",
-    "strokeWidth": 2
-  },
-
-  "encoding": {
-    "color": {
-      "field": "rent_inflation_yoy_pct",
-      "type": "quantitative",
-      "title": "Rent inflation (% y/y)",
-      "scale": { "scheme": "blues", "domain": [3.0, 10.0] }
-    },
-    "tooltip": [
-      { "field": "areanm", "type": "nominal", "title": "Region" },
-      {
-        "field": "rent_inflation_yoy_pct",
-        "type": "quantitative",
-        "title": "Rent inflation (% y/y)",
-        "format": ".1f"
-      }
-    ]
-  }
+  ]
 }
