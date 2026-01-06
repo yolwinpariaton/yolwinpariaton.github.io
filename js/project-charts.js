@@ -313,39 +313,9 @@ console.log("LOADED project-charts v3-enhanced");
     config: THEME
   };
 
-  // --------------------------------------
-  // 4) Weekly fuel prices
-  // --------------------------------------
- /* ENHANCED CHART 4: UK Weekly Fuel Prices
-   Refined for high-fidelity rendering of annotations and baselines.
-*/
-
-const THEME = {
-  background: "#ffffff",
-  view: { stroke: null },
-  axis: {
-    labelFontSize: 11,
-    titleFontSize: 12,
-    labelColor: "#475569",
-    titleColor: "#0f172a",
-    grid: true,
-    gridOpacity: 0.1,
-    gridColor: "#cbd5e1",
-    domainColor: "#cbd5e1",
-    tickColor: "#cbd5e1"
-  },
-  title: {
-    fontSize: 20,
-    subtitleFontSize: 12,
-    color: "#0f172a",
-    subtitleColor: "#64748b",
-    anchor: "start",
-    offset: 20
-  }
-};
-
-const FIT = { autosize: { type: "fit", contains: "padding", resize: true } };
-
+ // --------------------------------------
+// 4) Weekly fuel prices (ENHANCED)
+// --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   ...FIT,
@@ -365,11 +335,14 @@ const vis4 = {
     { calculate: "toDate(datum.date)", as: "d" },
     { fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel_raw", "ppl_raw"] },
     { calculate: "toNumber(datum.ppl_raw)", as: "ppl" },
-    { calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'", as: "fuel" }
+    { 
+      calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'", 
+      as: "fuel" 
+    }
   ],
 
   layer: [
-    // 1. BASELINE REFERENCE
+    // 1. BASELINE REFERENCE (The 120p horizontal line)
     {
       mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.8, strokeWidth: 1.5 },
       encoding: { y: { datum: 120 } }
@@ -383,7 +356,7 @@ const vis4 = {
       }
     },
 
-    // 2. VERTICAL ANNOTATIONS (Lockdown & Ukraine)
+    // 2. VERTICAL ANNOTATIONS (Lockdown & Ukraine events)
     {
       data: {
         values: [
@@ -407,7 +380,7 @@ const vis4 = {
       ]
     },
 
-    // 3. MAIN DATA LINES (Moving Average)
+    // 3. MAIN DATA LINES (Using a 5-week Moving Average for smoothness)
     {
       transform: [
         {
@@ -433,7 +406,7 @@ const vis4 = {
         color: {
           field: "fuel",
           type: "nominal",
-          scale: { range: ["#2563eb", "#d97706"] },
+          scale: { range: ["#2563eb", "#d97706"] }, // Blue for Petrol, Orange for Diesel
           legend: {
             orient: "top",
             direction: "horizontal",
@@ -446,7 +419,7 @@ const vis4 = {
       }
     },
 
-    // 4. INTERACTIVE TOOLTIP LAYER
+    // 4. INTERACTIVE TOOLTIP LAYER (Hidden points to capture mouse hover)
     {
       transform: [
         {
@@ -469,7 +442,6 @@ const vis4 = {
   ],
   config: THEME
 };
-
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
