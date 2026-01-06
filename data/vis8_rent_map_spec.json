@@ -15,7 +15,7 @@
   },
 
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/gb/ctry.json",
+    "url": "data/uk_countries.json",
     "format": { "type": "json", "property": "features" }
   },
 
@@ -23,13 +23,13 @@
     {
       "lookup": "properties.CTRY12NM",
       "from": {
-        "data": { "url": "data/vis8_rent_map_countries.csv" },
-        "key": "country",
+        "data": { "url": "data/vis8_rent_map_countries.json" },
+        "key": "areanm",
         "fields": ["rent_inflation_yoy_pct"]
       }
     },
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "infl" }
-  ],
+  },
 
   "projection": { 
     "type": "mercator",

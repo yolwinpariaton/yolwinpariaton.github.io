@@ -15,7 +15,7 @@
   },
 
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/eng/rgn.json",
+    "url": "data/eng_regions.json",
     "format": { "type": "json", "property": "features" }
   },
 
@@ -23,7 +23,7 @@
     {
       "lookup": "properties.EER13NM",
       "from": {
-        "data": { "url": "data/vis6_rent_map_regions.csv" },
+        "data": { "url": "data/vis6_rent_map_regions.json" },
         "key": "areanm",
         "fields": ["rent_inflation_yoy_pct"]
       }
