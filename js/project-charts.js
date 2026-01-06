@@ -692,10 +692,11 @@ const vis1 = {
     },
 
     transform: [
-      // Keep English regions only (GSS codes for English regions start with E12)
-      { filter: "startsWith(datum.properties.areacd, 'E12')" },
+      // Vega expressions don't support startsWith(); use substring instead.
+      // English regions have codes like E12000001, E12000002, ...
+      { filter: "substring(datum.properties.areacd, 0, 3) == 'E12'" },
 
-      // Lookup rent inflation values by region name
+      // Join rent inflation values onto the topo shapes
       {
         lookup: "properties.areanm",
         from: {
@@ -705,8 +706,11 @@ const vis1 = {
         }
       },
 
-      // Ensure numeric values (prevents scale/legend issues if JSON values are strings)
-      { calculate: "toNumber(datum.value)", as: "rent_growth" }
+      // Handle values like "5.2%" AND numeric values safely
+      { calculate: "toNumber(replace('' + datum.value, '%', ''))", as: "rent_growth" },
+
+      // Drop records that still don't have a valid number (prevents Infinity/NaN scales)
+      { filter: "isValid(datum.rent_growth)" }
     ],
 
     projection: { type: "mercator" },
@@ -728,7 +732,6 @@ const vis1 = {
 
     config: THEME
   };
-
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -879,7 +882,12 @@ const vis1 = {
           fields: ["value"]
         }
       },
-      { calculate: "toNumber(datum.value)", as: "rent_growth" }
+
+      // Handle "x%" strings and numeric values
+      { calculate: "toNumber(replace('' + datum.value, '%', ''))", as: "rent_growth" },
+
+      // Prevent Infinity/NaN scales
+      { filter: "isValid(datum.rent_growth)" }
     ],
 
     projection: { type: "mercator" },
