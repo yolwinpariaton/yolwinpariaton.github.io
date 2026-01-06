@@ -16,13 +16,12 @@ console.log("LOADED project-charts v3-fixed");
   const opts = {
     actions: false,
     renderer: "svg",
-    // Avoid any "legend.disable" conflicts from merged configs
     config: {
       legend: { disable: false }
     }
   };
 
-  // Consistent visual theme (NO legend.disable here)
+  // Consistent visual theme
   const THEME = {
     background: "#ffffff",
     view: { stroke: null },
@@ -161,7 +160,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
   // --------------------------------------
-  // 2) Food inflation vs headline — unify color scale to avoid range warnings
+  // 2) Food inflation vs headline
   // --------------------------------------
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -473,7 +472,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
   // --------------------------------------
-  // 5) Rent vs house price — unify scale range
+  // 5) Rent vs house price
   // --------------------------------------
   const vis5 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -648,17 +647,15 @@ console.log("LOADED project-charts v3-fixed");
   // EMBED ALL EIGHT CHARTS
   // ------------------------------------------------------------------
   safeEmbed("#vis1", vis1);
+  safeEmbed("#vis2", vis2);
+  safeEmbed("#vis3", vis3);
+  safeEmbed("#vis4", vis4);
+  safeEmbed("#vis5", vis5);
 
-  // Your existing embeds (keep):
-  safeEmbed("#vis2", "data/vis2_food_vs_headline.json");   // if you use inline objects, keep yours
-  safeEmbed("#vis3", "data/vis3_energy_cap.json");
-  safeEmbed("#vis4", "data/vis4_fuel_weekly.json");
-  safeEmbed("#vis5", "data/vis5_rent_vs_house.json");
-
-  // Maps embed from map spec files
+  // Maps embed from external spec files
   safeEmbed("#vis6", "data/vis6_rent_map_spec.json");
-
-  safeEmbed("#vis7", "data/vis7_rent_trend_regions.json");
+  
+  safeEmbed("#vis7", vis7);
 
   safeEmbed("#vis8", "data/vis8_rent_map_spec.json");
 })();
