@@ -312,13 +312,12 @@
   };
 
 // --------------------------------------
-// 4) Weekly fuel prices — CLEAN + PUBLISH-READY (FIXED)
-// Fixes implemented:
-//  - Remove striped bands under 120 (rect layers no longer inherit y/color)
-//  - Remove "Infinite extent..." warning (no invalid inherited encodings)
-//  - Remove "Conflicting legend disable" warning (legend defined once)
-//  - Move "Russia-Ukraine Crisis" + "Peak" labels to better positions
-//  - Reduce excess space below the x-axis (less bottom padding; tune CSS height)
+// 4) Weekly fuel prices — CLEAN FINAL
+// Fixes:
+//  - Removes barcode marks (annotation layers draw once via data: {values:[{}]})
+//  - Moves Peak label to the right (near peak)
+//  - Removes white "bubble" peak points (deleted emphasis-point layer)
+//  - Reduces space below x-axis (smaller padding.bottom)
 // --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -336,8 +335,8 @@ const vis4 = {
   width: "container",
   height: "container",
 
-  // Reduced bottom padding (you had too much empty space)
-  padding: { top: 42, right: 16, bottom: 78, left: 62 },
+  // Reduced bottom padding (less empty space under x-axis)
+  padding: { top: 42, right: 16, bottom: 54, left: 62 },
 
   transform: [
     { calculate: "toDate(datum.date)", as: "d" },
@@ -349,7 +348,7 @@ const vis4 = {
     }
   ],
 
-  // Define x and y ONCE so axis always shows. Do NOT define color here.
+  // Keep axis stable: define x/y once. Do NOT define color here.
   encoding: {
     x: {
       field: "d",
@@ -360,7 +359,7 @@ const vis4 = {
         format: "%Y",
         tickCount: 7,
         labelPadding: 10,
-        titlePadding: 14,
+        titlePadding: 10,
         labelOverlap: "greedy"
       }
     },
@@ -374,8 +373,9 @@ const vis4 = {
   },
 
   layer: [
-    // Background: Pandemic window (explicit y/y2 so it does NOT inherit y field)
+    // Pandemic background — draw ONCE (no banding)
     {
+      data: { values: [{}] },
       mark: { type: "rect", opacity: 0.30 },
       encoding: {
         x: { datum: "2020-03-01" },
@@ -386,8 +386,9 @@ const vis4 = {
       }
     },
 
-    // Background: Russia-Ukraine shock window
+    // Russia-Ukraine shock background — draw ONCE
     {
+      data: { values: [{}] },
       mark: { type: "rect", opacity: 0.40 },
       encoding: {
         x: { datum: "2022-03-01" },
@@ -398,22 +399,19 @@ const vis4 = {
       }
     },
 
-    // Baseline reference line (explicit color so it does not inherit anything)
+    // Baseline line — draw ONCE (prevents tick-like artifacts)
     {
-      mark: {
-        type: "rule",
-        strokeDash: [6, 4],
-        strokeWidth: 1.8,
-        opacity: 0.70
-      },
+      data: { values: [{}] },
+      mark: { type: "rule", strokeDash: [6, 4], strokeWidth: 1.8, opacity: 0.70 },
       encoding: {
         y: { datum: 120 },
         color: { value: "#64748b" }
       }
     },
 
-    // Baseline label (moved up and right to avoid overlapping series)
+    // Baseline label — draw ONCE
     {
+      data: { values: [{}] },
       mark: {
         type: "text",
         clip: true,
@@ -425,14 +423,15 @@ const vis4 = {
         text: "Pre-pandemic baseline (120p)"
       },
       encoding: {
-        x: { datum: "2019-06-01" },
+        x: { datum: "2019-07-01" },
         y: { datum: 136 },
         color: { value: "#64748b" }
       }
     },
 
-    // COVID label (kept safely inside plot)
+    // COVID label — draw ONCE
     {
+      data: { values: [{}] },
       mark: {
         type: "text",
         clip: true,
@@ -449,8 +448,9 @@ const vis4 = {
       }
     },
 
-    // Crisis label (moved closer to the highlighted period and away from legend)
+    // Crisis label — draw ONCE
     {
+      data: { values: [{}] },
       mark: {
         type: "text",
         clip: true,
@@ -467,8 +467,9 @@ const vis4 = {
       }
     },
 
-    // Peak label (moved right, near the actual peak)
+    // Peak label — moved RIGHT (near the peak)
     {
+      data: { values: [{}] },
       mark: {
         type: "text",
         clip: true,
@@ -480,13 +481,13 @@ const vis4 = {
         text: "Peak: 191p (+60%)"
       },
       encoding: {
-        x: { datum: "2022-07-10" },
-        y: { datum: 198 },
+        x: { datum: "2022-08-05" },
+        y: { datum: 197 },
         color: { value: "#dc2626" }
       }
     },
 
-    // Raw weekly line (very subtle; no legend)
+    // Raw weekly lines (very subtle; no legend)
     {
       mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" },
       encoding: {
@@ -499,7 +500,7 @@ const vis4 = {
       }
     },
 
-    // Moving average (bold) — OWNS the legend (only legend in the whole chart)
+    // Moving average (bold) — only legend in the chart
     {
       transform: [
         {
@@ -528,29 +529,6 @@ const vis4 = {
             offset: -10,
             padding: 0
           }
-        }
-      }
-    },
-
-    // Peak period emphasis points
-    {
-      transform: [
-        {
-          window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-          frame: [-2, 2],
-          sort: [{ field: "d", order: "ascending" }],
-          groupby: ["fuel"]
-        },
-        { filter: "year(datum.d) === 2022 && month(datum.d) >= 6 && month(datum.d) <= 7" }
-      ],
-      mark: { type: "point", filled: true, size: 85, stroke: "white", strokeWidth: 2.5 },
-      encoding: {
-        y: { field: "ppl_ma" },
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: null
         }
       }
     },
@@ -587,6 +565,7 @@ const vis4 = {
 
   config: THEME
 };
+
 
 
   // --------------------------------------
@@ -681,10 +660,10 @@ const vis4 = {
     },
 
     width: "container",
-    height: 480,
+    height: 500,
     
-    // Minimal top padding; more bottom space to push legend down
-    padding: { top: 8, bottom: 16, left: 0, right: 0 },
+    // Minimal padding - legend pushed to very bottom
+    padding: { top: 6, bottom: 24, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -700,8 +679,7 @@ const vis4 = {
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    // Larger scale + adjusted center for better fit
-    projection: { type: "mercator", center: [-2.6, 53.4], scale: 2400 },
+    projection: { type: "mercator", center: [-2.6, 53.3], scale: 2500 },
 
     mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -719,8 +697,8 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 2,
-          padding: 4
+          offset: 8,
+          padding: 2
         }
       },
       tooltip: [
@@ -731,7 +709,6 @@ const vis4 = {
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
-
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -831,10 +808,10 @@ const vis4 = {
     },
 
     width: "container",
-    height: 500,
+    height: 520,
     
-    // Minimal top padding; more bottom space to push legend down
-    padding: { top: 8, bottom: 16, left: 0, right: 0 },
+    // Minimal padding - legend pushed to very bottom
+    padding: { top: 6, bottom: 24, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -850,8 +827,7 @@ const vis4 = {
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    // Larger scale + adjusted center for better horizontal/vertical balance
-    projection: { type: "mercator", center: [-3.2, 55.0], scale: 1400 },
+    projection: { type: "mercator", center: [-3.2, 54.8], scale: 1450 },
 
     mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 
@@ -869,8 +845,8 @@ const vis4 = {
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 2,
-          padding: 4
+          offset: 8,
+          padding: 2
         }
       },
       tooltip: [

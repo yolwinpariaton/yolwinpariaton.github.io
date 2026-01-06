@@ -56,7 +56,7 @@
 
 /* Extra bottom padding for map charts to accommodate legends */
 .chart-wrapper--map .chart-frame{
-  padding-bottom: 38px;
+  padding-bottom: 32px;
 }
 
 /* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
@@ -157,20 +157,14 @@
 /* Chart 4 only: responsive height for Vega-Lite "height: container"   */
 /* ------------------------------------------------------------------ */
 
-#vis4{
-  height: 470px;
-}
+#vis4{ height: 430px; }
 
 @media (max-width: 900px){
-  #vis4{
-    height: 450px;
-  }
+  #vis4{ height: 410px; }
 }
 
 @media (max-width: 600px){
-  #vis4{
-    height: 420px;
-  }
+  #vis4{ height: 390px; }
 }
 
 /* --- Source/notes typography (outside the chart card) --- */
@@ -203,7 +197,7 @@
 
   /* Maintain extra bottom padding for maps on mobile */
   .chart-wrapper--map .chart-frame{
-    padding-bottom: 36px;
+    padding-bottom: 30px;
   }
 
   .task{
