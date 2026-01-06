@@ -36,8 +36,6 @@
   width: 100%;
   max-width: 980px;
   margin: 16px auto 0 auto;
-
-  /* IMPORTANT: keep normal flow to avoid overlaps */
   overflow: visible;
 }
 
@@ -53,14 +51,13 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 
   width: 100%;
-
-  /* IMPORTANT: prevent the SVG from spilling into the next section */
-  overflow: hidden;
+  overflow: hidden; /* keeps rounded-corner clipping clean */
 }
 
-/* Map cards: no legend, so do NOT reserve extra bottom padding */
+/* Map charts: keep enough space for legend INSIDE the frame */
 .chart-wrapper--map .chart-frame{
-  padding-bottom: 18px;
+  /* extra bottom padding so bottom legend never touches border */
+  padding-bottom: 34px;
 }
 
 /* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
@@ -84,10 +81,7 @@
   max-width: 100%;
 }
 
-/* IMPORTANT DEFAULT:
-   For normal charts, do NOT force height:100%.
-   Let Vega control the SVG height.
-*/
+/* Default: let Vega control the height; keep SVG responsive */
 .vega-embed svg{
   width: 100% !important;
   height: auto !important;
@@ -101,48 +95,47 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Map-specific sizing                                                 */
+/* Map-specific layout                                                  */
 /* ------------------------------------------------------------------ */
-
-/* Give MAPS more height so nothing gets clipped */
-.vega-map{
-  height: 680px;         /* increased so the full shape fits */
-  min-height: 680px;
-  display: block;        /* do not use flex here (it reduces usable layout predictability) */
-}
 
 /* Narrower container specifically for maps */
 .chart-wrapper--map{
-  max-width: 760px !important;   /* a bit wider improves fit and reduces clipping */
+  max-width: 720px !important;   /* a bit wider than 600 so legend fits comfortably */
   margin-left: auto;
   margin-right: auto;
 }
 
-/* MAP OVERRIDE ONLY:
-   Fill the fixed-height map box. (No more 90% height shrink.) */
-.vega-map .vega-embed{
-  height: 100%;
-  width: 100%;
+/*
+  IMPORTANT CHANGE:
+  Do NOT force maps into a fixed-height flex box.
+  That was the reason legends were clipped/vanishing.
+  Let Vega-Lite manage map + legend layout via its own height/padding.
+*/
+.vega-map{
+  height: auto;
+  min-height: 0;
 }
 
+/* Remove the “fill the box” behaviour for maps */
+.vega-map .vega-embed,
 .vega-map .vega-embed > div{
-  height: 100%;
-  width: 100%;
-}
-
-/* Critical: let the SVG use the full map box */
-.vega-map .vega-embed svg{
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100%;
-  max-height: 100%;
+  height: auto;
   display: block;
 }
 
-/* If a map ever renders to canvas, also fill the map box */
+/* Ensure map SVG remains responsive like other charts */
+.vega-map .vega-embed svg{
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+  max-height: none;
+  margin: 0 auto;
+}
+
+/* If a map ever renders to canvas, keep it responsive */
 .vega-map .vega-embed canvas{
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
   display: block;
 }
 
@@ -181,7 +174,7 @@
   }
 }
 
-/* Mobile: reduce map height a bit so it doesn't dominate */
+/* Mobile tweaks */
 @media (max-width: 600px){
   .chart-frame{
     padding: 14px 12px 18px;
@@ -189,19 +182,14 @@
   }
 
   .chart-wrapper--map .chart-frame{
-    padding-bottom: 16px;
+    padding-bottom: 30px;
   }
 
   .task{
     margin: 36px 0;
   }
 
-  .vega-map{
-    height: 560px;
-    min-height: 560px;
-  }
-
   .chart-wrapper--map{
-    max-width: 94% !important;
+    max-width: 100% !important;
   }
 }
