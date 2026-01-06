@@ -45,7 +45,6 @@
   border: 2px solid rgba(120, 150, 210, 0.22);
   border-radius: 22px;
 
-  /* More breathing room at the bottom (key fix) */
   padding: 18px 16px 22px;
 
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
@@ -61,33 +60,60 @@
   margin: 0;
 }
 
-/* IMPORTANT: Do NOT use flex on the same element Vega-Embed writes into.
-   Flex often causes sizing/cropping issues for SVG/canvas-based embeds. */
+/* Map container (the element you embed into) */
 .vega-map{
+  /* keep a stable map area so the frame doesn't look empty */
   min-height: 360px;
+
+  /* Center the embed output INSIDE this block */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* vertical centering */
+  align-items: center;      /* horizontal centering */
 }
 
-/* Vega-Embed wrapper should fill the frame */
+/* Vega-Embed wrapper */
 .vega-embed{
   width: 100%;
   max-width: 100%;
   display: block;
 }
 
-/* Vega-Embed sometimes inserts nested divs; force them to behave responsively */
+/* Vega-Embed sometimes inserts nested divs; keep responsive */
 .vega-embed > div{
   width: 100%;
   max-width: 100%;
 }
 
-/* Ensure SVG is truly responsive inside the card */
+/* -------------------------------------------------------------
+   CRITICAL CHANGE:
+   Do NOT force height:auto on ALL SVGs. Vega uses explicit viewBox
+   and internal sizing. Forcing height:auto makes maps float upward.
+   ------------------------------------------------------------- */
+
+/* Default (all charts): let Vega control svg sizing */
 .vega-embed svg{
   width: 100% !important;
+  height: 100% !important;   /* was: auto */
+  display: block;
+}
+
+/* But for maps, we want the SVG to scale inside the centered box
+   without breaking Vega's intended layout. */
+.vega-map .vega-embed{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Keep map SVG responsive but not "auto-height" */
+.vega-map .vega-embed svg{
+  max-width: 100% !important;
   height: auto !important;
   display: block;
 }
 
-/* Keep canvases from exceeding the container (if any chart ever uses canvas) */
+/* Canvas safeguard (if any chart ever uses canvas) */
 .vega-embed canvas{
   max-width: 100% !important;
   display: block;
@@ -117,11 +143,14 @@
 /* Improve mobile spacing and avoid cramped titles */
 @media (max-width: 600px){
   .chart-frame{
-    /* More bottom space on mobile as well */
     padding: 14px 12px 18px;
     border-radius: 18px;
   }
   .task{
     margin: 36px 0;
+  }
+
+  .vega-map{
+    min-height: 320px;
   }
 }
