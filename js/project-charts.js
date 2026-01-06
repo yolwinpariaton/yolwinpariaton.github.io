@@ -312,13 +312,13 @@
   };
 
 // --------------------------------------
-// 4) Weekly fuel prices — PUBLISH-READY (FIXED)
+// 4) Weekly fuel prices — FINAL FIX PASS
 // Fixes implemented:
-//  - Baseline label kept INSIDE plot (clip + safer anchor)
-//  - Peak label repositioned near peak, inside plot (clip + better coordinates)
-//  - Legend no longer transparent (legend symbolOpacity/labelOpacity forced to 1;
-//    legend owned by a non-transparent layer)
-//  - X-axis explicitly shown with title and labels (and enough bottom padding)
+//  - X-axis reliably appears (x encoding defined ONCE at top-level; no axis conflicts)
+//  - Peak label moved right (near peak) + clipped inside plot
+//  - “Weird lines” reduced (raw weekly line made subtler + monotone interpolation)
+//  - Baseline text moved to avoid overlapping series
+//  - Removes legend disable warnings (color/legend defined ONCE at top-level; no conflicts)
 // --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -336,7 +336,7 @@ const vis4 = {
   width: "container",
   height: "container",
 
-  // More bottom space so x-axis never clips; top space for legend + annotations
+  // Enough bottom room for x-axis title + labels; top room for legend/annotations
   padding: { top: 42, right: 16, bottom: 130, left: 62 },
 
   transform: [
@@ -349,24 +349,67 @@ const vis4 = {
     }
   ],
 
+  // IMPORTANT: define shared encodings ONCE to avoid axis/legend conflicts
+  encoding: {
+    x: {
+      field: "d",
+      type: "temporal",
+      title: "Year",
+      axis: {
+        orient: "bottom",
+        format: "%Y",
+        tickCount: 7,
+        labelPadding: 10,
+        titlePadding: 18,
+        labelOverlap: "greedy"
+      }
+    },
+    y: {
+      field: "ppl",
+      type: "quantitative",
+      title: "Pence per litre",
+      // Keep the chart in a clean, publication-style window
+      scale: { domain: [60, 220] },
+      axis: { labelFontSize: 11, titleFontSize: 12 }
+    },
+    color: {
+      field: "fuel",
+      type: "nominal",
+      scale: { range: ["#1e40af", "#d97706"] },
+      legend: {
+        orient: "top",
+        direction: "horizontal",
+        title: null,
+        labelFontSize: 13,
+        symbolSize: 240,
+        symbolStrokeWidth: 3.8,
+        // ensure legend never looks “transparent”
+        symbolOpacity: 1,
+        labelOpacity: 1,
+        offset: -10,
+        padding: 0
+      }
+    }
+  },
+
   layer: [
     // Period backgrounds
     {
       mark: { type: "rect", color: "#dbeafe", opacity: 0.30 },
       encoding: {
-        x: { datum: "2020-03-01", type: "temporal" },
-        x2: { datum: "2020-12-31", type: "temporal" }
+        x: { datum: "2020-03-01" },
+        x2: { datum: "2020-12-31" }
       }
     },
     {
       mark: { type: "rect", color: "#fef3c7", opacity: 0.40 },
       encoding: {
-        x: { datum: "2022-03-01", type: "temporal" },
-        x2: { datum: "2022-08-01", type: "temporal" }
+        x: { datum: "2022-03-01" },
+        x2: { datum: "2022-08-01" }
       }
     },
 
-    // Baseline reference line
+    // Baseline reference line (keep within same scale system)
     {
       mark: {
         type: "rule",
@@ -378,23 +421,22 @@ const vis4 = {
       encoding: { y: { datum: 120 } }
     },
 
-    // Baseline label (kept inside plot)
+    // Baseline label (moved up so it does NOT overlap series)
     {
       mark: {
         type: "text",
         clip: true,
         align: "left",
         dx: 6,
-        dy: -10,
+        dy: -6,
         fontSize: 10,
         color: "#64748b",
         fontWeight: 600,
         text: "Pre-pandemic baseline (120p)"
       },
       encoding: {
-        // Anchor clearly inside the time domain (left side, not outside y-axis)
-        x: { datum: "2019-04-01", type: "temporal" },
-        y: { datum: 126, type: "quantitative" }
+        x: { datum: "2019-04-01" },
+        y: { datum: 136 }
       }
     },
 
@@ -411,8 +453,8 @@ const vis4 = {
         text: "COVID-19 Pandemic"
       },
       encoding: {
-        x: { datum: "2020-03-15", type: "temporal" },
-        y: { datum: 78, type: "quantitative" }
+        x: { datum: "2020-03-15" },
+        y: { datum: 78 }
       }
     },
 
@@ -429,12 +471,12 @@ const vis4 = {
         text: "Russia-Ukraine Crisis"
       },
       encoding: {
-        x: { datum: "2022-03-10", type: "temporal" },
-        y: { datum: 206, type: "quantitative" }
+        x: { datum: "2022-03-10" },
+        y: { datum: 206 }
       }
     },
 
-    // Peak label (repositioned near the peak, not floating at the top-left)
+    // Peak label — moved RIGHT to sit near the peak
     {
       mark: {
         type: "text",
@@ -448,13 +490,19 @@ const vis4 = {
         text: "Peak: 191p (+60%)"
       },
       encoding: {
-        // Place near the peak period
-        x: { datum: "2022-06-20", type: "temporal" },
-        y: { datum: 191, type: "quantitative" }
+        // this places it just before/around the peak; adjust ± a few weeks if desired
+        x: { datum: "2022-06-25" },
+        y: { datum: 196 }
       }
     },
 
-    // Moving average (bold) — ALSO OWNS THE LEGEND (so legend isn't transparent)
+    // Raw weekly line (very subtle) — this is the “weird” volatility you noticed
+    // Keep it, but make it MUCH softer + monotone smoothing
+    {
+      mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" }
+    },
+
+    // Moving average (bold) — smoother and publication-like
     {
       transform: [
         {
@@ -464,65 +512,13 @@ const vis4 = {
           groupby: ["fuel"]
         }
       ],
-      mark: { type: "line", strokeWidth: 3.8 },
+      mark: { type: "line", strokeWidth: 3.8, interpolate: "monotone" },
       encoding: {
-        x: {
-          field: "d",
-          type: "temporal",
-          title: "Year",
-          axis: {
-            orient: "bottom",
-            format: "%Y",
-            tickCount: 7,
-            labelPadding: 10,
-            titlePadding: 18,
-            labelOverlap: "greedy"
-          }
-        },
-        y: {
-          field: "ppl_ma",
-          type: "quantitative",
-          title: "Pence per litre",
-          scale: { domain: [60, 220] },
-          axis: { labelFontSize: 11, titleFontSize: 12 }
-        },
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: {
-            orient: "top",
-            direction: "horizontal",
-            title: null,
-            labelFontSize: 13,
-            symbolSize: 240,
-            symbolStrokeWidth: 3.8,
-            // Force legend to be fully opaque (fixes your transparency issue)
-            symbolOpacity: 1,
-            labelOpacity: 1,
-            offset: -10,
-            padding: 0
-          }
-        }
+        y: { field: "ppl_ma" }
       }
     },
 
-    // Raw weekly data (subtle, no legend/axis here)
-    {
-      mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
-      encoding: {
-        x: { field: "d", type: "temporal", axis: null, title: null },
-        y: { field: "ppl", type: "quantitative" },
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: null
-        }
-      }
-    },
-
-    // Peak period emphasis
+    // Peak period emphasis points (optional but clean)
     {
       transform: [
         {
@@ -534,19 +530,10 @@ const vis4 = {
         { filter: "year(datum.d) === 2022 && month(datum.d) >= 6 && month(datum.d) <= 7" }
       ],
       mark: { type: "point", filled: true, size: 85, stroke: "white", strokeWidth: 2.5 },
-      encoding: {
-        x: { field: "d", type: "temporal", axis: null, title: null },
-        y: { field: "ppl_ma", type: "quantitative" },
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: null
-        }
-      }
+      encoding: { y: { field: "ppl_ma" } }
     },
 
-    // Interactive tooltips (invisible points)
+    // Tooltips (invisible points)
     {
       transform: [
         {
@@ -559,14 +546,7 @@ const vis4 = {
       ],
       mark: { type: "point", filled: true, size: 60, opacity: 0 },
       encoding: {
-        x: { field: "d", type: "temporal", axis: null, title: null },
-        y: { field: "ppl_ma", type: "quantitative" },
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: null
-        },
+        y: { field: "ppl_ma" },
         tooltip: [
           { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
           { field: "fuel", type: "nominal", title: "Fuel type" },
@@ -579,6 +559,7 @@ const vis4 = {
 
   config: THEME
 };
+
 
   // --------------------------------------
   // 5) Rent vs house price
