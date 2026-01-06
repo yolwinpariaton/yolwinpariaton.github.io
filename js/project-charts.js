@@ -312,12 +312,12 @@
   };
 
 // --------------------------------------
-// 4) Weekly fuel prices — UPDATED FIXES
-//  - Bigger frame (height + padding)
-//  - Force x-axis to bottom
-//  - Stop "source" overlap by keeping all chart content inside padding
-//  - Coloured labels (legend) below subtitle, inside plotting area
-//  - Remove legend disable conflict (legend defined ONCE)
+// 4) Weekly fuel prices — PUBLISH-READY
+// Fixes:
+//  - Avoid label overlap (safer y-domain + adjusted annotation positions)
+//  - Ensure x-axis is visible (more bottom padding + labelOverlap)
+//  - Responsive height (height: "container" + CSS sets #vis4 height)
+//  - Does not alter other charts
 // --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -334,17 +334,20 @@ const vis4 = {
   data: { url: "data/vis4_fuel_weekly.json" },
   width: "container",
 
-  // Increase the frame
-  height: 520,
+  // Responsive: Vega-Lite will fit the container height (set via CSS on #vis4)
+  height: "container",
 
-  // More breathing room so nothing spills into the source text below
-  padding: { top: 34, right: 14, bottom: 96, left: 62 },
+  // More breathing room so x-axis never clips and nothing spills into the source text
+  padding: { top: 38, right: 14, bottom: 112, left: 62 },
 
   transform: [
     { calculate: "toDate(datum.date)", as: "d" },
     { fold: ["unleaded_ppl", "diesel_ppl"], as: ["fuel_raw", "ppl_raw"] },
     { calculate: "toNumber(datum.ppl_raw)", as: "ppl" },
-    { calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'", as: "fuel" }
+    {
+      calculate: "datum.fuel_raw === 'unleaded_ppl' ? 'Unleaded (petrol)' : 'Diesel'",
+      as: "fuel"
+    }
   ],
 
   layer: [
@@ -366,7 +369,13 @@ const vis4 = {
 
     // Baseline reference line
     {
-      mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
+      mark: {
+        type: "rule",
+        strokeDash: [6, 4],
+        color: "#64748b",
+        strokeWidth: 1.8,
+        opacity: 0.65
+      },
       encoding: { y: { datum: 120 } }
     },
 
@@ -405,20 +414,20 @@ const vis4 = {
       }
     },
 
-    // Crisis label
+    // Crisis label (nudged slightly downward to avoid any top crowding)
     {
       mark: {
         type: "text",
         align: "left",
         dx: 5,
-        fontSize: 10.5,
+        fontSize: 10,
         color: "#92400e",
         fontWeight: 700,
         text: "Russia-Ukraine Crisis"
       },
       encoding: {
         x: { datum: "2022-03-10", type: "temporal" },
-        y: { datum: 212, type: "quantitative" }
+        y: { datum: 206, type: "quantitative" }
       }
     },
 
@@ -439,7 +448,7 @@ const vis4 = {
       }
     },
 
-    // Raw weekly data (subtle) — OWNS axis + legend (only once)
+    // Raw weekly data (subtle) — OWNS axis + legend (defined only once)
     {
       mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
       encoding: {
@@ -448,20 +457,22 @@ const vis4 = {
           type: "temporal",
           title: "Date",
           axis: {
-            orient: "bottom", // force x-axis at bottom
+            orient: "bottom",
             format: "%Y",
             tickCount: { interval: "year", step: 1 },
             labelPadding: 10,
-            titlePadding: 18
+            titlePadding: 18,
+            labelOverlap: "greedy"
           }
         },
         y: {
           field: "ppl",
           type: "quantitative",
           title: "Pence per litre",
+          scale: { domain: [60, 220] },
           axis: { labelFontSize: 11, titleFontSize: 12 }
         },
-        // Coloured labels below subtitle (legend inside plotting area)
+        // Legend placed under subtitle, inside chart area
         color: {
           field: "fuel",
           type: "nominal",
@@ -473,14 +484,14 @@ const vis4 = {
             labelFontSize: 13,
             symbolSize: 240,
             symbolStrokeWidth: 3.8,
-            offset: -10,     // pulls legend up (below subtitle)
+            offset: -10,
             padding: 0
           }
         }
       }
     },
 
-    // 5-week moving average (bold) — NO legend here (prevents conflicting legend.disable warning)
+    // 5-week moving average (bold) — NO legend here
     {
       transform: [
         {
@@ -494,7 +505,12 @@ const vis4 = {
       encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
         y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre" },
-        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: null
+        }
       }
     },
 
@@ -513,11 +529,16 @@ const vis4 = {
       encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
         y: { field: "ppl_ma", type: "quantitative" },
-        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: null
+        }
       }
     },
 
-    // Interactive tooltips
+    // Interactive tooltips (invisible points)
     {
       transform: [
         {
@@ -532,7 +553,12 @@ const vis4 = {
       encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
         y: { field: "ppl_ma", type: "quantitative" },
-        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null },
+        color: {
+          field: "fuel",
+          type: "nominal",
+          scale: { range: ["#1e40af", "#d97706"] },
+          legend: null
+        },
         tooltip: [
           { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
           { field: "fuel", type: "nominal", title: "Fuel type" },

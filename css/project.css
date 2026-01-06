@@ -170,6 +170,14 @@
   }
 }
 
+/* Chart 4 only: responsive height so Vega-Lite can fit to container */
+#vis4 { height: 520px; }
+
+@media (max-width: 600px) {
+  #vis4 { height: 460px; }
+}
+
+
 /* Mobile: reduce map height a bit so it doesn't dominate */
 @media (max-width: 600px){
   .chart-frame{
