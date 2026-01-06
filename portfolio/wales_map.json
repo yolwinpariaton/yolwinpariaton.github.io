@@ -29,7 +29,7 @@
       "lookup": "properties.LAD25CD",
       "from": {
         "data": {
-          "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/wales_business.csv"
+          "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/portfolio/wales_business.csv"
         },
         "key": "geo_id",
         "fields": ["Data values", "Area"]

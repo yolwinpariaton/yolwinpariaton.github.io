@@ -4,7 +4,7 @@
     "text": "Rent vs house price inflation (UK)"
   },
   "data": {
-    "url": "data/chart8_rent_vs_house_inflation.json"
+    "url": "project/chart8_rent_vs_house_inflation.json"
   },
   "width": "container",
   "height": 300,

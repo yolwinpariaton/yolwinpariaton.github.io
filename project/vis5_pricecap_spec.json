@@ -4,7 +4,7 @@
     "text": "Energy price cap (typical annual dual-fuel bill, Great Britain)"
   },
   "data": {
-    "url": "data/chart5_energy_price_cap.json"
+    "url": "project/chart5_energy_price_cap.json"
   },
   "width": "container",
   "height": 260,

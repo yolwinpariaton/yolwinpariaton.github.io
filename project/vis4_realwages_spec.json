@@ -5,7 +5,7 @@
     "subtitle": "Weekly pump prices (2019-2025) showing the dramatic spike during the Russia-Ukraine conflict"
   },
   "data": {
-    "url": "data/vis4_fuel_weekly.json"
+    "url": "project/vis4_fuel_weekly.json"
   },
   "width": "container",
   "height": 400,

@@ -4,7 +4,7 @@
     "text": "Weekly road fuel pump prices (UK)"
   },
   "data": {
-    "url": "data/chart6_road_fuel_prices.json"
+    "url": "project/chart6_road_fuel_prices.json"
   },
   "width": "container",
   "height": 300,

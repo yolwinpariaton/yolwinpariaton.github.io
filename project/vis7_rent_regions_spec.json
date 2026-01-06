@@ -4,7 +4,7 @@
     "text": "Rent inflation by English region (latest month)"
   },
   "data": {
-    "url": "data/chart7_rent_inflation_regions.json"
+    "url": "project/chart7_rent_inflation_regions.json"
   },
   "width": "container",
   "height": 320,

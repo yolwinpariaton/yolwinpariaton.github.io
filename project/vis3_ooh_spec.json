@@ -4,7 +4,7 @@
     "text": "Owner occupiers\u2019 housing costs (OOH) inflation (CPIH component)"
   },
   "data": {
-    "url": "data/chart3_ooh_inflation.json"
+    "url": "project/chart3_ooh_inflation.json"
   },
   "width": "container",
   "height": 300,

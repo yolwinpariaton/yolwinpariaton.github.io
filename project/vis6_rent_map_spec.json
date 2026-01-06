@@ -33,7 +33,7 @@
   "layer": [
     {
       "data": {
-        "url": "data/ENG_REGIONS_TOPO.json",
+        "url": "project/ENG_REGIONS_TOPO.json",
         "format": { "type": "topojson", "feature": "FEATURE_NAME_HERE" }
       },
 
@@ -41,7 +41,7 @@
         {
           "lookup": "properties.AREACD",
           "from": {
-            "data": { "url": "data/vis6_rent_map_regions.json" },
+            "data": { "url": "project/vis6_rent_map_regions.json" },
             "key": "areacd",
             "fields": ["areanm", "rent_inflation_yoy_pct"]
           }

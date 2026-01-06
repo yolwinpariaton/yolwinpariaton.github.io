@@ -36,7 +36,7 @@
     },
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/graphs/scotland_distilleries.csv"
+        "url": "https://raw.githubusercontent.com/yolwinpariaton/yolwinpariaton.github.io/main/portfolio/scotland_distilleries.csv"
       },
       "mark": {
         "type": "circle",

@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Bread rolls price indexed to base 100",
   "data": {
-    "url": "data/price_bread.csv"
+    "url": "portfolio/price_bread.csv"
   },
   "transform": [
     {

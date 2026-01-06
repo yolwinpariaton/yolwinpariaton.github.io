@@ -9,7 +9,7 @@
     "color": "#2c3e50"
   },
   "data": {
-    "url": "data/emissions_tidy.csv",
+    "url": "portfolio/emissions_tidy.csv",
     "format": {"type": "csv"}
   },
   "transform": [

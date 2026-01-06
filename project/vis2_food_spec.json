@@ -4,7 +4,7 @@
     "text": "Food inflation (CPI) annual rate (UK)"
   },
   "data": {
-    "url": "data/chart2_food_inflation.json"
+    "url": "project/chart2_food_inflation.json"
   },
   "width": "container",
   "height": 300,

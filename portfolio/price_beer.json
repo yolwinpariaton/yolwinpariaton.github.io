@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Draught bitter price over time",
   "data": {
-    "url": "data/price_beer.csv"
+    "url": "portfolio/price_beer.csv"
   },
   "transform": [
     {

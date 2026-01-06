@@ -9,7 +9,7 @@
     "color": "#1e293b"
   },
   "data": {
-    "url": "graphs/dashboard1.json",
+    "url": "portfolio/dashboard1.json",
     "format": { "type": "json" }
   },
   "params": [
