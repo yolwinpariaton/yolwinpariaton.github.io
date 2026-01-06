@@ -316,7 +316,7 @@
 // Fixes implemented:
 //  - X-axis reliably appears (x encoding defined ONCE at top-level; no axis conflicts)
 //  - Peak label moved right (near peak) + clipped inside plot
-//  - “Weird lines” reduced (raw weekly line made subtler + monotone interpolation)
+//  - "Weird lines" reduced (raw weekly line made subtler + monotone interpolation)
 //  - Baseline text moved to avoid overlapping series
 //  - Removes legend disable warnings (color/legend defined ONCE at top-level; no conflicts)
 // --------------------------------------
@@ -383,7 +383,7 @@ const vis4 = {
         labelFontSize: 13,
         symbolSize: 240,
         symbolStrokeWidth: 3.8,
-        // ensure legend never looks “transparent”
+        // ensure legend never looks "transparent"
         symbolOpacity: 1,
         labelOpacity: 1,
         offset: -10,
@@ -496,7 +496,7 @@ const vis4 = {
       }
     },
 
-    // Raw weekly line (very subtle) — this is the “weird” volatility you noticed
+    // Raw weekly line (very subtle) — this is the "weird" volatility you noticed
     // Keep it, but make it MUCH softer + monotone smoothing
     {
       mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" }
@@ -639,7 +639,7 @@ const vis4 = {
   };
 
   // --------------------------------------
-  // 6) England regional map — IMPROVED LEGEND INTEGRATION
+  // 6) England regional map — LARGER & CENTERED
   // --------------------------------------
   const vis6 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -653,10 +653,10 @@ const vis4 = {
     },
 
     width: "container",
-    height: 360,
+    height: 480,
     
-    // Reduced bottom padding so legend feels more connected
-    padding: { top: 6, bottom: 4, left: 0, right: 0 },
+    // Top padding helps vertical centering; reduced bottom for legend integration
+    padding: { top: 12, bottom: 4, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -672,7 +672,8 @@ const vis4 = {
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    projection: { type: "mercator", center: [-2.6, 53.7], scale: 1900 },
+    // Larger scale + adjusted center for better fit
+    projection: { type: "mercator", center: [-2.6, 53.4], scale: 2400 },
 
     mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -788,7 +789,7 @@ const vis4 = {
   };
 
   // --------------------------------------
-  // 8) UK nations map — IMPROVED LEGEND INTEGRATION
+  // 8) UK nations map — LARGER & CENTERED
   // --------------------------------------
   const vis8 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -802,10 +803,10 @@ const vis4 = {
     },
 
     width: "container",
-    height: 380,
+    height: 500,
     
-    // Reduced bottom padding so legend feels more connected
-    padding: { top: 6, bottom: 4, left: 0, right: 0 },
+    // Top padding helps vertical centering; reduced bottom for legend integration
+    padding: { top: 12, bottom: 4, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -821,7 +822,8 @@ const vis4 = {
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    projection: { type: "mercator", center: [-4.3, 55.6], scale: 1020 },
+    // Larger scale + adjusted center for better horizontal/vertical balance
+    projection: { type: "mercator", center: [-3.2, 55.0], scale: 1400 },
 
     mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 

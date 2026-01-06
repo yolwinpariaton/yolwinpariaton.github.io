@@ -1,5 +1,5 @@
 // =============================
-// details.js (Robust embeds + layout patches)
+// this are details.js (just for fobust embeds + layout patches)
 // =============================
 
 const BASE_VL_CONFIG = {
@@ -186,8 +186,7 @@ async function embedMap(selector, url) {
   try {
     let spec = await getJson(url);
     
-    // Don't modify the spec at all - use it as-is
-    // Just ensure we have the right embed options for maps
+      // Just ensure i have the right embed options for maps
     const mapOptions = {
       actions: false,
       renderer: "svg"

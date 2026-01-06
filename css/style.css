@@ -270,7 +270,7 @@ a:hover{ text-decoration: underline; }
   display: block;
 }
 
-/* IMPORTANT: Force Vega to occupy full container height (fixes Task 4 frame fill) */
+/* IMPORTANT: I force Vega to occupy full container height (fixes Task 4 frame fill) */
 .vega-container .vega-embed,
 .vega-container .vega-embed .vega-vis{
   width: 100% !important;

@@ -104,8 +104,8 @@
 
 /* Give MAPS a real height so the SVG can fill it and be centered */
 .vega-map{
-  height: 380px;    /* stable box height for maps */
-  min-height: 380px;
+  height: 540px;    /* increased to accommodate larger maps */
+  min-height: 540px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -214,7 +214,7 @@
   }
 
   .vega-map{
-    height: 320px;
-    min-height: 320px;
+    height: 420px;
+    min-height: 420px;
   }
 }
