@@ -1,0 +1,211 @@
+/* Project-specific styles */
+
+/* Landing-style hero with background image */
+.hero--project{
+  position: relative;
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  background: url("../images/living_cost.jpg") center/cover no-repeat;
+}
+
+/* --- Overall page typography spacing --- */
+.task{
+  margin: 48px 0;
+}
+
+.task h2{
+  margin: 0 0 12px 0;
+}
+
+.task > p{
+  margin: 0 0 18px 0;
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------------------------ */
+/* Chart wrapper                                                       */
+/* ------------------------------------------------------------------ */
+.chart-wrapper{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  width: 100%;
+  max-width: 980px;
+  margin: 16px auto 0 auto;
+  overflow: visible;
+}
+
+/* Chart "card" contains ONLY the visualization */
+.chart-frame{
+  background: #fff;
+  border: 2px solid rgba(120, 150, 210, 0.22);
+  border-radius: 22px;
+
+  /* Card padding */
+  padding: 18px 16px 22px;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+
+  width: 100%;
+  overflow: hidden; /* keeps rounded-corner clipping clean */
+}
+
+/* Extra bottom padding for map charts to accommodate legends */
+.chart-wrapper--map .chart-frame{
+  padding-bottom: 28px;
+}
+
+/* Vega target container (the div you embed into: #vis6, #vis8, etc.) */
+.vega-container{
+  width: 100%;
+  display: block;
+  margin: 0;
+
+  /* allow Vega to size within a real box */
+  position: relative;
+}
+
+/* Vega-Embed wrapper must fill the target box */
+.vega-embed{
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+/* Vega-Embed inserts nested divs — keep responsive */
+.vega-embed > div{
+  width: 100%;
+  max-width: 100%;
+}
+
+/* IMPORTANT DEFAULT:
+   For normal charts, do NOT force height:100%.
+   Let Vega control the SVG height.
+*/
+.vega-embed svg{
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+/* Keep canvases well-behaved if any chart uses canvas */
+.vega-embed canvas{
+  max-width: 100% !important;
+  display: block;
+}
+
+/* ------------------------------------------------------------------ */
+/* Map-specific sizing                                                  */
+/* ------------------------------------------------------------------ */
+
+/* Give MAPS a real height so the SVG can fill it and be centered */
+.vega-map{
+  height: 540px;    /* increased to accommodate larger maps */
+  min-height: 540px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Narrower container specifically for maps */
+.chart-wrapper--map{
+  max-width: 600px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* MAP OVERRIDE ONLY:
+   For maps inside a fixed-height box, fill the box and center.
+*/
+.vega-map .vega-embed{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vega-map .vega-embed > div{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vega-map .vega-embed svg{
+  width: auto !important;
+  height: 90% !important;
+  max-width: 90%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* If a map ever renders to canvas, also fill the map box */
+.vega-map .vega-embed canvas{
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* ------------------------------------------------------------------ */
+/* Chart 4 only: responsive height for Vega-Lite "height: container"   */
+/* ------------------------------------------------------------------ */
+
+#vis4{ height: 430px; }
+
+@media (max-width: 900px){
+  #vis4{ height: 410px; }
+}
+
+@media (max-width: 600px){
+  #vis4{ height: 390px; }
+}
+
+/* --- Source/notes typography (outside the chart card) --- */
+.chart-source{
+  margin: 12px 2px 0;
+  color: #2b2f36;
+  font-size: 0.95rem;
+}
+
+.chart-note{
+  margin: 6px 2px 0;
+  color: #555;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* Optional: keep the page from feeling "giant" on large screens */
+@media (min-width: 1100px){
+  .container{
+    max-width: 1040px;
+  }
+}
+
+/* Mobile: reduce map height a bit so it doesn't dominate */
+@media (max-width: 600px){
+  .chart-frame{
+    padding: 14px 12px 18px;
+    border-radius: 18px;
+  }
+
+  /* Maintain extra bottom padding for maps on mobile */
+  .chart-wrapper--map .chart-frame{
+    padding-bottom: 28px;
+  }
+
+  .task{
+    margin: 36px 0;
+  }
+
+  .vega-map{
+    height: 420px;
+    min-height: 420px;
+  }
+}
