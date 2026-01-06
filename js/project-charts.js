@@ -557,6 +557,28 @@ console.log("LOADED project-charts v3-enhanced");
         field: "rent_yoy",
         type: "quantitative",
         title: "Rent inflation (% y/y)",
+        scale: { domain: [3, 10], scheme: { name: "oranges", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
+        legend: {
+          orient: "bottom",
+          direction: "horizontal",
+          gradientLength: 360,
+          gradientThickness: 14,
+          titleFontSize: 12,
+          labelFontSize: 11,
+          format: ".1f",
+          offset: 16,
+          padding: 2
+        }
+      },
+      tooltip: [
+        { field: "areanm", type: "nominal", title: "Region" },
+        { field: "rent_yoy", type: "quantitative", title: "Inflation (% y/y)", format: ".1f" }
+      ]
+    },
+
+    config: { ...THEME, axis: { ...THEME.axis, grid: false } }
+  };
+
   // --------------------------------------
   // 7) Interactive regional trend — ULTRA-PROFESSIONAL PUBLICATION VERSION
   // --------------------------------------
@@ -566,7 +588,7 @@ console.log("LOADED project-charts v3-enhanced");
 
     title: {
       text: "Regional Rent Inflation Dynamics",
-      subtitle: "Compare any English region against the national benchmark (2016–2024) | Grey band shows +/-1 standard deviation from England average",
+      subtitle: "Compare any English region against the national benchmark (2016–2024) | Grey band shows ±1 standard deviation from England average",
       anchor: "start",
       offset: 14
     },
@@ -1013,56 +1035,6 @@ console.log("LOADED project-charts v3-enhanced");
 
     config: THEME
   };
-          y: { field: "y", type: "quantitative" },
-          color: { field: "color", type: "nominal", scale: null }
-        }
-      },
-
-      {
-        data: { values: [{ label: "Selected Region", y: 9.5, color: "#dc2626" }] },
-        mark: { type: "text", fontSize: 12, fontWeight: 600, align: "left", dx: 28 },
-        encoding: {
-          x: { value: 10 },
-          y: { field: "y", type: "quantitative" },
-          text: { field: "label" },
-          color: { field: "color", type: "nominal", scale: null }
-        }
-      },
-      {
-        data: { values: [{ x: 10, y: 9.5, color: "#dc2626" }] },
-        mark: { type: "rule", strokeWidth: 4.2, size: 20 },
-        encoding: {
-          x: { value: 10 },
-          x2: { value: 30 },
-          y: { field: "y", type: "quantitative" },
-          color: { field: "color", type: "nominal", scale: null }
-        }
-      },
-
-      {
-        data: { values: [{ label: "Other Regions", y: 8.7, color: "#cbd5e1" }] },
-        mark: { type: "text", fontSize: 11, fontWeight: 400, align: "left", dx: 28, opacity: 0.7 },
-        encoding: {
-          x: { value: 10 },
-          y: { field: "y", type: "quantitative" },
-          text: { field: "label" },
-          color: { field: "color", type: "nominal", scale: null }
-        }
-      },
-      {
-        data: { values: [{ x: 10, y: 8.7, color: "#cbd5e1" }] },
-        mark: { type: "rule", strokeWidth: 1.2, size: 20, opacity: 0.3 },
-        encoding: {
-          x: { value: 10 },
-          x2: { value: 30 },
-          y: { field: "y", type: "quantitative" },
-          color: { field: "color", type: "nominal", scale: null }
-        }
-      }
-    ],
-
-    config: THEME
-  };
 
   // --------------------------------------
   // 8) UK nations map — FINAL PERFECTED
@@ -1128,7 +1100,7 @@ console.log("LOADED project-charts v3-enhanced");
     },
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
-  }
+  };
   
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
