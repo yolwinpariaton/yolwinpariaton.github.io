@@ -9,14 +9,14 @@
   background: #ffffff;
 }
 
-/* HERO: preserve your background image (whatever you already set in your CSS)
-   This only ensures proper sizing/position and prevents overlay bugs. */
+/* HERO: background image + proper sizing/position */
 .hero--project {
   position: relative;
   min-height: 380px;
   display: flex;
   align-items: flex-end;
 
+  background-image: url('../images/living-cost.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -79,9 +79,16 @@ footer {
   overflow: hidden;
 }
 
-/* IMPORTANT: kill any nested frame styling if present in style.css */
-.chart-frame * {
-  box-shadow: none;
+/* IMPORTANT: kill any nested frame styling from vega-embed */
+.chart-frame .vega-embed,
+.chart-frame .vega-embed > div,
+.chart-frame .vega-embed details,
+.chart-frame .vega-embed summary {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 /* Vega container should fill available width */
@@ -126,7 +133,7 @@ footer {
   max-height: 520px;
 }
 
-/* Cap internal svg/canvas height so the map doesn’t become "giant" */
+/* Cap internal svg/canvas height so the map doesn't become "giant" */
 .vega-map .vega-embed,
 .vega-map .vega-embed > svg,
 .vega-map .vega-embed > canvas {
