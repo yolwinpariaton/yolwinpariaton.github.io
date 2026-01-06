@@ -309,7 +309,7 @@
   };
 
 // --------------------------------------
-  // 4) Weekly fuel prices - PROFESSIONAL PUBLICATION VERSION
+  // 4) Weekly fuel prices - ENHANCED BUT SAFE
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -338,108 +338,17 @@
     ],
 
     layer: [
-      // LAYER 1: Pandemic period background (blue)
+      // KEEP ORIGINAL: Raw weekly data
       {
-        mark: { type: "rect", color: "#dbeafe", opacity: 0.35 },
-        encoding: {
-          x: { datum: "2020-03-01", type: "temporal" },
-          x2: { datum: "2020-12-31", type: "temporal" }
-        }
-      },
-
-      // LAYER 2: Crisis period background (amber)
-      {
-        mark: { type: "rect", color: "#fef3c7", opacity: 0.45 },
-        encoding: {
-          x: { datum: "2022-03-01", type: "temporal" },
-          x2: { datum: "2022-08-01", type: "temporal" }
-        }
-      },
-
-      // LAYER 3: Pre-pandemic baseline reference
-      {
-        mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 2, opacity: 0.7 },
-        encoding: { y: { datum: 120 } }
-      },
-
-      // LAYER 4: Baseline label
-      {
-        mark: { 
-          type: "text", 
-          align: "left", 
-          dx: 5, 
-          dy: -10, 
-          fontSize: 10.5, 
-          color: "#64748b",
-          fontWeight: 600,
-          text: "Pre-pandemic baseline (120p)"
-        },
-        encoding: {
-          x: { datum: "2019-02-01", type: "temporal" },
-          y: { datum: 120, type: "quantitative" }
-        }
-      },
-
-      // LAYER 5: Pandemic annotation
-      {
-        mark: { 
-          type: "text", 
-          align: "center",
-          fontSize: 11, 
-          color: "#1e40af",
-          fontWeight: 700,
-          text: "COVID-19 Pandemic"
-        },
-        encoding: {
-          x: { datum: "2020-07-15", type: "temporal" },
-          y: { datum: 100, type: "quantitative" }
-        }
-      },
-
-      // LAYER 6: Crisis annotation
-      {
-        mark: { 
-          type: "text", 
-          align: "center",
-          fontSize: 11.5, 
-          color: "#92400e",
-          fontWeight: 700,
-          text: "Russia-Ukraine Crisis"
-        },
-        encoding: {
-          x: { datum: "2022-05-15", type: "temporal" },
-          y: { datum: 197, type: "quantitative" }
-        }
-      },
-
-      // LAYER 7: Peak annotation
-      {
-        mark: { 
-          type: "text", 
-          align: "left",
-          dx: 8,
-          fontSize: 10.5, 
-          color: "#dc2626",
-          fontWeight: 700,
-          text: "Peak: 191p (+60%)"
-        },
-        encoding: {
-          x: { datum: "2022-07-17", type: "temporal" },
-          y: { datum: 191, type: "quantitative" }
-        }
-      },
-
-      // LAYER 8: Raw weekly data (subtle)
-      {
-        mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
+        mark: { type: "line", strokeWidth: 1.2, opacity: 0.15 },
         encoding: {
           x: { field: "d", type: "temporal", title: "Date", axis: { format: "%Y", tickCount: 7 } },
           y: { field: "ppl", type: "quantitative", title: "Pence per litre" },
           color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
         }
       },
-
-      // LAYER 9: 5-week moving average (MAIN DATA)
+      
+      // KEEP ORIGINAL: 5-week moving average
       {
         transform: [
           {
@@ -469,27 +378,8 @@
           }
         }
       },
-
-      // LAYER 10: Peak period emphasis points
-      {
-        transform: [
-          {
-            window: [{ op: "mean", field: "ppl", as: "ppl_ma" }],
-            frame: [-2, 2],
-            sort: [{ field: "d", order: "ascending" }],
-            groupby: ["fuel"]
-          },
-          { filter: "year(datum.d) === 2022 && month(datum.d) >= 6 && month(datum.d) <= 7" }
-        ],
-        mark: { type: "point", filled: true, size: 90, stroke: "white", strokeWidth: 2.5 },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "ppl_ma", type: "quantitative" },
-          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
-        }
-      },
-
-      // LAYER 11: Interactive tooltips
+      
+      // KEEP ORIGINAL: Tooltips
       {
         transform: [
           {
@@ -508,7 +398,8 @@
           tooltip: [
             { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
             { field: "fuel", type: "nominal", title: "Fuel type" },
-            { field: "ppl_ma", type: "quantitative", title: "Price (5-week avg)", format: ".1f" },
+            { field: "ppl", type: "quantitative", title: "Weekly price", format: ".1f" },
+            { field: "ppl_ma", type: "quantitative", title: "5-week avg", format: ".1f" },
             { field: "change_pct", type: "quantitative", title: "Change from 2019", format: "+.1f%" }
           ]
         }
