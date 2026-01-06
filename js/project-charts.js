@@ -309,7 +309,7 @@
   };
 
 // --------------------------------------
-  // 4) Weekly fuel prices - FINAL POLISHED VERSION
+  // 4) Weekly fuel prices - FINAL COMPLETE VERSION
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -324,8 +324,10 @@
 
     data: { url: "data/vis4_fuel_weekly.json" },
     width: "container",
-    height: 420,
-    padding: { top: 6, right: 6, bottom: 28, left: 6 },
+    height: 440,
+    
+    // CRITICAL FIX: More bottom padding for x-axis
+    padding: { top: 6, right: 6, bottom: 45, left: 6 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -354,76 +356,78 @@
         }
       },
 
-      // Baseline reference
+      // Baseline reference line
       {
         mark: { type: "rule", strokeDash: [6, 4], color: "#64748b", strokeWidth: 1.8, opacity: 0.65 },
         encoding: { y: { datum: 120 } }
       },
 
-      // REPOSITIONED: Baseline label (right side, clear)
+      // REPOSITIONED: Baseline label (top-right, outside data)
       {
         mark: { 
           type: "text", 
           align: "right", 
-          dx: -5, 
+          dx: -8, 
           dy: -10, 
-          fontSize: 10.5, 
+          fontSize: 10, 
           color: "#64748b",
           fontWeight: 600,
           text: "Pre-pandemic baseline (120p)"
         },
         encoding: {
-          x: { datum: "2025-11-15", type: "temporal" },
+          x: { datum: "2025-11-30", type: "temporal" },
           y: { datum: 120, type: "quantitative" }
         }
       },
 
-      // REPOSITIONED: Pandemic label (centered, lowered)
+      // REPOSITIONED: Pandemic label (inside blue, bottom-left)
       {
         mark: { 
           type: "text", 
-          align: "center",
-          fontSize: 11, 
+          align: "left",
+          dx: 5,
+          fontSize: 10.5, 
           color: "#1e40af",
           fontWeight: 700,
           text: "COVID-19 Pandemic"
         },
         encoding: {
-          x: { datum: "2020-07-15", type: "temporal" },
-          y: { datum: 90, type: "quantitative" }
+          x: { datum: "2020-03-15", type: "temporal" },
+          y: { datum: 88, type: "quantitative" }
         }
       },
 
-      // REPOSITIONED: Crisis label (centered, raised)
+      // REPOSITIONED: Crisis label (inside amber, top-left)
       {
         mark: { 
           type: "text", 
-          align: "center",
-          fontSize: 11.5, 
+          align: "left",
+          dx: 5,
+          fontSize: 10.5, 
           color: "#92400e",
           fontWeight: 700,
           text: "Russia-Ukraine Crisis"
         },
         encoding: {
-          x: { datum: "2022-05-15", type: "temporal" },
-          y: { datum: 203, type: "quantitative" }
+          x: { datum: "2022-03-10", type: "temporal" },
+          y: { datum: 205, type: "quantitative" }
         }
       },
 
-      // REPOSITIONED: Peak label (right side of peak)
+      // REPOSITIONED: Peak label (right of peak, clear space)
       {
         mark: { 
           type: "text", 
           align: "left",
-          dx: 10,
-          fontSize: 10.5, 
+          dx: 12,
+          fontSize: 10, 
           color: "#dc2626",
           fontWeight: 700,
           text: "Peak: 191p (+60%)"
         },
         encoding: {
-          x: { datum: "2022-07-20", type: "temporal" },
-          y: { datum: 188, type: "quantitative" }
+          x: { datum: "2022-08-01", type: "temporal" },
+          y: { datum: 185, type: "quantitative" }
         }
       },
 
@@ -536,6 +540,7 @@
 
     config: THEME
   };
+  
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
@@ -680,7 +685,7 @@
     // Turn off axis gridlines for maps (cleaner)
     config: { ...THEME, ...LEGEND_POLICY, axis: { ...THEME.axis, grid: false } }
   };
-  
+
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
