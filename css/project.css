@@ -1,3 +1,4 @@
+/* css/project.css */
 /* Project-specific styles */
 
 /* Landing-style hero with background image */
@@ -51,7 +52,9 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 
   width: 100%;
-  overflow: hidden; /* keeps rounded-corner clipping clean */
+
+  /* FIX: allow Vega axes/labels to render fully (x-axis was being clipped) */
+  overflow: visible; /* was hidden */
 }
 
 /* Vega target container (the div you embed into: #vis6, #vis8, etc.) */

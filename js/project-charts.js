@@ -315,8 +315,8 @@
     config: THEME
   };
 
-// --------------------------------------
-  // 4) Weekly fuel prices - FINAL COMPLETE VERSION
+  // --------------------------------------
+  // 4) Weekly fuel prices - CORRECTED VERSION
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -332,9 +332,9 @@
     data: { url: "data/vis4_fuel_weekly.json" },
     width: "container",
     height: 440,
-    
-    // CRITICAL FIX: More bottom padding for x-axis
-    padding: { top: 6, right: 6, bottom: 45, left: 6 },
+
+    // FIX: give axes/labels space + reserve top space for coloured label under subtitle
+    padding: { top: 34, right: 12, bottom: 62, left: 56 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -347,6 +347,26 @@
     ],
 
     layer: [
+      // ----- COLOURED LABELS just under subtitle (acts as a key) -----
+      {
+        data: { values: [{ x: 90, y: -18, t: "Unleaded (petrol)" }] },
+        mark: { type: "text", fontSize: 12, fontWeight: 700, align: "left", baseline: "top", color: "#1e40af" },
+        encoding: {
+          x: { field: "x", type: "quantitative", axis: null },
+          y: { field: "y", type: "quantitative", axis: null },
+          text: { field: "t" }
+        }
+      },
+      {
+        data: { values: [{ x: 260, y: -18, t: "Diesel" }] },
+        mark: { type: "text", fontSize: 12, fontWeight: 700, align: "left", baseline: "top", color: "#d97706" },
+        encoding: {
+          x: { field: "x", type: "quantitative", axis: null },
+          y: { field: "y", type: "quantitative", axis: null },
+          text: { field: "t" }
+        }
+      },
+
       // Period backgrounds
       {
         mark: { type: "rect", color: "#dbeafe", opacity: 0.3 },
@@ -369,72 +389,72 @@
         encoding: { y: { datum: 120 } }
       },
 
-      // REPOSITIONED: Baseline label (top-right, outside data)
+      // Baseline label (moved slightly above the line to reduce overlap)
       {
-        mark: { 
-          type: "text", 
-          align: "right", 
-          dx: -8, 
-          dy: -10, 
-          fontSize: 10, 
+        mark: {
+          type: "text",
+          align: "right",
+          dx: -8,
+          dy: -10,
+          fontSize: 10,
           color: "#64748b",
           fontWeight: 600,
           text: "Pre-pandemic baseline (120p)"
         },
         encoding: {
           x: { datum: "2025-11-30", type: "temporal" },
-          y: { datum: 120, type: "quantitative" }
+          y: { datum: 126, type: "quantitative" }
         }
       },
 
-      // REPOSITIONED: Pandemic label (inside blue, bottom-left)
+      // Pandemic label (lower to avoid crossing the series)
       {
-        mark: { 
-          type: "text", 
+        mark: {
+          type: "text",
           align: "left",
           dx: 5,
-          fontSize: 10.5, 
+          fontSize: 10.5,
           color: "#1e40af",
           fontWeight: 700,
           text: "COVID-19 Pandemic"
         },
         encoding: {
           x: { datum: "2020-03-15", type: "temporal" },
-          y: { datum: 88, type: "quantitative" }
+          y: { datum: 78, type: "quantitative" }
         }
       },
 
-      // REPOSITIONED: Crisis label (inside amber, top-left)
+      // Crisis label (slightly higher)
       {
-        mark: { 
-          type: "text", 
+        mark: {
+          type: "text",
           align: "left",
           dx: 5,
-          fontSize: 10.5, 
+          fontSize: 10.5,
           color: "#92400e",
           fontWeight: 700,
           text: "Russia-Ukraine Crisis"
         },
         encoding: {
           x: { datum: "2022-03-10", type: "temporal" },
-          y: { datum: 205, type: "quantitative" }
+          y: { datum: 212, type: "quantitative" }
         }
       },
 
-      // REPOSITIONED: Peak label (right of peak, clear space)
+      // Peak label (adjusted position)
       {
-        mark: { 
-          type: "text", 
+        mark: {
+          type: "text",
           align: "left",
           dx: 12,
-          fontSize: 10, 
+          fontSize: 10,
           color: "#dc2626",
           fontWeight: 700,
           text: "Peak: 191p (+60%)"
         },
         encoding: {
           x: { datum: "2022-08-01", type: "temporal" },
-          y: { datum: 185, type: "quantitative" }
+          y: { datum: 192, type: "quantitative" }
         }
       },
 
@@ -442,22 +462,23 @@
       {
         mark: { type: "line", strokeWidth: 1, opacity: 0.12 },
         encoding: {
-          x: { 
-            field: "d", 
-            type: "temporal", 
+          x: {
+            field: "d",
+            type: "temporal",
             title: "Date",
-            axis: { 
-              format: "%Y", 
+            axis: {
+              format: "%Y",
               tickCount: 7,
               labelFontSize: 11,
               titleFontSize: 12,
-              labelPadding: 8,
-              titlePadding: 12
+              labelPadding: 10,
+              titlePadding: 16,
+              labelOverlap: "greedy"
             }
           },
-          y: { 
-            field: "ppl", 
-            type: "quantitative", 
+          y: {
+            field: "ppl",
+            type: "quantitative",
             title: "Pence per litre",
             axis: {
               labelFontSize: 11,
@@ -467,8 +488,8 @@
           color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
         }
       },
-      
-      // 5-week moving average with legend
+
+      // 5-week moving average (no legend: coloured subtitle labels act as the key)
       {
         transform: [
           {
@@ -482,21 +503,7 @@
         encoding: {
           x: { field: "d", type: "temporal", title: "Date" },
           y: { field: "ppl_ma", type: "quantitative", title: "Pence per litre" },
-          color: {
-            field: "fuel",
-            type: "nominal",
-            scale: { range: ["#1e40af", "#d97706"] },
-            legend: { 
-              orient: "top", 
-              direction: "horizontal", 
-              title: null, 
-              padding: 15,
-              symbolSize: 240,
-              labelFontSize: 13,
-              symbolStrokeWidth: 3.8,
-              offset: 5
-            }
-          }
+          color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
         }
       },
 
@@ -518,7 +525,7 @@
           color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null }
         }
       },
-      
+
       // Interactive tooltips
       {
         transform: [
@@ -547,7 +554,7 @@
 
     config: THEME
   };
-  
+
   // --------------------------------------
   // 5) Rent vs house price
   // --------------------------------------
@@ -625,7 +632,7 @@
     config: THEME
   };
 
-// --------------------------------------
+  // --------------------------------------
   // 6) England regional map
   // --------------------------------------
   const vis6 = {
@@ -771,7 +778,7 @@
     config: THEME
   };
 
-    // --------------------------------------
+  // --------------------------------------
   // 8) UK nations map
   // --------------------------------------
   const vis8 = {
@@ -832,6 +839,7 @@
 
     config: { ...THEME, ...LEGEND_POLICY, axis: { ...THEME.axis, grid: false } }
   };
+
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
