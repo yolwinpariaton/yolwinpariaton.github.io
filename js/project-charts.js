@@ -67,7 +67,7 @@ console.log("LOADED project-charts v3-fixed");
     });
   }
 
-  // ------------------------------------------------------------------
+// ------------------------------------------------------------------
   // 1) Prices vs Pay (Indexed) - PUBLICATION READY
   // ------------------------------------------------------------------
   const vis1 = {
@@ -77,8 +77,8 @@ console.log("LOADED project-charts v3-fixed");
     title: {
       text: "The Real Wage Squeeze: Prices vs Pay",
       subtitle: [
-        "Indices (January 2019 = 100). Red = Prices (CPIH) | Black = Real Earnings.",
-        "The gap represents the significant loss in consumer purchasing power since 2022."
+        "Indices (January 2019 = 100). The gap represents the loss in consumer",
+        "purchasing power as inflation outpaced real earnings growth."
       ],
       anchor: "start",
       offset: 25,
@@ -92,7 +92,7 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 400,
 
-    padding: { top: 20, right: 80, bottom: 20, left: 10 },
+    padding: { top: 40, right: 20, bottom: 20, left: 10 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -104,7 +104,22 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      // 1. Baseline Reference Line (2019 level)
+      // 1. Custom Legend Labels (Positioned above the chart, below subtitle)
+      {
+        data: { values: [
+          { x: "2019-01-01", label: "■ Prices (CPIH)", color: "#e11d48", offset: 0 },
+          { x: "2020-06-01", label: "■ Real Earnings", color: "#0f172a", offset: 120 }
+        ]},
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 12, baseline: "bottom" },
+        encoding: {
+          x: { field: "x", type: "temporal" },
+          y: { value: -20 }, // Positioned in the top padding area
+          text: { field: "label" },
+          color: { field: "color", type: "nominal", scale: null }
+        }
+      },
+
+      // 2. Baseline Reference Line (100)
       {
         mark: {
           type: "rule",
@@ -116,7 +131,7 @@ console.log("LOADED project-charts v3-fixed");
         encoding: { y: { datum: 100 } }
       },
       
-      // 2. Shaded Gap Area
+      // 3. Shaded Gap Area
       {
         mark: {
           type: "area",
@@ -153,7 +168,7 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
-      // 3. Price Line (CPIH)
+      // 4. Price Line (CPIH)
       {
         mark: { type: "line", strokeWidth: 3.5, color: "#e11d48", interpolate: "monotone" },
         encoding: {
@@ -162,7 +177,7 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
-      // 4. Earnings Line
+      // 5. Earnings Line
       {
         mark: { type: "line", strokeWidth: 3.5, color: "#0f172a", interpolate: "monotone" },
         encoding: {
@@ -171,7 +186,27 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
-      // 5. Tooltip Hit Area (Transparent points for easier hovering)
+      // 6. Annotation for Maximum Gap
+      {
+        transform: [
+          { window: [{ op: "max", field: "gap", as: "max_gap" }] },
+          { filter: "datum.gap === datum.max_gap" }
+        ],
+        mark: { 
+          type: "text", 
+          dy: -20, 
+          fontSize: 11, 
+          fontWeight: "600", 
+          color: "#475569",
+          text: "Maximum Pressure Point"
+        },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "prices", type: "quantitative" }
+        }
+      },
+
+      // 7. Tooltip Layer
       {
         mark: { type: "point", size: 100, opacity: 0 },
         encoding: {
@@ -180,62 +215,14 @@ console.log("LOADED project-charts v3-fixed");
           tooltip: [
             { field: "d", type: "temporal", title: "Month", format: "%B %Y" },
             { field: "prices", type: "quantitative", title: "Price Index", format: ".1f" },
-            { field: "earnings", type: "quantitative", title: "Earnings Index", format: ".1f" },
-            { field: "gap", type: "quantitative", title: "Index Point Gap", format: ".1f" }
+            { field: "earnings", type: "quantitative", title: "Earnings Index", format: ".1f" }
           ]
         }
-      },
-
-      // 6. Direct Label: Prices
-      {
-        transform: [{ window: [{ op: "rank", as: "rank" }], sort: [{ field: "d", order: "descending" }] }, { filter: "datum.rank === 1" }],
-        mark: { type: "text", align: "left", dx: 10, fontWeight: "bold", fontSize: 12, color: "#e11d48" },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "prices", type: "quantitative" },
-          text: { value: "PRICES" }
-        }
-      },
-
-      // 7. Direct Label: Pay
-      {
-        transform: [{ window: [{ op: "rank", as: "rank" }], sort: [{ field: "d", order: "descending" }] }, { filter: "datum.rank === 1" }],
-        mark: { type: "text", align: "left", dx: 10, fontWeight: "bold", fontSize: 12, color: "#0f172a" },
-        encoding: {
-          x: { field: "d", type: "temporal" },
-          y: { field: "earnings", type: "quantitative" },
-          text: { value: "PAY" }
-        }
-      },
-
-      // 8. Annotation for Peak Gap (Circa Late 2022/Early 2023)
-      {
-        transform: [
-          { window: [{ op: "max", field: "gap", as: "max_gap" }] },
-          { filter: "datum.gap === datum.max_gap" }
-        ],
-        layer: [
-          {
-            mark: { type: "text", dy: -25, fontSize: 11, fontWeight: "600", color: "#475569" },
-            encoding: {
-              x: { field: "d", type: "temporal" },
-              y: { field: "prices", type: "quantitative" },
-              text: { value: "Maximum Pressure Point" }
-            }
-          },
-          {
-            mark: { type: "point", shape: "arrow", angle: 0, size: 40, color: "#475569" },
-            encoding: {
-              x: { field: "d", type: "temporal" },
-              y: { field: "prices", type: "quantitative" }
-            }
-          }
-        ]
       }
     ],
 
     config: { ...THEME, view: { stroke: null } }
-  };  
+  };
   // --------------------------------------
   // 2) Food inflation vs headline
   // --------------------------------------
