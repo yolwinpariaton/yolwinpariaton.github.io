@@ -309,7 +309,7 @@
   };
 
 // --------------------------------------
-  // 4) Weekly fuel prices - ENHANCED BUT SAFE
+  // 4) Weekly fuel prices - FORMAT ERROR FIXED
   // --------------------------------------
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -338,7 +338,7 @@
     ],
 
     layer: [
-      // KEEP ORIGINAL: Raw weekly data
+      // Raw weekly data
       {
         mark: { type: "line", strokeWidth: 1.2, opacity: 0.15 },
         encoding: {
@@ -348,7 +348,7 @@
         }
       },
       
-      // KEEP ORIGINAL: 5-week moving average
+      // 5-week moving average
       {
         transform: [
           {
@@ -379,7 +379,7 @@
         }
       },
       
-      // KEEP ORIGINAL: Tooltips
+      // Tooltips with FIXED format
       {
         transform: [
           {
@@ -400,7 +400,7 @@
             { field: "fuel", type: "nominal", title: "Fuel type" },
             { field: "ppl", type: "quantitative", title: "Weekly price", format: ".1f" },
             { field: "ppl_ma", type: "quantitative", title: "5-week avg", format: ".1f" },
-            { field: "change_pct", type: "quantitative", title: "Change from 2019", format: "+.1f%" }
+            { field: "change_pct", type: "quantitative", title: "Change from 2019 (%)", format: ".1f" }
           ]
         }
       }
