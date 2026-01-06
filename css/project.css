@@ -1,101 +1,146 @@
-/* ================================
-   styles.css (FULL - corrected)
-   ================================ */
+/* =========================
+   GLOBAL / PAGE
+========================= */
 
-/* Basic reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+:root{
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #d9e1f2;
+  --card: #ffffff;
+  --shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  --radius: 28px;
 }
 
-html, body {
+*{ box-sizing: border-box; }
+
+html, body{
+  height: 100%;
+}
+
+body{
   margin: 0;
-  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  line-height: 1.5;
 }
 
-body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  color: #0f172a;
-  background: #ffffff;
-  line-height: 1.4;
+/* If you previously added a dark overlay using pseudo-elements, this disables it */
+body::before,
+body::after{
+  content: none !important;
 }
 
-/* Page layout (adjust if you already have a container system) */
-main {
-  width: min(1100px, 92vw);
-  margin: 24px auto 56px auto;
+/* Do NOT use opacity on big wrappers (this is a common cause of “grey overlays”). */
+main, header, section, .container, .content{
+  opacity: 1 !important;
 }
 
-/* Section spacing so charts never overlap next headings */
-section {
-  margin: 0 0 34px 0;
+/* =========================
+   LAYOUT
+========================= */
+
+.container{
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
 }
 
-/* Your framed chart cards */
-.chart-frame {
-  background: #ffffff;
-  border: 3px solid #d9deef;
-  border-radius: 38px;
-  padding: 26px 28px 26px 28px;
-  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
-  margin: 18px 0 26px 0;
-
-  /* CRITICAL: do not clip Vega content (legends can be near edges) */
-  overflow: visible;
+.section{
+  padding: 28px 0;
 }
 
-/* The div where Vega gets embedded (e.g. <div id="vis6"></div>) */
-.chart-frame .vis,
-.chart-frame .chart,
-.chart-frame [id^="vis"] {
+.section h2{
+  margin: 0 0 10px 0;
+  font-size: 32px;
+}
+
+.section p{
+  margin: 0 0 16px 0;
+  color: var(--muted);
+}
+
+/* =========================
+   CHART CARD / FRAME
+========================= */
+
+.chart-card{
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px 22px 18px 22px;
+  margin: 18px auto 34px auto; /* IMPORTANT: prevents overlap with next topic */
+}
+
+/* This is the div you embed into, e.g. <div id="vis6" class="vis"></div> */
+.vis{
   width: 100%;
-  overflow: visible;
+  display: block;
+  position: relative;
+  /* IMPORTANT: do not set fixed height here; Vega will size itself */
 }
 
-/* Vega embed wrapper */
-.vega-embed {
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow: visible !important;
-}
+/* =========================
+   VEGA EMBED RESPONSIVE + CENTER
+========================= */
 
-/* Ensure SVG scales nicely */
-.vega-embed svg {
-  width: 100% !important;
-  height: auto !important;
+/* vega-embed wrapper */
+.vega-embed{
+  width: 100%;
   display: block;
 }
 
-/* If Vega outputs a canvas, keep it responsive too */
-.vega-embed canvas {
-  max-width: 100% !important;
-  height: auto !important;
+/* Center the actual rendered SVG/canvas */
+.vega-embed > svg,
+.vega-embed > canvas{
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
 }
 
-/* Remove Vega action menu spacing if it ever appears */
-.vega-embed .vega-actions {
+/* Sometimes vega-embed inserts a div wrapper; ensure it doesn't break layout */
+.vega-embed > div{
+  width: 100%;
+}
+
+/* Hide the "Open in Vega Editor" etc (you already set actions:false, but keep safe) */
+.vega-actions{
   display: none !important;
 }
 
-/* Headings / typography (optional but safe) */
-h1, h2, h3 {
-  margin: 18px 0 10px 0;
-  line-height: 1.15;
+/* IMPORTANT:
+   Do NOT clip content. If you set overflow:hidden on the chart container,
+   Vega legends can appear to “disappear” when they sit near the bottom.
+*/
+.chart-card,
+.vis,
+.vega-embed{
+  overflow: visible !important;
 }
 
-p {
-  margin: 10px 0;
+/* =========================
+   OPTIONAL: FOOTNOTES / SOURCES
+========================= */
+
+.source{
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
-/* Mobile adjustments */
-@media (max-width: 720px) {
-  main {
-    width: min(980px, 94vw);
+/* =========================
+   RESPONSIVE TWEAKS
+========================= */
+
+@media (max-width: 700px){
+  .chart-card{
+    padding: 18px 16px 14px 16px;
+    border-radius: 22px;
   }
 
-  .chart-frame {
-    border-radius: 26px;
-    padding: 18px 16px 18px 16px;
+  .section h2{
+    font-size: 26px;
   }
 }

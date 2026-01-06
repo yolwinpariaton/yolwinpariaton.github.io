@@ -892,9 +892,8 @@ const vis4 = {
 
     config: THEME
   };
-
-  // --------------------------------------
-// 6) England regional map — FIXED (legend ON + sized correctly)
+// --------------------------------------
+// 6) England regional map — centered + legend forced ON + smaller
 // --------------------------------------
 const vis6 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -911,8 +910,8 @@ const vis6 = {
   width: "container",
   height: 360,
 
-  // Reserve space for the legend at the bottom
-  padding: { top: 18, bottom: 70, left: 0, right: 0 },
+  /* Enough space for legend; avoids overlap with next section */
+  padding: { top: 18, bottom: 62, left: 0, right: 0 },
 
   data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -928,7 +927,7 @@ const vis6 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  // Smaller + better centered for England regions
+  /* Slightly smaller scale so it doesn’t dominate */
   projection: { type: "mercator", center: [-2.6, 53.5], scale: 2000 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
@@ -944,16 +943,14 @@ const vis6 = {
         unknown: "#e5e7eb"
       },
       legend: {
-        disable: false,                 // IMPORTANT: force legend ON
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 520,
+        gradientLength: 420,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
         format: ".1f",
-        offset: 10,
-        padding: 6
+        offset: 10
       }
     },
     tooltip: [
@@ -962,13 +959,14 @@ const vis6 = {
     ]
   },
 
-  // IMPORTANT: override any global "legend.disable" coming from elsewhere
+  /* FORCE legends ON to defeat the global disable conflict */
   config: {
     ...THEME,
     axis: { ...THEME.axis, grid: false },
     legend: { disable: false }
   }
 };
+
 
 // --------------------------------------
   // 7) Interactive regional trend — PROFESSIONAL PUBLICATION VERSION
@@ -1299,8 +1297,8 @@ const vis6 = {
     config: THEME
   };
 
-  // --------------------------------------
-// 8) UK nations map — FIXED (legend ON + sized correctly)
+// --------------------------------------
+// 8) UK nations map — centered + legend forced ON + smaller
 // --------------------------------------
 const vis8 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -1316,8 +1314,8 @@ const vis8 = {
   width: "container",
   height: 380,
 
-  // Reserve space for the legend at the bottom
-  padding: { top: 18, bottom: 70, left: 0, right: 0 },
+  /* Enough room for the legend */
+  padding: { top: 18, bottom: 62, left: 0, right: 0 },
 
   data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -1333,8 +1331,8 @@ const vis8 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  // Smaller + better centered for whole UK
-  projection: { type: "mercator", center: [-3.2, 55.2], scale: 1150 },
+  /* Slightly smaller scale than before */
+  projection: { type: "mercator", center: [-3.2, 55.2], scale: 1200 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 
@@ -1349,16 +1347,14 @@ const vis8 = {
         unknown: "#e5e7eb"
       },
       legend: {
-        disable: false,                 // IMPORTANT: force legend ON
         orient: "bottom",
         direction: "horizontal",
-        gradientLength: 520,
+        gradientLength: 420,
         gradientThickness: 14,
         titleFontSize: 12,
         labelFontSize: 11,
         format: ".1f",
-        offset: 10,
-        padding: 6
+        offset: 10
       }
     },
     tooltip: [
@@ -1367,7 +1363,7 @@ const vis8 = {
     ]
   },
 
-  // IMPORTANT: override any global "legend.disable" coming from elsewhere
+  /* FORCE legends ON to defeat the global disable conflict */
   config: {
     ...THEME,
     axis: { ...THEME.axis, grid: false },
