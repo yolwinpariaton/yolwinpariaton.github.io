@@ -2,9 +2,9 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Rent Inflation: UK Nations",
   "width": "container",
-  "height": 360,
+  "height": 500,
   "autosize": { "type": "fit", "contains": "padding", "resize": true },
-  "padding": { "left": 10, "right": 10, "top": 0, "bottom": 0 },
+  "padding": { "left": 10, "right": 10, "top": 10, "bottom": 10 },
 
   "title": {
     "text": "Rent Inflation: UK Nations",
@@ -15,12 +15,13 @@
   },
 
   "data": {
-    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/gb-nation.geo.json"
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/gb/ctry.json",
+    "format": { "type": "json", "property": "features" }
   },
 
   "transform": [
     {
-      "lookup": "properties.name",
+      "lookup": "properties.CTRY12NM",
       "from": {
         "data": { "url": "data/vis8_rent_map_countries.csv" },
         "key": "country",
@@ -30,9 +31,17 @@
     { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "infl" }
   ],
 
-  "projection": { "type": "mercator" },
+  "projection": { 
+    "type": "mercator",
+    "center": [-3, 54.5],
+    "scale": 1800
+  },
 
-  "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1.2 },
+  "mark": { 
+    "type": "geoshape", 
+    "stroke": "white", 
+    "strokeWidth": 2 
+  },
 
   "encoding": {
     "color": {
@@ -40,17 +49,21 @@
       "type": "quantitative",
       "title": "Rent inflation (% y/y)",
       "scale": { "scheme": "oranges", "domain": [3, 9] },
-      "legend": { "orient": "bottom", "direction": "horizontal" }
+      "legend": { 
+        "orient": "bottom", 
+        "direction": "horizontal",
+        "titleFontSize": 11,
+        "labelFontSize": 10
+      }
     },
     "tooltip": [
-      { "field": "properties.name", "type": "nominal", "title": "Nation" },
-      { "field": "infl", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
+      { "field": "properties.CTRY12NM", "type": "nominal", "title": "Nation" },
+      { "field": "infl", "type": "quantitative", "title": "Rent inflation (%)", "format": ".1f" }
     ]
   },
 
   "config": {
     "background": "#ffffff",
-    "view": { "stroke": null },
-    "legend": { "disable": false }
+    "view": { "stroke": null }
   }
 }
