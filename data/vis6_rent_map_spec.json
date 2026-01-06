@@ -30,7 +30,7 @@
   },
 
   "data": {
-    "url": "data/ENG_REGIONS_TOPO.json",
+    "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json",
     "format": { "type": "topojson", "feature": "rgn" }
   },
 
@@ -61,8 +61,14 @@
       "scale": { "scheme": "blues", "domain": [3.0, 10.0] }
     },
     "tooltip": [
-      { "field": "areanm", "type": "nominal", "title": "Region" },
-      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
+      { "field": "properties.AREANM", "type": "nominal", "title": "Region (map)" },
+      { "field": "areanm", "type": "nominal", "title": "Region (data)" },
+      {
+        "field": "rent_inflation_yoy_pct",
+        "type": "quantitative",
+        "title": "Rent inflation (% y/y)",
+        "format": ".1f"
+      }
     ]
   }
 }

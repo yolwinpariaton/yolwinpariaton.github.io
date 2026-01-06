@@ -30,7 +30,7 @@
   },
 
   "data": {
-    "url": "data/UK_NATIONS_TOPO.json",
+    "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json",
     "format": { "type": "topojson", "feature": "ctry" }
   },
 
@@ -61,8 +61,14 @@
       "scale": { "scheme": "oranges", "domain": [3.0, 9.0] }
     },
     "tooltip": [
-      { "field": "areanm", "type": "nominal", "title": "Nation" },
-      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
+      { "field": "properties.AREANM", "type": "nominal", "title": "Nation (map)" },
+      { "field": "areanm", "type": "nominal", "title": "Nation (data)" },
+      {
+        "field": "rent_inflation_yoy_pct",
+        "type": "quantitative",
+        "title": "Rent inflation (% y/y)",
+        "format": ".1f"
+      }
     ]
   }
 }
