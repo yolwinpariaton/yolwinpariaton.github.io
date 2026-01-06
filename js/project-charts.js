@@ -330,7 +330,7 @@ console.log("LOADED project-charts v2");
   data: { url: "data/vis4_fuel_weekly.json" },
   width: "container",
   height: "container",
-  padding: { top: 44, right: 16, bottom: 54, left: 62 },
+  padding: { top: 34, right: 16, bottom: 54, left: 62 },
 
   transform: [
     { calculate: "toDate(datum.date)", as: "d" },
@@ -343,34 +343,12 @@ console.log("LOADED project-charts v2");
   ],
 
   layer: [
-    // Shaded periods (draw once)
-    {
-      data: { values: [{ x1: "2020-03-01", x2: "2021-03-01" }] },
-      mark: { type: "rect", opacity: 0.18, color: "#dbeafe" },
-      encoding: {
-        x: { field: "x1", type: "temporal" },
-        x2: { field: "x2" },
-        y: { datum: 60 },
-        y2: { datum: 220 }
-      }
-    },
-    {
-      data: { values: [{ x1: "2022-02-24", x2: "2022-10-01" }] },
-      mark: { type: "rect", opacity: 0.18, color: "#fef3c7" },
-      encoding: {
-        x: { field: "x1", type: "temporal" },
-        x2: { field: "x2" },
-        y: { datum: 60 },
-        y2: { datum: 220 }
-      }
-    },
-
-    // Raw weekly series (subtle, no axis, no legend)
+    // Raw weekly (subtle) — NO legend, NO axis
     {
       mark: { type: "line", strokeWidth: 0.8, opacity: 0.06, interpolate: "monotone" },
       encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
-        y: { field: "ppl", type: "quantitative", scale: { domain: [60, 220] }, axis: null, title: null },
+        y: { field: "ppl", type: "quantitative", axis: null, title: null, scale: { domain: [60, 220] } },
         color: {
           field: "fuel",
           type: "nominal",
@@ -380,7 +358,7 @@ console.log("LOADED project-charts v2");
       }
     },
 
-    // Moving average (bold) — OWNS axis + legend (only once)
+    // Moving average (bold) — OWNS axis + legend (the only legend)
     {
       transform: [
         {
@@ -399,7 +377,7 @@ console.log("LOADED project-charts v2");
           axis: {
             orient: "bottom",
             format: "%Y",
-            tickCount: { interval: "year", step: 1 },  // <- IMPORTANT FIX
+            tickCount: 7,              // keep SIMPLE (avoid the axis crash)
             labelPadding: 10,
             titlePadding: 10,
             labelOverlap: "greedy"
@@ -423,16 +401,14 @@ console.log("LOADED project-charts v2");
             labelFontSize: 13,
             symbolSize: 240,
             symbolStrokeWidth: 3.8,
-            symbolOpacity: 1,
-            labelOpacity: 1,
-            offset: -10,
+            offset: -6,
             padding: 0
           }
         }
       }
     },
 
-    // Tooltips (invisible points, no legend)
+    // Tooltips (invisible points)
     {
       transform: [
         {
@@ -440,24 +416,17 @@ console.log("LOADED project-charts v2");
           frame: [-2, 2],
           sort: [{ field: "d", order: "ascending" }],
           groupby: ["fuel"]
-        },
-        { calculate: "((datum.ppl_ma - 120) / 120) * 100", as: "change_pct" }
+        }
       ],
       mark: { type: "point", filled: true, size: 60, opacity: 0 },
       encoding: {
         x: { field: "d", type: "temporal", axis: null, title: null },
         y: { field: "ppl_ma", type: "quantitative", axis: null, title: null },
-        color: {
-          field: "fuel",
-          type: "nominal",
-          scale: { range: ["#1e40af", "#d97706"] },
-          legend: null
-        },
+        color: { field: "fuel", type: "nominal", scale: { range: ["#1e40af", "#d97706"] }, legend: null },
         tooltip: [
           { field: "d", type: "temporal", title: "Week", format: "%b %d, %Y" },
           { field: "fuel", type: "nominal", title: "Fuel type" },
-          { field: "ppl_ma", type: "quantitative", title: "Price (5-week avg)", format: ".1f" },
-          { field: "change_pct", type: "quantitative", title: "Change from 2019 (%)", format: ".1f" }
+          { field: "ppl_ma", type: "quantitative", title: "Price (5-week avg)", format: ".1f" }
         ]
       }
     }
@@ -558,9 +527,10 @@ console.log("LOADED project-charts v2");
     },
 
     width: "container",
-    height: 500,
+    height: 480,
     
-    padding: { top: 6, bottom: 40, left: 0, right: 0 },
+    // Better balance: more top, less bottom
+    padding: { top: 20, bottom: 35, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -576,7 +546,8 @@ console.log("LOADED project-charts v2");
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    projection: { type: "mercator", center: [-2.6, 53.3], scale: 2500 },
+    // Adjusted center for better vertical positioning
+    projection: { type: "mercator", center: [-2.6, 53.5], scale: 2400 },
 
     mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -594,7 +565,7 @@ console.log("LOADED project-charts v2");
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 18,
+          offset: 16,
           padding: 2
         }
       },
@@ -606,7 +577,6 @@ console.log("LOADED project-charts v2");
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
-
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
@@ -706,9 +676,10 @@ console.log("LOADED project-charts v2");
     },
 
     width: "container",
-    height: 520,
+    height: 500,
     
-    padding: { top: 6, bottom: 32, left: 0, right: 0 },
+    // Better balance: more top, less bottom
+    padding: { top: 18, bottom: 30, left: 0, right: 0 },
 
     data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -724,7 +695,8 @@ console.log("LOADED project-charts v2");
       { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
     ],
 
-    projection: { type: "mercator", center: [-3.2, 54.8], scale: 1450 },
+    // Better centered
+    projection: { type: "mercator", center: [-3.2, 55.2], scale: 1400 },
 
     mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 
@@ -742,7 +714,7 @@ console.log("LOADED project-charts v2");
           titleFontSize: 12,
           labelFontSize: 11,
           format: ".1f",
-          offset: 12,
+          offset: 10,
           padding: 2
         }
       },
@@ -754,7 +726,6 @@ console.log("LOADED project-charts v2");
 
     config: { ...THEME, axis: { ...THEME.axis, grid: false } }
   };
-
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
   safeEmbed("#vis2", vis2);
