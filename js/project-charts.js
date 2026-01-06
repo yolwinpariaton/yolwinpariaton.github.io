@@ -67,8 +67,8 @@ console.log("LOADED project-charts v3-fixed");
     });
   }
 
-// ------------------------------------------------------------------
-  // 1) Prices vs Pay (Indexed) - FIXED LABELS & X-AXIS TITLE
+  // ------------------------------------------------------------------
+  // 1) Prices vs Pay (Indexed) - FINAL STABLE VERSION
   // ------------------------------------------------------------------
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -92,8 +92,8 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 400,
 
-    // Increased padding to ensure legend labels and axis titles don't clip
-    padding: { top: 70, right: 30, bottom: 40, left: 30 },
+    // Increased top padding to 80 to prevent legend clipping
+    padding: { top: 80, right: 30, bottom: 40, left: 30 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -105,23 +105,23 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      // 1. Custom Legend: Prices (Positioned far left)
+      // 1. Custom Legend: Prices (Fixed Pixel Position)
       {
         data: { values: [{ label: "■ Prices (CPIH)" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#e11d48" },
         encoding: {
-          x: { datum: "2019-01-15", type: "temporal" }, 
-          y: { value: -40 },
+          x: { value: 20 }, // Fixed pixels from left
+          y: { value: -45 }, // Fixed pixels above chart
           text: { field: "label" }
         }
       },
-      // 2. Custom Legend: Earnings (Moved significantly right to 2021 to prevent overlap)
+      // 2. Custom Legend: Earnings (Fixed Pixel Position - No Overlap)
       {
         data: { values: [{ label: "■ Real Earnings" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#0f172a" },
         encoding: {
-          x: { datum: "2021-06-01", type: "temporal" }, 
-          y: { value: -40 },
+          x: { value: 150 }, // 130px gap from the first label
+          y: { value: -45 },
           text: { field: "label" }
         }
       },
@@ -150,13 +150,12 @@ console.log("LOADED project-charts v3-fixed");
           x: {
             field: "d",
             type: "temporal",
-            title: "Year", // DISPLAYING THE X-AXIS NAME
+            title: "Year", 
             axis: { 
               format: "%Y", 
               tickCount: 6, 
               grid: false, 
               labelFlush: true,
-              labelPadding: 10,
               titlePadding: 15
             }
           },
@@ -200,7 +199,7 @@ console.log("LOADED project-charts v3-fixed");
         mark: { 
           type: "text", 
           dy: -20, 
-          dx: 50, // Shifted further right to avoid Y-axis labels
+          dx: 80, // Moved far right to clear the Y-axis entirely
           fontSize: 11, 
           fontWeight: "600", 
           color: "#475569",
@@ -229,6 +228,7 @@ console.log("LOADED project-charts v3-fixed");
 
     config: { ...THEME, view: { stroke: null } }
   };
+
   // --------------------------------------
   // 2) Food inflation vs headline
   // --------------------------------------
