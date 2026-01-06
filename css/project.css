@@ -15,7 +15,7 @@
   display: flex;
   align-items: flex-end;
 
-  background-image: url('../images/living_cost.jpg');  /* CORRECTED: underscore not hyphen */
+  background-image: url('../images/living_cost.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -66,14 +66,14 @@ footer {
   margin: 36px 0 16px;
 }
 
-/* Single clean frame with EXTRA generous padding for legends/axes */
+/* Single clean frame with generous padding */
 .chart-frame {
   background: #ffffff;
   border: 2px solid rgba(203, 210, 227, 0.85);
   border-radius: 28px;
   box-shadow: 0 10px 24px rgba(11, 18, 32, 0.08);
-  padding: 45px 35px 35px 35px; /* Much more top padding */
-  overflow: visible; /* Critical: allows legends to extend naturally */
+  padding: 45px 35px 35px 35px;
+  overflow: visible;
   position: relative;
 }
 
@@ -120,27 +120,44 @@ footer {
 }
 
 /* =====================
+   SPECIFIC CHART FIXES
+   ===================== */
+
+/* Chart 1 (vis1) - Ensure x-axis is visible */
+#vis1 .vega-container {
+  min-height: 450px; /* Extra space for x-axis */
+}
+
+/* Chart 4 (vis4) - Extra bottom padding for legend */
+#vis4 {
+  padding-bottom: 80px !important; /* Prevent legend overlap with source */
+}
+
+/* =====================
    MAP-SPECIFIC STYLING
    ===================== */
 
-/* Maps get MUCH narrower, centered container */
+/* Maps: narrower and centered */
 .chart-wrapper--map {
-  max-width: 800px; /* Significantly narrower than regular charts */
+  max-width: 750px; /* Much narrower than regular charts */
   margin-left: auto;
   margin-right: auto;
 }
 
 .chart-wrapper--map .chart-frame {
-  padding: 40px 30px 95px 30px; /* Extra bottom space for horizontal legend */
+  padding: 40px 30px 100px 30px; /* Extra bottom space for legend */
+  display: flex;
+  justify-content: center; /* Center the map horizontally */
 }
 
 /* Map container with controlled dimensions */
 .vega-map {
   width: 100%;
-  max-width: 100%;
+  max-width: 650px; /* Limit map width */
   min-height: 400px;
   max-height: 500px;
   overflow: visible;
+  margin: 0 auto; /* Center within frame */
 }
 
 /* Prevent maps from becoming too large */
@@ -184,17 +201,26 @@ footer {
     border-radius: 22px;
   }
 
+  #vis1 .vega-container {
+    min-height: 420px;
+  }
+
+  #vis4 {
+    padding-bottom: 70px !important;
+  }
+
   .chart-wrapper--map {
     max-width: 100%;
   }
 
   .chart-wrapper--map .chart-frame {
-    padding: 32px 22px 85px 22px;
+    padding: 32px 22px 90px 22px;
   }
 
   .vega-map {
     min-height: 340px;
     max-height: 440px;
+    max-width: 100%;
   }
 
   .vega-map .vega-embed,
@@ -209,7 +235,11 @@ footer {
     padding: 28px 18px 22px 18px;
   }
 
+  #vis4 {
+    padding-bottom: 65px !important;
+  }
+
   .chart-wrapper--map .chart-frame {
-    padding: 28px 18px 80px 18px;
+    padding: 28px 18px 85px 18px;
   }
 }
