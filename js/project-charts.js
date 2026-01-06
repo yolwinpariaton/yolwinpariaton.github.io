@@ -316,6 +316,9 @@ console.log("LOADED project-charts v3-enhanced");
  // --------------------------------------
 // 4) Weekly fuel prices (ENHANCED)
 // --------------------------------------
+// --------------------------------------
+// 4) Weekly fuel prices (ENHANCED WITH SHADES)
+// --------------------------------------
 const vis4 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   ...FIT,
@@ -323,7 +326,7 @@ const vis4 = {
     text: "UK Fuel Prices: From Pandemic Crash to Energy Crisis",
     subtitle: [
       "Weekly pump prices (2019–2025) | Data: Department for Energy Security and Net Zero",
-      "The Russia-Ukraine conflict drove prices ~60% above the pre-pandemic baseline."
+      "Shaded areas indicate major global events impacting supply and demand."
     ]
   },
   data: { url: "data/vis4_fuel_weekly.json" },
@@ -342,9 +345,37 @@ const vis4 = {
   ],
 
   layer: [
-    // 1. BASELINE REFERENCE (The 120p horizontal line)
+    // 1. BACKGROUND SHADES (Contextual Events)
     {
-      mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.8, strokeWidth: 1.5 },
+      data: {
+        values: [
+          { start: "2020-03-23", end: "2021-07-19", event: "COVID Lockdown Period", color: "#f1f5f9" },
+          { start: "2022-02-24", end: "2023-01-01", event: "Initial Ukraine Energy Shock", color: "#fef2f2" }
+        ]
+      },
+      layer: [
+        {
+          mark: { type: "rect", opacity: 0.6 },
+          encoding: {
+            x: { field: "start", type: "temporal" },
+            x2: { field: "end" },
+            color: { field: "color", type: "nominal", scale: null }
+          }
+        },
+        {
+          mark: { type: "text", align: "left", baseline: "top", dy: -35, fontSize: 10, fontWeight: 600, color: "#475569" },
+          encoding: {
+            x: { field: "start", type: "temporal" },
+            y: { value: 0 }, // Top of the chart
+            text: { field: "event" }
+          }
+        }
+      ]
+    },
+
+    // 2. BASELINE REFERENCE (120p)
+    {
+      mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.5, strokeWidth: 1.5 },
       encoding: { y: { datum: 120 } }
     },
     {
@@ -356,31 +387,7 @@ const vis4 = {
       }
     },
 
-    // 2. VERTICAL ANNOTATIONS (Lockdown & Ukraine events)
-    {
-      data: {
-        values: [
-          { date: "2020-03-23", event: "COVID Lockdown" },
-          { date: "2022-02-24", event: "Invasion of Ukraine" }
-        ]
-      },
-      layer: [
-        {
-          mark: { type: "rule", color: "#0f172a", strokeWidth: 1, opacity: 0.4, strokeDash: [2, 2] },
-          encoding: { x: { field: "date", type: "temporal" } }
-        },
-        {
-          mark: { type: "text", angle: -90, align: "right", baseline: "middle", dx: -12, dy: 10, fontSize: 11, fontWeight: 700, color: "#1e293b" },
-          encoding: {
-            x: { field: "date", type: "temporal" },
-            y: { value: 20 },
-            text: { field: "event" }
-          }
-        }
-      ]
-    },
-
-    // 3. MAIN DATA LINES (Using a 5-week Moving Average for smoothness)
+    // 3. MAIN DATA LINES (Moving Average)
     {
       transform: [
         {
@@ -406,7 +413,7 @@ const vis4 = {
         color: {
           field: "fuel",
           type: "nominal",
-          scale: { range: ["#2563eb", "#d97706"] }, // Blue for Petrol, Orange for Diesel
+          scale: { range: ["#2563eb", "#d97706"] },
           legend: {
             orient: "top",
             direction: "horizontal",
@@ -419,7 +426,7 @@ const vis4 = {
       }
     },
 
-    // 4. INTERACTIVE TOOLTIP LAYER (Hidden points to capture mouse hover)
+    // 4. INTERACTIVE TOOLTIP LAYER
     {
       transform: [
         {
@@ -522,8 +529,7 @@ const vis4 = {
   // --------------------------------------
   // 6) England regional map — FINAL PERFECTED
   // --------------------------------------
-  // 6) England regional map — no overlap, legend inside card
-const vis6 = {
+  const vis6 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   ...FIT,
 
@@ -537,8 +543,8 @@ const vis6 = {
   width: "container",
   height: 520,
 
-  // Give Vega enough internal space for the bottom legend
-  padding: { top: 12, bottom: 64, left: 0, right: 0 },
+  // Reserve guaranteed space for the legend INSIDE the SVG
+  padding: { top: 12, bottom: 78, left: 0, right: 0 },
 
   data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "rgn" } },
 
@@ -554,7 +560,7 @@ const vis6 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  projection: { type: "mercator", center: [-2.6, 53.35], scale: 2850 },
+  projection: { type: "mercator", center: [-2.6, 53.35], scale: 2750 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2, strokeJoin: "round" },
 
@@ -565,6 +571,7 @@ const vis6 = {
       title: "Rent inflation (% y/y)",
       scale: { domain: [3, 10], scheme: { name: "oranges", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
       legend: {
+        disable: false,              // IMPORTANT: force legends ON
         orient: "bottom",
         direction: "horizontal",
         gradientLength: 360,
@@ -572,7 +579,7 @@ const vis6 = {
         titleFontSize: 12,
         labelFontSize: 11,
         format: ".1f",
-        offset: 10,     // keep small; padding handles spacing
+        offset: 10,
         padding: 6
       }
     },
@@ -582,11 +589,11 @@ const vis6 = {
     ]
   },
 
-  config: { ...THEME, axis: { ...THEME.axis, grid: false } }
+  // IMPORTANT: override any global legend disable
+  config: { ...THEME, legend: { disable: false }, axis: { ...THEME.axis, grid: false } }
 };
 
-
-  // --------------------------------------
+// --------------------------------------
   // 7) Interactive regional trend — PROFESSIONAL PUBLICATION VERSION
   // --------------------------------------
   const vis7 = {
@@ -639,7 +646,7 @@ const vis6 = {
     ],
 
     layer: [
-      // COVID-19 period (subtle context shading)
+      // COVID-19 period (more visible shading)
       {
         data: { 
           values: [
@@ -649,7 +656,7 @@ const vis6 = {
         mark: { 
           type: "rect", 
           color: "#fef3c7", 
-          opacity: 0.12 
+          opacity: 0.22
         },
         encoding: {
           x: { 
@@ -660,7 +667,7 @@ const vis6 = {
         }
       },
 
-      // COVID label (very subtle)
+      // COVID label
       {
         data: { 
           values: [{ date: "2020-09-15", y: 10.6, label: "COVID-19" }] 
@@ -670,7 +677,7 @@ const vis6 = {
           fontSize: 9.5, 
           fontStyle: "italic",
           color: "#92400e",
-          opacity: 0.5
+          opacity: 0.6
         },
         encoding: {
           x: { field: "date", type: "temporal" },
@@ -685,13 +692,13 @@ const vis6 = {
         encoding: { y: { datum: 0 } }
       },
 
-      // Background regions (all other regions, very subtle)
+      // Background regions (other regions)
       {
         transform: [{ filter: "datum.group === 'Other Regions'" }],
         mark: { 
           type: "line", 
           strokeWidth: 1.2, 
-          opacity: 0.12,
+          opacity: 0.18,
           interpolate: "monotone"
         },
         encoding: {
@@ -730,13 +737,12 @@ const vis6 = {
         mark: { 
           type: "line", 
           strokeWidth: 3.2,
-          interpolate: "monotone",
-          strokeDash: [0]
+          interpolate: "monotone"
         },
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "inflation", type: "quantitative" },
-          color: { value: "#1e40af" }  // Professional deep blue
+          color: { value: "#1e40af" }
         }
       },
 
@@ -751,7 +757,7 @@ const vis6 = {
         encoding: {
           x: { field: "d", type: "temporal" },
           y: { field: "inflation", type: "quantitative" },
-          color: { value: "#dc2626" }  // Professional strong red
+          color: { value: "#dc2626" }
         }
       },
 
@@ -931,7 +937,8 @@ const vis8 = {
   width: "container",
   height: 560,
 
-  padding: { top: 12, bottom: 64, left: 0, right: 0 },
+  // Reserve guaranteed space for the legend INSIDE the SVG
+  padding: { top: 12, bottom: 78, left: 0, right: 0 },
 
   data: { url: UK_TOPO_URL, format: { type: "topojson", feature: "ctry" } },
 
@@ -947,7 +954,7 @@ const vis8 = {
     { calculate: "toNumber(datum.rent_inflation_yoy_pct)", as: "rent_yoy" }
   ],
 
-  projection: { type: "mercator", center: [-3.2, 55.1], scale: 1550 },
+  projection: { type: "mercator", center: [-3.2, 55.1], scale: 1500 },
 
   mark: { type: "geoshape", stroke: "#ffffff", strokeWidth: 2.5, strokeJoin: "round" },
 
@@ -958,6 +965,7 @@ const vis8 = {
       title: "Rent inflation (% y/y)",
       scale: { domain: [3, 9], scheme: { name: "blues", extent: [0.25, 0.98] }, unknown: "#e5e7eb" },
       legend: {
+        disable: false,              // IMPORTANT: force legends ON
         orient: "bottom",
         direction: "horizontal",
         gradientLength: 360,
@@ -975,8 +983,10 @@ const vis8 = {
     ]
   },
 
-  config: { ...THEME, axis: { ...THEME.axis, grid: false } }
+  // IMPORTANT: override any global legend disable
+  config: { ...THEME, legend: { disable: false }, axis: { ...THEME.axis, grid: false } }
 };
+
   
   // Embed all eight charts
   safeEmbed("#vis1", vis1);
