@@ -1,60 +1,57 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Rent Inflation: English Regions",
+  "width": "container",
+  "height": 360,
+  "autosize": { "type": "fit", "contains": "padding", "resize": true },
+  "padding": { "left": 10, "right": 10, "top": 0, "bottom": 0 },
+
   "title": {
     "text": "Rent Inflation: English Regions",
     "subtitle": "Annual percentage change by region",
     "anchor": "start",
-    "fontSize": 30,
-    "subtitleFontSize": 18,
-    "subtitleColor": "#667085",
-    "offset": 12
+    "fontSize": 20,
+    "subtitleFontSize": 12
   },
-  "width": "container",
-  "height": 380,
-  "autosize": { "type": "fit", "contains": "padding", "resize": true },
-  "padding": { "left": 0, "right": 0, "top": 28, "bottom": 10 },
-  "config": {
-    "view": { "stroke": null },
-    "legend": {
-      "orient": "bottom",
-      "direction": "horizontal",
-      "titleFontSize": 16,
-      "labelFontSize": 16,
-      "titlePadding": 10,
-      "labelPadding": 6,
-      "gradientThickness": 16,
-      "gradientLength": 520
-    }
-  },
+
   "data": {
-    "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json",
-    "format": { "type": "topojson", "feature": "rgn" }
+    "url": "https://raw.githubusercontent.com/ONSdigital/geoportal-data/master/geographies/UK/Regions/2021/Regions_Dec_2021_EN_BFC_v2.topojson",
+    "format": { "type": "topojson", "feature": "Regions_Dec_2021_EN_BFC_v2" }
   },
+
   "transform": [
     {
-      "calculate": "datum.properties.AREACD ? datum.properties.AREACD : datum.properties.areacd",
-      "as": "areacd_join"
-    },
-    {
-      "lookup": "areacd_join",
+      "lookup": "properties.rgn21nm",
       "from": {
-        "data": { "url": "data/vis6_rent_map_regions.json" },
-        "key": "areacd",
-        "fields": ["areanm", "rent_inflation_yoy_pct"]
+        "data": { "url": "data/vis6_rent_map_regions.csv" },
+        "key": "areanm",
+        "fields": ["rent_inflation_yoy_pct"]
       }
-    }
+    },
+    { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "infl" }
   ],
-  "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 2 },
+
+  "projection": { "type": "mercator" },
+
+  "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1.2 },
+
   "encoding": {
     "color": {
-      "field": "rent_inflation_yoy_pct",
+      "field": "infl",
       "type": "quantitative",
       "title": "Rent inflation (% y/y)",
-      "scale": { "scheme": "blues", "domain": [3.0, 10.0] }
+      "scale": { "scheme": "blues", "domain": [3, 10] },
+      "legend": { "orient": "bottom", "direction": "horizontal" }
     },
     "tooltip": [
-      { "field": "areanm", "type": "nominal", "title": "Region" },
-      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
+      { "field": "properties.rgn21nm", "type": "nominal", "title": "Region" },
+      { "field": "infl", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
     ]
+  },
+
+  "config": {
+    "background": "#ffffff",
+    "view": { "stroke": null },
+    "legend": { "disable": false }
   }
 }

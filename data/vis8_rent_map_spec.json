@@ -1,60 +1,56 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Rent Inflation: UK Nations",
+  "width": "container",
+  "height": 360,
+  "autosize": { "type": "fit", "contains": "padding", "resize": true },
+  "padding": { "left": 10, "right": 10, "top": 0, "bottom": 0 },
+
   "title": {
     "text": "Rent Inflation: UK Nations",
     "subtitle": "Annual percentage change by country",
     "anchor": "start",
-    "fontSize": 30,
-    "subtitleFontSize": 18,
-    "subtitleColor": "#667085",
-    "offset": 12
+    "fontSize": 20,
+    "subtitleFontSize": 12
   },
-  "width": "container",
-  "height": 380,
-  "autosize": { "type": "fit", "contains": "padding", "resize": true },
-  "padding": { "left": 0, "right": 0, "top": 28, "bottom": 10 },
-  "config": {
-    "view": { "stroke": null },
-    "legend": {
-      "orient": "bottom",
-      "direction": "horizontal",
-      "titleFontSize": 16,
-      "labelFontSize": 16,
-      "titlePadding": 10,
-      "labelPadding": 6,
-      "gradientThickness": 16,
-      "gradientLength": 520
-    }
-  },
+
   "data": {
-    "url": "https://raw.githubusercontent.com/ONSdigital/uk-topojson/main/output/topo.json",
-    "format": { "type": "topojson", "feature": "ctry" }
+    "url": "https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/gb-nation.geo.json"
   },
+
   "transform": [
     {
-      "calculate": "datum.properties.AREACD ? datum.properties.AREACD : datum.properties.areacd",
-      "as": "areacd_join"
-    },
-    {
-      "lookup": "areacd_join",
+      "lookup": "properties.name",
       "from": {
-        "data": { "url": "data/vis8_rent_map_countries.json" },
-        "key": "areacd",
-        "fields": ["areanm", "rent_inflation_yoy_pct"]
+        "data": { "url": "data/vis8_rent_map_countries.csv" },
+        "key": "country",
+        "fields": ["rent_inflation_yoy_pct"]
       }
-    }
+    },
+    { "calculate": "toNumber(datum.rent_inflation_yoy_pct)", "as": "infl" }
   ],
-  "mark": { "type": "geoshape", "stroke": "#ffffff", "strokeWidth": 2 },
+
+  "projection": { "type": "mercator" },
+
+  "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1.2 },
+
   "encoding": {
     "color": {
-      "field": "rent_inflation_yoy_pct",
+      "field": "infl",
       "type": "quantitative",
       "title": "Rent inflation (% y/y)",
-      "scale": { "scheme": "oranges", "domain": [3.0, 9.0] }
+      "scale": { "scheme": "oranges", "domain": [3, 9] },
+      "legend": { "orient": "bottom", "direction": "horizontal" }
     },
     "tooltip": [
-      { "field": "areanm", "type": "nominal", "title": "Nation" },
-      { "field": "rent_inflation_yoy_pct", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
+      { "field": "properties.name", "type": "nominal", "title": "Nation" },
+      { "field": "infl", "type": "quantitative", "title": "Rent inflation (% y/y)", "format": ".1f" }
     ]
+  },
+
+  "config": {
+    "background": "#ffffff",
+    "view": { "stroke": null },
+    "legend": { "disable": false }
   }
 }
