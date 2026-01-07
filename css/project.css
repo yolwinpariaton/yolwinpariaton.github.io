@@ -235,8 +235,6 @@
 .chart-section:nth-of-type(4) .vega-embed svg {
   min-height: 520px !important;
   max-height: 520px !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
 }
 
 /* Extra stability for Chart 4 (Fuel) */
@@ -244,8 +242,6 @@
 .chart-section:nth-of-type(5) .vega-embed svg {
   min-height: 450px !important;
   max-height: 450px !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
 }
 
 /* Extra stability for Chart 7 (Regional) */
@@ -253,80 +249,21 @@
 .chart-section:nth-of-type(8) .vega-embed svg {
   min-height: 450px !important;
   max-height: 450px !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
 }
 
-/* Disable ALL hover interactions and prevent ANY rendering changes */
+/* Disable ALL hover interactions for Charts 3, 4, and 7 */
 .chart-section:nth-of-type(4) .vega-embed svg *,
 .chart-section:nth-of-type(5) .vega-embed svg *,
 .chart-section:nth-of-type(8) .vega-embed svg * {
   pointer-events: none !important;
+}
+
+/* Prevent any visual changes on hover */
+.chart-section:nth-of-type(4) *,
+.chart-section:nth-of-type(5) *,
+.chart-section:nth-of-type(8) * {
   transition: none !important;
-  transform: none !important;
-  animation: none !important;
-}
-
-/* Force complete containment and prevent reflow */
-.chart-section:nth-of-type(4) .chart-visual,
-.chart-section:nth-of-type(5) .chart-visual,
-.chart-section:nth-of-type(8) .chart-visual {
-  contain: strict !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-/* Lock the container dimensions */
-.chart-section:nth-of-type(4) .chart-frame,
-.chart-section:nth-of-type(5) .chart-frame,
-.chart-section:nth-of-type(8) .chart-frame {
-  contain: layout size style !important;
   will-change: auto !important;
-}
-
-/* Disable hover state changes completely */
-.chart-section:nth-of-type(4):hover .vega-embed,
-.chart-section:nth-of-type(5):hover .vega-embed,
-.chart-section:nth-of-type(8):hover .vega-embed,
-.chart-section:nth-of-type(4):hover .vega-embed svg,
-.chart-section:nth-of-type(5):hover .vega-embed svg,
-.chart-section:nth-of-type(8):hover .vega-embed svg {
-  transform: none !important;
-  transition: none !important;
-}
-
-/* Prevent text selection from causing reflow */
-.chart-section:nth-of-type(4) svg text,
-.chart-section:nth-of-type(5) svg text,
-.chart-section:nth-of-type(8) svg text {
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-}
-
-/* Force GPU acceleration but prevent transforms */
-.chart-section:nth-of-type(4) .vega-embed canvas,
-.chart-section:nth-of-type(5) .vega-embed canvas,
-.chart-section:nth-of-type(8) .vega-embed canvas,
-.chart-section:nth-of-type(4) .vega-embed svg,
-.chart-section:nth-of-type(5) .vega-embed svg,
-.chart-section:nth-of-type(8) .vega-embed svg {
-  backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
-  perspective: 1000px !important;
-  transform: translate3d(0, 0, 0) !important;
-  -webkit-transform: translate3d(0, 0, 0) !important;
-}
-
-/* Lock cursor to prevent hover state detection */
-.chart-section:nth-of-type(4) .vega-embed,
-.chart-section:nth-of-type(5) .vega-embed,
-.chart-section:nth-of-type(8) .vega-embed,
-.chart-section:nth-of-type(4) .vega-embed *,
-.chart-section:nth-of-type(5) .vega-embed *,
-.chart-section:nth-of-type(8) .vega-embed * {
-  cursor: default !important;
 }
 
 /* =====================
