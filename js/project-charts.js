@@ -544,7 +544,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
 // --------------------------------------
-// 5) Rent vs house price - FULLY FIXED
+// 5) Rent vs house price - ALL ISSUES FIXED
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -575,13 +575,13 @@ const vis5 = {
     // Pandemic period shading
     {
       data: {
-        values: [{ start: "2020-03-01", end: "2021-06-01" }]
+        values: [{ start: "2020-03-01", end: "2021-06-01", y: 10 }]
       },
       mark: { type: "rect", color: "#fef3c7", opacity: 0.25 },
       encoding: {
         x: { field: "start", type: "temporal" },
         x2: { field: "end", type: "temporal" },
-        y: { datum: 10 }
+        y: { field: "y", type: "quantitative" }
       }
     },
 
@@ -665,7 +665,8 @@ const vis5 = {
         color: { 
           field: "series", 
           type: "nominal", 
-          scale: { range: ["#dc2626", "#1e40af"] }
+          scale: { range: ["#dc2626", "#1e40af"] },
+          legend: null
         },
         detail: { field: "series" }
       }
@@ -688,7 +689,8 @@ const vis5 = {
         color: {
           field: "series",
           type: "nominal",
-          scale: { range: ["#dc2626", "#1e40af"] }
+          scale: { range: ["#dc2626", "#1e40af"] },
+          legend: null
         }
       }
     },
@@ -696,7 +698,7 @@ const vis5 = {
     // Peak rent inflation annotation
     {
       transform: [
-        { filter: "datum.series === 'Private rents'" },
+        { filter: "datum.series === 'Private rents (UK)'" },
         {
           window: [{ op: "mean", field: "v", as: "v_ma" }],
           frame: [-2, 2],
@@ -736,7 +738,6 @@ const vis5 = {
       encoding: {
         x: { field: "d", type: "temporal" },
         y: { field: "v_ma", type: "quantitative" },
-        color: { field: "series", type: "nominal" },
         tooltip: [
           { field: "d", type: "temporal", title: "Month", format: "%B %Y" },
           { field: "series", type: "nominal", title: "Housing Type" },
@@ -747,10 +748,7 @@ const vis5 = {
     }
   ],
 
-  config: {
-    ...THEME,
-    legend: { disable: false }
-  }
+  config: THEME
 };
 
   // --------------------------------------
