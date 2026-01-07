@@ -233,13 +233,28 @@
 /* Extra stability for Chart 3 (Energy) */
 .chart-section:nth-of-type(4) .vega-embed,
 .chart-section:nth-of-type(4) .vega-embed svg {
-  min-height: 500px !important;
-  max-height: 500px !important;
+  min-height: 520px !important;
+  max-height: 520px !important;
 }
 
-/* Disable ALL hover interactions for Charts 3 and 4 */
+/* Extra stability for Chart 4 (Fuel) */
+.chart-section:nth-of-type(5) .vega-embed,
+.chart-section:nth-of-type(5) .vega-embed svg {
+  min-height: 450px !important;
+  max-height: 450px !important;
+}
+
+/* Extra stability for Chart 7 (Regional) */
+.chart-section:nth-of-type(8) .vega-embed,
+.chart-section:nth-of-type(8) .vega-embed svg {
+  min-height: 450px !important;
+  max-height: 450px !important;
+}
+
+/* Disable ALL hover interactions for Charts 3, 4, and 7 */
 .chart-section:nth-of-type(4) .vega-embed svg *,
-.chart-section:nth-of-type(5) .vega-embed svg * {
+.chart-section:nth-of-type(5) .vega-embed svg *,
+.chart-section:nth-of-type(8) .vega-embed svg * {
   pointer-events: none !important;
 }
 

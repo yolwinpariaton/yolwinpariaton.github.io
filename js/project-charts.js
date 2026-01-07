@@ -256,26 +256,26 @@ console.log("LOADED project-charts FIXED VERSION");
     title: {
       text: "UK Energy Price Cap: The Crisis in Context",
       subtitle: [
-        "Quarterly typical household bills (2021-2025). Peak: £2,070 (+118%).",
-        "Shaded areas show periods of wholesale market volatility."
+        "Quarterly household bills (2021-2025). Peak: £2,070 (+118%).",
+        "Shaded areas show wholesale market volatility periods."
       ],
       anchor: "start",
-      offset: 35,
-      fontSize: 24,
-      subtitleFontSize: 15,
+      offset: 30,
+      fontSize: 20,
+      subtitleFontSize: 13,
       subtitleColor: "#475569"
     },
 
     data: { url: "data/vis3_energy_cap.json" },
     width: "container",
-    height: 500,
-    padding: { top: 90, right: 50, bottom: 70, left: 45 },
+    height: 520,
+    padding: { top: 80, right: 50, bottom: 60, left: 40 },
 
     layer: [
       {
         data: { values: [{ label: "■ Annual Bill Amount (£)" }] },
-        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 15, color: "#3b82f6" },
-        encoding: { x: { value: 0 }, y: { value: -65 }, text: { field: "label" } }
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 13, color: "#3b82f6" },
+        encoding: { x: { value: 0 }, y: { value: -55 }, text: { field: "label" } }
       },
       {
         data: { values: [{ period_label: "2021 Q4" }, { period_label: "2022 Q1" }, { period_label: "2022 Q2" }] },
@@ -298,13 +298,13 @@ console.log("LOADED project-charts FIXED VERSION");
             field: "period_label",
             type: "ordinal",
             sort: QUARTER_SORT,
-            axis: { title: "Quarterly Period", labelAngle: -45, labelAlign: "right", titlePadding: 30, labelFontSize: 12 }
+            axis: { title: "Quarterly Period", labelAngle: -45, labelAlign: "right", titlePadding: 25, labelFontSize: 11, titleFontSize: 12 }
           },
           y: {
             field: "typical_annual_bill_gbp",
             type: "quantitative",
             scale: { domain: [0, 2500] },
-            axis: { title: "Typical Annual Bill", format: ",.0f", labelExpr: "'£' + datum.label", titlePadding: 25, gridOpacity: 0.1, labelFontSize: 12 }
+            axis: { title: "Typical Annual Bill", format: ",.0f", labelExpr: "'£' + datum.label", titlePadding: 20, gridOpacity: 0.1, labelFontSize: 11, titleFontSize: 12 }
           }
         }
       },
@@ -323,7 +323,7 @@ console.log("LOADED project-charts FIXED VERSION");
       },
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: -25, fontSize: 14, fontWeight: "bold", color: "#0f172a" },
+        mark: { type: "text", dy: -20, fontSize: 12, fontWeight: "bold", color: "#0f172a" },
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
@@ -332,7 +332,7 @@ console.log("LOADED project-charts FIXED VERSION");
       },
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: 30, fontSize: 13, fontWeight: "800", color: "#dc2626" },
+        mark: { type: "text", dy: 25, fontSize: 11, fontWeight: "800", color: "#dc2626" },
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
@@ -345,8 +345,8 @@ console.log("LOADED project-charts FIXED VERSION");
       ...THEME, 
       view: { 
         stroke: null,
-        continuousWidth: 900,
-        continuousHeight: 400
+        continuousWidth: 1000,
+        continuousHeight: 450
       } 
     }
   };
@@ -471,8 +471,8 @@ console.log("LOADED project-charts FIXED VERSION");
       },
       {
         data: { values: [{ label: "PANDEMIC" }] },
-        mark: { type: "text", align: "center", baseline: "bottom", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.7 },
-        encoding: { x: { datum: "2020-10-01", type: "temporal" }, y: { datum: 0.5 }, text: { field: "label" } }
+        mark: { type: "text", align: "left", baseline: "bottom", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.7 },
+        encoding: { x: { datum: "2020-07-01", type: "temporal" }, y: { datum: 0.5 }, text: { field: "label" } }
       },
       {
         data: { values: [{ label: "■ Private Rents" }] },
@@ -568,8 +568,8 @@ console.log("LOADED project-charts FIXED VERSION");
       },
       {
         data: { values: [{ label: "PANDEMIC" }] },
-        mark: { type: "text", baseline: "bottom", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.6 },
-        encoding: { x: { datum: "2020-09-15", type: "temporal" }, y: { datum: 1 }, text: { field: "label" } }
+        mark: { type: "text", align: "left", baseline: "bottom", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.6 },
+        encoding: { x: { datum: "2020-06-15", type: "temporal" }, y: { datum: 1 }, text: { field: "label" } }
       },
       {
         transform: [{ filter: "datum.group === 'Others'" }],
