@@ -1,8 +1,5 @@
-/* js/project-charts-fixed.js
-   FIXED VERSION: Tooltips no longer cause charts to disappear on hover
+/* js/project-charts.js 
    
-   KEY FIX: Replaced transparent point/rule layers with proper tooltip encoding
-   on visible marks to prevent flickering and disappearing.
 */
 
 console.log("LOADED project-charts FIXED VERSION");
@@ -61,7 +58,7 @@ console.log("LOADED project-charts FIXED VERSION");
     });
   }
 
-  // Chart 1: Prices vs Pay - FIXED HOVER
+  // Chart 1: Prices vs Pay 
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -164,7 +161,7 @@ console.log("LOADED project-charts FIXED VERSION");
     config: { ...THEME, view: { stroke: null } }
   };
 
-  // Chart 2: Food vs Headline - FIXED HOVER
+  // Chart 2: Food vs Headline 
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -353,7 +350,7 @@ console.log("LOADED project-charts FIXED VERSION");
     }
   };
 
-  // Chart 4: Weekly Fuel Prices - FIXED HOVER
+  // Chart 4: Weekly Fuel Prices 
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -434,7 +431,7 @@ console.log("LOADED project-charts FIXED VERSION");
     }
   };
 
-  // Chart 5: Rent vs House Prices - FIXED HOVER
+  // Chart 5: Rent vs House Prices 
   const vis5 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -523,7 +520,7 @@ console.log("LOADED project-charts FIXED VERSION");
     config: THEME
   };
 
-  // Chart 7: Interactive Regional Trend - FIXED HOVER
+  // Chart 7: Interactive Regional Trend 
   const vis7 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,

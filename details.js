@@ -53,7 +53,7 @@ function ensurePaddingObject(padding) {
   return { ...padding };
 }
 
-/* ---------- PATCHES ---------- */
+/*  */
 
 /* Task 3: enforce smaller titles */
 function patchTask3_VegaLite(spec) {

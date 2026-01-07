@@ -1,5 +1,5 @@
 /* =========================================================
-   Project page: Professional chart presentation
+   Project page:
    ========================================================= */
 
 .white-space {
@@ -51,7 +51,7 @@
 }
 
 /* =====================
-   INTRODUCTION SECTION (CENTERED)
+   INTRODUCTION SECTION
    ===================== */
 
 .intro-section {
@@ -83,7 +83,7 @@
 }
 
 /* =====================
-   CHART SECTIONS - ALTERNATING LAYOUT
+   CHART SECTIONS 
    ===================== */
 
 .chart-section {
@@ -95,12 +95,12 @@
   max-width: 1800px;
 }
 
-/* Chart on RIGHT (odd sections: 1, 3, 5, 7) */
+/* Chart on RIGHT  */
 .chart-section:nth-of-type(odd) {
   flex-direction: row;
 }
 
-/* Chart on LEFT (even sections: 2, 4, 6, 8) */
+/* Chart on LEFT  */
 .chart-section:nth-of-type(even) {
   flex-direction: row-reverse;
 }
@@ -127,7 +127,7 @@
   margin: 0;
 }
 
-/* Chart container - 75% width */
+/* Chart container */
 .chart-visual {
   flex: 0 0 75%;
   max-width: 75%;
@@ -244,14 +244,14 @@
   max-height: 450px !important;
 }
 
-/* Extra stability for Chart 7 (Regional) */
+/* Extra stability for Chart 7  */
 .chart-section:nth-of-type(8) .vega-embed,
 .chart-section:nth-of-type(8) .vega-embed svg {
   min-height: 450px !important;
   max-height: 450px !important;
 }
 
-/* Disable ALL hover interactions for Charts 3, 4, and 7 */
+/* Disable ALL hover interactions */
 .chart-section:nth-of-type(4) .vega-embed svg *,
 .chart-section:nth-of-type(5) .vega-embed svg *,
 .chart-section:nth-of-type(8) .vega-embed svg * {
@@ -266,7 +266,7 @@
   will-change: auto !important;
 }
 
-/* Add invisible overlay to completely block mouse events */
+/* Add invisible overlay */
 .chart-section:nth-of-type(4) .chart-frame::after,
 .chart-section:nth-of-type(5) .chart-frame::after,
 .chart-section:nth-of-type(8) .chart-frame::after {
@@ -393,7 +393,7 @@
 
 
 /* =====================
-   NAVIGATION IMPROVEMENTS (matching style.css)
+   NAVIGATION IMPROVEMENTS 
    ===================== */
 
 .nav__link{
@@ -415,7 +415,7 @@
 }
 
 /* =====================
-   HERO SIZE CONSISTENCY (matching index.html at 88vh)
+   HERO SIZE CONSISTENCY 
    ===================== */
 
 .hero--project {
