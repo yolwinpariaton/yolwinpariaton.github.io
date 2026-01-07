@@ -13,7 +13,8 @@ console.log("LOADED project-charts FIXED VERSION");
   const opts = {
     actions: false,
     renderer: "svg",
-    config: { legend: { disable: false } }
+    config: { legend: { disable: false } },
+    tooltip: false
   };
 
   const THEME = {
@@ -171,7 +172,7 @@ console.log("LOADED project-charts FIXED VERSION");
     title: {
       text: "Food Inflation vs Overall Inflation",
       subtitle: [
-        "Annual percentage rates (2016–2024). Bold lines show 5-period moving average.",
+        "Annual percentage rates (2016-2024). Bold lines show 5-period moving average.",
         "Food price volatility significantly outpaced headline CPIH during the energy crisis."
       ],
       anchor: "start",
@@ -255,11 +256,11 @@ console.log("LOADED project-charts FIXED VERSION");
     title: {
       text: "UK Energy Price Cap: The Crisis in Context",
       subtitle: [
-        "Quarterly typical household bills (2021–2025). Peak: £2,070 (+118%).",
+        "Quarterly typical household bills (2021-2025). Peak: £2,070 (+118%).",
         "Shaded areas show periods of wholesale market volatility."
       ],
       anchor: "start",
-      offset: 40,
+      offset: 35,
       fontSize: 24,
       subtitleFontSize: 15,
       subtitleColor: "#475569"
@@ -268,7 +269,7 @@ console.log("LOADED project-charts FIXED VERSION");
     data: { url: "data/vis3_energy_cap.json" },
     width: "container",
     height: 500,
-    padding: { top: 90, right: 40, bottom: 70, left: 50 },
+    padding: { top: 90, right: 50, bottom: 70, left: 45 },
 
     layer: [
       {
@@ -340,7 +341,14 @@ console.log("LOADED project-charts FIXED VERSION");
       }
     ],
 
-    config: { ...THEME, view: { stroke: null } }
+    config: { 
+      ...THEME, 
+      view: { 
+        stroke: null,
+        continuousWidth: 900,
+        continuousHeight: 400
+      } 
+    }
   };
 
   // Chart 4: Weekly Fuel Prices - FIXED HOVER
@@ -350,7 +358,7 @@ console.log("LOADED project-charts FIXED VERSION");
     title: {
       text: "UK Fuel Prices: From Pandemic Crash to Energy Crisis",
       subtitle: [
-        "Weekly pump prices (2019–2025) | Department for Energy Security",
+        "Weekly pump prices (2019-2025) | Department for Energy Security",
         "Shaded areas show major global events affecting supply and demand."
       ]
     },
@@ -434,7 +442,7 @@ console.log("LOADED project-charts FIXED VERSION");
     title: {
       text: "Housing Cost Dynamics: Rents vs House Prices",
       subtitle: [
-        "Annual inflation rates (2019–2025). Bold lines show 5-month moving average.",
+        "Annual inflation rates (2019-2025). Bold lines show 5-month moving average.",
         "Rents sustained elevated inflation while house prices cooled sharply in 2023."
       ],
       anchor: "start",
