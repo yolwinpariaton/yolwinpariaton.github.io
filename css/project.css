@@ -105,32 +105,32 @@
   flex-direction: row-reverse;
 }
 
-/* Text container - 40% width */
+/* Text container - 30% width */
 .chart-text {
-  flex: 0 0 40%;
-  max-width: 40%;
+  flex: 0 0 30%;
+  max-width: 30%;
   padding-top: 20px;
 }
 
 .chart-text h2 {
-  font-size: 26px;
+  font-size: 24px;
   color: #0f172a;
-  margin: 0 0 20px;
+  margin: 0 0 18px;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .chart-text p {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.7;
   color: #334155;
   margin: 0;
 }
 
-/* Chart container - 60% width */
+/* Chart container - 70% width */
 .chart-visual {
-  flex: 0 0 60%;
-  max-width: 60%;
+  flex: 0 0 70%;
+  max-width: 70%;
 }
 
 /* =====================
@@ -144,9 +144,9 @@
 .chart-frame {
   background: #ffffff;
   border: 2px solid rgba(203, 210, 227, 0.85);
-  border-radius: 28px;
-  box-shadow: 0 10px 24px rgba(11, 18, 32, 0.08);
-  padding: 45px 35px 35px 35px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(11, 18, 32, 0.06);
+  padding: 30px 25px 25px 25px;
   position: relative;
 }
 
@@ -190,7 +190,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 36px 28px 26px 28px;
+  padding: 25px 20px 20px 20px;
 }
 
 .chart-wrapper--map .vega-container,
@@ -208,7 +208,7 @@
 
 .vega-map {
   width: 100%;
-  min-height: 520px;
+  min-height: 450px;
   margin: 0 auto;
 }
 

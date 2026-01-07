@@ -80,8 +80,8 @@ console.log("LOADED project-charts FIXED VERSION");
 
     data: { url: "data/vis1_prices_vs_pay.json" },
     width: "container",
-    height: 520,
-    padding: { top: 80, right: 40, bottom: 40, left: 20 },
+    height: 450,
+    padding: { top: 80, right: 30, bottom: 40, left: 20 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -183,8 +183,8 @@ console.log("LOADED project-charts FIXED VERSION");
 
     data: { url: "data/vis2_food_vs_headline.json" },
     width: "container",
-    height: 520,
-    padding: { top: 80, right: 40, bottom: 40, left: 40 },
+    height: 450,
+    padding: { top: 80, right: 30, bottom: 40, left: 40 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -267,8 +267,8 @@ console.log("LOADED project-charts FIXED VERSION");
 
     data: { url: "data/vis3_energy_cap.json" },
     width: "container",
-    height: 600,
-    padding: { top: 100, right: 50, bottom: 80, left: 70 },
+    height: 500,
+    padding: { top: 90, right: 40, bottom: 70, left: 60 },
 
     layer: [
       {
@@ -360,7 +360,7 @@ console.log("LOADED project-charts FIXED VERSION");
     },
     data: { url: "data/vis4_fuel_weekly.json" },
     width: "container",
-    height: 500,
+    height: 450,
     padding: { top: 50, right: 30, bottom: 50, left: 60 },
 
     transform: [
@@ -450,7 +450,7 @@ console.log("LOADED project-charts FIXED VERSION");
 
     data: { url: "data/vis5_rent_vs_house.json" },
     width: "container",
-    height: 540,
+    height: 450,
     padding: { top: 80, right: 30, bottom: 50, left: 60 },
 
     transform: [
@@ -535,7 +535,7 @@ console.log("LOADED project-charts FIXED VERSION");
 
     data: { url: "data/vis7_rent_trend_regions.json" },
     width: "container",
-    height: 540,
+    height: 450,
     padding: { top: 60, right: 30, bottom: 40, left: 60 },
 
     params: [

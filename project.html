@@ -11,12 +11,12 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/project.css" />
 
-  <!-- Vega libraries -->
-  <script defer src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <!-- Vega libraries - using unpkg CDN to avoid tracking prevention blocks -->
+  <script src="https://unpkg.com/vega@5.28.0/build/vega.min.js"></script>
+  <script src="https://unpkg.com/vega-lite@5.17.0/build/vega-lite.min.js"></script>
+  <script src="https://unpkg.com/vega-embed@6.24.0/build/vega-embed.min.js"></script>
 
-  <!-- Charts script -->
+  <!-- Charts script - load after Vega -->
   <script defer src="js/project-charts.js?v=2026-01-07-fixed"></script>
 </head>
 
@@ -394,7 +394,7 @@
     <div class="container footer__grid footer__grid--centered">
       <div>
         <h3 class="footer__title">Contact</h3>
-        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
+        <p>Email: <a href="/cdn-cgi/l/email-protection#51287f3f7f2130233830253e3f7c2b2423382530113d22347f30327f243a"><span class="__cf_email__" data-cfemail="4f366121613f2e3d262e3b202162353a3d263b2e0f233c2a612e2c613a24">[email&#160;protected]</span></a></p>
       </div>
 
       <div>
@@ -405,10 +405,3 @@
 
       <div>
         <h3 class="footer__title">About</h3>
-        <p>Built for LSE PP434 Automated Data Visualisation</p>
-        <p>© 2025 Yolwin Pariaton</p>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
