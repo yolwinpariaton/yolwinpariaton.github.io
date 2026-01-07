@@ -634,7 +634,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
 // ------------------------------------------------------------------
-// 5) Rent vs House Price - FIXED LABEL ALIGNMENT & COMPACT FRAME
+// 5) Rent vs House Price - PANDEMIC LABEL FIXED & CENTERED
 // ------------------------------------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -642,7 +642,7 @@ const vis5 = {
 
   title: {
     text: "Housing Cost Dynamics: Rents vs House Prices",
-    subtitle: "Annual inflation rates (2019–2025). Bold lines show 5-month moving average.",
+    subtitle: "Annual inflation rates (2019–2025). Shaded area indicates the pandemic period.",
     anchor: "start",
     offset: 20,
     fontSize: 18,
@@ -651,7 +651,7 @@ const vis5 = {
 
   data: { url: "data/vis5_rent_vs_house.json" },
   width: "container",
-  height: 450, // Reduced height for a more compact frame
+  height: 420, // Reduced for tighter frame
 
   padding: { top: 70, right: 30, bottom: 40, left: 60 },
 
@@ -662,7 +662,7 @@ const vis5 = {
   ],
 
   layer: [
-    // 1. Shaded Area
+    // 1. Shaded Area (March 2020 - June 2021)
     {
       data: { values: [{ start: "2020-03-01", end: "2021-06-01" }] },
       mark: { type: "rect", color: "#fef3c7", opacity: 0.4 },
@@ -672,27 +672,27 @@ const vis5 = {
       }
     },
 
-    // 2. Pandemic Label - FORCE CENTERED
+    // 2. Pandemic Label - MOVED TO CENTER OF SHADE
     {
       data: { values: [{ label: "PANDEMIC PERIOD" }] },
       mark: { 
         type: "text", 
         align: "center", 
         baseline: "middle", 
-        fontSize: 9, 
+        fontSize: 10, 
         fontWeight: "bold", 
         color: "#92400e", 
-        opacity: 0.8,
-        dy: 0 // Vertically centered relative to the 'y' datum
+        opacity: 0.8
       },
       encoding: {
+        // October 2020 is the visual center of the shaded area
         x: { datum: "2020-10-15", type: "temporal" }, 
-        y: { datum: 4 }, 
+        y: { datum: 4.5 }, 
         text: { field: "label" }
       }
     },
 
-    // 3. Legends (Shifted up to save space)
+    // 3. Custom Legends
     {
       data: { values: [{ label: "■ Private Rents" }] },
       mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 12, color: "#dc2626" },
@@ -708,7 +708,7 @@ const vis5 = {
     {
       mark: { type: "line", strokeWidth: 1, opacity: 0.15, interpolate: "monotone" },
       encoding: {
-        x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", grid: false, labelFontSize: 10 } },
+        x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", grid: false } },
         y: { field: "v", type: "quantitative", title: "Annual rate (%)", scale: { domain: [-4, 11] }, axis: { gridOpacity: 0.1 } },
         color: { field: "series", type: "nominal", scale: { range: ["#dc2626", "#1e40af"] }, legend: null }
       }
@@ -723,7 +723,7 @@ const vis5 = {
       }
     },
 
-    // 5. Peak Annotation (Fixed placement to avoid Y-axis overlap)
+    // 5. Peak Annotation (Positioned Right)
     {
       transform: [
         { filter: "datum.series === 'Private rents (UK)'" },
@@ -732,11 +732,11 @@ const vis5 = {
         { window: [{ op: "rank", as: "r" }], sort: [{ field: "d", order: "descending" }] },
         { filter: "datum.r === 1" }
       ],
-      mark: { type: "text", dy: -15, dx: 45, fontSize: 10, fontWeight: "bold", color: "#dc2626", text: "PEAK RENT GROWTH" },
+      mark: { type: "text", dy: -15, dx: 50, fontSize: 10, fontWeight: "bold", color: "#dc2626", text: "PEAK RENT GROWTH" },
       encoding: { x: { field: "d", type: "temporal" }, y: { field: "v_ma", type: "quantitative" } }
     },
 
-    // 6. Tooltip points
+    // 6. Transparent Tooltip points
     {
       mark: { type: "point", size: 60, opacity: 0 },
       encoding: {
@@ -753,7 +753,7 @@ const vis5 = {
 };
 
 // ------------------------------------------------------------------
-// 7) Regional Rent Trend - COMPACT FRAME & CENTERED LABEL
+// 7) Regional Rent Trend - PANDEMIC LABEL FIXED & COMPACT
 // ------------------------------------------------------------------
 const vis7 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -761,7 +761,7 @@ const vis7 = {
 
   title: {
     text: "Regional Rent Inflation Dynamics",
-    subtitle: "Compare regions against the national England average.",
+    subtitle: "Select a region to highlight local trends against the national average.",
     anchor: "start",
     offset: 15,
     fontSize: 18,
@@ -770,9 +770,9 @@ const vis7 = {
 
   data: { url: "data/vis7_rent_trend_regions.json" },
   width: "container",
-  height: 450, // Significantly reduced height to remove white space
+  height: 420, // Tightened frame height
 
-  padding: { top: 50, right: 30, bottom: 30, left: 60 },
+  padding: { top: 50, right: 30, bottom: 20, left: 60 },
 
   params: [
     {
@@ -797,29 +797,29 @@ const vis7 = {
     {
       data: { values: [{ start: "2020-03-01", end: "2021-06-01" }] },
       mark: { type: "rect", color: "#fef3c7", opacity: 0.3 },
-      encoding: { x: { field: "start", type: "temporal" }, x2: { field: "end" } }
+      encoding: { x: { field: "start", type: "temporal" }, x2: { field: "end", type: "temporal" } }
     },
     
-    // 2. Pandemic Label - CENTERED
+    // 2. Pandemic Label - MOVED TO CENTER OF SHADE
     {
       data: { values: [{ label: "PANDEMIC PERIOD" }] },
       mark: { 
         type: "text", 
         align: "center", 
         baseline: "middle", 
-        fontSize: 9, 
+        fontSize: 10, 
         fontWeight: "bold", 
         color: "#92400e", 
-        opacity: 0.7 
+        opacity: 0.8 
       },
       encoding: { 
         x: { datum: "2020-10-15", type: "temporal" }, 
-        y: { datum: 5.5 }, // Mid-point of the inflation scale
+        y: { datum: 5.5 }, 
         text: { field: "label" } 
       }
     },
 
-    // 3. Background Lines
+    // 3. Gray Background Lines
     {
       transform: [{ filter: "datum.group === 'Others'" }],
       mark: { type: "line", strokeWidth: 1.2, opacity: 0.1, color: "#94a3b8", interpolate: "monotone" },
@@ -830,21 +830,21 @@ const vis7 = {
       }
     },
 
-    // 4. England Average
+    // 4. England Average (Blue)
     {
       transform: [{ filter: "datum.group === 'Average'" }],
       mark: { type: "line", strokeWidth: 2.5, color: "#1e40af", opacity: 0.7, interpolate: "monotone" },
       encoding: { x: { field: "d", type: "temporal" }, y: { field: "inflation", type: "quantitative" } }
     },
 
-    // 5. Selected Region
+    // 5. Selected Region (Red)
     {
       transform: [{ filter: "datum.group === 'Selected'" }],
       mark: { type: "line", strokeWidth: 4, color: "#dc2626", interpolate: "monotone" },
       encoding: { x: { field: "d", type: "temporal" }, y: { field: "inflation", type: "quantitative" } }
     },
 
-    // 6. Tooltip (Stable Points)
+    // 6. Anti-Shiver Tooltip Points
     {
       mark: { type: "point", size: 60, opacity: 0 },
       encoding: {
