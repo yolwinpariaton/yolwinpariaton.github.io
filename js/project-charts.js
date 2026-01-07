@@ -372,9 +372,9 @@ console.log("LOADED project-charts v3-fixed");
 
     config: { ...THEME, view: { stroke: null } }
   };
-  // --------------------------------------
-  // 3) Energy cap
-  // --------------------------------------
+  // ------------------------------------------------------------------
+  // 3) Energy Price Cap - PROFESSIONAL VERSION
+  // ------------------------------------------------------------------
   const QUARTER_SORT = [
     "2021 Q4",
     "2022 Q1", "2022 Q2", "2022 Q3", "2022 Q4",
@@ -389,38 +389,61 @@ console.log("LOADED project-charts v3-fixed");
 
     title: {
       text: "UK Energy Price Cap: The Crisis in Context",
-      subtitle:
-        "Quarterly typical household bills (2021–2025) | Peak of £2,070 represents a 118% increase from £950 baseline",
+      subtitle: [
+        "Quarterly typical household bills (2021–2025). Peak of £2,070 represents a 118% increase from baseline.",
+        "Shaded areas highlight the periods of most acute volatility in the wholesale market."
+      ],
       anchor: "start",
-      offset: 14
+      offset: 30,
+      fontSize: 22,
+      subtitleFontSize: 14,
+      subtitleColor: "#475569",
+      font: "Inter, sans-serif"
     },
 
     data: { url: "data/vis3_energy_cap.json" },
     width: "container",
-    height: 360,
+    height: 520,
 
-    padding: { top: 6, right: 18, bottom: 28, left: 6 },
+    // Standardized padding for visual alignment
+    padding: { top: 80, right: 40, bottom: 60, left: 40 },
 
     layer: [
+      // 1. Custom Legend (Fixed Position)
+      {
+        data: { values: [{ label: "■ Annual Bill Amount (£)" }] },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#3b82f6" },
+        encoding: {
+          x: { value: 0 }, 
+          y: { value: -50 },
+          text: { field: "label" }
+        }
+      },
+
+      // 2. Background Shading (Crisis Periods)
       {
         data: { values: [{ period_label: "2021 Q4" }, { period_label: "2022 Q1" }, { period_label: "2022 Q2" }] },
-        mark: { type: "bar", color: "#dbeafe", opacity: 0.28 },
+        mark: { type: "bar", color: "#dbeafe", opacity: 0.2 },
         encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
       },
       {
         data: { values: [{ period_label: "2024 Q2" }, { period_label: "2024 Q3" }, { period_label: "2024 Q4" }] },
-        mark: { type: "bar", color: "#fef3c7", opacity: 0.32 },
+        mark: { type: "bar", color: "#fef3c7", opacity: 0.2 },
         encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
       },
+
+      // 3. Baseline Reference Line
       {
-        mark: { type: "rule", strokeDash: [4, 4], color: "#0891b2", strokeWidth: 1.5, opacity: 0.5 },
+        mark: { type: "rule", strokeDash: [4, 4], color: "#0891b2", strokeWidth: 1.5, opacity: 0.4 },
         encoding: { y: { datum: 1070 } }
       },
+
+      // 4. Main Line and Points
       {
         layer: [
-          { mark: { type: "line", strokeWidth: 2.5, color: "#64748b" } },
+          { mark: { type: "line", strokeWidth: 3, color: "#64748b", interpolate: "monotone" } },
           {
-            mark: { type: "point", filled: true, size: 190, stroke: "white", strokeWidth: 2.2 },
+            mark: { type: "point", filled: true, size: 200, stroke: "white", strokeWidth: 2 },
             encoding: {
               color: {
                 field: "typical_annual_bill_gbp",
@@ -429,18 +452,8 @@ console.log("LOADED project-charts v3-fixed");
                   domain: [950, 1300, 1700, 2070],
                   range: ["#06b6d4", "#3b82f6", "#f59e0b", "#dc2626"]
                 },
-                legend: {
-                  title: "Bill amount (£)",
-                  orient: "right",
-                  format: ",.0f",
-                  titleFontSize: 11,
-                  labelFontSize: 10
-                }
-              },
-              tooltip: [
-                { field: "period_label", title: "Quarter", type: "nominal" },
-                { field: "typical_annual_bill_gbp", title: "Bill (£)", type: "quantitative", format: ",.0f" }
-              ]
+                legend: null
+              }
             }
           }
         ],
@@ -450,44 +463,59 @@ console.log("LOADED project-charts v3-fixed");
             type: "ordinal",
             sort: QUARTER_SORT,
             axis: {
-              title: "Quarter",
+              title: "Quarterly Period",
               labelAngle: -45,
               labelAlign: "right",
-              labelFontSize: 10,
-              titleFontSize: 12
+              titlePadding: 25,
+              labelFontSize: 11
             }
           },
           y: {
             field: "typical_annual_bill_gbp",
             type: "quantitative",
-            scale: { domain: [0, 2200] },
-            axis: { title: "Annual bill (£)", format: ",.0f" }
+            scale: { domain: [0, 2300] },
+            axis: { title: "Typical Annual Bill (£)", format: ",.0f", titlePadding: 20, gridOpacity: 0.1 }
           }
         }
       },
+
+      // 5. Value Annotations (Key Points)
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: -16, fontSize: 12, fontWeight: "bold", color: "#0f172a" },
+        mark: { type: "text", dy: -20, fontSize: 13, fontWeight: "bold", color: "#0f172a" },
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
-          text: { field: "typical_annual_bill_gbp", type: "quantitative", format: ",.0f" }
+          text: { field: "typical_annual_bill_gbp", type: "quantitative", format: "£,.0f" }
         }
       },
+
+      // 6. Percentage Increase Annotation
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: 26, fontSize: 11, fontWeight: "bold", color: "#dc2626" },
+        mark: { type: "text", dy: 25, fontSize: 12, fontWeight: "800", color: "#dc2626" },
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
-          text: { value: "+118%" }
+          text: { value: "↑ 118% CRISIS PEAK" }
+        }
+      },
+
+      // 7. Stable Tooltip Layer
+      {
+        mark: { type: "rect", opacity: 0 },
+        encoding: {
+          x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
+          tooltip: [
+            { field: "period_label", title: "Quarter", type: "nominal" },
+            { field: "typical_annual_bill_gbp", title: "Annual Bill (£)", type: "quantitative", format: ",.0f" }
+          ]
         }
       }
     ],
 
-    config: THEME
+    config: { ...THEME, view: { stroke: null } }
   };
-
   // --------------------------------------
   // 4) Weekly fuel prices
   // --------------------------------------
@@ -598,7 +626,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
 // --------------------------------------
-// 5) Rent vs house price - FINAL VERSION
+// 5) Rent vs house price - FINAL ADJUSTMENTS
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -657,7 +685,7 @@ const vis5 = {
       }
     },
 
-    // Custom Legend: House Prices (moved significantly right)
+    // Custom Legend: House Prices (moved further right to avoid overlap)
     {
       data: { values: [{ label: "■ House Prices" }] },
       mark: { 
@@ -668,7 +696,7 @@ const vis5 = {
         color: "#1e40af" 
       },
       encoding: {
-        x: { datum: "2021-01-01", type: "temporal" },
+        x: { datum: "2021-09-01", type: "temporal" },
         y: { value: -45 },
         text: { field: "label" }
       }
@@ -750,7 +778,7 @@ const vis5 = {
       }
     },
 
-    // Peak rent inflation annotation
+    // Peak rent inflation annotation (moved to the right)
     {
       transform: [
         { filter: "datum.series === 'Private rents (UK)'" },
@@ -768,7 +796,7 @@ const vis5 = {
       mark: { 
         type: "text", 
         dy: -15, 
-        dx: 0,
+        dx: 35,
         fontSize: 11, 
         fontWeight: "600", 
         color: "#dc2626",
@@ -806,7 +834,6 @@ const vis5 = {
 
   config: THEME
 };
-
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
