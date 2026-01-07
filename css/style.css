@@ -132,7 +132,7 @@ a:hover{ text-decoration: underline; }
 
 .hero--portfolio{
   position: relative;
-  min-height: 70vh;
+  min-height: 88vh;
   display: grid;
   place-items: center;
   background: url("../images/portfolio.jpg") center/cover no-repeat;
