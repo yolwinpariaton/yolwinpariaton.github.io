@@ -301,7 +301,11 @@ console.log("LOADED project-charts FIXED VERSION");
                 type: "quantitative",
                 scale: { domain: [950, 1300, 1700, 2070], range: ["#06b6d4", "#3b82f6", "#f59e0b", "#dc2626"] },
                 legend: null
-              }
+              },
+              tooltip: [
+                { field: "period_label", title: "Quarter", type: "nominal" },
+                { field: "typical_annual_bill_gbp", title: "Annual Bill (£)", type: "quantitative", format: ",.0f" }
+              ]
             }
           }
         ],
@@ -317,11 +321,7 @@ console.log("LOADED project-charts FIXED VERSION");
             type: "quantitative",
             scale: { domain: [0, 2500] },
             axis: { title: "Typical Annual Bill", format: ",.0f", labelExpr: "'£' + datum.label", titlePadding: 25, gridOpacity: 0.1, labelFontSize: 12 }
-          },
-          tooltip: [
-            { field: "period_label", title: "Quarter", type: "nominal" },
-            { field: "typical_annual_bill_gbp", title: "Annual Bill (£)", type: "quantitative", format: ",.0f" }
-          ]
+          }
         }
       },
       {
@@ -468,7 +468,7 @@ console.log("LOADED project-charts FIXED VERSION");
       {
         data: { values: [{ label: "PANDEMIC PERIOD" }] },
         mark: { type: "text", align: "center", baseline: "middle", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.7 },
-        encoding: { x: { datum: "2020-10-15", type: "temporal" }, y: { datum: 4 }, text: { field: "label" } }
+        encoding: { x: { datum: "2020-09-15", type: "temporal" }, y: { datum: 3.5 }, text: { field: "label" } }
       },
       {
         data: { values: [{ label: "■ Private Rents" }] },
@@ -512,7 +512,7 @@ console.log("LOADED project-charts FIXED VERSION");
           { window: [{ op: "rank", as: "r" }], sort: [{ field: "d", order: "ascending" }] },
           { filter: "datum.r === 1" }
         ],
-        mark: { type: "text", dy: -20, fontSize: 11, fontWeight: "bold", color: "#dc2626", text: "PEAK RENT GROWTH" },
+        mark: { type: "text", dx: 25, dy: -20, fontSize: 11, fontWeight: "bold", color: "#dc2626", text: "PEAK RENT GROWTH" },
         encoding: { x: { field: "d", type: "temporal" }, y: { field: "v_ma", type: "quantitative" } }
       }
     ],

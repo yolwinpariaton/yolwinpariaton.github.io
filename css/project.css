@@ -139,6 +139,7 @@
 
 .chart-wrapper {
   margin: 0;
+  overflow: hidden;
 }
 
 .chart-frame {
@@ -148,6 +149,7 @@
   box-shadow: 0 8px 20px rgba(11, 18, 32, 0.06);
   padding: 30px 25px 25px 25px;
   position: relative;
+  overflow: visible;
 }
 
 .chart-frame .vega-embed {
@@ -182,6 +184,23 @@
   z-index: 1;
 }
 
+/* Prevent chart size changes on hover */
+.vega-container,
+.vega-embed,
+.vega-embed svg,
+.vega-embed canvas {
+  transition: none !important;
+}
+
+.chart-visual {
+  position: relative;
+}
+
+.chart-visual .vega-embed {
+  width: 100% !important;
+  height: auto !important;
+}
+
 /* =====================
    MAP-SPECIFIC FIXES
    ===================== */
@@ -190,7 +209,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px 20px 20px 20px;
+  padding: 30px 25px 35px 25px;
 }
 
 .chart-wrapper--map .vega-container,
@@ -208,7 +227,7 @@
 
 .vega-map {
   width: 100%;
-  min-height: 450px;
+  min-height: 520px;
   margin: 0 auto;
 }
 
@@ -227,6 +246,11 @@
 .chart-note {
   font-style: italic;
   color: rgba(27, 42, 70, 0.7);
+}
+
+/* Extra spacing for map sources */
+.chart-wrapper--map .chart-source {
+  margin-top: 24px;
 }
 
 /* =====================
