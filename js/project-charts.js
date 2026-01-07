@@ -231,24 +231,33 @@ console.log("LOADED project-charts v3-fixed");
     config: { ...THEME, view: { stroke: null } }
   };
 
-  // --------------------------------------
-  // 2) Food inflation vs headline
-  // --------------------------------------
+  // ------------------------------------------------------------------
+  // 2) Food Inflation vs Headline - PROFESSIONAL VERSION
+  // ------------------------------------------------------------------
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
 
     title: {
       text: "Food Inflation vs Overall Inflation",
-      subtitle: "Annual percentage rates (2016–2024) | Bold lines show 5-period moving average",
+      subtitle: [
+        "Annual percentage rates (2016–2024). Bold lines show 5-period moving average.",
+        "Food price volatility significantly outpaced headline CPIH during the energy crisis."
+      ],
       anchor: "start",
-      offset: 14
+      offset: 30,
+      fontSize: 22,
+      subtitleFontSize: 14,
+      subtitleColor: "#475569",
+      font: "Inter, sans-serif"
     },
+
     data: { url: "data/vis2_food_vs_headline.json" },
     width: "container",
-    height: 340,
+    height: 520,
 
-    padding: { top: 12, right: 12, bottom: 22, left: 8 },
+    // Padding aligned with Chart 1
+    padding: { top: 80, right: 40, bottom: 40, left: 30 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -256,20 +265,63 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
+      // 1. Custom Legend: Food (Fixed Pixel Position)
       {
-        mark: { type: "rule", strokeDash: [4, 6], color: "#94a3b8", opacity: 0.6 },
-        encoding: { y: { datum: 0 } }
+        data: { values: [{ label: "■ Food & Non-Alcoholic" }] },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#dc2626" },
+        encoding: {
+          x: { value: 0 }, 
+          y: { value: -50 },
+          text: { field: "label" }
+        }
       },
+      // 2. Custom Legend: Headline CPIH (Fixed Pixel Position)
       {
-        mark: { type: "rule", strokeDash: [3, 3], color: "#10b981", opacity: 0.4 },
-        encoding: { y: { datum: 2 } }
+        data: { values: [{ label: "■ Headline CPIH" }] },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#1e40af" },
+        encoding: {
+          x: { value: 190 }, 
+          y: { value: -50 },
+          text: { field: "label" }
+        }
       },
 
+      // 3. Zero Baseline
       {
-        mark: { type: "line", strokeWidth: 1.5, opacity: 0.2, interpolate: "monotone" },
+        mark: { type: "rule", strokeDash: [4, 4], color: "#94a3b8", opacity: 0.5 },
+        encoding: { y: { datum: 0 } }
+      },
+
+      // 4. BoE 2% Inflation Target Line
+      {
+        mark: { type: "rule", strokeDash: [2, 2], color: "#10b981", opacity: 0.5, strokeWidth: 1.5 },
+        encoding: { y: { datum: 2 } }
+      },
+      {
+        mark: { type: "text", align: "right", dx: -5, dy: -8, fontSize: 10, color: "#059669", fontWeight: "600" },
         encoding: {
-          x: { field: "d", type: "temporal", title: "Year", axis: { format: "%Y", tickCount: 8 } },
-          y: { field: "v", type: "quantitative", title: "Annual inflation rate (%)" },
+          x: { value: 1000 }, // Positioned to the right side
+          y: { datum: 2 },
+          text: { value: "2% Target" }
+        }
+      },
+
+      // 5. Raw Data Lines (Background)
+      {
+        mark: { type: "line", strokeWidth: 1.5, opacity: 0.15, interpolate: "monotone" },
+        encoding: {
+          x: { 
+            field: "d", 
+            type: "temporal", 
+            title: "Year", 
+            axis: { format: "%Y", tickCount: 8, grid: false, titlePadding: 20 } 
+          },
+          y: { 
+            field: "v", 
+            type: "quantitative", 
+            title: "Annual inflation rate (%)",
+            axis: { titlePadding: 20, gridOpacity: 0.1 } 
+          },
           color: {
             field: "series",
             type: "nominal",
@@ -280,6 +332,7 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
+      // 6. Bold Moving Average Lines
       {
         transform: [
           {
@@ -297,27 +350,37 @@ console.log("LOADED project-charts v3-fixed");
             field: "series",
             type: "nominal",
             scale: { range: ["#dc2626", "#1e40af"] },
-            legend: {
-              orient: "top",
-              direction: "horizontal",
-              title: null,
-              labelFontSize: 12,
-              symbolSize: 200,
-              symbolStrokeWidth: 4
-            }
-          },
+            legend: null
+          }
+        }
+      },
+
+      // 7. Interactive Tooltip Layer
+      {
+        transform: [
+          {
+            window: [{ op: "mean", field: "v", as: "v_ma" }],
+            frame: [-2, 2],
+            sort: [{ field: "d", order: "ascending" }],
+            groupby: ["series"]
+          }
+        ],
+        mark: { type: "point", size: 100, opacity: 0 },
+        encoding: {
+          x: { field: "d", type: "temporal" },
+          y: { field: "v_ma", type: "quantitative" },
           tooltip: [
             { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
-            { field: "series", type: "nominal", title: "Series" },
-            { field: "v_ma", type: "quantitative", title: "Rate (%)", format: ".1f" }
+            { field: "series", type: "nominal", title: "Category" },
+            { field: "v_ma", type: "quantitative", title: "Avg Rate (%)", format: ".1f" },
+            { field: "v", type: "quantitative", title: "Raw Rate (%)", format: ".1f" }
           ]
         }
       }
     ],
 
-    config: THEME
+    config: { ...THEME, view: { stroke: null } }
   };
-
   // --------------------------------------
   // 3) Energy cap
   // --------------------------------------
@@ -544,7 +607,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
 // --------------------------------------
-// 5) Rent vs house price - ALL ISSUES FIXED
+// 5) Rent vs house price - FULLY CORRECTED
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -585,7 +648,7 @@ const vis5 = {
       }
     },
 
-    // Custom Legend: Private Rents
+    // Custom Legend: Private Rents (far left)
     {
       data: { values: [{ label: "■ Private Rents" }] },
       mark: { 
@@ -596,13 +659,13 @@ const vis5 = {
         color: "#dc2626" 
       },
       encoding: {
-        x: { datum: "2016-06-01", type: "temporal" },
+        x: { datum: "2016-03-01", type: "temporal" },
         y: { value: -45 },
         text: { field: "label" }
       }
     },
 
-    // Custom Legend: House Prices
+    // Custom Legend: House Prices (moved further right to avoid overlap)
     {
       data: { values: [{ label: "■ House Prices" }] },
       mark: { 
@@ -613,7 +676,7 @@ const vis5 = {
         color: "#1e40af" 
       },
       encoding: {
-        x: { datum: "2018-03-01", type: "temporal" },
+        x: { datum: "2019-06-01", type: "temporal" },
         y: { value: -45 },
         text: { field: "label" }
       }
@@ -695,18 +758,19 @@ const vis5 = {
       }
     },
 
-    // Peak rent inflation annotation
+    // Peak rent inflation annotation - FIXED FILTER
     {
       transform: [
         { filter: "datum.series === 'Private rents (UK)'" },
         {
           window: [{ op: "mean", field: "v", as: "v_ma" }],
           frame: [-2, 2],
-          sort: [{ field: "d", order: "ascending" }]
+          sort: [{ field: "d", order: "ascending" }],
+          groupby: ["series"]
         },
-        { window: [{ op: "max", field: "v_ma", as: "max_v" }] },
-        { filter: "datum.v_ma === datum.max_v" },
-        { window: [{ op: "rank", as: "r" }] },
+        { window: [{ op: "max", field: "v_ma", as: "max_v" }], groupby: [] },
+        { filter: "abs(datum.v_ma - datum.max_v) < 0.01" },
+        { window: [{ op: "rank", as: "r" }], sort: [{ field: "d", order: "ascending" }] },
         { filter: "datum.r === 1" }
       ],
       mark: { 
