@@ -390,8 +390,3 @@
     font-size: 16px;
   }
 }
-
-/* Make project hero match index.html hero size */
-.hero--project {
-  min-height: 88vh;
-}
