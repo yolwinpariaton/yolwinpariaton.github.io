@@ -372,8 +372,9 @@ console.log("LOADED project-charts v3-fixed");
 
     config: { ...THEME, view: { stroke: null } }
   };
+  
   // ------------------------------------------------------------------
-  // 3) Energy Price Cap - PROFESSIONAL VERSION
+  // 3) Energy Price Cap - FIXED FORMATTING & LAYOUT
   // ------------------------------------------------------------------
   const QUARTER_SORT = [
     "2021 Q4",
@@ -390,11 +391,11 @@ console.log("LOADED project-charts v3-fixed");
     title: {
       text: "UK Energy Price Cap: The Crisis in Context",
       subtitle: [
-        "Quarterly typical household bills (2021–2025). Peak of £2,070 represents a 118% increase from baseline.",
+        "Quarterly typical household bills (2021–2025). Peak of £2,070 is a 118% increase from baseline.",
         "Shaded areas highlight the periods of most acute volatility in the wholesale market."
       ],
       anchor: "start",
-      offset: 30,
+      offset: 40, // Increased offset to prevent overlapping with labels
       fontSize: 22,
       subtitleFontSize: 14,
       subtitleColor: "#475569",
@@ -405,8 +406,8 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 520,
 
-    // Standardized padding for visual alignment
-    padding: { top: 80, right: 40, bottom: 60, left: 40 },
+    // Increased top padding to accommodate the legend and multi-line title
+    padding: { top: 100, right: 40, bottom: 60, left: 60 },
 
     layer: [
       // 1. Custom Legend (Fixed Position)
@@ -415,7 +416,7 @@ console.log("LOADED project-charts v3-fixed");
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#3b82f6" },
         encoding: {
           x: { value: 0 }, 
-          y: { value: -50 },
+          y: { value: -60 },
           text: { field: "label" }
         }
       },
@@ -473,8 +474,14 @@ console.log("LOADED project-charts v3-fixed");
           y: {
             field: "typical_annual_bill_gbp",
             type: "quantitative",
-            scale: { domain: [0, 2300] },
-            axis: { title: "Typical Annual Bill (£)", format: ",.0f", titlePadding: 20, gridOpacity: 0.1 }
+            scale: { domain: [0, 2400] },
+            axis: { 
+              title: "Typical Annual Bill", 
+              format: ",.0f", // Removed £ from here
+              labelExpr: "'£' + datum.label", // Added £ here for safe rendering
+              titlePadding: 20, 
+              gridOpacity: 0.1 
+            }
           }
         }
       },
@@ -486,7 +493,7 @@ console.log("LOADED project-charts v3-fixed");
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
-          text: { field: "typical_annual_bill_gbp", type: "quantitative", format: "£,.0f" }
+          text: { field: "typical_annual_bill_gbp", type: "quantitative", format: ",.0f" } // Removed £ from format
         }
       },
 
@@ -516,6 +523,7 @@ console.log("LOADED project-charts v3-fixed");
 
     config: { ...THEME, view: { stroke: null } }
   };
+
   // --------------------------------------
   // 4) Weekly fuel prices
   // --------------------------------------
@@ -625,8 +633,8 @@ console.log("LOADED project-charts v3-fixed");
     config: THEME
   };
 
-// --------------------------------------
-// 5) Rent vs house price - FINAL ADJUSTMENTS
+  // --------------------------------------
+// 5) Rent vs house price - IMPROVED VERSION
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -644,7 +652,7 @@ const vis5 = {
 
   data: { url: "data/vis5_rent_vs_house.json" },
   width: "container",
-  height: 400,
+  height: 450,
 
   padding: { top: 60, right: 12, bottom: 22, left: 8 },
 
@@ -668,6 +676,24 @@ const vis5 = {
       }
     },
 
+    // Pandemic period label
+    {
+      data: { values: [{ label: "Pandemic Period" }] },
+      mark: { 
+        type: "text", 
+        align: "center",
+        fontSize: 10, 
+        fontWeight: "600", 
+        color: "#92400e",
+        opacity: 0.7
+      },
+      encoding: {
+        x: { datum: "2020-11-01", type: "temporal" },
+        y: { value: 15 },
+        text: { field: "label" }
+      }
+    },
+
     // Custom Legend: Private Rents
     {
       data: { values: [{ label: "■ Private Rents" }] },
@@ -685,7 +711,7 @@ const vis5 = {
       }
     },
 
-    // Custom Legend: House Prices (moved further right to avoid overlap)
+    // Custom Legend: House Prices
     {
       data: { values: [{ label: "■ House Prices" }] },
       mark: { 
@@ -778,7 +804,7 @@ const vis5 = {
       }
     },
 
-    // Peak rent inflation annotation (moved to the right)
+    // Peak rent inflation annotation (moved significantly to the right)
     {
       transform: [
         { filter: "datum.series === 'Private rents (UK)'" },
@@ -796,7 +822,7 @@ const vis5 = {
       mark: { 
         type: "text", 
         dy: -15, 
-        dx: 35,
+        dx: 60,
         fontSize: 11, 
         fontWeight: "600", 
         color: "#dc2626",
