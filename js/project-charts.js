@@ -255,8 +255,8 @@ console.log("LOADED project-charts FIXED VERSION");
     title: {
       text: "UK Energy Price Cap: The Crisis in Context",
       subtitle: [
-        "Quarterly typical household bills (2021–2025). Peak of £2,070 is a 118% increase from baseline.",
-        "Shaded areas highlight the periods of most acute volatility in the wholesale market."
+        "Quarterly typical household bills (2021–2025). Peak: £2,070 (+118%).",
+        "Shaded areas show periods of wholesale market volatility."
       ],
       anchor: "start",
       offset: 40,
@@ -304,15 +304,11 @@ console.log("LOADED project-charts FIXED VERSION");
             type: "quantitative",
             scale: { domain: [0, 2500] },
             axis: { title: "Typical Annual Bill", format: ",.0f", labelExpr: "'£' + datum.label", titlePadding: 25, gridOpacity: 0.1, labelFontSize: 12 }
-          },
-          tooltip: [
-            { field: "period_label", title: "Quarter", type: "nominal" },
-            { field: "typical_annual_bill_gbp", title: "Annual Bill (£)", type: "quantitative", format: ",.0f" }
-          ]
+          }
         }
       },
       {
-        mark: { type: "point", filled: true, size: 250, stroke: "white", strokeWidth: 2.5 },
+        mark: { type: "point", filled: true, size: 250, stroke: "white", strokeWidth: 2.5, opacity: 1 },
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
@@ -354,8 +350,8 @@ console.log("LOADED project-charts FIXED VERSION");
     title: {
       text: "UK Fuel Prices: From Pandemic Crash to Energy Crisis",
       subtitle: [
-        "Weekly pump prices (2019–2025) | Data: Department for Energy Security and Net Zero",
-        "Shaded areas indicate major global events impacting supply and demand."
+        "Weekly pump prices (2019–2025) | Department for Energy Security",
+        "Shaded areas show major global events affecting supply and demand."
       ]
     },
     data: { url: "data/vis4_fuel_weekly.json" },
@@ -374,8 +370,8 @@ console.log("LOADED project-charts FIXED VERSION");
       {
         data: {
           values: [
-            { start: "2020-03-23", end: "2021-07-19", event: "COVID Lockdown Period", color: "#cbd5e1" },
-            { start: "2022-02-24", end: "2023-01-01", event: "Initial Ukraine Energy Shock", color: "#fca5a5" }
+            { start: "2020-03-23", end: "2021-07-19", event: "COVID Lockdown", color: "#cbd5e1" },
+            { start: "2022-02-24", end: "2023-01-01", event: "Ukraine Crisis", color: "#fca5a5" }
           ]
         },
         layer: [
@@ -466,9 +462,9 @@ console.log("LOADED project-charts FIXED VERSION");
         encoding: { x: { field: "start", type: "temporal" }, x2: { field: "end", type: "temporal" } }
       },
       {
-        data: { values: [{ label: "PANDEMIC PERIOD" }] },
+        data: { values: [{ label: "PANDEMIC" }] },
         mark: { type: "text", align: "center", baseline: "middle", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.7 },
-        encoding: { x: { datum: "2020-08-01", type: "temporal" }, y: { datum: 3 }, text: { field: "label" } }
+        encoding: { x: { datum: "2020-10-01", type: "temporal" }, y: { datum: 2.5 }, text: { field: "label" } }
       },
       {
         data: { values: [{ label: "■ Private Rents" }] },
@@ -512,7 +508,7 @@ console.log("LOADED project-charts FIXED VERSION");
           { window: [{ op: "rank", as: "r" }], sort: [{ field: "d", order: "ascending" }] },
           { filter: "datum.r === 1" }
         ],
-        mark: { type: "text", dx: 50, dy: -15, fontSize: 11, fontWeight: "bold", color: "#dc2626", text: "PEAK RENT GROWTH" },
+        mark: { type: "text", dx: 70, dy: 0, fontSize: 10, fontWeight: "bold", color: "#dc2626", text: "PEAK" },
         encoding: { x: { field: "d", type: "temporal" }, y: { field: "v_ma", type: "quantitative" } }
       }
     ],
@@ -564,8 +560,8 @@ console.log("LOADED project-charts FIXED VERSION");
       },
       {
         data: { values: [{ label: "PANDEMIC" }] },
-        mark: { type: "text", baseline: "top", dy: 5, fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.5 },
-        encoding: { x: { datum: "2020-09-15", type: "temporal" }, y: { value: 15 }, text: { field: "label" } }
+        mark: { type: "text", baseline: "middle", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.5 },
+        encoding: { x: { datum: "2020-10-01", type: "temporal" }, y: { datum: 3 }, text: { field: "label" } }
       },
       {
         transform: [{ filter: "datum.group === 'Others'" }],
