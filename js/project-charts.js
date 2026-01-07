@@ -231,8 +231,9 @@ console.log("LOADED project-charts v3-fixed");
     config: { ...THEME, view: { stroke: null } }
   };
 
+  
   // ------------------------------------------------------------------
-  // 2) Food Inflation vs Headline - PROFESSIONAL VERSION
+  // 2) Food Inflation vs Headline - FIXED INTERACTION
   // ------------------------------------------------------------------
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -256,8 +257,8 @@ console.log("LOADED project-charts v3-fixed");
     width: "container",
     height: 520,
 
-    // Padding aligned with Chart 1
-    padding: { top: 80, right: 40, bottom: 40, left: 30 },
+    // Consistent padding with Chart 1
+    padding: { top: 80, right: 40, bottom: 40, left: 40 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -265,7 +266,7 @@ console.log("LOADED project-charts v3-fixed");
     ],
 
     layer: [
-      // 1. Custom Legend: Food (Fixed Pixel Position)
+      // 1. Custom Legend: Food (Fixed Position)
       {
         data: { values: [{ label: "■ Food & Non-Alcoholic" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#dc2626" },
@@ -275,12 +276,12 @@ console.log("LOADED project-charts v3-fixed");
           text: { field: "label" }
         }
       },
-      // 2. Custom Legend: Headline CPIH (Fixed Pixel Position)
+      // 2. Custom Legend: Headline CPIH (Fixed Position)
       {
         data: { values: [{ label: "■ Headline CPIH" }] },
         mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#1e40af" },
         encoding: {
-          x: { value: 190 }, 
+          x: { value: 200 }, 
           y: { value: -50 },
           text: { field: "label" }
         }
@@ -297,16 +298,8 @@ console.log("LOADED project-charts v3-fixed");
         mark: { type: "rule", strokeDash: [2, 2], color: "#10b981", opacity: 0.5, strokeWidth: 1.5 },
         encoding: { y: { datum: 2 } }
       },
-      {
-        mark: { type: "text", align: "right", dx: -5, dy: -8, fontSize: 10, color: "#059669", fontWeight: "600" },
-        encoding: {
-          x: { value: 1000 }, // Positioned to the right side
-          y: { datum: 2 },
-          text: { value: "2% Target" }
-        }
-      },
 
-      // 5. Raw Data Lines (Background)
+      // 5. Raw Data Lines (Thin Background)
       {
         mark: { type: "line", strokeWidth: 1.5, opacity: 0.15, interpolate: "monotone" },
         encoding: {
@@ -327,12 +320,11 @@ console.log("LOADED project-charts v3-fixed");
             type: "nominal",
             scale: { range: ["#dc2626", "#1e40af"] },
             legend: null
-          },
-          detail: { field: "series" }
+          }
         }
       },
 
-      // 6. Bold Moving Average Lines
+      // 6. Moving Average Lines (Bold)
       {
         transform: [
           {
@@ -355,7 +347,8 @@ console.log("LOADED project-charts v3-fixed");
         }
       },
 
-      // 7. Interactive Tooltip Layer
+      // 7. FIXED: Transparent Tooltip Layer
+      // This uses a rule to create a vertical hover line that displays values for all series
       {
         transform: [
           {
@@ -365,15 +358,13 @@ console.log("LOADED project-charts v3-fixed");
             groupby: ["series"]
           }
         ],
-        mark: { type: "point", size: 100, opacity: 0 },
+        mark: { type: "rule", strokeWidth: 40, opacity: 0, color: "white" },
         encoding: {
           x: { field: "d", type: "temporal" },
-          y: { field: "v_ma", type: "quantitative" },
           tooltip: [
             { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
             { field: "series", type: "nominal", title: "Category" },
-            { field: "v_ma", type: "quantitative", title: "Avg Rate (%)", format: ".1f" },
-            { field: "v", type: "quantitative", title: "Raw Rate (%)", format: ".1f" }
+            { field: "v_ma", type: "quantitative", title: "Avg Rate (%)", format: ".1f" }
           ]
         }
       }
@@ -607,7 +598,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
 // --------------------------------------
-// 5) Rent vs house price - FULLY CORRECTED
+// 5) Rent vs house price - FINAL VERSION
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -616,7 +607,7 @@ const vis5 = {
   title: {
     text: "Housing Cost Dynamics: Rents vs House Prices",
     subtitle: [
-      "Annual inflation rates (2016–2024) | Bold lines show 5-month moving average",
+      "Annual inflation rates (2019–2025) | Bold lines show 5-month moving average",
       "Rents sustained elevated inflation while house prices cooled sharply in 2023"
     ],
     anchor: "start",
@@ -631,7 +622,8 @@ const vis5 = {
 
   transform: [
     { calculate: "toDate(datum.date)", as: "d" },
-    { calculate: "toNumber(datum.value)", as: "v" }
+    { calculate: "toNumber(datum.value)", as: "v" },
+    { filter: "year(datum.d) >= 2019" }
   ],
 
   layer: [
@@ -648,7 +640,7 @@ const vis5 = {
       }
     },
 
-    // Custom Legend: Private Rents (far left)
+    // Custom Legend: Private Rents
     {
       data: { values: [{ label: "■ Private Rents" }] },
       mark: { 
@@ -659,13 +651,13 @@ const vis5 = {
         color: "#dc2626" 
       },
       encoding: {
-        x: { datum: "2016-03-01", type: "temporal" },
+        x: { datum: "2019-02-01", type: "temporal" },
         y: { value: -45 },
         text: { field: "label" }
       }
     },
 
-    // Custom Legend: House Prices (moved further right to avoid overlap)
+    // Custom Legend: House Prices (moved significantly right)
     {
       data: { values: [{ label: "■ House Prices" }] },
       mark: { 
@@ -676,7 +668,7 @@ const vis5 = {
         color: "#1e40af" 
       },
       encoding: {
-        x: { datum: "2019-06-01", type: "temporal" },
+        x: { datum: "2021-01-01", type: "temporal" },
         y: { value: -45 },
         text: { field: "label" }
       }
@@ -717,7 +709,7 @@ const vis5 = {
           field: "d", 
           type: "temporal", 
           title: "Year", 
-          axis: { format: "%Y", tickCount: 8 }
+          axis: { format: "%Y", tickCount: 7 }
         },
         y: { 
           field: "v", 
@@ -758,7 +750,7 @@ const vis5 = {
       }
     },
 
-    // Peak rent inflation annotation - FIXED FILTER
+    // Peak rent inflation annotation
     {
       transform: [
         { filter: "datum.series === 'Private rents (UK)'" },
