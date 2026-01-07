@@ -86,16 +86,20 @@ a:hover{ text-decoration: underline; }
 
 .nav__link{
   color: var(--white);
-  padding: 8px 10px;
-  border-radius: 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
   font-weight: 600;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
 }
 .nav__link:hover{
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.15);
   text-decoration: none;
+  transform: translateY(-1px);
 }
 .nav__link[aria-current="page"]{
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.22);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .nav__checkbox{

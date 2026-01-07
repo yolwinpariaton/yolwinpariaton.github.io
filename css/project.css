@@ -390,3 +390,34 @@
     font-size: 16px;
   }
 }
+
+
+/* =====================
+   NAVIGATION IMPROVEMENTS (matching style.css)
+   ===================== */
+
+.nav__link{
+  color: var(--white);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+}
+.nav__link:hover{
+  background: rgba(255,255,255,0.15);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.nav__link[aria-current="page"]{
+  background: rgba(255,255,255,0.22);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* =====================
+   HERO SIZE CONSISTENCY (matching index.html at 88vh)
+   ===================== */
+
+.hero--project {
+  min-height: 88vh;
+}
