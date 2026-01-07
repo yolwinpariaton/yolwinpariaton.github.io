@@ -268,7 +268,7 @@ console.log("LOADED project-charts FIXED VERSION");
     data: { url: "data/vis3_energy_cap.json" },
     width: "container",
     height: 500,
-    padding: { top: 90, right: 40, bottom: 70, left: 60 },
+    padding: { top: 90, right: 40, bottom: 70, left: 50 },
 
     layer: [
       {
@@ -357,7 +357,7 @@ console.log("LOADED project-charts FIXED VERSION");
     data: { url: "data/vis4_fuel_weekly.json" },
     width: "container",
     height: 450,
-    padding: { top: 50, right: 30, bottom: 50, left: 60 },
+    padding: { top: 50, right: 30, bottom: 50, left: 55 },
 
     transform: [
       { calculate: "toDate(datum.date)", as: "d" },
@@ -463,8 +463,8 @@ console.log("LOADED project-charts FIXED VERSION");
       },
       {
         data: { values: [{ label: "PANDEMIC" }] },
-        mark: { type: "text", align: "center", baseline: "middle", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.7 },
-        encoding: { x: { datum: "2020-10-01", type: "temporal" }, y: { datum: 2.5 }, text: { field: "label" } }
+        mark: { type: "text", align: "center", baseline: "bottom", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.7 },
+        encoding: { x: { datum: "2020-10-01", type: "temporal" }, y: { datum: 0.5 }, text: { field: "label" } }
       },
       {
         data: { values: [{ label: "■ Private Rents" }] },
@@ -508,7 +508,7 @@ console.log("LOADED project-charts FIXED VERSION");
           { window: [{ op: "rank", as: "r" }], sort: [{ field: "d", order: "ascending" }] },
           { filter: "datum.r === 1" }
         ],
-        mark: { type: "text", dx: 70, dy: 0, fontSize: 10, fontWeight: "bold", color: "#dc2626", text: "PEAK" },
+        mark: { type: "text", dx: 80, dy: -25, fontSize: 10, fontWeight: "bold", color: "#dc2626", text: "PEAK" },
         encoding: { x: { field: "d", type: "temporal" }, y: { field: "v_ma", type: "quantitative" } }
       }
     ],
@@ -560,8 +560,8 @@ console.log("LOADED project-charts FIXED VERSION");
       },
       {
         data: { values: [{ label: "PANDEMIC" }] },
-        mark: { type: "text", baseline: "middle", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.5 },
-        encoding: { x: { datum: "2020-10-01", type: "temporal" }, y: { datum: 3 }, text: { field: "label" } }
+        mark: { type: "text", baseline: "bottom", fontSize: 10, fontWeight: "bold", color: "#92400e", opacity: 0.6 },
+        encoding: { x: { datum: "2020-09-15", type: "temporal" }, y: { datum: 1 }, text: { field: "label" } }
       },
       {
         transform: [{ filter: "datum.group === 'Others'" }],

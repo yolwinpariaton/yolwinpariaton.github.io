@@ -192,11 +192,14 @@
   transition: none !important;
   transform: none !important;
   will-change: auto !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .chart-visual {
   position: relative;
   contain: layout style;
+  isolation: isolate;
 }
 
 .chart-visual .vega-embed {
@@ -218,6 +221,13 @@
 .chart-frame .vega-embed canvas,
 .chart-frame .vega-embed svg {
   position: relative !important;
+}
+
+/* Prevent hover from triggering reflow */
+.chart-frame:hover .vega-embed,
+.chart-frame:hover .vega-embed svg,
+.chart-frame:hover .vega-embed canvas {
+  transform: translateZ(0) !important;
 }
 
 /* =====================
