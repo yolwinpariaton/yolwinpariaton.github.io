@@ -125,19 +125,33 @@
           </p>
 
           <h3>Part A: API chart</h3>
-          <p>This chart pulls UK inflation data directly from the World Bank Indicators API.</p>
+          <p>This chart uses data from the <strong>World Bank Indicators API</strong>.</p>
+          <p>The base URL is: <code>https://api.worldbank.org/v2/</code></p>
+          <p>To get the data, the API call specifies:</p>
+          <ul style="text-align: left; max-width: 600px; margin: 10px auto;">
+            <li>Country code: <code>GBR</code> (United Kingdom)</li>
+            <li>Indicator: <code>FP.CPI.TOTL.ZG</code> (Inflation, consumer prices, annual %)</li>
+            <li>Format: <code>json</code></li>
+            <li>Results per page: <code>200</code></li>
+          </ul>
+          <p>Full API request: <a href="https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200" target="_blank" rel="noopener"><code>https://api.worldbank.org/v2/country/GBR/indicator/FP.CPI.TOTL.ZG?format=json&per_page=200</code></a></p>
+          
           <div class="chart-wrapper chart-wrapper--center">
             <div id="vis_api" class="vega-container"></div>
           </div>
 
           <h3>Part B: Scraped chart</h3>
-          <p>This chart uses emissions data scraped from Wikipedia, cleaned into tidy format.</p>
+          <p>This chart uses data scraped from <strong>Wikipedia</strong>.</p>
+          <p>Source URL: <a href="https://en.wikipedia.org/wiki/List_of_countries_by_greenhouse_gas_emissions" target="_blank" rel="noopener">List of countries by greenhouse gas emissions</a></p>
+          <p>Method: Web scraping with Python's <code>requests</code> library, data cleaning, and conversion to tidy (long-form) format.</p>
+          
           <div class="chart-wrapper chart-wrapper--center">
             <div id="vis_scrape" class="vega-container"></div>
           </div>
 
-          <p class="task-source">Source: World Bank Indicators API (Part A) and Wikipedia (Part B)
-            Code notebook: <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" rel="noopener">Colab</a>.
+          <p class="task-source">
+            Source: World Bank Indicators API (Part A) and Wikipedia (Part B). 
+            Code notebook: <a href="https://colab.research.google.com/drive/11neYjbKBxWSSuUEjuSMm9_zYyfKnSPFz" target="_blank" rel="noopener">Colab</a>
           </p>
         </section>
 
@@ -249,7 +263,7 @@
     <div class="container footer__grid footer__grid--centered">
       <div>
         <h3 class="footer__title">Contact</h3>
-        <p>Email: <a href="/cdn-cgi/l/email-protection#334a1d5d1d4352415a52475c5d1e4946415a4752735f40561d52501d4658"><span class="__cf_email__" data-cfemail="453c6b2b6b3524372c24312a2b683f30372c3124052936206b24266b302e">[email&#160;protected]</span></a></p>
+        <p>Email: <a href="mailto:y.n.pariaton-zurita@lse.ac.uk">y.n.pariaton-zurita@lse.ac.uk</a></p>
       </div>
 
       <div>
@@ -260,3 +274,10 @@
 
       <div>
         <h3 class="footer__title">About</h3>
+        <p>Built for the LSE Automated Data Visualisation Course.</p>
+        <p>© 2025 Yolwin Pariaton</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
