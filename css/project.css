@@ -266,6 +266,20 @@
   will-change: auto !important;
 }
 
+/* Add invisible overlay to completely block mouse events */
+.chart-section:nth-of-type(4) .chart-frame::after,
+.chart-section:nth-of-type(5) .chart-frame::after,
+.chart-section:nth-of-type(8) .chart-frame::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  cursor: default;
+}
+
 /* =====================
    MAP-SPECIFIC FIXES
    ===================== */

@@ -347,7 +347,9 @@ console.log("LOADED project-charts FIXED VERSION");
         stroke: null,
         continuousWidth: 1000,
         continuousHeight: 450
-      } 
+      },
+      mark: { tooltip: null },
+      axis: { domain: false }
     }
   };
 
@@ -422,16 +424,14 @@ console.log("LOADED project-charts FIXED VERSION");
             type: "nominal",
             scale: { range: ["#2563eb", "#d97706"] },
             legend: { orient: "top", direction: "horizontal", title: null, labelFontSize: 13, symbolType: "circle", symbolSize: 160, offset: 25 }
-          },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Date", format: "%d %b %Y" },
-            { field: "fuel", type: "nominal", title: "Fuel" },
-            { field: "ppl_ma", type: "quantitative", title: "Price (p)", format: ".1f" }
-          ]
+          }
         }
       }
     ],
-    config: THEME
+    config: { 
+      ...THEME,
+      mark: { tooltip: null }
+    }
   };
 
   // Chart 5: Rent vs House Prices - FIXED HOVER
@@ -590,16 +590,14 @@ console.log("LOADED project-charts FIXED VERSION");
         mark: { type: "line", strokeWidth: 4.5, color: "#dc2626", interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal" },
-          y: { field: "inflation", type: "quantitative" },
-          tooltip: [
-            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
-            { field: "areanm", title: "Region" },
-            { field: "inflation", title: "Rate (%)", format: ".1f" }
-          ]
+          y: { field: "inflation", type: "quantitative" }
         }
       }
     ],
-    config: THEME
+    config: { 
+      ...THEME,
+      mark: { tooltip: null }
+    }
   };
 
   // Embed all charts
