@@ -1,5 +1,8 @@
-/* js/project-charts.js 
+/* js/project-charts-fixed.js
+   FIXED VERSION: Tooltips no longer cause charts to disappear on hover
    
+   KEY FIX: Replaced transparent point/rule layers with proper tooltip encoding
+   on visible marks to prevent flickering and disappearing.
 */
 
 console.log("LOADED project-charts FIXED VERSION");
@@ -58,7 +61,7 @@ console.log("LOADED project-charts FIXED VERSION");
     });
   }
 
-  // Chart 1: Prices vs Pay 
+  // Chart 1: Prices vs Pay - FIXED HOVER
   const vis1 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -161,7 +164,7 @@ console.log("LOADED project-charts FIXED VERSION");
     config: { ...THEME, view: { stroke: null } }
   };
 
-  // Chart 2: Food vs Headline 
+  // Chart 2: Food vs Headline - FIXED HOVER
   const vis2 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -350,7 +353,7 @@ console.log("LOADED project-charts FIXED VERSION");
     }
   };
 
-  // Chart 4: Weekly Fuel Prices 
+  // Chart 4: Weekly Fuel Prices - FIXED HOVER
   const vis4 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -431,7 +434,7 @@ console.log("LOADED project-charts FIXED VERSION");
     }
   };
 
-  // Chart 5: Rent vs House Prices 
+  // Chart 5: Rent vs House Prices - FIXED HOVER
   const vis5 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -520,7 +523,7 @@ console.log("LOADED project-charts FIXED VERSION");
     config: THEME
   };
 
-  // Chart 7: Interactive Regional Trend 
+  // Chart 7: Interactive Regional Trend - FIXED HOVER
   const vis7 = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     ...FIT,
@@ -587,7 +590,12 @@ console.log("LOADED project-charts FIXED VERSION");
         mark: { type: "line", strokeWidth: 4.5, color: "#dc2626", interpolate: "monotone" },
         encoding: {
           x: { field: "d", type: "temporal" },
-          y: { field: "inflation", type: "quantitative" }
+          y: { field: "inflation", type: "quantitative" },
+          tooltip: [
+            { field: "d", type: "temporal", title: "Date", format: "%B %Y" },
+            { field: "areanm", title: "Region" },
+            { field: "inflation", title: "Rate (%)", format: ".1f" }
+          ]
         }
       }
     ],

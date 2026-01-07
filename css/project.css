@@ -1,5 +1,5 @@
 /* =========================================================
-   Project page:
+   Project page: Professional chart presentation
    ========================================================= */
 
 .white-space {
@@ -51,7 +51,7 @@
 }
 
 /* =====================
-   INTRODUCTION SECTION
+   INTRODUCTION SECTION (CENTERED)
    ===================== */
 
 .intro-section {
@@ -83,7 +83,7 @@
 }
 
 /* =====================
-   CHART SECTIONS 
+   CHART SECTIONS - ALTERNATING LAYOUT
    ===================== */
 
 .chart-section {
@@ -95,12 +95,12 @@
   max-width: 1800px;
 }
 
-/* Chart on RIGHT  */
+/* Chart on RIGHT (odd sections: 1, 3, 5, 7) */
 .chart-section:nth-of-type(odd) {
   flex-direction: row;
 }
 
-/* Chart on LEFT  */
+/* Chart on LEFT (even sections: 2, 4, 6, 8) */
 .chart-section:nth-of-type(even) {
   flex-direction: row-reverse;
 }
@@ -127,7 +127,7 @@
   margin: 0;
 }
 
-/* Chart container */
+/* Chart container - 75% width */
 .chart-visual {
   flex: 0 0 75%;
   max-width: 75%;
@@ -244,32 +244,22 @@
   max-height: 450px !important;
 }
 
-/* Extra stability for Chart 7  */
-.chart-section:nth-of-type(8) .vega-embed,
-.chart-section:nth-of-type(8) .vega-embed svg {
-  min-height: 450px !important;
-  max-height: 450px !important;
-}
-
-/* Disable ALL hover interactions */
+/* Disable ALL hover interactions for Charts 3 and 4 only */
 .chart-section:nth-of-type(4) .vega-embed svg *,
-.chart-section:nth-of-type(5) .vega-embed svg *,
-.chart-section:nth-of-type(8) .vega-embed svg * {
+.chart-section:nth-of-type(5) .vega-embed svg * {
   pointer-events: none !important;
 }
 
-/* Prevent any visual changes on hover */
+/* Prevent any visual changes on hover for Charts 3 and 4 */
 .chart-section:nth-of-type(4) *,
-.chart-section:nth-of-type(5) *,
-.chart-section:nth-of-type(8) * {
+.chart-section:nth-of-type(5) * {
   transition: none !important;
   will-change: auto !important;
 }
 
-/* Add invisible overlay */
+/* Add invisible overlay to Charts 3 and 4 only */
 .chart-section:nth-of-type(4) .chart-frame::after,
-.chart-section:nth-of-type(5) .chart-frame::after,
-.chart-section:nth-of-type(8) .chart-frame::after {
+.chart-section:nth-of-type(5) .chart-frame::after {
   content: '';
   position: absolute;
   top: 0;
@@ -393,7 +383,7 @@
 
 
 /* =====================
-   NAVIGATION IMPROVEMENTS 
+   NAVIGATION IMPROVEMENTS (matching style.css)
    ===================== */
 
 .nav__link{
@@ -415,7 +405,7 @@
 }
 
 /* =====================
-   HERO SIZE CONSISTENCY 
+   HERO SIZE CONSISTENCY (matching index.html at 88vh)
    ===================== */
 
 .hero--project {
