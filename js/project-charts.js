@@ -374,7 +374,7 @@ console.log("LOADED project-charts v3-fixed");
   };
   
   // ------------------------------------------------------------------
-  // 3) Energy Price Cap - FIXED FORMATTING & LAYOUT
+  // 3) Energy Price Cap - EXPANDED PROFESSIONAL VERSION
   // ------------------------------------------------------------------
   const QUARTER_SORT = [
     "2021 Q4",
@@ -395,28 +395,28 @@ console.log("LOADED project-charts v3-fixed");
         "Shaded areas highlight the periods of most acute volatility in the wholesale market."
       ],
       anchor: "start",
-      offset: 40, // Increased offset to prevent overlapping with labels
-      fontSize: 22,
-      subtitleFontSize: 14,
+      offset: 40,
+      fontSize: 24, // Slightly larger title for the larger chart
+      subtitleFontSize: 15,
       subtitleColor: "#475569",
       font: "Inter, sans-serif"
     },
 
     data: { url: "data/vis3_energy_cap.json" },
     width: "container",
-    height: 520,
+    height: 600, // Increased from 520 to 600 to fill the frame better
 
-    // Increased top padding to accommodate the legend and multi-line title
-    padding: { top: 100, right: 40, bottom: 60, left: 60 },
+    // Balanced padding for the larger frame
+    padding: { top: 100, right: 50, bottom: 80, left: 70 },
 
     layer: [
       // 1. Custom Legend (Fixed Position)
       {
         data: { values: [{ label: "■ Annual Bill Amount (£)" }] },
-        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 14, color: "#3b82f6" },
+        mark: { type: "text", align: "left", fontWeight: "bold", fontSize: 15, color: "#3b82f6" },
         encoding: {
           x: { value: 0 }, 
-          y: { value: -60 },
+          y: { value: -65 },
           text: { field: "label" }
         }
       },
@@ -425,12 +425,12 @@ console.log("LOADED project-charts v3-fixed");
       {
         data: { values: [{ period_label: "2021 Q4" }, { period_label: "2022 Q1" }, { period_label: "2022 Q2" }] },
         mark: { type: "bar", color: "#dbeafe", opacity: 0.2 },
-        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
+        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2400 } }
       },
       {
         data: { values: [{ period_label: "2024 Q2" }, { period_label: "2024 Q3" }, { period_label: "2024 Q4" }] },
         mark: { type: "bar", color: "#fef3c7", opacity: 0.2 },
-        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2200 } }
+        encoding: { x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT }, y: { datum: 2400 } }
       },
 
       // 3. Baseline Reference Line
@@ -442,9 +442,9 @@ console.log("LOADED project-charts v3-fixed");
       // 4. Main Line and Points
       {
         layer: [
-          { mark: { type: "line", strokeWidth: 3, color: "#64748b", interpolate: "monotone" } },
+          { mark: { type: "line", strokeWidth: 4, color: "#64748b", interpolate: "monotone" } },
           {
-            mark: { type: "point", filled: true, size: 200, stroke: "white", strokeWidth: 2 },
+            mark: { type: "point", filled: true, size: 250, stroke: "white", strokeWidth: 2.5 },
             encoding: {
               color: {
                 field: "typical_annual_bill_gbp",
@@ -467,20 +467,21 @@ console.log("LOADED project-charts v3-fixed");
               title: "Quarterly Period",
               labelAngle: -45,
               labelAlign: "right",
-              titlePadding: 25,
-              labelFontSize: 11
+              titlePadding: 30,
+              labelFontSize: 12
             }
           },
           y: {
             field: "typical_annual_bill_gbp",
             type: "quantitative",
-            scale: { domain: [0, 2400] },
+            scale: { domain: [0, 2500] },
             axis: { 
               title: "Typical Annual Bill", 
-              format: ",.0f", // Removed £ from here
-              labelExpr: "'£' + datum.label", // Added £ here for safe rendering
-              titlePadding: 20, 
-              gridOpacity: 0.1 
+              format: ",.0f", 
+              labelExpr: "'£' + datum.label", 
+              titlePadding: 25, 
+              gridOpacity: 0.1,
+              labelFontSize: 12
             }
           }
         }
@@ -489,18 +490,18 @@ console.log("LOADED project-charts v3-fixed");
       // 5. Value Annotations (Key Points)
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 950 || datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: -20, fontSize: 13, fontWeight: "bold", color: "#0f172a" },
+        mark: { type: "text", dy: -25, fontSize: 14, fontWeight: "bold", color: "#0f172a" },
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
-          text: { field: "typical_annual_bill_gbp", type: "quantitative", format: ",.0f" } // Removed £ from format
+          text: { field: "typical_annual_bill_gbp", type: "quantitative", format: ",.0f" }
         }
       },
 
       // 6. Percentage Increase Annotation
       {
         transform: [{ filter: "datum.typical_annual_bill_gbp === 2070" }],
-        mark: { type: "text", dy: 25, fontSize: 12, fontWeight: "800", color: "#dc2626" },
+        mark: { type: "text", dy: 30, fontSize: 13, fontWeight: "800", color: "#dc2626" },
         encoding: {
           x: { field: "period_label", type: "ordinal", sort: QUARTER_SORT },
           y: { field: "typical_annual_bill_gbp", type: "quantitative" },
@@ -523,7 +524,6 @@ console.log("LOADED project-charts v3-fixed");
 
     config: { ...THEME, view: { stroke: null } }
   };
-
   // --------------------------------------
   // 4) Weekly fuel prices
   // --------------------------------------
@@ -634,7 +634,7 @@ console.log("LOADED project-charts v3-fixed");
   };
 
   // --------------------------------------
-// 5) Rent vs house price - IMPROVED VERSION
+// 5) Rent vs house price - POLISHED VERSION
 // --------------------------------------
 const vis5 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -676,7 +676,7 @@ const vis5 = {
       }
     },
 
-    // Pandemic period label
+    // Pandemic period label (centered within shaded area)
     {
       data: { values: [{ label: "Pandemic Period" }] },
       mark: { 
@@ -688,13 +688,13 @@ const vis5 = {
         opacity: 0.7
       },
       encoding: {
-        x: { datum: "2020-11-01", type: "temporal" },
-        y: { value: 15 },
+        x: { datum: "2020-10-15", type: "temporal" },
+        y: { value: 30 },
         text: { field: "label" }
       }
     },
 
-    // Custom Legend: Private Rents
+    // Custom Legend: Private Rents (far left)
     {
       data: { values: [{ label: "■ Private Rents" }] },
       mark: { 
@@ -705,13 +705,13 @@ const vis5 = {
         color: "#dc2626" 
       },
       encoding: {
-        x: { datum: "2019-02-01", type: "temporal" },
+        x: { datum: "2019-01-15", type: "temporal" },
         y: { value: -45 },
         text: { field: "label" }
       }
     },
 
-    // Custom Legend: House Prices
+    // Custom Legend: House Prices (well separated to the right)
     {
       data: { values: [{ label: "■ House Prices" }] },
       mark: { 
@@ -722,7 +722,7 @@ const vis5 = {
         color: "#1e40af" 
       },
       encoding: {
-        x: { datum: "2021-09-01", type: "temporal" },
+        x: { datum: "2022-03-01", type: "temporal" },
         y: { value: -45 },
         text: { field: "label" }
       }
@@ -804,7 +804,7 @@ const vis5 = {
       }
     },
 
-    // Peak rent inflation annotation (moved significantly to the right)
+    // Peak rent inflation annotation
     {
       transform: [
         { filter: "datum.series === 'Private rents (UK)'" },
@@ -860,6 +860,7 @@ const vis5 = {
 
   config: THEME
 };
+
   // --------------------------------------
   // 7) Interactive regional trend
   // --------------------------------------
